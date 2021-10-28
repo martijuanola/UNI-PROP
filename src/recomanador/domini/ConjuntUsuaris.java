@@ -1,5 +1,5 @@
 package src.recomanador.domini;
 
-public class conjuntUsuaris {
+public class ConjuntUsuaris {
     
 }

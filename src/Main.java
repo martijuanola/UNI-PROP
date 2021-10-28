@@ -1,10 +1,10 @@
 package src;
 
 import src.recomanador.*;
-import src.recomanador.domini.controladorDomini;
+import src.recomanador.domini.ControladorDomini;
 
 public class Main {
     public static void main(String[] args) {
-        controladorDomini cd = new controladorDomini();
+        ControladorDomini cd = new ControladorDomini();
     }
 }
