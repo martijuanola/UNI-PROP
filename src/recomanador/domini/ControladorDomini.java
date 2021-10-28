@@ -27,4 +27,11 @@ public class ControladorDomini {
     {
 		id = identificador;
 	}
+	
+	//Pre: cert
+	//Post: s'iguala la id a NULL_ID, indicant que ningú està com a usuari
+	public void logout()
+    {
+		id = NULL_ID;
+	}
 }
