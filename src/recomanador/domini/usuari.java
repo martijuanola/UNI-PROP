@@ -1,21 +1,25 @@
 package src.recomanador.domini;
 
-public class usuari {
+public class Usuari {
+    
+    /*----- ATRIBUTS -----*/
+
     private int id;
-    private conjuntRecomanacions cr;
-    private conjuntValoracions cv;
+
+    private ConjuntRecomanacions cr;
+    private ConjuntValoracions cv;
 
     /*----- CONSTRUCTORS -----*/
 
     // Pre: -
     // Post: L'usuari s'ha creat amb l'id id
-    public usuari(int id) {
+    public Usuari(int id) {
         this.id = id;
     }
 
     // Pre: -
     // Post: L'usuari s'ha creat amb l'id, el conjunt de recomanacions i valoracions id, cr i cv
-    public usuari(int id, conjuntRecomanacions cr, conjuntValoracions cv) {
+    public Usuari(int id, ConjuntRecomanacions cr, ConjuntValoracions cv) {
         this.id = id;
         this.cr = cr;
         this.cv = cv;
@@ -39,48 +43,49 @@ public class usuari {
 
     // Pre: -
     // Post: Retorna les recomanacions del usuari
-    public conjuntRecomanacions getRecomanacions() {
+    public ConjuntRecomanacions getRecomanacions() {
         return cr;
     }
 
-    public void setRecomanacions(conjuntRecomanacions cr) {
+    public void setRecomanacions(ConjuntRecomanacions cr) {
         this.cr = cr;
     }
 
-    public recomanacio getRecomanacio(int i) {
+    public Recomanacio getRecomanacio(int i) {
         return cr.get(i);
     }
 
-    public recomanacio eliminarRecomanacio(int i) {
+    public Recomanacio eliminarRecomanacio(int i) {
         return cr.remove(i);
     }
 
-    public valoracio valorar(int recomanacio, int puntuacio) {
-        valoracio v = new valoracio(cr.get(recomanacio));
+    public Valoracio valorar(int recomanacio, int puntuacio) {
+        Valoracio v = (valoracio) cr.get(recomanacio);
         cr.remove(recomanacio);
-        cv.add(cv.size()-1, v);
+        v.setPuntuacio(puntuacio);
+        cv.add(v);
         return v;
     }
 
     /*----- VALORACIONS -----*/
 
-    public conjuntValoracions getValoracions() {
+    public ConjuntValoracions getValoracions() {
         return cv;
     }
 
-    public void setValoracions(conjuntValoracions cv) {
+    public void setValoracions(ConjuntValoracions cv) {
         this.cv = cv;
     }
 
-    public valoracio getValoracio(int i) {
+    public Valoracio getValoracio(int i) {
         return cv.get(i);
     }
 
-    public valoracio eliminarValoracio(int i) {
+    public Valoracio eliminarValoracio(int i) {
         return cv.remove(i);
     }
 
-    public void valorarValoracio(int valoracio, int puntuacio) {
+    public void ValorarValoracio(int valoracio, int puntuacio) {
         cv.get(valoracio).setPuntuacio(puntuacio);
     }
 }

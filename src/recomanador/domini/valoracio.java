@@ -1,8 +1,15 @@
 package src.recomanador.domini;
 
-public class valoracio {
+public class Valoracio extends Recomanacio {
+
+    /*----- ATRIBUTS -----*/
+
     private int puntuacio;
-    public valoracio(recomanacio r) {
+    
+    
+    /*----- CONSTRUCTORS -----*/
+
+    public Valoracio(Recomanacio r) {
 
     }
     

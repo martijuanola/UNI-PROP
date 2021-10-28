@@ -1,0 +1,1958 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"get",
+				"get_dist"
+			],
+			[
+				"p",
+				"println"
+			],
+			[
+				"get_",
+				"get_peticio"
+			],
+			[
+				"gasolin",
+				"gasolineres"
+			],
+			[
+				"is",
+				"isNull"
+			],
+			[
+				"print",
+				"print_pendents"
+			],
+			[
+				"benefic",
+				"benefici_camio_old"
+			],
+			[
+				"Gasol",
+				"GasolinaBoard"
+			],
+			[
+				"Ga",
+				"GasolinaBoard"
+			],
+			[
+				"Gas",
+				"GasolinaBoard"
+			],
+			[
+				"dist",
+				"distCG"
+			],
+			[
+				"D",
+				"Distribucion"
+			],
+			[
+				"max",
+				"maxViatges"
+			],
+			[
+				"dis",
+				"distCG"
+			],
+			[
+				"Dis",
+				"Distribucion"
+			],
+			[
+				"n",
+				"nGas"
+			],
+			[
+				"time",
+				"time_lapse"
+			],
+			[
+				"FFFFFF",
+				"ffffff"
+			],
+			[
+				"t",
+				"t_limit"
+			],
+			[
+				"m",
+				"mb_limit"
+			],
+			[
+				"b",
+				"b_limit"
+			],
+			[
+				"remove",
+				"remove_duplicates"
+			],
+			[
+				"back",
+				"back_rec"
+			],
+			[
+				"inside",
+				"inside_rec"
+			],
+			[
+				"read",
+				"read_matrix"
+			],
+			[
+				"nums",
+				"nums_rec"
+			],
+			[
+				"cols",
+				"cols"
+			],
+			[
+				"array",
+				"array_uris2"
+			],
+			[
+				"arr",
+				"array_uris2"
+			],
+			[
+				"G",
+				"Get_money"
+			],
+			[
+				"Get",
+				"Get_food"
+			],
+			[
+				"wea",
+				"weakest"
+			],
+			[
+				"citiz",
+				"citizen"
+			],
+			[
+				"weap",
+				"weapons"
+			],
+			[
+				"W",
+				"WeaponType"
+			],
+			[
+				"Get_",
+				"Get_gun"
+			],
+			[
+				"my",
+				"my_weakest_weapon"
+			],
+			[
+				"builder",
+				"builder_ini_life"
+			],
+			[
+				"best",
+				"best_option"
+			],
+			[
+				"crea",
+				"create_barricade"
+			],
+			[
+				"boar",
+				"board_cols"
+			],
+			[
+				"range",
+				"range_difference"
+			],
+			[
+				"num",
+				"num_barricades"
+			],
+			[
+				"avoid",
+				"avoid_cell"
+			],
+			[
+				"barri",
+				"barricades"
+			],
+			[
+				"tur",
+				"turns_to_demolish_max"
+			],
+			[
+				"close",
+				"closest_barricade"
+			],
+			[
+				"col",
+				"board_cols"
+			],
+			[
+				"upd",
+				"check_upgrade_barricade"
+			],
+			[
+				"Ci",
+				"CitizenType"
+			],
+			[
+				"matr",
+				"matrix_b"
+			],
+			[
+				"pos",
+				"pos_ok"
+			],
+			[
+				"Buil",
+				"Building"
+			],
+			[
+				"board",
+				"board_rows"
+			],
+			[
+				"boa",
+				"board_cols"
+			],
+			[
+				"att",
+				"attackers"
+			],
+			[
+				"round",
+				"rounds_left_to_change"
+			],
+			[
+				"citi",
+				"Citizen"
+			],
+			[
+				"en",
+				"enemy"
+			],
+			[
+				"warri",
+				"warrior_ini_life"
+			],
+			[
+				"warr",
+				"warrior_ini_life"
+			],
+			[
+				"lif",
+				"builder_ini_life"
+			],
+			[
+				"life",
+				"life_lost_in_attack"
+			],
+			[
+				"ci",
+				"CitizenType"
+			],
+			[
+				"food",
+				"food_percentage"
+			],
+			[
+				"firs",
+				"first_step"
+			],
+			[
+				"first",
+				"first_move"
+			],
+			[
+				"min",
+				"min_dist_to_money"
+			],
+			[
+				"pus",
+				"push_back"
+			],
+			[
+				"nu",
+				"numbers_data"
+			],
+			[
+				"u",
+				"uint32_t"
+			],
+			[
+				"i",
+				"i"
+			],
+			[
+				"res",
+				"resistant_search"
+			],
+			[
+				"mid",
+				"mid-1"
+			],
+			[
+				"gdp",
+				"gdp_sum"
+			],
+			[
+				"V",
+				"V"
+			],
+			[
+				"map",
+				"map\tstandard header"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/recomanador/domini/controladorDomini.java",
+			"settings":
+			{
+				"buffer_size": 359,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					8,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAKQAAAAAAAAApQAAAAAAAAAAAAAApQAAAAAAAACpAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAApAAAAAAAAACkAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					13,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAG0AAAAAAAAAbgAAAAAAAAAAAAAAbgAAAAAAAAByAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAbQAAAAAAAABtAAAAAAAAAAAAAAAAAEJA"
+				],
+				[
+					23,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAG0AAAAAAAAAbgAAAAAAAAAAAAAAbgAAAAAAAAByAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAbQAAAAAAAABtAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					25,
+					1,
+					"paste",
+					null,
+					"AQAAAHIAAAAAAAAAigAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAcgAAAAAAAAByAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					26,
+					1,
+					"run_macro_file",
+					{
+						"file": "res://Packages/Default/Add Line.sublime-macro"
+					},
+					"AgAAAIoAAAAAAAAAiwAAAAAAAAAAAAAAiwAAAAAAAACPAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAigAAAAAAAACKAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					37,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BgAAAMsAAAAAAAAAzAAAAAAAAAAAAAAAzAAAAAAAAADQAAAAAAAAAAAAAACLAAAAAAAAAIsAAAAAAAAABAAAACAgICDMAAAAAAAAAM0AAAAAAAAAAAAAAM0AAAAAAAAA0QAAAAAAAAAAAAAAyAAAAAAAAADIAAAAAAAAAAQAAAAgICAg",
+					"AQAAAAAAAAABAAAAywAAAAAAAADLAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					39,
+					1,
+					"reindent",
+					null,
+					"AQAAAMgAAAAAAAAAzAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAyAAAAAAAAADIAAAAAAAAAAAAAAAAAEJA"
+				],
+				[
+					41,
+					1,
+					"paste",
+					null,
+					"AQAAAMwAAAAAAAAA6AAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAzAAAAAAAAADMAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					43,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AwAAAMcAAAAAAAAAyAAAAAAAAAAAAAAAyAAAAAAAAADMAAAAAAAAAAAAAADuAAAAAAAAAO4AAAAAAAAABAAAACAgICA",
+					"AQAAAAAAAAABAAAAxwAAAAAAAADHAAAAAAAAAAAAAAAAAHJA"
+				]
+			]
+		},
+		{
+			"contents": "package src.recomanador.domini;\n\npublic class recomanacio {\n    \n    /*----- ATRIBUTS -----*/\n\n    private usuari usr;\n    private item item;\n\n\n    /*----- CONSTRUCTORS -----*/\n\n    \n\n\n}\n",
+			"file": "src/recomanador/domini/recomanacio.java",
+			"file_size": 116,
+			"file_write_time": 132798839919644973,
+			"settings":
+			{
+				"buffer_size": 187,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					71,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAEAAAAAAAAAAQQAAAAAAAAAAAAAAQQAAAAAAAABFAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					74,
+					1,
+					"paste",
+					null,
+					"AQAAAEUAAAAAAAAAYQAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAARQAAAAAAAABFAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					76,
+					1,
+					"insert",
+					{
+						"characters": "\n\n\n\n"
+					},
+					"CwAAAGEAAAAAAAAAYgAAAAAAAAAAAAAAYgAAAAAAAABmAAAAAAAAAAAAAABmAAAAAAAAAGcAAAAAAAAAAAAAAGcAAAAAAAAAawAAAAAAAAAAAAAAYgAAAAAAAABiAAAAAAAAAAQAAAAgICAgZwAAAAAAAABoAAAAAAAAAAAAAABoAAAAAAAAAGwAAAAAAAAAAAAAAGMAAAAAAAAAYwAAAAAAAAAEAAAAICAgIGgAAAAAAAAAaQAAAAAAAAAAAAAAaQAAAAAAAABtAAAAAAAAAAAAAABkAAAAAAAAAGQAAAAAAAAABAAAACAgICA",
+					"AQAAAAAAAAABAAAAYQAAAAAAAABhAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					80,
+					1,
+					"insert",
+					{
+						"characters": "ATRIBUTS"
+					},
+					"CgAAAE0AAAAAAAAATgAAAAAAAAAAAAAATgAAAAAAAABOAAAAAAAAAAwAAABDT05TVFJVQ1RPUlNaAAAAAAAAAFoAAAAAAAAABAAAACAgICBOAAAAAAAAAE8AAAAAAAAAAAAAAE8AAAAAAAAAUAAAAAAAAAAAAAAAUAAAAAAAAABRAAAAAAAAAAAAAABRAAAAAAAAAFIAAAAAAAAAAAAAAFIAAAAAAAAAUwAAAAAAAAAAAAAAUwAAAAAAAABUAAAAAAAAAAAAAABUAAAAAAAAAFUAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAWQAAAAAAAABNAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					85,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BQAAAF0AAAAAAAAAXgAAAAAAAAAAAAAAXgAAAAAAAABiAAAAAAAAAAAAAABiAAAAAAAAAGMAAAAAAAAAAAAAAGMAAAAAAAAAZwAAAAAAAAAAAAAAXgAAAAAAAABeAAAAAAAAAAQAAAAgICAg",
+					"AQAAAAAAAAABAAAAXQAAAAAAAABdAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					87,
+					1,
+					"insert",
+					{
+						"characters": "usuari"
+					},
+					"BgAAAGMAAAAAAAAAZAAAAAAAAAAAAAAAZAAAAAAAAABlAAAAAAAAAAAAAABlAAAAAAAAAGYAAAAAAAAAAAAAAGYAAAAAAAAAZwAAAAAAAAAAAAAAZwAAAAAAAABoAAAAAAAAAAAAAABoAAAAAAAAAGkAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAYwAAAAAAAABjAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					89,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAGkAAAAAAAAAagAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAaQAAAAAAAABpAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					91,
+					1,
+					"insert",
+					{
+						"characters": "u"
+					},
+					"AQAAAGoAAAAAAAAAawAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAagAAAAAAAABqAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					93,
+					1,
+					"insert",
+					{
+						"characters": "st"
+					},
+					"AgAAAGsAAAAAAAAAbAAAAAAAAAAAAAAAbAAAAAAAAABtAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAawAAAAAAAABrAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					94,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGwAAAAAAAAAbAAAAAAAAAABAAAAdA",
+					"AQAAAAAAAAABAAAAbQAAAAAAAABtAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					95,
+					1,
+					"insert",
+					{
+						"characters": "r"
+					},
+					"AQAAAGwAAAAAAAAAbQAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAbAAAAAAAAABsAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					110,
+					1,
+					"insert",
+					{
+						"characters": "private"
+					},
+					"BwAAAGMAAAAAAAAAZAAAAAAAAAAAAAAAZAAAAAAAAABlAAAAAAAAAAAAAABlAAAAAAAAAGYAAAAAAAAAAAAAAGYAAAAAAAAAZwAAAAAAAAAAAAAAZwAAAAAAAABoAAAAAAAAAAAAAABoAAAAAAAAAGkAAAAAAAAAAAAAAGkAAAAAAAAAagAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAYwAAAAAAAABjAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					111,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAGoAAAAAAAAAawAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAagAAAAAAAABqAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					117,
+					1,
+					"insert",
+					{
+						"characters": ";"
+					},
+					"AQAAAHUAAAAAAAAAdgAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAdQAAAAAAAAB1AAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					119,
+					1,
+					"duplicate_line",
+					null,
+					"AQAAAHcAAAAAAAAAjwAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAdgAAAAAAAAB2AAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					123,
+					6,
+					"left_delete",
+					null,
+					"BgAAAIgAAAAAAAAAiAAAAAAAAAABAAAAaYcAAAAAAAAAhwAAAAAAAAABAAAAcoYAAAAAAAAAhgAAAAAAAAABAAAAYYUAAAAAAAAAhQAAAAAAAAABAAAAdYQAAAAAAAAAhAAAAAAAAAABAAAAc4MAAAAAAAAAgwAAAAAAAAABAAAAdQ",
+					"AQAAAAAAAAABAAAAiQAAAAAAAACJAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					124,
+					1,
+					"insert",
+					{
+						"characters": "item"
+					},
+					"BAAAAIMAAAAAAAAAhAAAAAAAAAAAAAAAhAAAAAAAAACFAAAAAAAAAAAAAACFAAAAAAAAAIYAAAAAAAAAAAAAAIYAAAAAAAAAhwAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAgwAAAAAAAACDAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					127,
+					3,
+					"left_delete",
+					null,
+					"AwAAAIoAAAAAAAAAigAAAAAAAAABAAAAcokAAAAAAAAAiQAAAAAAAAABAAAAc4gAAAAAAAAAiAAAAAAAAAABAAAAdQ",
+					"AQAAAAAAAAABAAAAiwAAAAAAAACLAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					128,
+					1,
+					"insert",
+					{
+						"characters": "it"
+					},
+					"AgAAAIgAAAAAAAAAiQAAAAAAAAAAAAAAiQAAAAAAAACKAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAiAAAAAAAAACIAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					129,
+					2,
+					"left_delete",
+					null,
+					"AgAAAIkAAAAAAAAAiQAAAAAAAAABAAAAdIgAAAAAAAAAiAAAAAAAAAABAAAAaQ",
+					"AQAAAAAAAAABAAAAigAAAAAAAACKAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					130,
+					1,
+					"insert",
+					{
+						"characters": "in"
+					},
+					"AgAAAIgAAAAAAAAAiQAAAAAAAAAAAAAAiQAAAAAAAACKAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAiAAAAAAAAACIAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					131,
+					1,
+					"left_delete",
+					null,
+					"AQAAAIkAAAAAAAAAiQAAAAAAAAABAAAAbg",
+					"AQAAAAAAAAABAAAAigAAAAAAAACKAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					132,
+					1,
+					"insert",
+					{
+						"characters": "tem"
+					},
+					"AwAAAIkAAAAAAAAAigAAAAAAAAAAAAAAigAAAAAAAACLAAAAAAAAAAAAAACLAAAAAAAAAIwAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAiQAAAAAAAACJAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					157,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAI8AAAAAAAAAkAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAjwAAAAAAAACPAAAAAAAAAAAAAAAAYGVA"
+				],
+				[
+					158,
+					1,
+					"reindent",
+					null,
+					"AQAAAJAAAAAAAAAAlAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkAAAAAAAAACQAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					160,
+					1,
+					"paste",
+					null,
+					"AQAAAJQAAAAAAAAAsAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlAAAAAAAAACUAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					164,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAALAAAAAAAAAAsQAAAAAAAAAAAAAAsQAAAAAAAAC1AAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAsAAAAAAAAACwAAAAAAAAAAAAAAAAAHJA"
+				],
+				[
+					166,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AwAAALUAAAAAAAAAtgAAAAAAAAAAAAAAtgAAAAAAAAC6AAAAAAAAAAAAAACxAAAAAAAAALEAAAAAAAAABAAAACAgICA",
+					"AQAAAAAAAAABAAAAtQAAAAAAAAC1AAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "src/recomanador/domini/valoracio.java",
+			"settings":
+			{
+				"buffer_size": 385,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					6,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAFQAAAAAAAAAVQAAAAAAAAAAAAAAVQAAAAAAAABZAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABUAAAAAAAAAFQAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					20,
+					1,
+					"insert",
+					{
+						"characters": " extends"
+					},
+					"CAAAADcAAAAAAAAAOAAAAAAAAAAAAAAAOAAAAAAAAAA5AAAAAAAAAAAAAAA5AAAAAAAAADoAAAAAAAAAAAAAADoAAAAAAAAAOwAAAAAAAAAAAAAAOwAAAAAAAAA8AAAAAAAAAAAAAAA8AAAAAAAAAD0AAAAAAAAAAAAAAD0AAAAAAAAAPgAAAAAAAAAAAAAAPgAAAAAAAAA/AAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAANwAAAAAAAAA3AAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					21,
+					1,
+					"insert",
+					{
+						"characters": " recoma"
+					},
+					"BwAAAD8AAAAAAAAAQAAAAAAAAAAAAAAAQAAAAAAAAABBAAAAAAAAAAAAAABBAAAAAAAAAEIAAAAAAAAAAAAAAEIAAAAAAAAAQwAAAAAAAAAAAAAAQwAAAAAAAABEAAAAAAAAAAAAAABEAAAAAAAAAEUAAAAAAAAAAAAAAEUAAAAAAAAARgAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAPwAAAAAAAAA/AAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					22,
+					1,
+					"insert",
+					{
+						"characters": "nacio"
+					},
+					"BQAAAEYAAAAAAAAARwAAAAAAAAAAAAAARwAAAAAAAABIAAAAAAAAAAAAAABIAAAAAAAAAEkAAAAAAAAAAAAAAEkAAAAAAAAASgAAAAAAAAAAAAAASgAAAAAAAABLAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAARgAAAAAAAABGAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					26,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAE0AAAAAAAAATgAAAAAAAAAAAAAATgAAAAAAAABSAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAATQAAAAAAAABNAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					32,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BgAAAFIAAAAAAAAAUwAAAAAAAAAAAAAAUwAAAAAAAABXAAAAAAAAAAAAAABOAAAAAAAAAE4AAAAAAAAABAAAACAgICBTAAAAAAAAAFQAAAAAAAAAAAAAAFQAAAAAAAAAWAAAAAAAAAAAAAAATwAAAAAAAABPAAAAAAAAAAQAAAAgICAg",
+					"AQAAAAAAAAABAAAAUgAAAAAAAABSAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					34,
+					1,
+					"reindent",
+					null,
+					"AQAAAE8AAAAAAAAAUwAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAATwAAAAAAAABPAAAAAAAAAAAAAAAAAEJA"
+				],
+				[
+					35,
+					1,
+					"paste",
+					null,
+					"AQAAAFMAAAAAAAAAawAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAUwAAAAAAAABTAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					41,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"BgAAAJAAAAAAAAAAkQAAAAAAAAAAAAAAkQAAAAAAAACVAAAAAAAAAAAAAABsAAAAAAAAAGwAAAAAAAAABAAAACAgICCRAAAAAAAAAJIAAAAAAAAAAAAAAJIAAAAAAAAAlgAAAAAAAAAAAAAAjQAAAAAAAACNAAAAAAAAAAQAAAAgICAg",
+					"AQAAAAAAAAABAAAAkAAAAAAAAACQAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					49,
+					1,
+					"reindent",
+					null,
+					"AQAAAI0AAAAAAAAAkQAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAjQAAAAAAAACNAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					51,
+					1,
+					"paste",
+					null,
+					"AQAAAJEAAAAAAAAArgAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkQAAAAAAAACRAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					68,
+					1,
+					"left_delete",
+					null,
+					"AgAAAJEAAAAAAAAAkQAAAAAAAAABAAAAIK4AAAAAAAAArgAAAAAAAAAEAAAAICAgIA",
+					"AQAAAAAAAAABAAAAkgAAAAAAAACSAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					71,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAIwAAAAAAAAAjQAAAAAAAAAAAAAAjQAAAAAAAACRAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAjAAAAAAAAACMAAAAAAAAAAAAAAAAAEJA"
+				]
+			]
+		},
+		{
+			"file": "src/recomanador/domini/usuari.java",
+			"settings":
+			{
+				"buffer_size": 1961,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					37,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGwFAAAAAAAAbAUAAAAAAAALAAAAdi5zaXplKCktMSw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAB3BQAAAAAAAGwFAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					40,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGsFAAAAAAAAawUAAAAAAAABAAAAYw",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABsBQAAAAAAAGwFAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					43,
+					1,
+					"left_delete",
+					null,
+					"AQAAAGsFAAAAAAAAawUAAAAAAAABAAAAIA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABsBQAAAAAAAGwFAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					59,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAEoAAAAAAAAASwAAAAAAAAAAAAAASwAAAAAAAABPAAAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABKAAAAAAAAAEoAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					65,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AwAAADsAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAABAAAAAAAAAAAAAAABQAAAAAAAAAFAAAAAAAAAABAAAACAgICA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAA7AAAAAAAAADsAAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					90,
+					1,
+					"",
+					null,
+					"AQAAAF0CAAAAAAAAXgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABdAgAAAAAAAF0CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					92,
+					1,
+					"",
+					null,
+					"AQAAAF0CAAAAAAAAXQIAAAAAAAABAAAAYA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAABeAgAAAAAAAF4CAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					99,
+					1,
+					"",
+					null,
+					"AQAAAJECAAAAAAAAkgIAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACRAgAAAAAAAJECAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					101,
+					1,
+					"",
+					null,
+					"AQAAAJECAAAAAAAAkQIAAAAAAAABAAAAXg",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAACSAgAAAAAAAJICAAAAAAAAAAAAAAAA8L8"
+				],
+				[
+					7,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAADsAAAAAAAAAPAAAAAAAAAAAAAAAPAAAAAAAAABAAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAOwAAAAAAAAA7AAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					9,
+					1,
+					"paste",
+					null,
+					"AQAAAEAAAAAAAAAATgAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAQAAAAAAAAABAAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					11,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAE4AAAAAAAAATwAAAAAAAAAAAAAATwAAAAAAAABTAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAATgAAAAAAAABOAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					25,
+					1,
+					"paste",
+					null,
+					"AgAAAEAAAAAAAAAAXAAAAAAAAAAAAAAAXAAAAAAAAABcAAAAAAAAAA4AAAAvKiBBdHJpYnV0cyAqLw",
+					"AQAAAAAAAAABAAAAQAAAAAAAAABOAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					30,
+					2,
+					"left_delete",
+					null,
+					"AwAAAEkAAAAAAAAASQAAAAAAAAALAAAAT05TVFJVQ1RPUlNSAAAAAAAAAFIAAAAAAAAABAAAACAgICBIAAAAAAAAAEgAAAAAAAAAAQAAAEM",
+					"AQAAAAAAAAABAAAAVAAAAAAAAABJAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					31,
+					1,
+					"insert",
+					{
+						"characters": "ATRIBUTS"
+					},
+					"CAAAAEgAAAAAAAAASQAAAAAAAAAAAAAASQAAAAAAAABKAAAAAAAAAAAAAABKAAAAAAAAAEsAAAAAAAAAAAAAAEsAAAAAAAAATAAAAAAAAAAAAAAATAAAAAAAAABNAAAAAAAAAAAAAABNAAAAAAAAAE4AAAAAAAAAAAAAAE4AAAAAAAAATwAAAAAAAAAAAAAATwAAAAAAAABQAAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAASAAAAAAAAABIAAAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					78,
+					1,
+					"insert",
+					{
+						"characters": "\nv"
+					},
+					"AwAAAF8FAAAAAAAAYAUAAAAAAAAAAAAAYAUAAAAAAABoBQAAAAAAAAAAAABoBQAAAAAAAGkFAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAXwUAAAAAAABfBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					80,
+					4,
+					"left_delete",
+					null,
+					"BAAAAGgFAAAAAAAAaAUAAAAAAAABAAAAdmQFAAAAAAAAZAUAAAAAAAAEAAAAICAgIGAFAAAAAAAAYAUAAAAAAAAEAAAAICAgIF8FAAAAAAAAXwUAAAAAAAABAAAACg",
+					"AQAAAAAAAAABAAAAaQUAAAAAAABpBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					182,
+					1,
+					"left_delete",
+					null,
+					"AQAAADwFAAAAAAAAPAUAAAAAAAANAAAAbmV3IHZhbG9yYWNpbw",
+					"AQAAAAAAAAABAAAAPAUAAAAAAABJBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					185,
+					1,
+					"insert",
+					{
+						"characters": "()"
+					},
+					"AgAAADwFAAAAAAAAPQUAAAAAAAAAAAAAPQUAAAAAAAA+BQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAPAUAAAAAAAA8BQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					187,
+					1,
+					"insert",
+					{
+						"characters": "v"
+					},
+					"AQAAAD4FAAAAAAAAPwUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAPgUAAAAAAAA+BQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					189,
+					1,
+					"insert",
+					{
+						"characters": "alora"
+					},
+					"BQAAAD8FAAAAAAAAQAUAAAAAAAAAAAAAQAUAAAAAAABBBQAAAAAAAAAAAABBBQAAAAAAAEIFAAAAAAAAAAAAAEIFAAAAAAAAQwUAAAAAAAAAAAAAQwUAAAAAAABEBQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAPwUAAAAAAAA/BQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					191,
+					1,
+					"insert",
+					{
+						"characters": "z"
+					},
+					"AQAAAEQFAAAAAAAARQUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAARAUAAAAAAABEBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					193,
+					1,
+					"insert",
+					{
+						"characters": "z"
+					},
+					"AQAAAEUFAAAAAAAARgUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAARQUAAAAAAABFBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					195,
+					8,
+					"left_delete",
+					null,
+					"CAAAAEUFAAAAAAAARQUAAAAAAAABAAAAekQFAAAAAAAARAUAAAAAAAABAAAAekMFAAAAAAAAQwUAAAAAAAABAAAAYUIFAAAAAAAAQgUAAAAAAAABAAAAckEFAAAAAAAAQQUAAAAAAAABAAAAb0AFAAAAAAAAQAUAAAAAAAABAAAAbD8FAAAAAAAAPwUAAAAAAAABAAAAYT4FAAAAAAAAPgUAAAAAAAABAAAAdg",
+					"AQAAAAAAAAABAAAARgUAAAAAAABGBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					197,
+					1,
+					"insert",
+					{
+						"characters": "valoracio"
+					},
+					"CQAAAD0FAAAAAAAAPgUAAAAAAAAAAAAAPgUAAAAAAAA/BQAAAAAAAAAAAAA/BQAAAAAAAEAFAAAAAAAAAAAAAEAFAAAAAAAAQQUAAAAAAAAAAAAAQQUAAAAAAABCBQAAAAAAAAAAAABCBQAAAAAAAEMFAAAAAAAAAAAAAEMFAAAAAAAARAUAAAAAAAAAAAAARAUAAAAAAABFBQAAAAAAAAAAAABFBQAAAAAAAEYFAAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAPQUAAAAAAAA9BQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					198,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAEYFAAAAAAAARwUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAARgUAAAAAAABGBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					199,
+					1,
+					"left_delete",
+					null,
+					"AQAAAEYFAAAAAAAARgUAAAAAAAABAAAAIA",
+					"AQAAAAAAAAABAAAARwUAAAAAAABHBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					201,
+					1,
+					"insert",
+					{
+						"characters": " "
+					},
+					"AQAAAEcFAAAAAAAASAUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAARwUAAAAAAABHBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					206,
+					1,
+					"left_delete",
+					null,
+					"AQAAAEgFAAAAAAAASAUAAAAAAAABAAAAKA",
+					"AQAAAAAAAAABAAAASQUAAAAAAABJBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					210,
+					1,
+					"left_delete",
+					null,
+					"AQAAAFsFAAAAAAAAWwUAAAAAAAABAAAAKQ",
+					"AQAAAAAAAAABAAAAXAUAAAAAAABcBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					219,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AgAAAHwFAAAAAAAAfQUAAAAAAAAAAAAAfQUAAAAAAACFBQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAfAUAAAAAAAB8BQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					222,
+					1,
+					"insert",
+					{
+						"characters": "v."
+					},
+					"AgAAAIUFAAAAAAAAhgUAAAAAAAAAAAAAhgUAAAAAAACHBQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAhQUAAAAAAACFBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					224,
+					1,
+					"insert",
+					{
+						"characters": "setPunt"
+					},
+					"BwAAAIcFAAAAAAAAiAUAAAAAAAAAAAAAiAUAAAAAAACJBQAAAAAAAAAAAACJBQAAAAAAAIoFAAAAAAAAAAAAAIoFAAAAAAAAiwUAAAAAAAAAAAAAiwUAAAAAAACMBQAAAAAAAAAAAACMBQAAAAAAAI0FAAAAAAAAAAAAAI0FAAAAAAAAjgUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAhwUAAAAAAACHBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					225,
+					1,
+					"insert",
+					{
+						"characters": "uaco"
+					},
+					"BAAAAI4FAAAAAAAAjwUAAAAAAAAAAAAAjwUAAAAAAACQBQAAAAAAAAAAAACQBQAAAAAAAJEFAAAAAAAAAAAAAJEFAAAAAAAAkgUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAjgUAAAAAAACOBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					226,
+					1,
+					"left_delete",
+					null,
+					"AQAAAJEFAAAAAAAAkQUAAAAAAAABAAAAbw",
+					"AQAAAAAAAAABAAAAkgUAAAAAAACSBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					227,
+					1,
+					"insert",
+					{
+						"characters": "io"
+					},
+					"AgAAAJEFAAAAAAAAkgUAAAAAAAAAAAAAkgUAAAAAAACTBQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkQUAAAAAAACRBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					228,
+					1,
+					"insert_snippet",
+					{
+						"contents": "($0)"
+					},
+					"AQAAAJMFAAAAAAAAlQUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAkwUAAAAAAACTBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					231,
+					1,
+					"insert",
+					{
+						"characters": "punt"
+					},
+					"BAAAAJQFAAAAAAAAlQUAAAAAAAAAAAAAlQUAAAAAAACWBQAAAAAAAAAAAACWBQAAAAAAAJcFAAAAAAAAAAAAAJcFAAAAAAAAmAUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAlAUAAAAAAACUBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					232,
+					1,
+					"insert_completion",
+					{
+						"completion": "puntuacio",
+						"format": "text",
+						"keep_prefix": false,
+						"must_insert": false,
+						"trigger": "puntuacio"
+					},
+					"AgAAAJQFAAAAAAAAlAUAAAAAAAAEAAAAcHVudJQFAAAAAAAAnQUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAmAUAAAAAAACYBQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					236,
+					1,
+					"insert",
+					{
+						"characters": ";"
+					},
+					"AQAAAJ4FAAAAAAAAnwUAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAAngUAAAAAAACeBQAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				"Basic Builder"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"pull",
+				"Git: Pull"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"commit",
+				"Git: Commit"
+			],
+			[
+				"add",
+				"Git: Add All"
+			],
+			[
+				"pu",
+				"Git: Push"
+			],
+			[
+				"com",
+				"Git: Commit"
+			],
+			[
+				"comm",
+				"Git: Commit"
+			],
+			[
+				"COMMIT",
+				"Git: Commit"
+			],
+			[
+				"PULL",
+				"Git: Pull"
+			],
+			[
+				"pus",
+				"Git: Push"
+			],
+			[
+				"commi",
+				"Git: Commit"
+			],
+			[
+				"terminu",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"terminus open",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"terminus clo",
+				"Terminus: Close All"
+			],
+			[
+				"temrinus",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"termi",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"ter",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"git add",
+				"Git: Add All"
+			],
+			[
+				"git pull",
+				"Git: Pull"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"merge",
+				"Git: Merge Branch"
+			],
+			[
+				"add ",
+				"Git: Add All"
+			],
+			[
+				"comi",
+				"Git: Commit"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git add ",
+				"Git: Add All"
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"git pul",
+				"Git: Pull"
+			],
+			[
+				"git pus",
+				"Git: Push"
+			],
+			[
+				"term",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"pac",
+				"Package Control: List Packages"
+			],
+			[
+				"git commi",
+				"Git: Commit"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git",
+				"Git: Pull"
+			],
+			[
+				"sublime ",
+				"Set Syntax: Sublimerge"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"isntall",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"setsyntax latex",
+				"Set Syntax: LaTeX"
+			],
+			[
+				"set syntax la",
+				"Set Syntax: LaTeX"
+			],
+			[
+				"set syntax to latex",
+				"Set Syntax: LaTeX Log"
+			],
+			[
+				"terminus",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"termin",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"termins",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"termiu",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"paka",
+				"Package Control: Discover Packages"
+			],
+			[
+				"open",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"termius",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"TERMINU",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"Terminus",
+				"Terminus: Open Default Shell in Tab (View)"
+			],
+			[
+				"Termi",
+				"Terminus: Close"
+			],
+			[
+				"Install Package",
+				"Package Control: Install Package"
+			],
+			[
+				"Package",
+				"Install Package Control"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 232.0,
+		"history":
+		[
+			"Terminus: Open Default Shell in Tab",
+			"\"cmd\": [\"/Applications/MyProgram.app/Contents/MacOS/my_command\", \"-d\", \"$file\"]",
+			"\"cmd\" : [\"cd\"]",
+			"{\"cmd\" : [\"cd\"]}",
+			"\"cmd\":[\"cd\"]",
+			"cd",
+			"\"cmd\": \"~/Documents/runC.sh\", \"${file_path}/${file_name}\", \"${file_path}/${file_base_name}\"]",
+			"g++ P84415.cc",
+			"ls",
+			"cd Desktop"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/martijuanola/Documents/Uni/3.1/PROP - Projecte de Programació/subgrup-prop5-5",
+		"/Users/martijuanola/Documents/Uni/3.1/PROP - Projecte de Programació/subgrup-prop5-5/src",
+		"/Users/martijuanola/Documents/Uni/3.1/PROP - Projecte de Programació/subgrup-prop5-5/src/recomanador",
+		"/Users/martijuanola/Documents/Uni/3.1/PROP - Projecte de Programació/subgrup-prop5-5/src/recomanador/domini",
+		"/Users/martijuanola/Documents/Uni/3.1/PROP - Projecte de Programació/subgrup-prop5-5/src/recomanador/persistencia"
+	],
+	"file_history":
+	[
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/data/OutputSeeds.txt",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/automata.c",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/output.txt",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/prova.py",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Gasolinero/GasolinaSuccessorFunction.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Gasolinero/GasolinaBoard.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/boxplot.py",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Gasolinero/Camion.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Gasolinero/CjtCamiones.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/.gitignore",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/test.sh",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/Makefile",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/tasques.txt",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Gasolinero/GasolinaSuccessorFunctionSA.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Main.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/resultats.txt",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/plot_data.txt",
+		"/prova.py",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/errors.txt",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Gasolinero/Peticion.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/notes.txt",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/src/Gasolinero/CjtPeticiones.java",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/doc/javadoc/index.html",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IA-Practica-1-Gasolinera/doc/javadoc/IA/Gasolina/Gasolinera.html",
+		"/Users/martijuanola/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IApractica1.sublime-project",
+		"/Users/martijuanola/Documents/Uni/3.1/TC - Teoria de la Computació/Problemes_TC.tex",
+		"/Users/martijuanola/Desktop/ex6.vert",
+		"/Users/martijuanola/Desktop/entrega2.tex",
+		"/Users/martijuanola/Desktop/entrega2.log",
+		"/Users/martijuanola/Desktop/prova.pdf",
+		"/Users/martijuanola/Desktop/prova",
+		"/Users/martijuanola/Downloads/simple/simple.cpp",
+		"/Users/martijuanola/Desktop/p.cc",
+		"/Applications/Cisco Packet Tracer 8.0.0/components.xml",
+		"/Users/martijuanola/Downloads/Pràctica 10 (Solucions)/Procesar_unal.s",
+		"/Users/martijuanola/Downloads/Pràctica 10/Procesar_unal.s",
+		"/Users/martijuanola/Desktop/femjazz2021/css/style.css",
+		"/Users/martijuanola/Desktop/femjazz2021/fotos2016.html",
+		"/Users/martijuanola/Desktop/femjazz2021/fotos2017.html",
+		"/Users/martijuanola/Desktop/femjazz2021/fotos2018.html",
+		"/Users/martijuanola/Desktop/femjazz2021/fotos2019.html",
+		"/Users/martijuanola/Desktop/femjazz2021/fotos2020.html",
+		"/Users/martijuanola/Desktop/femjazz2021/diumenge.html",
+		"/Users/martijuanola/Desktop/femjazz2021/dissabte.html",
+		"/Users/martijuanola/Desktop/femjazz2021/divendres.html",
+		"/Users/martijuanola/Desktop/femjazz2021/dijous.html",
+		"/Users/martijuanola/Desktop/femjazz2021/index.html",
+		"/Users/martijuanola/Desktop/femjazz2021/elements.html",
+		"/Users/martijuanola/Desktop/femjazz2021/style.css",
+		"/Users/martijuanola/Desktop/femjazz2021/style2020.css",
+		"/Users/martijuanola/Downloads/MyQLabel.cpp",
+		"/Users/martijuanola/Downloads/MyQLabel.h",
+		"/Users/martijuanola/Downloads/Practica08/mm-jki2.c",
+		"/Users/martijuanola/Downloads/Practica08/mm-jki.c",
+		"/Users/martijuanola/Downloads/Practica08/mm-ijk2.c",
+		"/Users/martijuanola/Downloads/Practica08/mm-ijk.c",
+		"/Users/martijuanola/Downloads/Practica08/mm-kij2.c",
+		"/Users/martijuanola/Downloads/Practica08/mm-kij.c",
+		"/Users/martijuanola/Downloads/Practica07/LineSize.c",
+		"/Users/martijuanola/Downloads/Practica07/CacheSize.c",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/LL2GLWidget.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/shaders/basicShader.vert",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/shaders/basicShader.frag",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-1-Lab-2021Q2/Exercici-1/MyGLWidget.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/LL2GLWidget.h",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-1-Lab-2021Q2/Exercici-1/MyGLWidget.h",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/MyGLWidget.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/MyGLWidget.h",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/MyForm.h",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/MyForm.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/Exercici-2-Lab-2021Q2/Exercici-2/main.cpp",
+		"/Users/martijuanola/Downloads/Practica04/Main.c",
+		"/Users/martijuanola/Downloads/Practica04/Buscar.c",
+		"/Users/martijuanola/Downloads/Practica04/BuscaElemento.s",
+		"/Users/martijuanola/Downloads/Practica04/Busca.s",
+		"/Users/martijuanola/Downloads/Practica04/BuscarElemento.c",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/funciona el basica del LAB3/shaders/basicShader.vert",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/funciona el basica del LAB3/MyGLWidget.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/funciona el basica del LAB3/MyGLWidget.h",
+		"/Users/martijuanola/Desktop/prova.cc",
+		"/Users/martijuanola/Desktop/13:03:2021/input.txt",
+		"/Users/martijuanola/Desktop/13:03:2021/p3.cc",
+		"/Users/martijuanola/Desktop/13:03:2021/p2.cc",
+		"/Users/martijuanola/Desktop/13:03:2021/p1.cc",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/funciona el basica del LAB3/shaders/basicShader.frag",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/funciona el basica del LAB3/moc_predefs.h",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/0def_MyForm/app.pro",
+		"/Users/martijuanola/Downloads/Pràctica 3 (Solucions)/Practica3CompletarA.s",
+		"/Users/martijuanola/Desktop/prova.s",
+		"/Users/martijuanola/Desktop/prova.c",
+		"/Users/martijuanola/Documents/Uni/2.2/IES/UML - Apunts.md",
+		"/Users/martijuanola/Desktop/p.py",
+		"/Users/martijuanola/Desktop/06:03:2021/input.txt",
+		"/Users/martijuanola/Desktop/06:03:2021/2.cc",
+		"/Users/martijuanola/Desktop/06:03:2021/1.cc",
+		"/Users/martijuanola/Desktop/06:03:2021/p.cc",
+		"/Users/martijuanola/Documents/Uni/2.2/AC/Practica01/Poker.c",
+		"/Users/martijuanola/Desktop/input.txt",
+		"/Users/martijuanola/Downloads/Pràctica 2 (Solucions)/ProgramaPractica2_PierdeTiempo (Sin condici¢n).s",
+		"/Users/martijuanola/Downloads/Pràctica 2 (Solucions)/ProgramaPractica2_PierdeTiempo (Condici¢n contraria).s",
+		"/Users/martijuanola/Desktop/#include <iostream>.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/0def_Form/main.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/0def_Form/Form.h",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/0def_Form/Form.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/0def_Form/app.pro",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/defaults/MyForm.h",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/defaults/MyForm.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/defaults/main.cpp",
+		"/Users/martijuanola/Documents/Uni/2.2/IDI/defaults/app.pro",
+		"/Users/martijuanola/Documents/CodeForcesProblems/12:02:2021/input.txt",
+		"/Users/martijuanola/Documents/CodeForcesProblems/12:02:2021/p3.cc",
+		"/Users/martijuanola/Documents/CodeForcesProblems/12:02:2021/p2.cc",
+		"/Users/martijuanola/Documents/CodeForcesProblems/12:02:2021/p.cc",
+		"/Users/martijuanola/Desktop/gym1/input.txt",
+		"/Users/martijuanola/Desktop/gym1/p4.cc",
+		"/Users/martijuanola/Desktop/gym1/p.cc",
+		"/Users/martijuanola/Desktop/gym1/p3.cc",
+		"/Users/martijuanola/Desktop/gym1/p2.cc",
+		"/Users/martijuanola/Desktop/CodeForcesProblems/07:02:2021/p3.cc",
+		"/Users/martijuanola/Desktop/Advent_of_Code_2020/output.txt",
+		"/Users/martijuanola/Desktop/Advent_of_Code_2020/input.txt",
+		"/Users/martijuanola/Desktop/Advent_of_Code_2020/AoC16.1.cc",
+		"/Users/martijuanola/Desktop/CodeForcesProblems/07:02:2021/input2.txt",
+		"/Users/martijuanola/Desktop/CodeForcesProblems/07:02:2021/input.txt",
+		"/Users/martijuanola/Desktop/CodeForcesProblems/07:02:2021/p2.cc",
+		"/Users/martijuanola/Desktop/CodeForcesProblems/07:02:2021/p.cc",
+		"/Users/martijuanola/Desktop/Advent_of_Code_2020/AoC11.12.cc",
+		"/Users/martijuanola/Desktop/Advent_of_Code_2020/AoC12.1.cc"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/recomanador/domini/controladorDomini.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								204,
+								204
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/recomanador/domini/recomanacio.java",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 187,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								182,
+								182
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Java/Java.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/recomanador/domini/valoracio.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 385,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								150,
+								178
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/recomanador/domini/usuari.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1961,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								188,
+								216
+							]
+						],
+						"settings":
+						{
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 42.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.Terminus":
+	{
+		"height": 188.0
+	},
+	"output.exec":
+	{
+		"height": 163.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 144.0
+	},
+	"output.latextools":
+	{
+		"height": 157.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 445.0
+	},
+	"pinned_build_system": "",
+	"project": "prop.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"cami",
+				"src/Gasolinero/Camion.java"
+			],
+			[
+				"board",
+				"src/Gasolinero/GasolinaBoard.java"
+			],
+			[
+				"gas",
+				"doc/javadoc/IA/Gasolina/Gasolinera.html"
+			],
+			[
+				"",
+				"Login Shell"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/Uni/3.1/IA - Intel·ligència Artificial/Pràctica 1/IApractica1.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 321.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
