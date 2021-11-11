@@ -27,13 +27,13 @@ public class ControladorLoad {
      * @param folder This is the folder that contains the file that is going
      * to be used for the loading
      * @return Returns an array of arrays of the values. Each array of arrays(line)
-     * contains an array of strings (columns). Each comma (",") separates a column. 
+     * contains an array of strings (columns). 
      * The first line corresponds to the header of the file, where each
      * column its identifier. 
      * The rest of the lines contain the values read. <p>
      * If an error has occurred, the null pointer will be returned instead.
      */
-    public ArrayList<ArrayList<String>> carregarUsuaris(File folder)
+    public ArrayList<ArrayList<String>> carregarRecomanacions(File folder)
     {
 		ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 		
