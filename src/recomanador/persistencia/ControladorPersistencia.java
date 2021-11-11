@@ -1,6 +1,6 @@
 package src.recomanador.persistencia;
 
 
-public class controladorPersistencia {
+public class ControladorPersistencia {
     
 }
