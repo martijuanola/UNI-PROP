@@ -34,4 +34,25 @@ public class ControladorDomini {
     {
 		id = NULL_ID;
 	}
+
+
+    //PSEUDOCODI !!!
+   /* public void carregaCarpeta(String file) {
+
+        //passar carpeta
+
+        ArrayList<ArrayList<String>> items = cp.carregaItemsOld();
+
+        CJ(items);
+
+         ArrayList<ArrayList<String>> valoracions = cp.carregaRecomanacionsOld();
+
+        CU(valoracions); //inicialitzarà
+
+        CV(valoracions); //només agafarà valoracions
+    }*/
+
+
+
+
 }
