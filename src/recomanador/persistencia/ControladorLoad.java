@@ -24,8 +24,7 @@ public class ControladorLoad {
 	}
     
     /**
-     * @param folder This is the folder that contains the file that is going
-     * to be used for the loading
+     * @param file This is the file that is going to be used for the loading
      * @return Returns an array of arrays of the values. Each array of arrays(line)
      * contains an array of strings (columns). 
      * The first line corresponds to the header of the file, where each
@@ -33,14 +32,14 @@ public class ControladorLoad {
      * The rest of the lines contain the values read. <p>
      * If an error has occurred, the null pointer will be returned instead.
      */
-    public ArrayList<ArrayList<String>> carregarRecomanacions(File folder)
+    public ArrayList<ArrayList<String>> carregarArxiu(File file)
     {
 		ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 		
 		FileReader f = null;
 		try
 		{
-			f = new FileReader(new File(folder, "ratings.db.csv"));
+			f = new FileReader(file);
 		} catch (IOException ex) {
 			return null;
 		}

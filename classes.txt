@@ -7,5 +7,6 @@
 ./src/recomanador/domini/ConjuntUsuaris.java
 ./src/recomanador/domini/Item.java
 ./src/recomanador/domini/Usuari.java
+./src/recomanador/persistencia/ControladorSave.java
 ./src/recomanador/persistencia/ControladorPersistencia.java
 ./src/recomanador/persistencia/ControladorLoad.java
