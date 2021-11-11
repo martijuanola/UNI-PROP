@@ -45,7 +45,10 @@ public class ControladorLoad {
 		}
 		
 		char c[] = new char[1];
-		int n = f.read(c);
+		int n = -1;
+		
+		try { n = f.read(c); }
+		catch (IOException ex) { return null; }
 		
 		//read will return a -1 if it has encountered the end.
 		//If this occurs at this point, it means that the file is empty
@@ -63,7 +66,9 @@ public class ControladorLoad {
 				while (c[0] != ',' && c[0] != '\n') 
 				{
 					column_name += c[0];
-					n = f.read(c);
+					
+					try { n = f.read(c); }
+					catch (IOException ex) { return null; }
 				}
 				
 				//always add to the last line
