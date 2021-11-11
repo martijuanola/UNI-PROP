@@ -7,7 +7,7 @@ public class Usuari {
     private int id;
 
     private ConjuntRecomanacions cr;
-    private ConjuntValoracions cv;
+    private ConjuntRecomanacions cv;
 
     /*----- CONSTRUCTORS -----*/
 
@@ -19,7 +19,7 @@ public class Usuari {
 
     // Pre: -
     // Post: L'usuari s'ha creat amb l'id, el conjunt de recomanacions i valoracions id, cr i cv
-    public Usuari(int id, ConjuntRecomanacions cr, ConjuntValoracions cv) {
+    public Usuari(int id, ConjuntRecomanacions cr, ConjuntRecomanacions cv) {
         this.id = id;
         this.cr = cr;
         this.cv = cv;
@@ -65,45 +65,47 @@ public class Usuari {
         return cr.remove(i);
     }
 
+
+//falta canviar això
     // Pre: L'index recomanacio és correcte
     // Post: La recomanació s'elimina de recomanacions i s'afegeix com a valoració amb puntuació
-    public Valoracio valorar(int recomanacio, int puntuacio) {
-        Valoracio v = (Valoracio) cr.get(recomanacio);
+    /*public Recomanacio valorar(int recomanacio, int puntuacio) {
+        Recomanacio v = (Recomanacio) cr.get(recomanacio);
         cr.remove(recomanacio);
         v.setPuntuacio(puntuacio);
         cv.add(v);
         return v;
-    }
+    }*/
 
     /*----- VALORACIONS -----*/
 
     // Pre: -
     // Post: Retorna el conjunt de valoracions del usuari
-    public ConjuntValoracions getValoracions() {
+    public ConjuntRecomanacions getValoracions() {
         return cv;
     }
 
     // Pre: -
     // Post: El conjunt de valoracions ara apunta a cv
-    public void setValoracions(ConjuntValoracions cv) {
+    public void setValoracions(ConjuntRecomanacions cv) {
         this.cv = cv;
     }
 
     // Pre: L'índex i és correcte
     // Post: Retorna la valoració que pertany al índex i 
-    public Valoracio getValoracio(int i) {
+    public Recomanacio getValoracio(int i) {
         return cv.get(i);
     }
 
     // Pre: L'índex i és correcte
     // Post: Elimina la valoració que pertany al índex i 
-    public Valoracio eliminarValoracio(int i) {
+    public Recomanacio eliminarValoracio(int i) {
         return cv.remove(i);
     }
 
     // Pre: L'índex valoració és correcte
     // Post: La nova puntuació de la valoració és puntuacio
-    public void ValorarValoracio(int valoracio, int puntuacio) {
-        cv.get(valoracio).setPuntuacio(puntuacio);
+    public void valorarValoracio(int valoracio, int puntuacio) {
+        cv.get(valoracio).setVal(puntuacio);
     }
 }
