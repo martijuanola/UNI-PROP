@@ -17,15 +17,20 @@ import java.util.ArrayList;
 public class ControladorLoad {
     
     /**
-     * @return Returns an instance of ControladorLoad
-     */    
+     * Creates an instance of ControladorLoad
+     * 
+     * @return Returns a new instance of ControladorLoad
+     */     
     public ControladorLoad()
     {
 	}
     
     /**
-     * @param file This is the file that is going to be used for the loading
-     * @return Returns an array of arrays of the values. Each array of arrays(line)
+     * Returns the content of the file specified read as a table separated
+     * with commas and enters.
+     * 
+     * @param      file      This is the file that is going to be used for the loading
+     * @return      Returns an array of arrays of the values. Each array of arrays(line)
      * contains an array of strings (columns). 
      * The first line corresponds to the header of the file, where each
      * column its identifier. 
