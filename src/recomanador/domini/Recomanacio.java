@@ -1,7 +1,7 @@
 package src.recomanador.domini;
 
 /**
- * Classe que representa la recomanació(valorada o no) d'un item a un ususari
+ * This class describes a recomendation of a <u>item</u> to a <u>user</u> with a possible <u>rating</u>.
  */
 public class Recomanacio {
     
@@ -10,18 +10,24 @@ public class Recomanacio {
     private Usuari usr;
     private Item item;
 
+    /**
+     * Values between [0,5] by steps of 0.5
+     */
     private float valoracio;
     
+    /**
+     * Value used as the null value for the atribute <i>valoracio</i>
+     */
     private static final float nul = 0;
 
 
     /*----- CONSTRUCTORS -----*/
 
     /**
-     * Crea una nova instància de recomanació sense valoració
+     * Constructs a new instance.
      *
-     * @param      u     Usuari que ha rebut la recomanació
-     * @param      i     Item recomanat
+     * @param      u     usuari
+     * @param      i     item
      */
     public Recomanacio(Usuari u, Item i) {
         usr = u;
@@ -30,11 +36,11 @@ public class Recomanacio {
     }
 
     /**
-     * Crea una nova instància de recomanació amb valoració
+     * Constructs a new instance.
      *
-     * @param      u     Usuari que ha rebut la recomanació
-     * @param      i     Item recomanat
-     * @param      v     Valoració de la recomanació(de l'item per l'usuari)
+     * @param      u     user
+     * @param      i     item
+     * @param      v     rating
      */
     public Recomanacio(Usuari u, Item i, float v) {
         usr = u;
@@ -46,9 +52,9 @@ public class Recomanacio {
     /*----- MODIFICADORES -----*/
 
     /**
-     * Assigna un valor per valoració
+     * Sets the value of rating
      *
-     * @param      v     Nou valor per valoració
+     * @param      v     The new value
      */
     public void setVal(float v) {
         valoracio = v;
@@ -58,36 +64,36 @@ public class Recomanacio {
     /*----- CONSULTORES -----*/
 
     /**
-     * Retorna l'usuari de la recomanació
+     * Gets the user.
      *
-     * @return     L'usuari
+     * @return     The user.
      */
     public Usuari getUsuari() {
         return usr;
     }
 
     /**
-     * Retorna l'item
+     * Gets the item.
      *
-     * @return     L'item
+     * @return     The item.
      */
     public Item getItem() {
         return item;
     }
 
     /**
-     * Retorna la valoració
+     * Gets the value of valoració.
      *
-     * @return     The value.
+     * @return     The value of valoració.
      */
     public float getVal() {
         return valoracio;
     }
 
     /**
-     * { function_description }
+     * Returs if the recomendation has a rating
      *
-     * @return     { description_of_the_return_value }
+     * @return     Rating not null
      */
     public boolean recomanacioValorada() {
         return valoracio != nul;

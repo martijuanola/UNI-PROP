@@ -3,13 +3,17 @@ import src.recomanador.persistencia.*;
 
 public class ControladorDomini {
 	
-	/*----- CONSTANT -----*/
+	/*----- CONSTANTS -----*/
 	public static final int NULL_ID = -1;
 	
 	/*----- ATRIBUTS -----*/
 	
     ControladorPersistencia cp;
+
     ConjuntUsuaris cu;
+    ConjuntRecomanacions cr;
+    ConjuntItems ci;
+
     int id;
     
     /*----- CONSTRUCTORS -----*/
@@ -36,23 +40,28 @@ public class ControladorDomini {
 	}
 
 
-    //PSEUDOCODI !!!
-   /* public void carregaCarpeta(String file) {
+    /**
+     * Calls the persistence controler to get all the data from a previous stored session
+     * and initilizes all the necessari arrays of data(ConjuntItems, ConjuntUsuaris, ConjuntRecomanacions and others)   
+     *
+     * @param      file  the directory where the files have been stored
+     */
+    public void carregarSessio(String file) {
 
-        //passar carpeta
+        //Funció per enviar el nom de la carpeta al controlador de persistència
 
-        ArrayList<ArrayList<String>> items = cp.carregaItemsOld();
-
-        CJ(items);
-
-         ArrayList<ArrayList<String>> valoracions = cp.carregaRecomanacionsOld();
-
-        CU(valoracions); //inicialitzarà
-
-        CV(valoracions); //només agafarà valoracions
-    }*/
+    //Jaume
+        //Funció per obtenir els items
+        //CJ(items);
 
 
+    //Martí
+        //ArrayList<ArrayList<String>> valoracions = cp.carregaRecomanacionsOld();
+
+        //CU(valoracions); //inicialitzarà
+
+        //CV(valoracions); //només agafarà valoracions
+    }
 
 
 }
