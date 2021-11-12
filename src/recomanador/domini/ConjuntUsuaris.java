@@ -1,5 +1,7 @@
 package src.recomanador.domini;
 
-public class ConjuntUsuaris {
+import java.util.ArrayList;
+
+public class ConjuntUsuaris extends ArrayList<Usuari> {
     
 }
