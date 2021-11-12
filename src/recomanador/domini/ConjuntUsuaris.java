@@ -1,8 +1,14 @@
 package src.recomanador.domini;
 
+import java.util.ArrayList;
+
+/**
+ * This class describes the extension of ArrayList<Ususaris> with extra methods.
+ */
 public class ConjuntUsuaris extends ArrayList<Usuari>{
     
-    //pensar si es guarden amb id ascendent per fer binarySearch()
+    //opció de guardar-ho per id ascendent per fer binarySearch()
+    //dependrà de que s'ha de fer a l'algorisme, de moment ho faig sense ordre
 
     /*----- CONSTANTS -----*/
     
@@ -29,5 +35,5 @@ public class ConjuntUsuaris extends ArrayList<Usuari>{
 
     /*----- MODIFICADORES -----*/
 
-    private void setUsuari(Usuari u) // per si s'ha d'afegir de manera ordenada
+    private void addUsuari(Usuari u) {} // per si s'ha d'afegir de manera ordenada
 }

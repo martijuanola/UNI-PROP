@@ -65,9 +65,9 @@ public class ControladorDomini {
 
     //Martí - Users + Recomanacions
         ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
-        cu(valoracions);
+        cu(valoracions); //crea ususaris buits
 
-        //CV(valoracions); //només agafarà valoracions
+        //CV(valoracions); //només agafarà valoracions i les valoracions dels usuaris
     }
 
 
