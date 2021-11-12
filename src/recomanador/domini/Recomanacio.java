@@ -2,6 +2,7 @@ package src.recomanador.domini;
 
 /**
  * This class describes a recomendation of a <u>item</u> to a <u>user</u> with a possible <u>rating</u>.
+ * @author     Martí J.
  */
 public class Recomanacio {
     

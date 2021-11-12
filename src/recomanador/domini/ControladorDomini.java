@@ -3,9 +3,11 @@ import src.recomanador.persistencia.*;
 
 public class ControladorDomini {
 	
+    
 	/*----- CONSTANTS -----*/
 	public static final int NULL_ID = -1;
 	
+
 	/*----- ATRIBUTS -----*/
 	
     ControladorPersistencia cp;
@@ -16,10 +18,16 @@ public class ControladorDomini {
 
     int id;
     
+
     /*----- CONSTRUCTORS -----*/
+
     public ControladorDomini() {
         cp = new ControladorPersistencia();
+
         cu = new ConjuntUsuaris();
+        cr = new ConjuntRecomanacions();
+        ci = new ConjuntItems();
+
         id = NULL_ID;
     }
     
@@ -27,15 +35,13 @@ public class ControladorDomini {
     
     //Pre: identificador és vàlida (i.e. identificador és diferent a NULL_ID)
     //Post: s'iguala l'id de la classe a identificador
-    public void establir_id_activa(int identificador)
-    {
+    public void establir_id_activa(int identificador) {
 		id = identificador;
 	}
 	
 	//Pre: cert
 	//Post: s'iguala la id a NULL_ID, indicant que ningú està com a usuari
-	public void logout()
-    {
+	public void logout() {
 		id = NULL_ID;
 	}
 
@@ -44,21 +50,22 @@ public class ControladorDomini {
      * Calls the persistence controler to get all the data from a previous stored session
      * and initilizes all the necessari arrays of data(ConjuntItems, ConjuntUsuaris, ConjuntRecomanacions and others)   
      *
-     * @param      file  the directory where the files have been stored
+     * @param      directory  the directory where the files have been stored
      */
-    public void carregarSessio(String file) {
+    public void carregarCarpeta(String directory) {
 
         //Funció per enviar el nom de la carpeta al controlador de persistència
+        cp.escollirProjecte(directory);
 
-    //Jaume
+
+    //Jaume - Items
         //Funció per obtenir els items
         //CJ(items);
 
 
-    //Martí
-        //ArrayList<ArrayList<String>> valoracions = cp.carregaRecomanacionsOld();
-
-        //CU(valoracions); //inicialitzarà
+    //Martí - Users + Recomanacions
+        ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
+        cu(valoracions);
 
         //CV(valoracions); //només agafarà valoracions
     }
