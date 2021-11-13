@@ -1,5 +1,8 @@
 package src.recomanador.domini;
+
 import src.recomanador.persistencia.*;
+
+import java.util.ArrayList;
 
 public class ControladorDomini {
 	
@@ -65,9 +68,11 @@ public class ControladorDomini {
 
     //Martí - Users + Recomanacions
         ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
-        cu(valoracions);
 
-        //CV(valoracions); //només agafarà valoracions
+        //crea ususaris buits
+        cu = new ConjuntUsuaris(valoracions);
+
+        //CV(valoracions); //només agafarà valoracions i les valoracions dels usuaris
     }
 
 
