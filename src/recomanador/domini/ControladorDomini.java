@@ -58,13 +58,13 @@ public class ControladorDomini {
      */
     public void carregarCarpeta(String directory) {
 
-        //Funció per enviar el nom de la carpeta al controlador de persistència
-        //try {
+        //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
+        try {
             cp.escollirProjecte(directory);
-        //}
-        //catch (FolderNotFoundException | FolderNotValidException ex) {
+        }
+        catch (FolderNotFoundException ex) {
             //passar-ho al driver per tornar a preguntar la carpeta
-        //}
+        }
 
 
     //Jaume - Items
@@ -73,12 +73,19 @@ public class ControladorDomini {
 
 
     //Martí - Users + Recomanacions
-        ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
+       
 
-        //crea ususaris buits
-        cu = new ConjuntUsuaris(valoracions);
+        try {
+            ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
+            
+            //crea ususaris buits
+            cu = new ConjuntUsuaris(valoracions);
 
-        //CV(valoracions); //només agafarà valoracions i les valoracions dels usuaris
+            //CV(valoracions); //només agafarà valoracions i les valoracions dels usuaris
+        }
+        catch(FolderNotValidException e) {
+            //processar error amb el driver
+        }
     }
 
 

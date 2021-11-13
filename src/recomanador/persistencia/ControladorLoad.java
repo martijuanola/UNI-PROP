@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
-import src.recomanador.exception.*;
+import src.recomanador.excepcions.*;
 
 /**
 * La classe ControladorLoad implementa controlador de lectura
