@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
+import src.recomanador.exception.*;
+
 /**
 * La classe ControladorLoad implementa controlador de lectura
 * de les dades en memòria.
@@ -17,32 +19,32 @@ import java.util.ArrayList;
 public class ControladorLoad {
     
     /**
-     * @return Returns an instance of ControladorLoad
-     */    
+     * Creates an instance of ControladorLoad
+     * 
+     * @return Returns a new instance of ControladorLoad
+     */     
     public ControladorLoad()
     {
 	}
     
     /**
-     * @param file This is the file that is going to be used for the loading
-     * @return Returns an array of arrays of the values. Each array of arrays(line)
+     * Returns the content of the file specified read as a table separated
+     * with commas and enters.
+     * 
+     * @param      file      This is the file that is going to be used for the loading
+     * @return      Returns an array of arrays of the values. Each array of arrays(line)
      * contains an array of strings (columns). 
      * The first line corresponds to the header of the file, where each
      * column its identifier. 
      * The rest of the lines contain the values read. <p>
      * If an error has occurred, the null pointer will be returned instead.
      */
-    public ArrayList<ArrayList<String>> carregarArxiu(File file)
+    public ArrayList<ArrayList<String>> carregarArxiu(File file) throws IOException
     {
 		ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 		
 		FileReader f = null;
-		try
-		{
-			f = new FileReader(file);
-		} catch (IOException ex) {
-			return null;
-		}
+		f = new FileReader(file);
 		
 		char c[] = new char[1];
 		int n = -1;
@@ -66,16 +68,14 @@ public class ControladorLoad {
 				while (c[0] != ',' && c[0] != '\n') 
 				{
 					column_name += c[0];
-					
-					try { n = f.read(c); }
-					catch (IOException ex) { return null; }
+					n = f.read(c);
 				}
 				
 				//always add to the last line
 				data.get(data.size()-1).add(column_name);
 			}
 		}
-		
+		f.close();
 		return data;
 	}
 }

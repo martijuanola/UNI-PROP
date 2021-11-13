@@ -17,7 +17,9 @@ import java.util.ArrayList;
 public class ControladorSave {
     
     /**
-     * @return Returns an instance of ControladorLoad
+     * Creates an instance of ControladorSave
+     * 
+     * @return Returns a new instance of ControladorSave
      */    
     public ControladorSave()
     {
