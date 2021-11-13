@@ -3,7 +3,6 @@
 ./src/recomanador/domini/Recomanacio.java
 ./src/recomanador/domini/ConjuntRecomanacions.java
 ./src/recomanador/domini/ConjuntUsuaris.java
-./src/recomanador/domini/ComparadorId.java
 ./src/recomanador/domini/ControladorDomini.java
 ./src/recomanador/domini/Item.java
 ./src/recomanador/excepcions/UserNotFoundException.java

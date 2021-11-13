@@ -1,6 +1,8 @@
 package src.recomanador.domini;
 
 import src.recomanador.excepcions.*;
+import java.util.*;  
+
 import java.util.ArrayList;
 
 /**
@@ -39,6 +41,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
             if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
             prev = newID;
         }
+        Collections.sort(this); 
     }
 
 

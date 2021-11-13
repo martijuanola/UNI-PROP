@@ -133,4 +133,18 @@ public class Usuari {
     public void valorarValoracio(int val, float pun) {
         cv.get(val).setVal(pun);
     }
+
+
+
+    /**
+     * Compares the instance to a user u2.
+     *
+     * @param      u2    The other user
+     *
+     * @return     this.id compareTo u2.id
+     */
+    @Override
+    public int compareTo(Usuari u2) {
+        return this.id.compareTo(u2.id);
+    }
 }

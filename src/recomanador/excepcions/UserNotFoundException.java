@@ -1,4 +1,6 @@
-package src.recomanador.exception;
+package src.recomanador.excepcions;
+
+//import java.lang.Exception; ??
 
 public class UserNotFoundException extends Exception {
 

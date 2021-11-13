@@ -59,12 +59,12 @@ public class ControladorDomini {
     public void carregarCarpeta(String directory) {
 
         //Funció per enviar el nom de la carpeta al controlador de persistència
-        try {
+        //try {
             cp.escollirProjecte(directory);
-        }
-        catch (FolderNotFoundException | FolderNotValidException ex) {
+        //}
+        //catch (FolderNotFoundException | FolderNotValidException ex) {
             //passar-ho al driver per tornar a preguntar la carpeta
-        }
+        //}
 
 
     //Jaume - Items
