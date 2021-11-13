@@ -1,6 +1,8 @@
 package src.recomanador.domini;
 
-public class ConjuntUsuaris extends ArrayList<Usuari>{
+import java.util.ArrayList;
+
+public class ConjuntUsuaris extends ArrayList<Usuari> {
     
     //pensar si es guarden amb id ascendent per fer binarySearch()
 

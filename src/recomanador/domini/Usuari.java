@@ -6,106 +6,131 @@ public class Usuari {
 
     private int id;
 
-    private ConjuntRecomanacions cr;
-    private ConjuntRecomanacions cv;
+    private ConjuntRecomanacions cr; //Conjunt recomanacions
+    private ConjuntRecomanacions cv; //Conjunt recomanacions valorades
 
     /*----- CONSTRUCTORS -----*/
 
-    // Pre: -
-    // Post: L'usuari s'ha creat amb l'id id
+    /**
+     * L'usuari s'ha creat amb l'id id
+     * @param id id ha de ser únic entre tots els usuaris
+     */
     public Usuari(int id) {
         this.id = id;
     }
 
-    // Pre: -
-    // Post: L'usuari s'ha creat amb l'id, el conjunt de recomanacions i valoracions id, cr i cv
+    /**
+     * L'usuari s'ha creat amb l'id, el conjunt de recomanacions i valoracions id, cr i cv
+     * @param id id ha de ser únic entre tots els usuaris
+     * @param cr conjunt de recomanacions que té actualemt l'usuari (si s'han modificat les dades, s'han de recalculat)
+     * @param cv conjunt de valoracions que té l'usuari 
+     */
     public Usuari(int id, ConjuntRecomanacions cr, ConjuntRecomanacions cv) {
         this.id = id;
         this.cr = cr;
         this.cv = cv;
     }
     
-    /*----- ID -----*/
+    /*----- GETTERS -----*/
 
-    // Pre: -
-    // Post: Retorna el id
+    /**
+     * Retorna el id de l'usuari
+     * @return int
+     */
     public int getId() {
         return id;
     }
 
-    // Pre: -
-    // Post: L'usuari té id id
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /*----- RECOMANACIONS -----*/
-
-    // Pre: -
-    // Post: Retorna les recomanacions del usuari
+    /**
+     * Retorna les recomanacions del usuari
+     * @return ConjuntRecomanacions 
+     */
     public ConjuntRecomanacions getRecomanacions() {
         return cr;
     }
 
-    // Pre: -
-    // Post: El punter de les recomanacions ara apunta a cr
-    public void setRecomanacions(ConjuntRecomanacions cr) {
-        this.cr = cr;
-    }
-
-    // Pre: L'índex i és correcte
-    // Post: Retorna la recomanació que pertany al índex i 
+    /**
+     * Retorna la recomanació que pertany al índex i
+     * @param i índex de la recomanació, ha de estar en el rang de recomanacions de l'usuari
+     * @return retorna la recomanació indicada per l'índex i
+     */
     public Recomanacio getRecomanacio(int i) {
         return cr.get(i);
     }
 
-    // Pre: L'índex i és correcte
-    // Post: Elimina la recomanació que pertany al índex i 
-    public Recomanacio eliminarRecomanacio(int i) {
-        return cr.remove(i);
-    }
-
-
-//falta canviar això
-    // Pre: L'index recomanacio és correcte
-    // Post: La recomanació s'elimina de recomanacions i s'afegeix com a valoració amb puntuació
-    /*public Recomanacio valorar(int recomanacio, int puntuacio) {
-        Recomanacio v = (Recomanacio) cr.get(recomanacio);
-        cr.remove(recomanacio);
-        v.setPuntuacio(puntuacio);
-        cv.add(v);
-        return v;
-    }*/
-
-    /*----- VALORACIONS -----*/
-
-    // Pre: -
-    // Post: Retorna el conjunt de valoracions del usuari
+    /**
+     * Retorna el conjunt de valoracions del usuari
+     * @return retorna el conjunt de valoracions de l'usuari
+     */
     public ConjuntRecomanacions getValoracions() {
         return cv;
     }
-
-    // Pre: -
-    // Post: El conjunt de valoracions ara apunta a cv
-    public void setValoracions(ConjuntRecomanacions cv) {
-        this.cv = cv;
-    }
-
-    // Pre: L'índex i és correcte
-    // Post: Retorna la valoració que pertany al índex i 
+ 
+    /**
+     * Retorna la valoració que pertany al índex i
+     * @param i índex de la valoració, ha de estar en el rang de valoracions de l'usuari
+     * @return retorna la valoració del índex i
+     */
     public Recomanacio getValoracio(int i) {
         return cv.get(i);
     }
 
-    // Pre: L'índex i és correcte
-    // Post: Elimina la valoració que pertany al índex i 
+    /*----- SETTERS -----*/
+
+    /**
+     * El punter de les recomanacions ara apunta a cr
+     * @param cr ConjuntRecomanacions
+     */
+    public void setRecomanacions(ConjuntRecomanacions cr) {
+        this.cr = cr;
+    }
+
+    /**
+     * El conjunt de valoracions ara apunta a cv
+     * @param cv ConjuntRecomanacions
+     */
+    public void setValoracions(ConjuntRecomanacions cv) {
+        this.cv = cv;
+    }
+
+    /**
+     * Elimina la recomanació que pertany al índex i
+     * @param i índex de la recomanació, ha de estar en el rang de recomanacions de l'usuari
+     * @return retorna la recomanació eliminada
+     */
+    public Recomanacio eliminarRecomanacio(int i) {
+        return cr.remove(i);
+    }
+
+    /**
+     * Elimina la valoració que pertany al índex i 
+     * @param i índex de la valoració, ha de estar en el rang de valoracions de l'usuari
+     * @return retorna la valoració eliminada
+     */
     public Recomanacio eliminarValoracio(int i) {
         return cv.remove(i);
     }
 
-    // Pre: L'índex valoració és correcte
-    // Post: La nova puntuació de la valoració és puntuacio
-    public void valorarValoracio(int valoracio, int puntuacio) {
-        cv.get(valoracio).setVal(puntuacio);
+    /**
+     * La recomanació s'elimina de recomanacions i s'afegeix com a valoració amb puntuació
+     * @param rec índex de la valoració, ha de estar en el rang de valoracions de l'usuari
+     * @param pun valor de la puntuació, ha de ser entre 0 i 5
+     * @return retorna la nova valoració
+     */
+    public Recomanacio valorarRecomanacio(int rec, float pun) {
+        Recomanacio r = cr.get(rec);
+        cr.remove(rec);
+        r.setVal(pun);
+        cv.add(r);
+        return r;
+    }
+
+    /**
+     * La nova puntuació de la valoració és pun
+     * @param val índex de la valoració, ha de estar en el rang de valoracions de l'usuari
+     * @param pun valor de la puntuació, ha de ser entre 0 i 5
+     */
+    public void valorarValoracio(int val, float pun) {
+        cv.get(val).setVal(pun);
     }
 }
