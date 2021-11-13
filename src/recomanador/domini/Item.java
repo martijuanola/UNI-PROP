@@ -2,40 +2,19 @@ package src.recomanador.domini;
 
 import java.util.ArrayList;
 
-import javax.print.attribute.standard.MediaSize.NA;
-
-public class Item {
-
-    public enum tipus
-    { //En ordre: ID, Nom, bool, float, string 
-        I, N, B, F, S
-    }
-
+public class Item implements Comparable<Item>{
 
     private ArrayList<ArrayList<String>> atributs; //Vector on cada atribut té un vector. Pot ser buit
-    public static String nom; //Nom del conjunt d'items
-    public static ArrayList<Float> pesos;
-    public static ArrayList<tipus> tipusAtribut; //I i N haurien de ser únics en els atributs
-    public static ArrayList<String> nomAtribut;
+    static int id; //posició del atribut id al tipus atribut
+    static private int nomA; //posició del atribut nom al al tipus atrbut. -1 si no en té
 
     public Item() {
     }
 
     public Item(ArrayList<ArrayList<String>> atributs) {
         this.atributs = atributs;
-    }
-
-    static public void inicialitzar(int nAtributs) {
-        pesos = new ArrayList<Float>(nAtributs);
-        tipusAtribut = new ArrayList<tipus>(nAtributs);
-        nomAtribut = new ArrayList<String>(nAtributs);
-        int i = 0;
-        while (i < nAtributs) {
-            pesos.add((float)i*2*i);
-            tipusAtribut.add(i, tipus.S);
-            nomAtribut.add("holi"+i);
-            ++i;
-        }
+        Item.id = -1;
+        Item.nomA = -1;
     }
 
     static public void assignarPes(int a, float pes)  {
@@ -44,6 +23,18 @@ public class Item {
 
     static public void assignarTipus(int a, tipus c) {
         Item.tipusAtribut.set(a, c);
+        if (c == tipus.I) {
+            if (id != -1) { //Canviem l'id antic per evitar tenir 2 id
+                Item.tipusAtribut.set(id, tipus.S);
+            }
+            id = a;
+        }
+        else if (c == tipus.N) {
+            if (nomA != -1) { //Canviem el nom antic per evitar tenir 2 noms
+                Item.tipusAtribut.set(nomA, tipus.S);
+            }
+            nomA = a;
+        }
     }
     
     static public void assignarNomAtributs(ArrayList<String> n) {
@@ -110,5 +101,18 @@ public class Item {
             else if (i != atributs.size()-1) System.out.print(", ");
         }
         System.out.println("");
+    }
+
+    public ArrayList<String> getAtribut(int i) {
+        return atributs.get(i);
+    }
+
+    public ArrayList<String> getID() {
+        return atributs.get(id);
+    }
+
+    @Override
+    public int compareTo(Item otherItem) {
+        return getID().get(0).compareTo(otherItem.getID().get(0));
     }
 }
