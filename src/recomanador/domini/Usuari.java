@@ -1,6 +1,6 @@
 package src.recomanador.domini;
 
-public class Usuari {
+public class Usuari implements Comparable<Usuari> {
     
     /*----- ATRIBUTS -----*/
 
@@ -143,8 +143,7 @@ public class Usuari {
      *
      * @return     this.id compareTo u2.id
      */
-    @Override
-    public int compareTo(Usuari u2) {
-        return this.id.compareTo(u2.id);
+    @Override public int compareTo(Usuari u2) {
+        return Integer.compare(this.id, u2.id);
     }
 }
