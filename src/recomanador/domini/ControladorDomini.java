@@ -42,10 +42,10 @@ public class ControladorDomini {
     public void provaItems(ArrayList<ArrayList<String>> items) {
         System.out.println("hey " + items.size() + " " + items.get(0).size() + " " + items.get(1).size() + " " + items.get(2).size());
         ci = new ConjuntItems(items);
-        Item.assignarNom("HEY NO SE QUE POSAR");
-        for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            Item.assignarTipus(i, Item.tipus.S);
-            Item.assignarPes(i, (i*(float)1.0));
+        ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
+        for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
+            ci.assignarTipus(i, ConjuntItems.tipus.I);
+            ConjuntItems.assignarPes(i, (i*(float)1.0));
         }
         ci.printItems();
     }

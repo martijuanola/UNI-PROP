@@ -1,9 +1,11 @@
 package src.recomanador.domini;
 
-import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+
+import src.exceptions.NotDefinedException;
+import src.exceptions.NotFoundException;
 
 public class ConjuntItems extends ArrayList<Item> {
 
@@ -15,6 +17,9 @@ public class ConjuntItems extends ArrayList<Item> {
     public static ArrayList<Float> pesos;
     public static ArrayList<tipus> tipusAtribut; //I i N haurien de ser únics en els atributs
     public static ArrayList<String> nomAtribut;
+
+    static int id; //posició del atribut id al tipus atribut
+    static private int nomA; //posició del atribut nom al al tipus atrbut. -1 si no en té
 
     public ConjuntItems(Collection<? extends Item> c) {
         super(c);
@@ -29,7 +34,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
     public ConjuntItems(ArrayList<ArrayList<String>> items) {
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
-        Item.assignarNomAtributs(nAtributs);
+        ConjuntItems.assignarNomAtributs(nAtributs);
         inicialitzar(nAtributs.size());
 
         if (items.size() > 0) {
@@ -71,10 +76,10 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     public void printItems() {
-        System.out.println("Nom conjunt: " + Item.nom);
-        for(int i = 0; i < Item.getNumAtributs(); ++i) {
-            System.out.print(Item.getNomAtribut(i) + " " + Item.getSTipus(i) + " " + Item.getPes(i));
-            if (i != Item.getNumAtributs()-1) System.out.print(" | ");
+        System.out.println("Nom conjunt: " + ConjuntItems.nom);
+        for(int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
+            System.out.print(ConjuntItems.getNomAtribut(i) + " " + ConjuntItems.getSTipus(i) + " " + ConjuntItems.getPes(i));
+            if (i != ConjuntItems.getNumAtributs()-1) System.out.print(" | ");
         }
         System.out.println("");
 
@@ -127,6 +132,80 @@ public class ConjuntItems extends ArrayList<Item> {
             throw new NotDefinedException("atribut id no té 1 valor " + m);
         }
         return id.get(0);
+    }
+
+    static public void assignarPes(int a, float pes)  {
+        ConjuntItems.pesos.set(a, pes);
+    }
+
+    public void assignarTipus(int a, tipus c) {
+        ConjuntItems.tipusAtribut.set(a, c);
+        if (c == tipus.I) {
+            if (id != -1) { //Canviem l'id antic per evitar tenir 2 id
+                ConjuntItems.tipusAtribut.set(id, tipus.S);
+            }
+            id = a;
+            Collections.sort(this);
+        }
+        else if (c == tipus.N) {
+            if (nomA != -1) { //Canviem el nom antic per evitar tenir 2 noms
+                ConjuntItems.tipusAtribut.set(nomA, tipus.S);
+            }
+            nomA = a;
+        }
+    }
+
+    
+    static public void assignarNomAtributs(ArrayList<String> n) {
+        ConjuntItems.nomAtribut = n;
+    }
+
+    static public void assignarNom(String n) {
+        ConjuntItems.nom = n;
+    }
+
+    static public String getNomAtribut(int i) {
+        return nomAtribut.get(i);
+    }
+
+    static public Float getPes(int i) {
+        return pesos.get(i);
+    }
+
+    static public int getNumAtributs() {
+        return pesos.size();
+    }
+
+    static public String getSTipus(int i) {
+        String s = "";
+        tipus t = tipusAtribut.get(i);
+
+        switch(t) {
+            case I:
+                s = "Identificador";
+                break;
+            case N:
+                s = "Nom";
+                break;
+            case B:
+                s = "Boolean";
+                break;
+            case F:
+                s = "Float";
+                break;
+            case S:
+                s = "String";
+                break;
+            default:
+                s = "No assignat";
+                break;
+        }
+
+        return s;
+    }
+
+    static public tipus getTipus(int i) {
+        return tipusAtribut.get(i);
     }
 
 }
