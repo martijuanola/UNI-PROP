@@ -40,17 +40,6 @@ public class ControladorPersistencia {
 		{
 			throw new FolderNotFoundException(s);
 		}
-		//generar els fitxers f a partir de la carpeta
-		try
-		{
-			f = new File(carpeta, "items");
-		}
-		catch(NullPointerException n)
-		{
-			throw new FolderNotFoundException(s);
-		}
-		
-		
 	}
 	
 	/**
