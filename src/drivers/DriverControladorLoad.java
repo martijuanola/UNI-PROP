@@ -72,18 +72,23 @@ public class DriverControladorLoad {
 		io.writeln("Testing function carregarArxiu()");
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
-		String p = "/home/r5d8/Desktop";
+		String p = "/home/r5d8/Desktop/ratings.db.csv";
 		/*try
 		{
-			//p = io.readline();
-			int n = io.readint();
+			p = io.readline();
 		}catch(Exception e){
 			io.writeln("Wrong path");
 		}*/
 		
 		//executar la funcionalitat
-		ArrayList<ArrayList<String>> sol;
-		sol = c.carregarArxiu(new File("", p));
+		ArrayList<ArrayList<String>> sol = new ArrayList<ArrayList<String>>();
+		try
+		{
+			sol = c.carregarArxiu(new File("", p));
+		}catch(Exception e)
+		{
+			io.writeln("Error carregar arxiu");
+		}
 		
 		//mostrar output
 		

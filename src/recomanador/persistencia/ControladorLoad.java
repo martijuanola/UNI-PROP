@@ -17,7 +17,6 @@ import src.recomanador.excepcions.*;
 */
 
 public class ControladorLoad {
-    
     /**
      * Creates an instance of ControladorLoad
      * 
@@ -45,7 +44,7 @@ public class ControladorLoad {
 		
 		FileReader f = null;
 		f = new FileReader(file);
-		
+				
 		char c;
 		int n = -1;
 		
@@ -54,7 +53,7 @@ public class ControladorLoad {
 		//If this occurs at this point, it means that the file is empty
 		if (n == -1) return null;
 		c = (char)n;
-		
+				
 		while (n != -1)
 		{
 			data.add(new ArrayList<String>());
@@ -81,8 +80,11 @@ public class ControladorLoad {
 				}
 			}
 			
-			n = f.read();
-			c = (char)n;
+			if (n != -1)
+			{
+				n = f.read();
+				c = (char)n;
+			}
 		}
 		
 		f.close();
