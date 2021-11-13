@@ -1,6 +1,7 @@
 package src.recomanador.domini;
 
 import src.recomanador.persistencia.*;
+import src.recomanador.excepcions.*;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,12 @@ public class ControladorDomini {
     public void carregarCarpeta(String directory) {
 
         //Funció per enviar el nom de la carpeta al controlador de persistència
-        cp.escollirProjecte(directory);
+        try {
+            cp.escollirProjecte(directory);
+        }
+        catch (FolderNotFoundException | FolderNotValidException ex) {
+            //passar-ho al driver per tornar a preguntar la carpeta
+        }
 
 
     //Jaume - Items

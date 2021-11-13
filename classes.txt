@@ -1,0 +1,13 @@
+./src/recomanador/domini/ConjuntItems.java
+./src/recomanador/domini/Usuari.java
+./src/recomanador/domini/Recomanacio.java
+./src/recomanador/domini/ConjuntRecomanacions.java
+./src/recomanador/domini/ConjuntUsuaris.java
+./src/recomanador/domini/ComparadorId.java
+./src/recomanador/domini/ControladorDomini.java
+./src/recomanador/domini/Item.java
+./src/recomanador/excepcions/UserNotFoundException.java
+./src/recomanador/persistencia/ControladorSave.java
+./src/recomanador/persistencia/ControladorPersistencia.java
+./src/recomanador/persistencia/ControladorLoad.java
+./src/Main.java

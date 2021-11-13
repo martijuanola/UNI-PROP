@@ -1,5 +1,6 @@
 package src.recomanador.domini;
 
+import src.recomanador.excepcions.*;
 import java.util.ArrayList;
 
 /**
