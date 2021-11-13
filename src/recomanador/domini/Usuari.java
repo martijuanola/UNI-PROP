@@ -1,6 +1,6 @@
 package src.recomanador.domini;
 
-public class Usuari {
+public class Usuari implements Comparable<Usuari> {
     
     /*----- ATRIBUTS -----*/
 
@@ -132,5 +132,18 @@ public class Usuari {
      */
     public void valorarValoracio(int val, float pun) {
         cv.get(val).setVal(pun);
+    }
+
+
+
+    /**
+     * Compares the instance to a user u2.
+     *
+     * @param      u2    The other user
+     *
+     * @return     this.id compareTo u2.id
+     */
+    @Override public int compareTo(Usuari u2) {
+        return Integer.compare(this.id, u2.id);
     }
 }

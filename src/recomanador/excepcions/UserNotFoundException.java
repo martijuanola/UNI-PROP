@@ -1,6 +1,6 @@
-package src.recomanador.domini;
+package src.recomanador.excepcions;
 
-import java.util.ArrayList;
+//import java.lang.Exception; ??
 
 public class UserNotFoundException extends Exception {
 

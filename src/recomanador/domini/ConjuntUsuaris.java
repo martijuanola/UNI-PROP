@@ -1,5 +1,8 @@
 package src.recomanador.domini;
 
+import src.recomanador.excepcions.*;
+import java.util.*;  
+
 import java.util.ArrayList;
 
 /**
@@ -7,12 +10,8 @@ import java.util.ArrayList;
  * @author Martí J.
  */
 public class ConjuntUsuaris extends ArrayList<Usuari> {
-    
-    //opció de guardar-ho per id ascendent per fer binarySearch()
-    //dependrà de que s'ha de fer a l'algorisme, de moment ho faig sense ordre
 
     /*----- CONSTANTS -----*/
-    
     /*----- ATRIBUTS -----*/
 
 
@@ -27,7 +26,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
 
     /**
      * Constructs a new instance with the users empty user(without ratings and recomendations)
-     *  from a previous execution without filling
+     *  from a previous execution without filling ordered by ID
      *
      * @param      raw   The raw data from a file of ratings
      */
@@ -38,6 +37,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
             if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
             prev = newID;
         }
+        Collections.sort(this);
     }
 
 
@@ -51,14 +51,13 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @return     A boolean indicating if the user can be found or not
      */
     public boolean existeixUsuari(int id) {
-        for(int i = 0; i < this.size(); i++) {
-            if (this.get(i).getId() == id) return true;
-        }
-        return false;
+        int pos = cercaBinaria(0,this.size(),id);
+        if(pos < this.size() && this.get(pos).getId() == id) return true;
+        else return false;
     }
 
     /**
-     * Gets the user with a certain id
+     * Gets the user with a certain id. Throws exception if not found
      *
      * @param      id                     The identifier
      *
@@ -67,14 +66,55 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @throws     UserNotFoundException  The user with that id didn't exist
      */
     public Usuari getUsuari(int id) throws UserNotFoundException {
-        for(int i = 0; i < this.size(); i++) {
-            if (this.get(i).getId() == id) return this.get(i);
-        }
-        throw new UserNotFoundException(id);
+        int pos = cercaBinaria(0,this.size(),id);
+        if(this.get(pos).getId() == id) return this.get(pos);
+        else throw new UserNotFoundException(id);
     }
 
 
     /*----- MODIFICADORES -----*/
 
-    //private void addUsuari(Usuari u) {} // per si s'ha d'afegir de manera ordenada
+    /**
+     * Adds the specified u keeping the list ordered by id.
+     *
+     * @param      u     User to get added 
+     *
+     * @return     true (as specified by Collection.add(E))
+     */
+    @Override public boolean add(Usuari u) {
+        int pos = cercaBinaria(0,this.size(),u.getId());
+        try {
+            this.add(pos,u);
+        }
+        catch(IndexOutOfBoundsException e){
+            return false;
+        }
+        return true;
+    }
+
+    /*----- ALTRES -----*/
+
+    /**
+     * Returns de index of the element with id = <i>id</i>, or if it doesn't exist,
+     *  the position where it should be added. It uses a binary search.
+     *
+     * @param      first  first element of the sequence of users
+     * @param      last   Last element of the sequenece of users
+     * @param      id     The identifier of the users we are looking for
+     *
+     * @return     the index where the user should be
+     */
+    private int cercaBinaria(int first, int last, int id) {  
+        while(first <= last) {
+            int mid = (first+last)/2;
+            int mid_id = this.get(mid).getId();
+            
+            if(mid_id > id) last = mid - 1;
+            else if(mid_id < id) first = mid + 1;
+            else return mid;
+        }
+        if(this.get(first).getId() > id) return first;
+        else return last;
+    }
+
 }

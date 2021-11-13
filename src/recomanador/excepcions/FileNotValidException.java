@@ -1,4 +1,4 @@
-package src.recomanador.exception;
+package src.recomanador.excepcions;
 
 public class FileNotValidException extends Exception {
 

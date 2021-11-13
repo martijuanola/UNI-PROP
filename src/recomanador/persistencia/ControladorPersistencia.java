@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import src.recomanador.exception.*;
+import src.recomanador.excepcions.*;
 
 public class ControladorPersistencia {
     private File carpeta;
@@ -60,7 +60,6 @@ public class ControladorPersistencia {
      * column its identifier. 
      * The rest of the lines contain the values read. <p>
      * If an error has occurred, the null pointer will be returned instead.
-     * @exception Throws a FolderNotValidException if the file is corrupted or is missing.
      */
 	public ArrayList<ArrayList<String>> carregarRecomanacionsCarpeta() throws FolderNotValidException
 	{

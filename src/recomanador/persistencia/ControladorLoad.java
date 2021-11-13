@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
-import src.recomanador.exception.*;
+import src.recomanador.excepcions.*;
 
 /**
 * La classe ControladorLoad implementa controlador de lectura
@@ -46,7 +46,7 @@ public class ControladorLoad {
 		FileReader f = null;
 		f = new FileReader(file);
 		
-		char c = "";
+		char c;
 		int n = -1;
 		
 		n = f.read();
