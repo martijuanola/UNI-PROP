@@ -1,6 +1,10 @@
 package src.drivers;
 
 import src.recomanador.persistencia.ControladorLoad;
+import java.io.File;
+import java.io.IOException;
+
+import java.util.ArrayList;
 
 public class DriverControladorLoad {
     
@@ -14,7 +18,7 @@ public class DriverControladorLoad {
 			
 			String s = "Options: \n" +
 			"0. exit\n" +
-			"1. option 1\n" +
+			"1. Load .csv file\n" +
 			"2. option 2\n" +
 			"3. option 3\n" +
 			"4. option 4\n" +
@@ -34,7 +38,7 @@ public class DriverControladorLoad {
 				switch(x)
 				{
 					case 1:
-						mostra_1();
+						testCarregarArxiu();
 						break;
 					case 2:
 						mostra_2();
@@ -63,13 +67,31 @@ public class DriverControladorLoad {
 		}
     }
     
-    static private void mostra_1() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+    static private void testCarregarArxiu() throws Exception {
+		///home/r5d8/Desktop
+		io.writeln("Testing function carregarArxiu()");
 		//demanar l'input
+		io.writeln("Write the path of the .csv file that you want to read");
+		String p = "/home/r5d8/Desktop";
+		/*try
+		{
+			//p = io.readline();
+			int n = io.readint();
+		}catch(Exception e){
+			io.writeln("Wrong path");
+		}*/
 		
 		//executar la funcionalitat
+		ArrayList<ArrayList<String>> sol;
+		sol = c.carregarArxiu(new File("", p));
 		
 		//mostrar output
+		
+		for (int i = 0; i < sol.size(); ++i)
+		{
+			for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
+			io.writeln();
+		}
 	}
     static private void mostra_2() throws Exception {
 		io.writeln("Testing function <NAME_FUNCTION>");
