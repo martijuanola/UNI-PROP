@@ -1,3 +1,4 @@
+./src/drivers/DriverRecomanacio.java
 ./src/drivers/DriverControladorLoad.java
 ./src/drivers/inout.java
 ./src/recomanador/domini/ConjuntItems.java
@@ -7,7 +8,9 @@
 ./src/recomanador/domini/ConjuntUsuaris.java
 ./src/recomanador/domini/ControladorDomini.java
 ./src/recomanador/domini/Item.java
+./src/recomanador/excepcions/ItemNotFoundException.java
 ./src/recomanador/excepcions/UserNotFoundException.java
+./src/recomanador/excepcions/ItemNotDefinedException.java
 ./src/recomanador/excepcions/FileNotFoundException.java
 ./src/recomanador/excepcions/RecommendationNotFoundException.java
 ./src/recomanador/excepcions/FolderNotFoundException.java

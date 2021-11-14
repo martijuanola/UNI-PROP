@@ -116,6 +116,18 @@ public class Recomanacio implements Comparable<Recomanacio> {
     }
 
     /**
+     * Checks if the item and user of the recomendation are <i>i</i> and <i>u</i>.
+     *
+     * @param      i     Item
+     * @param      u     User
+     *
+     * @return     True if both objects are the same
+     */
+    public boolean checkKeys(Item i, Usuari u) {
+        return usr == u && item == i;
+    }
+
+    /**
      * Compares the instance with another recommendation <i>r2</i>
      *
      * @param      r2    The other recommendation

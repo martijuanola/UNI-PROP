@@ -55,15 +55,16 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
 
     /*----- CONSULTORES -----*/
+    //quan s'acabi d'implementar l'algorisme es borren les que no es fan servir
 
     /**
-     * Returns if a recomendation between of an item <i>itemid</i> to a user <i>userid</i> exisist in 
+     * Returns if a recommendation between of an item <i>itemid</i> to a user <i>userid</i> exisist in 
      * the set of recommendations.
      *
      * @param      itemid  The id of the item
      * @param      userid  The id of the user
      *
-     * @return     True if the recomndation has been found
+     * @return     True if the recommendation has been found
      */
     public boolean existeixRecomacio(int itemid, int userid) {
     	int pos = cercaBinaria(0,this.size()-1,itemid,userid);
@@ -72,17 +73,47 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     }
 
     /**
-     * Returns if a recomendation with a rating between of an item <i>itemid</i> to a user <i>userid</i> 
+     * Returns if a recommendation between of an item <i>i</i> to a user <i>u</i> exisist in 
+     * the set of recommendations.
+     *
+     * @param      i     The item
+     * @param      u     The user
+     *
+     * @return     True if the recommendation has been found
+     */
+    public boolean existeixRecomanacio(Item i, Usuari u) {
+    	int pos = cercaBinaria(0,this.size()-1,i.getId(),u.getId());
+    	if(this.get(pos).checkKeys(i,u)) return true;
+    	else return false;
+    }
+
+    /**
+     * Returns if a recommendation with a rating of an item <i>itemid</i> to a user <i>userid</i> 
      * exisist in the set of recommendations.
      *
      * @param      itemid  The id of the item
      * @param      userid  The id of the user
      *
-     * @return     True if the recomndation has been found
+     * @return     True if the rated recomndation has been found
      */
     public boolean existeixValoracio(int itemid, int userid) {
     	int pos = cercaBinaria(0,this.size()-1,itemid,userid);
     	if(this.get(pos).checkIds(itemid, userid) && this.get(pos).getVal() != Recomanacio.nul) return true;
+    	else return false;
+    }
+
+    /**
+     * Returns if a recommendation with a rating of an item <i>i</i> to a user <i>u</i> 
+     * exisist in the set of recommendations.
+     *
+     * @param      i     The item
+     * @param      u     The user
+     *
+     * @return     True if the rated recommendation has been found
+     */
+    public boolean existeixValoracio(Item i, Usuari u) {
+    	int pos = cercaBinaria(0,this.size()-1,i.getId(),u.getId());
+    	if(this.get(pos).checkKeys(i,u) && this.get(pos).getVal() != Recomanacio.nul) return true;
     	else return false;
     }
 
@@ -100,6 +131,12 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 		int pos = cercaBinaria(0,this.size()-1,itemid,userid);
     	if(this.get(pos).checkIds(itemid, userid)) return this.get(pos);
     	else throw new RecommendationNotFoundException(itemid, userid);
+    }
+
+    public Recomanacio getRecomanacio(Item i, Uusuari u) throws RecommendationNotFoundException {
+		int pos = cercaBinaria(0,this.size()-1,i.getId(),u.getId());
+    	if(this.get(pos).checkKeys(i,u)) return this.get(pos);
+    	else throw new RecommendationNotFoundException(i.getId(), u.getId());
     }
 
     /**
