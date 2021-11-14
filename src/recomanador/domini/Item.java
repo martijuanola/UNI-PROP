@@ -2,18 +2,32 @@ package src.recomanador.domini;
 
 import java.util.ArrayList;
 
+import src.recomanador.excepcions.ItemIDNotValidException;
+/**
+ * Classe Item
+ * @author Jaume
+ */
 public class Item implements Comparable<Item>{
 
     private ArrayList<ArrayList<String>> atributs; //Vector on cada atribut té un vector. Pot ser buit
 
-
+    /**
+     * Constructor buit
+     */
     public Item() {
     }
 
+    /**
+     * Es crea l'item i s'assigna els atributs a l'item
+     * @param atributs llista d'atributs d'items on cada atribut pot tenir diversos atributs
+     */
     public Item(ArrayList<ArrayList<String>> atributs) {
         this.atributs = atributs;
     }
 
+    /**
+     * Imprimeix els atributs
+     */
     public void print() {
         for (int i = 0; i < atributs.size(); ++i) {
             int g = atributs.get(i).size();
@@ -28,27 +42,49 @@ public class Item implements Comparable<Item>{
         System.out.println("");
     }
 
+    /**
+     * Retorna l'atribut de la posició i
+     * @param i index del atribut: entro 0 i el nombre d'atributs
+     * @return llista dels sub atributs
+     */
     public ArrayList<String> getAtribut(int i) {
         return atributs.get(i);
     }
 
-    public ArrayList<String> getID() {
-        return atributs.get(ConjuntItems.id);
+    /**
+     * Retorna l'atribut de la posició id de ConjuntItems
+     * @return atribut id en forma de int
+     * @throws ItemIDNotValidException només si l'atribut no és correcte (no coincideix amb el format d'un id o no és un int)
+     */
+    public int getid() throws ItemIDNotValidException{
+        return Integer.parseInt(atributs.get(ConjuntItems.id).get(0));
     }
 
     @Override
+    /**
+     * Funció que fa override al compareTo per defecte, compara 2 items per els seus id's
+     * @param otherItem L'altre item que compara
+     * @return Retorna un nombre depenent de la comparació entre l'item al que es fa la crida de la funció i el paràmetre
+     * 1 si implícit > otherItem, 
+     * 0 si implícit > otherItem, 
+     * -1 si implícit < otherItem
+     */
     public int compareTo(Item otherItem) {
-        ArrayList<String> id1 = getID();
-        ArrayList<String> id2 = otherItem.getID();
-        int n1 = 0, n2 = 0;
+        int id1 = 0;
         try {
-            if (id1.size() != 0) n1 = Integer.parseInt(id1.get(0));
-            if (id2.size() != 0) n2 = Integer.parseInt(id2.get(0));
-        } catch (Exception e) {
+            id1 = getid();
+        } catch (ItemIDNotValidException e1) {
+            e1.printStackTrace();
+        }
+        int id2 = 0;
+        try {
+            id2 = otherItem.getid();
+        } catch (ItemIDNotValidException e) {
             e.printStackTrace();
         }
-        if (n1 == n2) return 0;
-        else if (n1 < n2) return -1;
+        
+        if (id1 == id2) return 0;
+        else if (id1 < id2) return -1;
         else return 1;
     }
 }
