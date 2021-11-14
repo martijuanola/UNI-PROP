@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import src.exceptions.NotDefinedException;
-import src.exceptions.NotFoundException;
+import src.recomanador.excepcions.ItemNotDefinedException;
+import src.recomanador.excepcions.ItemNotFoundException;
 
 public class ConjuntItems extends ArrayList<Item> {
 
@@ -91,11 +91,11 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    public Item getItem(String id) throws NotFoundException, NotDefinedException { //Cerca dicotòmica
+    public Item getItem(String id) throws ItemNotFoundException, ItemNotDefinedException { //Cerca dicotòmica
         return cercaBinaria(id, 0, size());
     }
 
-    public ArrayList<String> getAtributItem(String id, int i) throws NotFoundException, NotDefinedException { //Cerca dicotòmica + retornar atribut
+    public ArrayList<String> getAtributItem(String id, int i) throws ItemNotFoundException, ItemNotDefinedException { //Cerca dicotòmica + retornar atribut
         return getItem(id).getAtribut(i);
     }
 
@@ -103,12 +103,12 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(index).getAtribut(i);
     }
 
-    private Item cercaBinaria(String id, int left, int right) throws NotFoundException, NotDefinedException {
+    private Item cercaBinaria(String id, int left, int right) throws ItemNotFoundException, ItemNotDefinedException {
         int l = left, r = right, mid = 0;
         boolean end = false;
         while (!end) {
             if (r > l) {
-                throw new NotFoundException("id no existeix: " + id);
+                throw new ItemNotFoundException("id no existeix: " + id);
             }
 
             mid = l + (r - l)/2;
@@ -127,12 +127,12 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(mid);
     }
 
-    private String getID(int m) throws NotDefinedException {
+    private String getID(int m) throws ItemNotDefinedException {
         Item i = get(m);
         ArrayList<String> id;
         id = i.getID();
         if (id.size() != 1) {
-            throw new NotDefinedException("atribut id no té 1 valor " + m);
+            throw new ItemNotDefinedException("atribut id no té 1 valor " + m);
         }
         return id.get(0);
     }
