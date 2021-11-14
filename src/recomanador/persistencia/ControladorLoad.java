@@ -36,7 +36,7 @@ public class ControladorLoad {
      * The first line corresponds to the header of the file, where each
      * column its identifier. 
      * The rest of the lines contain the values read. <p>
-     * @exception	If there's an error reading, the IOException will be thrown
+     * @exception	IOException If there's an error reading, the IOException will be thrown
      */
     public ArrayList<ArrayList<String>> carregarArxiu(File file) throws IOException
     {

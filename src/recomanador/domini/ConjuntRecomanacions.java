@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 /**
- * This class describes a set of recomendations as an extenssion of ArrayList of recomendations.
+ * This class describes a set of recommendations as an extenssion of ArrayList of recommendations.
  * It always has the array sorted by item id and user id to improve efficency on certain calls.
  * @author Martí J.
  */
@@ -26,9 +26,9 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     }
 
     /**
-     * Constructs a new instance with the recomendations and ratings from the raw data
+     * Constructs a new instance with the recommendations and ratings from the raw data
      *  obtained from the ratings file. It also sets the correct elements in the sets of 
-     *  recomendations and ratings of the users. It sorts the elements by item id.
+     *  recommendations and ratings of the users. It sorts the elements by item id.
      *
      * @param      ci    Set of items from the Domain Controler
      * @param      cu    Set of users from the Domain Controler
@@ -58,7 +58,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
     /**
      * Returns if a recomendation between of an item <i>itemid</i> to a user <i>userid</i> exisist in 
-     * the set of recomendations.
+     * the set of recommendations.
      *
      * @param      itemid  The id of the item
      * @param      userid  The id of the user
@@ -73,7 +73,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
     /**
      * Returns if a recomendation with a rating between of an item <i>itemid</i> to a user <i>userid</i> 
-     * exisist in the set of recomendations.
+     * exisist in the set of recommendations.
      *
      * @param      itemid  The id of the item
      * @param      userid  The id of the user
@@ -128,7 +128,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     /**
      * Adds the specified recomendation <i>r</i> keeping the list ordered by id.
      *
-     * @param      u     User to get added 
+     * @param      r     User to get added 
      *
      * @return     true (as specified by Collection.add(E))
      */

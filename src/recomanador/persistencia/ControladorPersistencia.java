@@ -13,8 +13,6 @@ public class ControladorPersistencia {
     
     /**
 	 * Creates a new instance of the class ControladorPersistencia.
-	 * 
-	 * @return			 Returns a new instance of ControladorPersistencia.
 	 */
     public ControladorPersistencia()
     {
@@ -26,7 +24,7 @@ public class ControladorPersistencia {
 	 * Estableix el nom de la carpeta que s'usarà epr carregar les dàdes en el projecte
 	 * 
 	 * @param      s     Representa el nom de la carpeta, que s'haurà d'escollir entre la llista de les carpetes existents
-	 * @exception 	Throws a FolderNotValidException if the file is corrupted or is missing.
+	 * @exception 	FolderNotFoundException Throws a FolderNotValidException if the file is corrupted or is missing.
 	 */
     public void escollirProjecte(String s) throws FolderNotFoundException
     {
@@ -82,7 +80,7 @@ public class ControladorPersistencia {
      * column its identifier. 
      * The rest of the lines contain the values read. <p>
      * If an error has occurred, the null pointer will be returned instead.
-     * @exception Throws a FolderNotValidException if the file is corrupted or is missing.
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
      */
 	public ArrayList<ArrayList<String>> carregarItemsCarpeta() throws FolderNotValidException
 	{

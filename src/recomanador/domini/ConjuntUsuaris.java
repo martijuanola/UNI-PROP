@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 /**
- * This class describes the extension of ArrayList<Ususaris> with extra methods.
+ * This class describes a set of users as a extension of a users ArrayList.
  * It keeps the elements ordered by the id of users, to achieve a better performance when asking
  * for a user with a certain ID.
  * @author Martí J.
