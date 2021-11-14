@@ -10,8 +10,12 @@ import src.exceptions.NotFoundException;
 public class ConjuntItems extends ArrayList<Item> {
 
     public enum tipus
-    { //En ordre: ID, Nom, bool, float, string 
-        I, N, B, F, S
+    {
+        I, //ID
+        N, //Nom
+        B, //Boolean
+        F, //Float
+        S  //String
     }
     public static String nom; //Nom del conjunt d'items
     public static ArrayList<Float> pesos;
@@ -34,27 +38,26 @@ public class ConjuntItems extends ArrayList<Item> {
 
     public ConjuntItems(ArrayList<ArrayList<String>> items) {
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
-        ConjuntItems.assignarNomAtributs(nAtributs);
         inicialitzar(nAtributs.size());
+        ConjuntItems.assignarNomAtributs(nAtributs);
 
         if (items.size() > 0) {
             for (int i = 1; i < items.size(); ++i) {
-                ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array d'atributs
+                ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
                 for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
-                    str.add(new ArrayList<String>());
-                    String s = items.get(i).get(j); //String actual
+                    str.add(new ArrayList<String>()); //Array del atribut j del item i
+                    String s = items.get(i).get(j); //Atribut abans de separar
                     int ini = 0; //Últim ';' trobat
                     for (int k = 0; k < s.length(); ++k) {
                         if (s.charAt(k) == ';') {
                             String aux = s.substring(ini, k);
                             ini = k + 1;
-                            if (!s.equals("")) str.get(j).add(aux); //Les paraules buides no s'afegeixen
+                            str.get(j).add(aux); //S'afegeix la part del atribut
                         }
                     }
-                    if (s.length() > 0 && s.charAt(s.length()-1) != ';' && ini != s.length()-1) { //Paraula final o cas que no hi ha substring
-                        String aux = s.substring(ini, s.length()-1);
-                        str.get(j).add(aux);
-                    }
+                    //Paraula final o cas que no hi ha substring
+                    String aux = s.substring(ini, s.length());
+                    str.get(j).add(aux);
                 }
                 Item it = new Item(str);
                 add(it);
@@ -206,6 +209,15 @@ public class ConjuntItems extends ArrayList<Item> {
 
     static public tipus getTipus(int i) {
         return tipusAtribut.get(i);
+    }
+
+    public void printID() {
+        for (int i = 0; i < size(); ++i) {
+            Item it = get(i);
+            String id = "NOT HERE PAL";
+            if (it.getID().size() == 1) id = it.getID().get(0);
+            System.out.println("ID" + (i+1) + ": " + id);
+        }
     }
 
 }

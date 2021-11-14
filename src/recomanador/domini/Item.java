@@ -23,7 +23,7 @@ public class Item implements Comparable<Item>{
                 if (j != g-1) System.out.print(", ");
             }
             if (g > 1) System.out.print("}");
-            else if (i != atributs.size()-1) System.out.print(", ");
+            if (i != atributs.size()-1) System.out.print(", ");
         }
         System.out.println("");
     }
@@ -40,7 +40,15 @@ public class Item implements Comparable<Item>{
     public int compareTo(Item otherItem) {
         ArrayList<String> id1 = getID();
         ArrayList<String> id2 = otherItem.getID();
-        if (id1.size() == 0 || id2.size() == 0) return 0;
-        else return id1.get(0).compareTo(id2.get(0));
+        int n1 = 0, n2 = 0;
+        try {
+            if (id1.size() != 0) n1 = Integer.parseInt(id1.get(0));
+            if (id2.size() != 0) n2 = Integer.parseInt(id2.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (n1 == n2) return 0;
+        else if (n1 < n2) return -1;
+        else return 1;
     }
 }

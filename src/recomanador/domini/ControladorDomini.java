@@ -40,14 +40,17 @@ public class ControladorDomini {
 	}
 
     public void provaItems(ArrayList<ArrayList<String>> items) {
-        System.out.println("hey " + items.size() + " " + items.get(0).size() + " " + items.get(1).size() + " " + items.get(2).size());
+        System.out.println("Num items: " + (items.size()-1) + " Num atributs: " + items.get(0).size());
         ci = new ConjuntItems(items);
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
         for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
-            ci.assignarTipus(i, ConjuntItems.tipus.I);
-            ConjuntItems.assignarPes(i, (i*(float)1.0));
+            if (i == 5) ci.assignarTipus(i, ConjuntItems.tipus.I);
+            else if (i == 7) ci.assignarTipus(i, ConjuntItems.tipus.N);
+            else ci.assignarTipus(i, ConjuntItems.tipus.S);
+            ConjuntItems.assignarPes(i, ((float)100.0));
         }
         ci.printItems();
+        ci.printID();
     }
 
 
