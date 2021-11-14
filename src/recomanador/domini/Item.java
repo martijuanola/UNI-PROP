@@ -1,7 +1,10 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
-
+/**
+ * Classe Item
+ * @author Jaume
+ */
 public class Item implements Comparable<Item>{
 
     private ArrayList<ArrayList<String>> atributs; //Vector on cada atribut té un vector. Pot ser buit
