@@ -1,5 +1,8 @@
 package src.recomanador.domini;
 
+/**
+ * @author Martí i Jaume
+ */
 public class Usuari implements Comparable<Usuari> {
     
     /*----- ATRIBUTS -----*/
