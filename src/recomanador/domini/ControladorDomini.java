@@ -70,9 +70,6 @@ public class ControladorDomini {
     //Jaume - Items
         //Funció per obtenir els items
         //CJ(items);
-
-
-    //Martí - Users + Recomanacions
        
 
         try {
@@ -81,7 +78,8 @@ public class ControladorDomini {
             //crea ususaris buits
             cu = new ConjuntUsuaris(valoracions);
 
-            //CV(valoracions); //només agafarà valoracions i les valoracions dels usuaris
+            //es creen les recomanacions/valoracions i s'afegeixen a usuaris 
+            cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
         catch(FolderNotValidException e) {
             //processar error amb el driver

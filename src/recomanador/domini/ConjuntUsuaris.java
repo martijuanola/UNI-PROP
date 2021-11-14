@@ -1,12 +1,14 @@
 package src.recomanador.domini;
 
 import src.recomanador.excepcions.*;
-import java.util.*;  
 
+import java.util.Collections;  
 import java.util.ArrayList;
 
 /**
  * This class describes the extension of ArrayList<Ususaris> with extra methods.
+ * It keeps the elements ordered by the id of users, to achieve a better performance when asking
+ * for a user with a certain ID.
  * @author Martí J.
  */
 public class ConjuntUsuaris extends ArrayList<Usuari> {
@@ -32,7 +34,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      */
     public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) {
         int prev = -1;
-        for(int i = 0; i < raw.size(); i++) {
+        for(int i = 1; i < raw.size(); i++) {
             int newID = Integer.parseInt(raw.get(i).get(0));
             if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
             prev = newID;
@@ -51,7 +53,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @return     A boolean indicating if the user can be found or not
      */
     public boolean existeixUsuari(int id) {
-        int pos = cercaBinaria(0,this.size(),id);
+        int pos = cercaBinaria(0,this.size()-1,id);
         if(pos < this.size() && this.get(pos).getId() == id) return true;
         else return false;
     }
@@ -66,7 +68,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @throws     UserNotFoundException  The user with that id didn't exist
      */
     public Usuari getUsuari(int id) throws UserNotFoundException {
-        int pos = cercaBinaria(0,this.size(),id);
+        int pos = cercaBinaria(0,this.size()-1,id);
         if(this.get(pos).getId() == id) return this.get(pos);
         else throw new UserNotFoundException(id);
     }
@@ -75,7 +77,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
     /*----- MODIFICADORES -----*/
 
     /**
-     * Adds the specified u keeping the list ordered by id.
+     * Adds the specified user <i>u</i> keeping the list ordered by id.
      *
      * @param      u     User to get added 
      *
@@ -92,6 +94,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         return true;
     }
 
+
     /*----- ALTRES -----*/
 
     /**
@@ -102,7 +105,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @param      last   Last element of the sequenece of users
      * @param      id     The identifier of the users we are looking for
      *
-     * @return     the index where the user should be
+     * @return     The index where the user should be
      */
     private int cercaBinaria(int first, int last, int id) {  
         while(first <= last) {
