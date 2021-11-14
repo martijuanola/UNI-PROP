@@ -1,6 +1,8 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
+
+import src.recomanador.excepcions.ItemIDNotValidException;
 /**
  * Classe Item
  * @author Jaume
@@ -51,10 +53,11 @@ public class Item implements Comparable<Item>{
 
     /**
      * Retorna l'atribut de la posició id de ConjuntItems
-     * @return llista del atribut id (Només hi hauria d'haver un atribut, però no està assegurat)
+     * @return atribut id en forma de int
+     * @throws ItemIDNotValidException només si l'atribut no és correcte (no coincideix amb el format d'un id o no és un int)
      */
-    public ArrayList<String> getID() {
-        return atributs.get(ConjuntItems.id);
+    public int getid() throws ItemIDNotValidException{
+        return Integer.parseInt(atributs.get(ConjuntItems.id).get(0));
     }
 
     @Override
@@ -67,17 +70,21 @@ public class Item implements Comparable<Item>{
      * -1 si implícit < otherItem
      */
     public int compareTo(Item otherItem) {
-        ArrayList<String> id1 = getID();
-        ArrayList<String> id2 = otherItem.getID();
-        int n1 = 0, n2 = 0;
+        int id1 = 0;
         try {
-            if (id1.size() != 0) n1 = Integer.parseInt(id1.get(0));
-            if (id2.size() != 0) n2 = Integer.parseInt(id2.get(0));
-        } catch (Exception e) {
+            id1 = getid();
+        } catch (ItemIDNotValidException e1) {
+            e1.printStackTrace();
+        }
+        int id2 = 0;
+        try {
+            id2 = otherItem.getid();
+        } catch (ItemIDNotValidException e) {
             e.printStackTrace();
         }
-        if (n1 == n2) return 0;
-        else if (n1 < n2) return -1;
+        
+        if (id1 == id2) return 0;
+        else if (id1 < id2) return -1;
         else return 1;
     }
 }
