@@ -17,7 +17,6 @@ import src.recomanador.excepcions.*;
 */
 
 public class ControladorLoad {
-    
     /**
      * Creates an instance of ControladorLoad
      * 
@@ -37,7 +36,7 @@ public class ControladorLoad {
      * The first line corresponds to the header of the file, where each
      * column its identifier. 
      * The rest of the lines contain the values read. <p>
-     * If an error has occurred, the null pointer will be returned instead.
+     * @exception	If there's an error reading, the IOException will be thrown
      */
     public ArrayList<ArrayList<String>> carregarArxiu(File file) throws IOException
     {
@@ -45,36 +44,49 @@ public class ControladorLoad {
 		
 		FileReader f = null;
 		f = new FileReader(file);
-		
-		char c[] = new char[1];
+				
+		char c;
 		int n = -1;
 		
-		try { n = f.read(c); }
-		catch (IOException ex) { return null; }
-		
+		n = f.read();
 		//read will return a -1 if it has encountered the end.
 		//If this occurs at this point, it means that the file is empty
 		if (n == -1) return null;
-		
+		c = (char)n;
+				
 		while (n != -1)
 		{
 			data.add(new ArrayList<String>());
-			while (c[0] != '\n')
+			while (c != '\n')
 			{
 				String column_name = "";
 				//No hauria de donar problemes, però si se sobreescriu
 				//la string, fer un new String()
 				
-				while (c[0] != ',' && c[0] != '\n') 
+				while (c != ',' && c != '\n') 
 				{
-					column_name += c[0];
-					n = f.read(c);
+					column_name += c;
+					n = f.read();
+					c = (char)n;
 				}
 				
 				//always add to the last line
 				data.get(data.size()-1).add(column_name);
+				
+				if (c != '\n')
+				{
+					n = f.read();
+					c = (char)n;
+				}
+			}
+			
+			if (n != -1)
+			{
+				n = f.read();
+				c = (char)n;
 			}
 		}
+		
 		f.close();
 		return data;
 	}

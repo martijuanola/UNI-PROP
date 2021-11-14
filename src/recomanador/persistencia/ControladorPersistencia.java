@@ -8,7 +8,6 @@ import src.recomanador.excepcions.*;
 
 public class ControladorPersistencia {
     private File carpeta;
-    private File f;
     
     ControladorLoad cl;
     
@@ -20,7 +19,6 @@ public class ControladorPersistencia {
     public ControladorPersistencia()
     {
 		carpeta = null;
-		f = null;
 		cl = new ControladorLoad();
 	}
     
@@ -28,7 +26,7 @@ public class ControladorPersistencia {
 	 * Estableix el nom de la carpeta que s'usarà epr carregar les dàdes en el projecte
 	 * 
 	 * @param      s     Representa el nom de la carpeta, que s'haurà d'escollir entre la llista de les carpetes existents
-	 * @return			 Returns true if the folder opened correctly. Otherwise it returns false.
+	 * @exception 	Throws a FolderNotValidException if the file is corrupted or is missing.
 	 */
     public void escollirProjecte(String s) throws FolderNotFoundException
     {
@@ -84,8 +82,10 @@ public class ControladorPersistencia {
      * column its identifier. 
      * The rest of the lines contain the values read. <p>
      * If an error has occurred, the null pointer will be returned instead.
+     * @exception Throws a FolderNotValidException if the file is corrupted or is missing.
      */
-	public ArrayList<ArrayList<String>> carregarItemsCarpeta() throws FolderNotValidException {
+	public ArrayList<ArrayList<String>> carregarItemsCarpeta() throws FolderNotValidException
+	{
 		try
 		{
 			return cl.carregarArxiu(new File(carpeta, "items.csv"));
