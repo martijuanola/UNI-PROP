@@ -45,7 +45,7 @@ public class ConjuntItems extends ArrayList<Item> {
         super(size);
     }
 
-    public ConjuntItems(ArrayList<ArrayList<String>> items) {
+    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
         inicialitzar(nAtributs.size());
         ConjuntItems.assignarNomAtributs(nAtributs);
@@ -241,7 +241,8 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    public void detectarTipusAtributs() { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
+    public void detectarTipusAtributs() throws ItemTypeNotValidException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
+        boolean idAssignat = false;
         for (int i = 0; i < nomAtribut.size(); ++i) {
             boolean found = false;
             String nom = nomAtribut.get(i);
@@ -251,7 +252,9 @@ public class ConjuntItems extends ArrayList<Item> {
                     tipusAtribut.set(i, tipus.I);
                     canvisTipusAtribut(i, tipus.I);
                     found = true;
+                    idAssignat = true;
                 }
+                else throw new ItemTypeNotValidException("columna id no correspon a Identificador");
             }
             if (!found){ //Comprova si es bool
                 if (tipusCorrecte(i, tipus.B)) {
@@ -276,5 +279,6 @@ public class ConjuntItems extends ArrayList<Item> {
                 found = true;
             }
         }
+        if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
     }
 }
