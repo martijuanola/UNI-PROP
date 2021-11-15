@@ -3,6 +3,7 @@ package src.recomanador.domini;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Collections;
 
 import src.recomanador.excepcions.RecommendationNotFoundException;
 import src.recomanador.excepcions.UserNotFoundException;
@@ -31,6 +32,7 @@ public class CollaborativeFiltering {
     //idx user, centroid they belong
     HashMap<Integer, Integer> closest_centroid;
 
+    Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
 
@@ -58,10 +60,17 @@ public class CollaborativeFiltering {
      * 
      * @return     a sorted set the recommended item IDs
      */
-    public ArrayList<Integer> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
+    public ArrayList<Item> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
-        return slope1(user_ID, usuaris_cluster);
+        ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
+        ArrayList<Item> Q_items = new ArrayList<Item>(0);
+
+        for(int i = 0; i < Q; ++i){
+            Q_items.add(items_sorted.get(i).item);
+        }
+
+        return Q_items;
     }
 
     /**
@@ -75,15 +84,14 @@ public class CollaborativeFiltering {
 
         centroids = new Centroid[K];
         closest_centroid = new HashMap<Integer, Integer>(usuaris.size());
-        Random rand = new Random();
 
         //we fill each centroid with random values
         for (int centroid = 0; centroid < K; ++centroid) {
             for(int item = 0; item < items.size(); ++item) {
                 float valoracio = rand.nextFloat()*5;
                 centroids[centroid].valoracio.put(items.get(item), valoracio);
-                centroids[centroid].sum.put(items.get(item), valoracio);
-                centroids[centroid].quant.put(items.get(item), 1);
+                centroids[centroid].sum.put(items.get(item), 0f);
+                centroids[centroid].quant.put(items.get(item), 0);
             }
         }
         
@@ -141,12 +149,14 @@ public class CollaborativeFiltering {
                 for (int centroid = 0; centroid < K; ++centroid) {
                     for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
                         Item item = items.get(idx_item);
-                        float valoracio = centroids[centroid].sum.get(item) / centroids[centroid].quant.get(item);
+
+                        float valoracio;
+                        if(centroids[centroid].quant.get(item) == 0) valoracio = rand.nextFloat()*5;
+                        else valoracio = centroids[centroid].sum.get(item) / centroids[centroid].quant.get(item);
                         
-                        //perhaps we should generate random values if quant == 1
                         centroids[centroid].valoracio.replace(item, valoracio);
-                        centroids[centroid].sum.replace(item, valoracio);
-                        centroids[centroid].quant.replace(item, 1);
+                        centroids[centroid].sum.replace(item, 0f);
+                        centroids[centroid].quant.replace(item, 0);
                     }
                 }
             }
@@ -201,10 +211,11 @@ public class CollaborativeFiltering {
      *
      * @return     the distance between the user and the centroid
      */
-    aprivate ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException{
+    private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException{
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valoracionsUser = usuaris.get(user_ID).getValoracions();
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
         
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
             Item j_item = items.get(j_idx);
@@ -242,16 +253,15 @@ public class CollaborativeFiltering {
                 }
             }
 
-            float puntuacio_estimada = sum1/card_rj;
+            if(card_rj != 0){
+                float puntuacio_estimada = sum1/card_rj;
+                items_estimats.add(new ItemValoracioEstimada(puntuacio_estimada, j_item));
+            }
         }
-
-        ArrayList<Integer> amogus = new ArrayList<Integer>();
-        return amogus;
+        Collections.sort(items_estimats);
+        return items_estimats;
     }
 }
-
-    //Generar aleatoriament quan sum = 1
-    //Obtenir els Q millor valorats
     //K-NN
         //volem que ens doni 0-1
             //(string, string) = 1-edit_distance/max(size)

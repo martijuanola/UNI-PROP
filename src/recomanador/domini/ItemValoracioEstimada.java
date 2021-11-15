@@ -4,7 +4,7 @@ public class ItemValoracioEstimada implements Comparable<ItemValoracioEstimada>{
     public float valoracioEstimada;
     public Item item;
 
-    public ItemValoracioEstimada(float valoracioEstimada, String item){
+    public ItemValoracioEstimada(float valoracioEstimada, Item item){
         this.valoracioEstimada = valoracioEstimada;
         this.item = item;
     }
