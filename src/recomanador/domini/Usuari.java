@@ -1,13 +1,23 @@
 package src.recomanador.domini;
 
+/**
+ * @author Martí i Jaume
+ */
 public class Usuari implements Comparable<Usuari> {
     
     /*----- ATRIBUTS -----*/
 
     private int id;
 
-    private ConjuntRecomanacions cr; //Conjunt recomanacions
-    private ConjuntRecomanacions cv; //Conjunt recomanacions valorades
+    /**
+     * Set of all the recomendations recieved by the user but with no rating
+     */
+    private ConjuntRecomanacions cr;
+
+    /**
+     * Set of the rated recomendations of the users
+     */
+    private ConjuntRecomanacions cv;
 
     /*----- CONSTRUCTORS -----*/
 
@@ -17,6 +27,8 @@ public class Usuari implements Comparable<Usuari> {
      */
     public Usuari(int id) {
         this.id = id;
+        cr = new ConjuntRecomanacions();
+        cv = new ConjuntRecomanacions();
     }
 
     /**
@@ -77,6 +89,7 @@ public class Usuari implements Comparable<Usuari> {
 
     /*----- SETTERS -----*/
 
+    //Possiblement Inutil
     /**
      * El punter de les recomanacions ara apunta a cr
      * @param cr ConjuntRecomanacions
@@ -85,6 +98,7 @@ public class Usuari implements Comparable<Usuari> {
         this.cr = cr;
     }
 
+    //Possiblement Inutil
     /**
      * El conjunt de valoracions ara apunta a cv
      * @param cv ConjuntRecomanacions

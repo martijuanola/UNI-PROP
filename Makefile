@@ -10,7 +10,7 @@ driver:
 	
 
 run:
-	java -cp bin:. src.Main 
+	java -cp bin:. src.Main
 
 clean:
 	rm -Rf bin/*

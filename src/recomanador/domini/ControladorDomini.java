@@ -49,6 +49,29 @@ public class ControladorDomini {
 		id = NULL_ID;
 	}
 
+    public void provaItems(ArrayList<ArrayList<String>> items) {
+        System.out.println("Num items: " + (items.size()-1) + " Num atributs: " + items.get(0).size());
+        for (int i = 0; i < items.size(); ++i) {
+            if (items.get(i).size() != items.get(0).size()) System.out.println("NoPe: " + i + " id: "+items.get(i).get(5));
+        }
+        try {
+            ci = new ConjuntItems(items);
+        } catch (ItemTypeNotValidException e1) {
+            e1.printStackTrace();
+        }
+        ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
+
+        for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
+            try {
+                ConjuntItems.assignarPes(i, ((float)100.0));
+            } catch (Exception e) {
+                //Improbable que passi xd
+            }
+        }
+        ci.printItems();
+        ci.printId();
+    }
+
 
     /**
      * Calls the persistence controler to get all the data from a previous stored session
@@ -66,14 +89,7 @@ public class ControladorDomini {
             //passar-ho al driver per tornar a preguntar la carpeta
         }
 
-
-    //Jaume - Items
-        //Funció per obtenir els items
-        //CJ(items);
-
-
-    //Martí - Users + Recomanacions
-       
+        //falta inicialitzar items!!!
 
         try {
             ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
@@ -81,12 +97,15 @@ public class ControladorDomini {
             //crea ususaris buits
             cu = new ConjuntUsuaris(valoracions);
 
-            //CV(valoracions); //només agafarà valoracions i les valoracions dels usuaris
+            //es creen les recomanacions/valoracions i s'afegeixen a usuaris 
+            cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
         catch(FolderNotValidException e) {
             //processar error amb el driver
         }
+        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+            //throw new invalid file o algo d'aquest estil
+        }
     }
-
 
 }
