@@ -1,0 +1,8 @@
+Jaume:
+	-(FET)Documentar Item
+	-Documentar ConjuntItem
+	-Treure el megatest quan funcioni el read
+	-Driver de Item
+	-Driver de ConjuntItem
+	-(FET)Detectar automaticament atributs
+	-(SEGUR???)Passar atributs al tipus correcte

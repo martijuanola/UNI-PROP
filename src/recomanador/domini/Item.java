@@ -2,7 +2,7 @@ package src.recomanador.domini;
 
 import java.util.ArrayList;
 
-import src.recomanador.excepcions.ItemIDNotValidException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
 /**
  * Classe Item
  * @author Jaume
