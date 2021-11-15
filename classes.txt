@@ -8,9 +8,11 @@
 ./src/recomanador/domini/ConjuntUsuaris.java
 ./src/recomanador/domini/ControladorDomini.java
 ./src/recomanador/domini/Item.java
+./src/recomanador/Utils.java
 ./src/recomanador/excepcions/ItemNotFoundException.java
 ./src/recomanador/excepcions/UserNotFoundException.java
 ./src/recomanador/excepcions/ItemNotDefinedException.java
+./src/recomanador/excepcions/ItemIDNotValidException.java
 ./src/recomanador/excepcions/FileNotFoundException.java
 ./src/recomanador/excepcions/RecommendationNotFoundException.java
 ./src/recomanador/excepcions/FolderNotFoundException.java

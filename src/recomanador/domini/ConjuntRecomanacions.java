@@ -25,6 +25,9 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	super();
     }
 
+
+    //es podria generalitzar perquè poguessis seleccionar quines columnes son que però de moment es supsoa
+    //que sempre sera ordre idUsuari + idItem + rating
     /**
      * Constructs a new instance with the recommendations and ratings from the raw data
      *  obtained from the ratings file. It also sets the correct elements in the sets of 
@@ -39,15 +42,27 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	raw.remove(0);//elimina la capçalera
 
     	for(ArrayList<String> fila : raw) {
-    		Item i = ci.getItem(Integer.parseInt(fila.get(1)));
-    		Usuari u = cu.getUsuari(Integer.parseInt(fila.get(0)));
+
     		float v = Integer.parseInt(fila.get(2));
 
-    		Recomanacio r = new Recomanacio(u, i, v);
-    		this.add(r);
+    		try {
+    			Item i = ci.getItem(Integer.parseInt(fila.get(1)));
+    			Usuari u = cu.getUsuari(Integer.parseInt(fila.get(0)));
+    			Recomanacio r = new Recomanacio(u, i, v);
+    			
+    			this.add(r);
 
-    		if(v != Recomanacio.nul) u.getValoracions().add(r);
-    		else u.getRecomanacions().add(r);
+    			if(v != Recomanacio.nul) u.getValoracions().add(r);
+    			else u.getRecomanacions().add(r);
+    		}
+    		catch(ItemNotFoundException e) {
+    			//items mal inicialitzats o
+    			//invalid file
+    		}
+    		catch(UserNotFoundException e) {
+    			//Usuaris mal inicialitzats o
+    			//invalid file
+    		}
     	}
 
     	Collections.sort(this);
@@ -133,7 +148,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	else throw new RecommendationNotFoundException(itemid, userid);
     }
 
-    public Recomanacio getRecomanacio(Item i, Uusuari u) throws RecommendationNotFoundException {
+    public Recomanacio getRecomanacio(Item i, Usuari u) throws RecommendationNotFoundException {
 		int pos = cercaBinaria(0,this.size()-1,i.getId(),u.getId());
     	if(this.get(pos).checkKeys(i,u)) return this.get(pos);
     	else throw new RecommendationNotFoundException(i.getId(), u.getId());

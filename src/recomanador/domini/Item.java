@@ -56,7 +56,7 @@ public class Item implements Comparable<Item>{
      * @return atribut id en forma de int
      * @throws ItemIDNotValidException només si l'atribut no és correcte (no coincideix amb el format d'un id o no és un int)
      */
-    public int getid() throws ItemIDNotValidException{
+    public int getId(){
         return Integer.parseInt(atributs.get(ConjuntItems.id).get(0));
     }
 
@@ -70,18 +70,8 @@ public class Item implements Comparable<Item>{
      * -1 si implícit < otherItem
      */
     public int compareTo(Item otherItem) {
-        int id1 = 0;
-        try {
-            id1 = getid();
-        } catch (ItemIDNotValidException e1) {
-            e1.printStackTrace();
-        }
-        int id2 = 0;
-        try {
-            id2 = otherItem.getid();
-        } catch (ItemIDNotValidException e) {
-            e.printStackTrace();
-        }
+        int id1 = getId();
+        int id2 = otherItem.getId();
         
         if (id1 == id2) return 0;
         else if (id1 < id2) return -1;

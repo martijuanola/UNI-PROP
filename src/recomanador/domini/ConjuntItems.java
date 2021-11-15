@@ -112,7 +112,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return cercaBinaria(id, 0, size());
     }
 
-    public ArrayList<String> getAtributItemID(int id, int i) throws ItemNotFoundException, ItemIDNotValidException { //Cerca dicotòmica + retornar atribut
+    public ArrayList<String> getAtributItemID(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
         return getItem(id).getAtribut(i);
     }
 
@@ -120,7 +120,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(index).getAtribut(i);
     }
 
-    private Item cercaBinaria(int id, int left, int right) throws ItemNotFoundException, ItemIDNotValidException {
+    private Item cercaBinaria(int id, int left, int right) throws ItemNotFoundException{
         int l = left, r = right, mid = 0;
         boolean end = false;
         while (!end) {
@@ -145,7 +145,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
     private int getID(int m) throws ItemIDNotValidException {
         Item i = get(m);
-        return i.getid();
+        return i.getId();
     }
 
     static public void assignarPes(int a, float pes) {
@@ -227,7 +227,7 @@ public class ConjuntItems extends ArrayList<Item> {
         for (int i = 0; i < size(); ++i) {
             Item it = get(i);
             String id = "NOT HERE PAL";
-            id = "" + it.getid();
+            id = "" + it.getId();
             System.out.println("ID" + (i + 1) + ": " + id);
         }
     }
