@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import src.recomanador.Search;
-import src.recomanador.StringChecker;
+import src.recomanador.StringOperations;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
@@ -48,7 +48,7 @@ public class ConjuntItems extends ArrayList<Item> {
         for (int i = 1; i < items.size(); ++i) {
             ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
             for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
-                str.add(StringChecker.divideString(items.get(i).get(j), ';'));
+                str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
             Item it = new Item(str);
             add(it);
@@ -136,28 +136,28 @@ public class ConjuntItems extends ArrayList<Item> {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esNombre(id.get(0))) return false;
+                if (!StringOperations.esNombre(id.get(0))) return false;
             }
         }
         else if (t == tipus.B) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esBool(id.get(0))) return false;
+                if (!StringOperations.esBool(id.get(0))) return false;
             }
         }
         else if (t == tipus.F) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esFloat(id.get(0))) return false;
+                if (!StringOperations.esFloat(id.get(0))) return false;
             }
         }
         else if (t == tipus.D) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esData(id.get(0))) return false;
+                if (!StringOperations.esData(id.get(0))) return false;
             }
         }
         // Nom i String sempre estaran bé
@@ -233,6 +233,19 @@ public class ConjuntItems extends ArrayList<Item> {
             id = "" + it.getId();
             System.out.println("ID" + (i + 1) + ": " + id);
         }
+    }
+
+    public String getMinAtribut(int col) {
+        String s = "";
+        for (int i = 0; i < size(); ++i) {
+            ArrayList<String> atr = get(i).getAtribut(i);
+            for (int j = 0; j < atr.size(); ++j) {
+                if (StringOperations.compararAtributs(atr.get(j), s, getTipus(i)) < 0) { //atribut és menor que j
+                    s = atr.get(j);
+                }
+            }
+        }
+        return s;
     }
 
     public void detectarTipusAtributs() throws ItemTypeNotValidException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
