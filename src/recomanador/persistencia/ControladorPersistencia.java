@@ -8,11 +8,12 @@ import src.recomanador.excepcions.*;
 
 public class ControladorPersistencia {
     private File carpeta;
-    
+    private static File dades; 		//Carpeta de dades
     ControladorLoad cl;
     
     /**
-	 * Creates a new instance of the class ControladorPersistencia.
+	 * Creates a new instance of the class ControladorPersistencia. It also finds the
+	 * data folder, and if it doen't exist, it creates it.
 	 * 
 	 * @return			 Returns a new instance of ControladorPersistencia.
 	 */
@@ -20,6 +21,9 @@ public class ControladorPersistencia {
     {
 		carpeta = null;
 		cl = new ControladorLoad();
+		
+		//Comprovar si existeix dades
+		//Sinó, crear-ne la carpeta
 	}
     
 	/**
@@ -65,11 +69,10 @@ public class ControladorPersistencia {
 	{
 		try
 		{
-			//usar files guardades en el main
-			return cl.carregarArxiu(new File(carpeta, "valoracions.csv"));
+			return cl.carregarArxiu(new File(carpeta, "ratings.db.csv"));
 		} catch (IOException e)
 		{
-			throw new FolderNotValidException(carpeta.getName(), "valoracions.csv");
+			throw new FolderNotValidException(carpeta.getName(), "ratings.db.csv");
 		}
 	}
 	
@@ -95,5 +98,21 @@ public class ControladorPersistencia {
 		}
 	}
 	
-	
+	public ArrayList<ArrayList<String>> carregarFitxerExtern(String s) throws FileNotValidException, FileNotFoundException
+	{
+		File extern;
+		try 
+		{
+			extern = new File(s);
+			try
+			{
+				return cl.carregarArxiu(extern);
+			} catch (IOException e) {
+				throw new FileNotValidException(extern);
+			}
+			
+		} catch (IOException e) {
+			throw new FileNotFoundException(extern);
+		}
+	}
 }
