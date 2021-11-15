@@ -1,12 +1,8 @@
 package src.recomanador.domini;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
-
-import javax.crypto.SealedObject;
 
 import src.recomanador.Search;
 import src.recomanador.StringChecker;
@@ -72,7 +68,7 @@ public class ConjuntItems extends ArrayList<Item> {
         while (i < nAtributs) {
             pesos.add((float) 100.0);
             tipusAtribut.add(i, tipus.S);
-            nomAtribut.add("holi" + i);
+            nomAtribut.add("Not A Name" + i);
             ++i;
         }
     }
@@ -107,11 +103,6 @@ public class ConjuntItems extends ArrayList<Item> {
 
     public ArrayList<String> getAtributItem(int posItem, int atribut) { //retornar atribut
         return get(posItem).getAtribut(atribut);
-    }
-
-    private int getId(int ind) {
-        Item i = get(ind);
-        return i.getId();
     }
 
     static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException {
@@ -186,6 +177,10 @@ public class ConjuntItems extends ArrayList<Item> {
         return nomAtribut.get(i);
     }
 
+    static public ArrayList<String> getCapçalera() {
+        return nomAtribut;
+    }
+
     static public Float getPes(int i) {
         return pesos.get(i);
     }
@@ -235,7 +230,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public void printId() {
         for (int i = 0; i < size(); ++i) {
             Item it = get(i);
-            String id = "NOT HERE PAL";
+            String id = "Not An ID";
             id = "" + it.getId();
             System.out.println("ID" + (i + 1) + ": " + id);
         }

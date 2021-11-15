@@ -49,27 +49,10 @@ public class ControladorDomini {
 		id = NULL_ID;
 	}
 
-    public void provaItems(ArrayList<ArrayList<String>> items) {
-        System.out.println("Num items: " + (items.size()-1) + " Num atributs: " + items.get(0).size());
-        for (int i = 0; i < items.size(); ++i) {
-            if (items.get(i).size() != items.get(0).size()) System.out.println("NoPe: " + i + " id: "+items.get(i).get(5));
-        }
-        try {
-            ci = new ConjuntItems(items);
-        } catch (ItemTypeNotValidException e1) {
-            e1.printStackTrace();
-        }
+    public void prova2() {
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
-
-        for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
-            try {
-                ConjuntItems.assignarPes(i, ((float)100.0));
-            } catch (Exception e) {
-                //Improbable que passi xd
-            }
-        }
-        ci.printItems();
-        ci.printId();
+        //ci.printItems();
+        //ci.printId();
     }
 
 
@@ -89,7 +72,19 @@ public class ControladorDomini {
             //passar-ho al driver per tornar a preguntar la carpeta
         }
 
-        //falta inicialitzar items!!!
+        try {
+            ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
+
+            ci = new ConjuntItems(items);
+            //TODO: Falta inicialitzar el nom del conjunt
+
+        }
+        catch (FolderNotValidException e1) {
+            //passar-ho al driver per tornar a preguntar la carpeta
+        }
+        catch (ItemTypeNotValidException e) {
+            //l'atribut id no existeix o hi ha algun que no és int
+        }
 
         try {
             ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();

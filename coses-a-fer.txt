@@ -6,3 +6,7 @@ Jaume:
 	-Driver de ConjuntItem
 	-(FET)Detectar automaticament atributs
 	-(SEGUR???)Passar atributs al tipus correcte
+	-Min i max d'un atribut
+	-distancies entre dates
+	-(FET)getCapceleres
+	-(FET)getAtributs

@@ -1,7 +1,5 @@
 package src.recomanador;
 
-import java.util.ArrayList;
-
 public class StringChecker {
     static public boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
         for (int i = 0; i < s.length(); ++i) {

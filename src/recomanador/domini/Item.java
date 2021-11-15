@@ -2,7 +2,6 @@ package src.recomanador.domini;
 
 import java.util.ArrayList;
 
-import src.recomanador.excepcions.ItemTypeNotValidException;
 /**
  * Classe Item
  * @author Jaume
@@ -57,6 +56,14 @@ public class Item implements Comparable<Item>{
      */
     public int getId(){
         return Integer.parseInt(atributs.get(ConjuntItems.id).get(0));
+    }
+
+    /**
+     * Retorna tots els atributs
+     * @return atributs en forma de llista de llistes d'atributs
+     */
+    public ArrayList<ArrayList<String>> getAtributs() {
+        return atributs;
     }
 
     @Override
