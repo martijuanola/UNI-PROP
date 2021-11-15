@@ -1,12 +1,14 @@
 Jaume:
-	-(FET)Documentar Item
+
+	-Min i max d'un atribut
+	-distancies entre dades
 	-Documentar ConjuntItem
-	-Treure el megatest quan funcioni el read
 	-Driver de Item
 	-Driver de ConjuntItem
-	-(FET)Detectar automaticament atributs
-	-(SEGUR???)Passar atributs al tipus correcte
-	-Min i max d'un atribut
-	-distancies entre dates
+	-Passar atributs al tipus correcte
+
 	-(FET)getCapceleres
 	-(FET)getAtributs
+	-(FET)Documentar Item
+	-(FET)Detectar automaticament atributs
+	-(FET)Treure el megatest quan funcioni el read
