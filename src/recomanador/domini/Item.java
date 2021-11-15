@@ -2,7 +2,7 @@ package src.recomanador.domini;
 
 import java.util.ArrayList;
 
-import src.recomanador.excepcions.ItemIdNotValidException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
 /**
  * Classe Item
  * @author Jaume
@@ -54,7 +54,6 @@ public class Item implements Comparable<Item>{
     /**
      * Retorna l'atribut de la posició id de ConjuntItems
      * @return atribut id en forma de int
-     * @throws ItemIdNotValidException només si l'atribut no és correcte (no coincideix amb el format d'un id o no és un int)
      */
     public int getId(){
         return Integer.parseInt(atributs.get(ConjuntItems.id).get(0));

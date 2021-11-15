@@ -4,11 +4,16 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
-import src.recomanador.Utils;
-import src.recomanador.excepcions.ItemIdNotValidException;
-import src.recomanador.excepcions.ItemNotDefinedException;
+import javax.crypto.SealedObject;
+
+import src.recomanador.Search;
+import src.recomanador.StringChecker;
+import src.recomanador.StringOperations;
 import src.recomanador.excepcions.ItemNotFoundException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 
 public class ConjuntItems extends ArrayList<Item> {
 
@@ -40,43 +45,22 @@ public class ConjuntItems extends ArrayList<Item> {
         super(size);
     }
 
-    public ConjuntItems(ArrayList<ArrayList<String>> items) {
+    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
         inicialitzar(nAtributs.size());
         ConjuntItems.assignarNomAtributs(nAtributs);
 
-        if (items.size() > 0) {
-            for (int i = 1; i < items.size(); ++i) {
-                ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
-                for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
-                    str.add(new ArrayList<String>()); //Array del atribut j del item i
-                    String s = items.get(i).get(j); //Atribut abans de separar
-                    int ini = 0; //Últim ';' trobat
-
-                    String c = "";
-                    for (int k = 0; k < s.length(); ++k) { //Eliminem totes les instàncies de ", perque no són últis
-                        if (s.charAt(k) != '\"')
-                            c = c + s.charAt(k);
-                    }
-                    s = c;
-
-                    for (int k = 0; k < s.length(); ++k) {
-                        if (s.charAt(k) == ';') {
-                            String aux = s.substring(ini, k);
-                            ini = k + 1;
-                            str.get(j).add(aux); //S'afegeix la part del atribut
-                        }
-                    }
-                    //Paraula final o cas que no hi ha substring
-                    String aux = s.substring(ini, s.length());
-                    str.get(j).add(aux);
-                }
-                Item it = new Item(str);
-                add(it);
+        for (int i = 1; i < items.size(); ++i) {
+            ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
+            for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
+                str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
+            Item it = new Item(str);
+            add(it);
         }
         detectarTipusAtributs();
     }
+
 
     static private void inicialitzar(int nAtributs) { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
         id = -1;
@@ -108,64 +92,86 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    public Item getItem(int id) throws ItemNotFoundException, ItemIdNotValidException { //Cerca dicotòmica
-        return cercaBinaria(id, 0, size());
+    public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
+        int pos = Search.binarySearchItem(this, id, 0, size()-1);
+        return get(pos);
+    }
+
+    public boolean existeixItem(int id) {
+        return Search.binarySearchItem(this, id, 0, size()-1) > -1;
     }
 
     public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
         return getItem(id).getAtribut(i);
     }
 
-    public ArrayList<String> getAtributItem(int index, int i) { //retornar atribut
-        return get(index).getAtribut(i);
+    public ArrayList<String> getAtributItem(int posItem, int atribut) { //retornar atribut
+        return get(posItem).getAtribut(atribut);
     }
 
-    private Item cercaBinaria(int id, int left, int right) throws ItemNotFoundException{
-        int l = left, r = right, mid = 0;
-        boolean end = false;
-        while (!end) {
-            if (r > l) {
-                throw new ItemNotFoundException("id no existeix: " + id);
-            }
-
-            mid = l + (r - l) / 2;
-            int s = getId(mid);
-
-            if (s < id) { //mid < id
-                l = mid + 1;
-            }
-            if (s > id) { //mid > id
-                r = mid - 1;
-            } else {
-                end = true;
-            }
-        }
-        return get(mid);
-    }
-
-    private int getId(int m) throws ItemIdNotValidException {
-        Item i = get(m);
+    private int getId(int ind) {
+        Item i = get(ind);
         return i.getId();
     }
 
-    static public void assignarPes(int a, float pes) {
-        ConjuntItems.pesos.set(a, pes);
+    static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException {
+        if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
+        else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
+        else ConjuntItems.pesos.set(a, pes);
     }
 
-    public void assignarTipus(int a, tipus c) {
-        ConjuntItems.tipusAtribut.set(a, c);
-        if (c == tipus.I) {
+    public void assignarTipus(int atribut, tipus t) throws ItemTypeNotValidException {
+        if (!tipusCorrecte(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + tipusToString(t));
+        ConjuntItems.tipusAtribut.set(atribut, t);
+        canvisTipusAtribut(atribut, t);
+    }
+
+    private void canvisTipusAtribut(int atribut, tipus t) {
+        if (t == tipus.I) {
             if (id != -1) { //Canviem l'id antic per evitar tenir 2 id
                 ConjuntItems.tipusAtribut.set(id, tipus.S);
             }
-            id = a;
+            id = atribut;
             Collections.sort(this);
-        } else if (c == tipus.N) {
+        } else if (t == tipus.N) {
             if (nomA != -1) { //Canviem el nom antic per evitar tenir 2 noms
                 ConjuntItems.tipusAtribut.set(nomA, tipus.S);
             }
-            nomA = a;
+            nomA = atribut;
         }
+    }
+
+    private boolean tipusCorrecte(int columna, tipus t) {
+        if (t == tipus.I) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() != 1) return false;
+                if (!StringChecker.esNombre(id.get(0))) return false;
+            }
+        }
+        else if (t == tipus.B) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() != 1) return false;
+                if (!StringChecker.esBool(id.get(0))) return false;
+            }
+        }
+        else if (t == tipus.F) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() != 1) return false;
+                if (!StringChecker.esFloat(id.get(0))) return false;
+            }
+        }
+        else if (t == tipus.D) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() != 1) return false;
+                if (!StringChecker.esData(id.get(0))) return false;
+            }
+        }
+        // Nom i String sempre estaran bé
+        return true;
     }
 
     static public void assignarNomAtributs(ArrayList<String> n) {
@@ -189,33 +195,36 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     static public String getSTipus(int i) {
-        String s = "";
         tipus t = tipusAtribut.get(i);
+        return tipusToString(t);
 
+    }
+
+    static public String tipusToString(tipus t) {
+        String s = "";
         switch (t) {
-        case I:
-            s = "Identificador";
-            break;
-        case N:
-            s = "Nom";
-            break;
-        case B:
-            s = "Boolean";
-            break;
-        case F:
-            s = "Float";
-            break;
-        case S:
-            s = "String";
-            break;
-        case D:
-            s = "Data";
-            break;
-        default:
-            s = "No assignat";
-            break;
-        }
-
+            case I:
+                s = "Identificador";
+                break;
+            case N:
+                s = "Nom";
+                break;
+            case B:
+                s = "Boolean";
+                break;
+            case F:
+                s = "Float";
+                break;
+            case S:
+                s = "String";
+                break;
+            case D:
+                s = "Data";
+                break;
+            default:
+                s = "No assignat";
+                break;
+            }
         return s;
     }
 
@@ -223,7 +232,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return tipusAtribut.get(i);
     }
 
-    public void printId() throws ItemIdNotValidException {
+    public void printId() {
         for (int i = 0; i < size(); ++i) {
             Item it = get(i);
             String id = "NOT HERE PAL";
@@ -232,77 +241,44 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    public void detectarTipusAtributs() { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
+    public void detectarTipusAtributs() throws ItemTypeNotValidException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
+        boolean idAssignat = false;
         for (int i = 0; i < nomAtribut.size(); ++i) {
-            double minimumPercent = 40.0; //Mínim percentatge d'aparacions per considerar que un atribut és d'un tipus
-            int minimumItems = size()/5; //Items mínims que ha de comprovar per decidir si es correcte o no
-            boolean isBool = false, isID = false, isFloat = false, isDate = false, isString = false, found = false;
+            boolean found = false;
             String nom = nomAtribut.get(i);
 
-            System.out.println("atribut " + nom);
             if (nom.equalsIgnoreCase("id")) { //Comprova si es id
-                isID = true;
-                found = true;
+                if (tipusCorrecte(i, tipus.I)) {
+                    tipusAtribut.set(i, tipus.I);
+                    canvisTipusAtribut(i, tipus.I);
+                    found = true;
+                    idAssignat = true;
+                }
+                else throw new ItemTypeNotValidException("columna id no correspon a Identificador");
             }
             if (!found){ //Comprova si es bool
-                int it = 0, count = 0;
-                while (!isBool && it < size()) {
-                    ArrayList<String> c = get(it).getAtribut(i);
-                    if (c.size() == 1 && Utils.esBool(c.get(0))) {
-                        ++count;
-                    }
-                    if (it > minimumItems) {
-                        if ((count*1.0/it*1.0)*100 > minimumPercent) {
-                            isBool = true;
-                            found = true;
-                        }
-                    }
-                    ++it;
+                if (tipusCorrecte(i, tipus.B)) {
+                    tipusAtribut.set(i, tipus.B);
+                    found = true;
                 }
             }
             if (!found) { //Comprova si es float/int
-                int it = 0, count = 0;
-                while (!isFloat && it < size()) {
-                    ArrayList<String> c = get(it).getAtribut(i);
-                    if (c.size() == 1) {
-                        if (Utils.esFloat(c.get(0))) ++count;
-                    }
-                    if (it > minimumItems) {
-                        if ((count*1.0/it*1.0)*100 > minimumPercent) {
-                            isFloat = true;
-                            found = true;
-                        }
-                    }
-                    ++it;
+                if (tipusCorrecte(i, tipus.F)) {
+                    tipusAtribut.set(i, tipus.F);
+                    found = true;
                 }
             }
             if (!found) { //Comprovar si es una data
-                int it = 0, count = 0;
-                while (!isDate && it < size()) {
-                    ArrayList<String> c = get(it).getAtribut(i);
-                    if (c.size() == 1) {
-                        String date = c.get(0);
-                        if (Utils.esData(date)) ++count;
-                    }
-                    if (it > minimumItems) {
-                        if ((count*1.0/it*1.0)*100 > minimumPercent) {
-                            isDate = true;
-                            found = true;
-                        }
-                    }
-                    ++it;
+                if (tipusCorrecte(i, tipus.D)) {
+                    tipusAtribut.set(i, tipus.D);
+                    found = true;
                 }
             }
             if (!found) { //Es una string
-                isString = true;
+                tipusAtribut.set(i, tipus.S);
                 found = true;
             }
-
-            if (isID) assignarTipus(i, tipus.I);
-            else if (isBool)assignarTipus(i, tipus.B);
-            else if (isFloat) assignarTipus(i, tipus.F);
-            else if (isDate) assignarTipus(i, tipus.D);
-            else if (isString) assignarTipus(i, tipus.S);
         }
+        if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
     }
 }

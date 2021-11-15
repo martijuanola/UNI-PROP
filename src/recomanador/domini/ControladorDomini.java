@@ -51,18 +51,25 @@ public class ControladorDomini {
 
     public void provaItems(ArrayList<ArrayList<String>> items) {
         System.out.println("Num items: " + (items.size()-1) + " Num atributs: " + items.get(0).size());
-        ci = new ConjuntItems(items);
+        for (int i = 0; i < items.size(); ++i) {
+            if (items.get(i).size() != items.get(0).size()) System.out.println("NoPe: " + i + " id: "+items.get(i).get(5));
+        }
+        try {
+            ci = new ConjuntItems(items);
+        } catch (ItemTypeNotValidException e1) {
+            e1.printStackTrace();
+        }
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
 
         for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
-            ConjuntItems.assignarPes(i, ((float)100.0));
+            try {
+                ConjuntItems.assignarPes(i, ((float)100.0));
+            } catch (Exception e) {
+                //Improbable que passi xd
+            }
         }
         ci.printItems();
-        try {
-            ci.printId();
-        } catch (ItemIdNotValidException e) {
-            e.printStackTrace();
-        }
+        ci.printId();
     }
 
 

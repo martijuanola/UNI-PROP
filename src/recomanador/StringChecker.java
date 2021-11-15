@@ -1,6 +1,8 @@
 package src.recomanador;
 
-public class Utils {
+import java.util.ArrayList;
+
+public class StringChecker {
     static public boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
         for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);
@@ -32,18 +34,18 @@ public class Utils {
     static public boolean esData(String s) {
         int p1, p2; //Marquen les posicions dels separadors
         if (s.length() == 10) {//xxxx-xx-xx o xx-xx-xxxx
-            if (Utils.esNombre(s.substring(0, 4))) { //Té l'any primer xxxx-xx-xx 
+            if (StringChecker.esNombre(s.substring(0, 4))) { //Té l'any primer xxxx-xx-xx 
                 p1 = 4;
                 p2 = 7;
             }
-            else if (Utils.esNombre(s.substring(0, 2))) { //Té un dia primer xx-xx-xxxx
+            else if (StringChecker.esNombre(s.substring(0, 2))) { //Té un dia primer xx-xx-xxxx
                 p1 = 2;
                 p2 = 5;
             }
             else return false;
 
             if ((s.charAt(p1) == '-' && s.charAt(p2) == '-') || (s.charAt(p1) == '/' && s.charAt(p2) == '/')) {
-                if (Utils.esNombre(s.substring(0, p1)) && Utils.esNombre(s.substring(p1+1, p2)) && Utils.esNombre(s.substring(p2+1, s.length()))) {
+                if (StringChecker.esNombre(s.substring(0, p1)) && StringChecker.esNombre(s.substring(p1+1, p2)) && StringChecker.esNombre(s.substring(p2+1, s.length()))) {
                     return true;
                 }
             }
