@@ -31,13 +31,20 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      *  from a previous execution without filling ordered by ID
      *
      * @param      raw   The raw data from a file of ratings
+     * @exception  UserIdNotValidException Gets thrown if the string for a user id is can not be converted
+     * to int
      */
-    public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) {
+    public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws UserIdNotValidException {
         int prev = -1;
         for(int i = 1; i < raw.size(); i++) {
-            int newID = Integer.parseInt(raw.get(i).get(0));
-            if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
-            prev = newID;
+            try {
+                int newID = Integer.parseInt(raw.get(i).get(0));
+                if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
+                prev = newID;
+            }
+            catch(NumberFormatException e) {
+                throw new UserIdNotValidException(raw.get(i).get(0));
+            }
         }
         Collections.sort(this);
     }

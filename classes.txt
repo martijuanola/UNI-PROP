@@ -12,11 +12,13 @@
 ./src/recomanador/excepcions/ItemNotFoundException.java
 ./src/recomanador/excepcions/UserNotFoundException.java
 ./src/recomanador/excepcions/ItemNotDefinedException.java
-./src/recomanador/excepcions/ItemIDNotValidException.java
+./src/recomanador/excepcions/RatingNotValidException.java
+./src/recomanador/excepcions/ItemIdNotValidException.java
 ./src/recomanador/excepcions/FileNotFoundException.java
 ./src/recomanador/excepcions/RecommendationNotFoundException.java
 ./src/recomanador/excepcions/FolderNotFoundException.java
 ./src/recomanador/excepcions/FileNotValidException.java
+./src/recomanador/excepcions/UserIdNotValidException.java
 ./src/recomanador/excepcions/FolderNotValidException.java
 ./src/recomanador/persistencia/ControladorSave.java
 ./src/recomanador/persistencia/ControladorPersistencia.java

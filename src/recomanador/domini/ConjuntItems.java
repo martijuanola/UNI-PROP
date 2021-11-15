@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import src.recomanador.Utils;
-import src.recomanador.excepcions.ItemIDNotValidException;
+import src.recomanador.excepcions.ItemIdNotValidException;
 import src.recomanador.excepcions.ItemNotDefinedException;
 import src.recomanador.excepcions.ItemNotFoundException;
 
@@ -108,11 +108,11 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    public Item getItem(int id) throws ItemNotFoundException, ItemIDNotValidException { //Cerca dicotòmica
+    public Item getItem(int id) throws ItemNotFoundException, ItemIdNotValidException { //Cerca dicotòmica
         return cercaBinaria(id, 0, size());
     }
 
-    public ArrayList<String> getAtributItemID(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
+    public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
         return getItem(id).getAtribut(i);
     }
 
@@ -129,7 +129,7 @@ public class ConjuntItems extends ArrayList<Item> {
             }
 
             mid = l + (r - l) / 2;
-            int s = getID(mid);
+            int s = getId(mid);
 
             if (s < id) { //mid < id
                 l = mid + 1;
@@ -143,7 +143,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(mid);
     }
 
-    private int getID(int m) throws ItemIDNotValidException {
+    private int getId(int m) throws ItemIdNotValidException {
         Item i = get(m);
         return i.getId();
     }
@@ -223,7 +223,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return tipusAtribut.get(i);
     }
 
-    public void printID() throws ItemIDNotValidException {
+    public void printId() throws ItemIdNotValidException {
         for (int i = 0; i < size(); ++i) {
             Item it = get(i);
             String id = "NOT HERE PAL";

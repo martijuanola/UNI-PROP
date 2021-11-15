@@ -1,8 +1,8 @@
 package src.recomanador.excepcions;
 
 
-public class ItemIDNotValidException extends Exception { 
-    public ItemIDNotValidException(String errorMessage) {
+public class ItemIdNotValidException extends Exception { 
+    public ItemIdNotValidException(String errorMessage) {
         super(errorMessage);
     }
 }

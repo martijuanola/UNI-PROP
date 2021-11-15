@@ -59,8 +59,8 @@ public class ControladorDomini {
         }
         ci.printItems();
         try {
-            ci.printID();
-        } catch (ItemIDNotValidException e) {
+            ci.printId();
+        } catch (ItemIdNotValidException e) {
             e.printStackTrace();
         }
     }
@@ -82,11 +82,7 @@ public class ControladorDomini {
             //passar-ho al driver per tornar a preguntar la carpeta
         }
 
-
-    //Jaume - Items
-        //Funció per obtenir els items
-        //CJ(items);
-       
+        //falta inicialitzar items!!!
 
         try {
             ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
@@ -100,7 +96,9 @@ public class ControladorDomini {
         catch(FolderNotValidException e) {
             //processar error amb el driver
         }
+        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+            //throw new invalid file o algo d'aquest estil
+        }
     }
-
 
 }

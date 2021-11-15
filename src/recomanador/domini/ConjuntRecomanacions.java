@@ -26,6 +26,8 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     }
 
 
+    //en principi les de user no haurien de petar perquè ja haurien petat abans però les poso igualment
+
     //es podria generalitzar perquè poguessis seleccionar quines columnes son que però de moment es supsoa
     //que sempre sera ordre idUsuari + idItem + rating
     /**
@@ -37,32 +39,47 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @param      cu    Set of users from the Domain Controler
      * @param      raw   The raw data from the ratings file
      */
-    public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) {
+    public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException  {
     	
     	raw.remove(0);//elimina la capçalera
 
     	for(ArrayList<String> fila : raw) {
+            float v;
+            Item i;
+            Usuari u;
 
-    		float v = Integer.parseInt(fila.get(2));
+            //potser cal inicialitzar-ho pels catchs
 
-    		try {
-    			Item i = ci.getItem(Integer.parseInt(fila.get(1)));
-    			Usuari u = cu.getUsuari(Integer.parseInt(fila.get(0)));
-    			Recomanacio r = new Recomanacio(u, i, v);
-    			
-    			this.add(r);
 
-    			if(v != Recomanacio.nul) u.getValoracions().add(r);
-    			else u.getRecomanacions().add(r);
-    		}
-    		catch(ItemNotFoundException e) {
-    			//items mal inicialitzats o
-    			//invalid file
-    		}
-    		catch(UserNotFoundException e) {
-    			//Usuaris mal inicialitzats o
-    			//invalid file
-    		}
+            //es podrien inicialitzar els trys i catchs si s'ajunten les excepcions en DataNotValidException o algo així
+            try {
+                v = Integer.parseInt(fila.get(2));
+            }
+            catch(NumberFormatException e) {
+                throw new RatingNotValidException(fila.get(2));
+            }
+
+            if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
+
+            try {
+                i = ci.getItem(Integer.parseInt(fila.get(1)));
+            }
+            catch(NumberFormatException e) {
+                throw new ItemIdNotValidException(fila.get(1));
+            }
+
+            try {
+    			u = cu.getUsuari(Integer.parseInt(fila.get(0)));
+            }
+            catch(NumberFormatException e) {
+                throw new ItemIdNotValidException(fila.get(0));
+            }
+
+            Recomanacio r = new Recomanacio(u, i, v);
+            this.add(r);
+
+            if(v != Recomanacio.nul) u.getValoracions().add(r);
+            else u.getRecomanacions().add(r);
     	}
 
     	Collections.sort(this);
