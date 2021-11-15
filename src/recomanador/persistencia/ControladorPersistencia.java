@@ -6,6 +6,13 @@ import java.util.ArrayList;
 
 import src.recomanador.excepcions.*;
 
+/**
+* La classe ControladorPersistencia implementa controlador de lectura
+* i d'escriptura de les dades en memòria. Gestiona també les carpetes
+* on es guardarà part de la informació.
+* 
+* @author Pol Sturlese 
+*/
 public class ControladorPersistencia {
     private File carpeta;
     private static File dades; 		//Carpeta de dades
@@ -108,11 +115,11 @@ public class ControladorPersistencia {
 			{
 				return cl.carregarArxiu(extern);
 			} catch (IOException e) {
-				throw new FileNotValidException(extern);
+				throw new FileNotValidException(s);
 			}
 			
-		} catch (IOException e) {
-			throw new FileNotFoundException(extern);
+		} catch (Exception e) {
+			throw new FileNotFoundException(s);
 		}
 	}
 }
