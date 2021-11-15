@@ -51,6 +51,9 @@ public class ControladorDomini {
 
     public void prova2() {
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
+        for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
+            System.out.println(ci.getMinAtribut(i));
+        }
         //ci.printItems();
         //ci.printId();
     }
