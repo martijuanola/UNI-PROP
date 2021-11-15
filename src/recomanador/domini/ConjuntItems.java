@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import src.recomanador.Search;
 import src.recomanador.StringChecker;
-import src.recomanador.StringOperations;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
@@ -49,7 +48,7 @@ public class ConjuntItems extends ArrayList<Item> {
         for (int i = 1; i < items.size(); ++i) {
             ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
             for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
-                str.add(StringOperations.divideString(items.get(i).get(j), ';'));
+                str.add(StringChecker.divideString(items.get(i).get(j), ';'));
             }
             Item it = new Item(str);
             add(it);

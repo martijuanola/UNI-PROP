@@ -1,5 +1,9 @@
 package src.recomanador;
 
+import java.util.ArrayList;
+
+import src.recomanador.domini.ConjuntItems.tipus;
+
 public class StringChecker {
     static public boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
         for (int i = 0; i < s.length(); ++i) {
@@ -53,5 +57,26 @@ public class StringChecker {
 
     static public boolean esBool(String s) {
         return s.equalsIgnoreCase("false") || s.equalsIgnoreCase("true");
+    }
+
+    public static int compararAtributs(String s1, String s2, tipus tipus) { //-1 si s1 < s2, 0 si son iguals, 1 si s1 > s2
+        return 0;
+    }
+    
+    static public ArrayList<String> divideString(String s, char divider) {
+        ArrayList<String> str = new ArrayList<String>();
+        int ini = 0; //Últim ';' trobat
+
+        for (int k = 0; k < s.length(); ++k) {
+            if (s.charAt(k) == ';') {
+                String aux = s.substring(ini, k);
+                ini = k + 1;
+                str.add(aux); //S'afegeix la part del atribut
+            }
+        }
+        //Paraula final o cas que no hi ha substring
+        String aux = s.substring(ini, s.length());
+        str.add(aux);
+        return str;
     }
 }
