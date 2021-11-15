@@ -101,7 +101,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return Search.binarySearchItem(this, id, 0, size()-1) > -1;
     }
 
-    public ArrayList<String> getAtributItemID(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
+    public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
         return getItem(id).getAtribut(i);
     }
 
@@ -109,7 +109,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(posItem).getAtribut(atribut);
     }
 
-    private int getID(int ind) {
+    private int getId(int ind) {
         Item i = get(ind);
         return i.getId();
     }
@@ -232,7 +232,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return tipusAtribut.get(i);
     }
 
-    public void printID() {
+    public void printId() {
         for (int i = 0; i < size(); ++i) {
             Item it = get(i);
             String id = "NOT HERE PAL";

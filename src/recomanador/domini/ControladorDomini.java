@@ -69,7 +69,7 @@ public class ControladorDomini {
             }
         }
         ci.printItems();
-        ci.printID();
+        ci.printId();
     }
 
 
