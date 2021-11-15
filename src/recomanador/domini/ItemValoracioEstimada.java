@@ -1,5 +1,11 @@
 package src.recomanador.domini;
 
+/**
+ * This class joins an item with an estimated rating, and reimplements the
+ * the comparator function to be able to sort it.
+ * 
+ * @author Adrià F.
+ */
 public class ItemValoracioEstimada implements Comparable<ItemValoracioEstimada>{
     public float valoracioEstimada;
     public Item item;
