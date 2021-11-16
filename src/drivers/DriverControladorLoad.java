@@ -19,12 +19,7 @@ public class DriverControladorLoad {
 			
 			String s = "Options: \n" +
 			"0. exit\n" +
-			"1. Load .csv file\n" +
-			"2. option 2\n" +
-			"3. option 3\n" +
-			"4. option 4\n" +
-			"5. option 5\n" +
-			"6. option 6\n";
+			"1. Load .csv file\n";
 			
 			io.writeln("Testing class ControladorLoad");
 			int x;
@@ -36,27 +31,26 @@ public class DriverControladorLoad {
 				
 				x = io.readint();
 				
+				/*es queda en un bucle infinit
+				do {
+					try {
+						x = io.readint();
+					}catch(Exception e) {
+						io.writeln("Please, write a number which belongs to the interval indicated.");
+						io.write("Option: ");
+						x = -1;
+					}
+				}while (x == -1);
+				//*/
+				
 				switch(x)
 				{
 					case 1:
 						testCarregarArxiu();
 						break;
-					case 2:
-						mostra_2();
-						break;
-					case 3:
-						mostra_3();
-						break;
-					case 4:
-						mostra_4();
-						break;
-					case 5:
-						mostra_5();
-						break;
-					case 6:
-						mostra_6();
-						break;
 					default:
+						//is always shown, even with the break
+						//io.writeln("Please, write a number which belongs to the interval indicated.");
 				}
 				
 			} while (x != 0);
@@ -73,27 +67,26 @@ public class DriverControladorLoad {
 		
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
-		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
-		//String p = "/home/r5d8/Desktop/ratings.db.csv";
-		String p = "data/Movies-2250/ratings.db.csv";
-		//String p = "/home/r5d8/fib/PROP/subgrup-prop5-5/data/Movies-2250/ratings.db.csv";
+		io.writeln("(If you don't know what to chose, you have an example at data/movies-2250/ratings.db.csv)");
+		
+		String p = "data/movies-2250/items.csv";
+		io.write("Path: ");
 		
 		Scanner scanner = new Scanner(System.in);
 		File f = null;
-		try
+		
+		p = scanner.nextLine();
+		f = new File(p);
+		if (!f.exists()) 
 		{
-			p = scanner.nextLine();
-			f = new File(p);
-		}catch(Exception e){
 			io.writeln("Wrong path");
+			return;
 		}
 		
 		//executar la funcionalitat
 		ArrayList<ArrayList<String>> sol = new ArrayList<ArrayList<String>>();
 		try
 		{
-			//Path absolut
-			//sol = c.carregarArxiu(new File("", p));
 			//Path relatiu
 			sol = c.carregarArxiu(f);
 		}catch(Exception e)
@@ -102,51 +95,25 @@ public class DriverControladorLoad {
 		}
 		
 		//mostrar output
+		int cols = sol.get(0).size();
+		io.writeln("Rows read: " + sol.size());
+		//for (int i = 0; i < sol.get(0).size(); ++i) ++cols;
+		
 		
 		for (int i = 0; i < sol.size(); ++i)
 		{
-			for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
-			io.writeln();
+			//for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
+			//io.writeln();
+			int temp_cols = sol.get(i).size();
+			//for (int j = 0; j < sol.get(i).size(); ++j) ++temp_cols;
+			if (temp_cols != cols)
+			{
+				io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
+				for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + "|");
+				io.writeln();
+			}
+			//io.writeln();
 		}
-	}
-    static private void mostra_2() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_3() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_4() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_5() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_6() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
+		io.writeln("Cols: " + cols);
 	}
 }

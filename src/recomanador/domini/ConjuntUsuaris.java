@@ -80,6 +80,10 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         else throw new UserNotFoundException(id);
     }
 
+    //usuaris que han valorat 1 item
+
+    //usuaris que han valorat 2 items
+
 
     /*----- MODIFICADORES -----*/
 
