@@ -19,6 +19,7 @@ public class ControladorPersistencia {
     private File carpeta;
     private File dades; 		//Carpeta de dades
     ControladorLoad cl;
+    ControladorSave cs;
 
 
 /*-----CREADORES-----*/   
@@ -168,10 +169,11 @@ public class ControladorPersistencia {
 
 /*-----ESCRIPTURA-----*/
 	/**
-	 * Creates an empty folder to store all the files.
+	 * Creates an empty folder to store all the files. It also sets the
+	 * variable carpeta as the file pointing the new one.
      * 
      * @param	s	It's the name that the folder will have. It can only contain
-     * letters, numbers, '-' and '_'
+     * letters, numbers, '.', '-' and '_'
      * 
      * @exception FolderNotValidException Throws a FileNotValidException if the file is corrupted.
      * 
@@ -186,7 +188,7 @@ public class ControladorPersistencia {
 				!(c >= 'a' && c <= 'z') &&
 				!(c == '-') && !(c == '_') )
 				throw new FolderNotValidException("El nom conté caràcters invàlids." + 
-					" Només es poden usar lletres, nombres, '-', '_'", false);
+					" Només es poden usar lletres, nombres, '-', '_', '.'", false);
 		}
 		
 		carpeta = new File(dades, s);
@@ -196,5 +198,39 @@ public class ControladorPersistencia {
 			throw new FolderNotValidException("Ja existeix un projecte annomenat " + s, false);
 		}
 		else carpeta.mkdir();
+	}
+	
+	public void guardarRecomanacions(ArrayList<ArrayList<String>> D) throws FolderNotValidException
+	{
+		if (carpeta == null) throw new FolderNotValidException();
+		
+		File f = new File(carpeta, "ratings.db.csv");
+		
+		//If the file doesn't exist, it tores the data into the correct one
+		//Otherwise, a temporal file is created, to prevent data losses from the prevoius
+		//executions, in case there's a failure during the execution (like a power outage)
+		if (!f.exists())
+		{
+			try
+			{
+				cs.guardarArxiu(f, D);
+			} catch (IOException e) {
+				throw new FolderNotValidException(false);
+			}
+		}
+		else
+		{
+			File temp = new File(carpeta, "temp_ratings.db.csv");
+			try
+			{
+				temp.createNewFile();
+				cs.guardarArxiu(temp, D);
+				
+				f.delete();
+				temp.renameTo(f);
+			} catch (IOException e) {
+				throw new FolderNotValidException(false);
+			}			
+		}
 	}
 }
