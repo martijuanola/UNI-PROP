@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import src.recomanador.excepcions.UserNotFoundException;
 
+/**
+ * This class is used to call the algorithm and keep saved its parameters.
+ * @author Adrià F.
+ */
 public class ControladorDominiAlgorisme {
     //0 - collaborative filtering
     //1 - content-based filtering
@@ -38,6 +42,8 @@ public class ControladorDominiAlgorisme {
                 return colFilt.collaborativeFiltering(Q, user_ID, K);
             //content based filtering
             case 1:
+                ContentBasedFiltering BasedFilt = new ContentBasedFiltering(items, usuaris, valoracions);
+                return BasedFilt.contentBasedFiltering(Q, user_ID);
 
             //Hybrid approaches
             case 2:
