@@ -200,11 +200,11 @@ public class ControladorPersistencia {
 		else carpeta.mkdir();
 	}
 	
-	public void guardarRecomanacions(ArrayList<ArrayList<String>> D) throws FolderNotValidException
+	private void guardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
 	{
 		if (carpeta == null) throw new FolderNotValidException();
 		
-		File f = new File(carpeta, "ratings.db.csv");
+		File f = new File(carpeta, s);
 		
 		//If the file doesn't exist, it tores the data into the correct one
 		//Otherwise, a temporal file is created, to prevent data losses from the prevoius
@@ -220,7 +220,7 @@ public class ControladorPersistencia {
 		}
 		else
 		{
-			File temp = new File(carpeta, "temp_ratings.db.csv");
+			File temp = new File(carpeta, "temp_" + s);
 			try
 			{
 				temp.createNewFile();
@@ -232,5 +232,15 @@ public class ControladorPersistencia {
 				throw new FolderNotValidException(false);
 			}			
 		}
+	}
+
+	public void guardarRecomanacions(ArrayList<ArrayList<String>> D) throws FolderNotValidException
+	{
+		this.guardarDades(D, "ratings.db.csv");
+	}
+	
+	public void guardarRecomanacions(ArrayList<ArrayList<String>> D) throws FolderNotValidException
+	{
+		this.guardarDades(D, "items.csv");
 	}
 }
