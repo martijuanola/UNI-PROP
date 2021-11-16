@@ -2,11 +2,6 @@ package src.drivers;
 
 import src.recomanador.domini.Recomanacio;
 
-//canviar quan es testeja
-import src.recomanador.domini.Usuari;
-//import src.stubs.Usuari;
-
-
 public class DriverRecomanacio {
     
     static private Recomanacio c;

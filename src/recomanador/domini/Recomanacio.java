@@ -1,8 +1,5 @@
 package src.recomanador.domini;
 
-//Per quan s'ha d'utilitzar StubUsuari.java
-//import src.stubs.*;
-
 /**
  * This class describes a recommendation of a <u>item</u> to a <u>user</u> with a possible <u>rating</u>.
  * @author     Martí J.
