@@ -5,6 +5,9 @@ import src.recomanador.excepcions.*;
 import java.util.Collections;  
 import java.util.ArrayList;
 
+//Per si s'ha d'utilitzar StubUsuari.java
+//import src.stubs.*;
+
 /**
  * This class describes a set of recommendations as an extenssion of ArrayList of recommendations.
  * It always has the array sorted by item id and user id to improve efficency on certain calls.
@@ -40,49 +43,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @param      raw   The raw data from the ratings file
      */
     public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException  {
-    	
-    	raw.remove(0);//elimina la capçalera
-
-    	for(ArrayList<String> fila : raw) {
-            float v;
-            Item i;
-            Usuari u;
-
-            //potser cal inicialitzar-ho pels catchs
-
-
-            //es podrien inicialitzar els trys i catchs si s'ajunten les excepcions en DataNotValidException o algo així
-            try {
-                v = Integer.parseInt(fila.get(2));
-            }
-            catch(NumberFormatException e) {
-                throw new RatingNotValidException(fila.get(2));
-            }
-
-            if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
-
-            try {
-                i = ci.getItem(Integer.parseInt(fila.get(1)));
-            }
-            catch(NumberFormatException e) {
-                throw new ItemIdNotValidException(fila.get(1));
-            }
-
-            try {
-    			u = cu.getUsuari(Integer.parseInt(fila.get(0)));
-            }
-            catch(NumberFormatException e) {
-                throw new ItemIdNotValidException(fila.get(0));
-            }
-
-            Recomanacio r = new Recomanacio(u, i, v);
-            this.add(r);
-
-            if(v != Recomanacio.nul) u.getValoracions().add(r);
-            else u.getRecomanacions().add(r);
-    	}
-
-    	Collections.sort(this);
+    	this.afegirDades(ci,cu,raw);
     }
 
 
@@ -210,6 +171,51 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             return false;
         }
         return true;
+    }
+
+    public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException {
+        raw.remove(0);//elimina la capçalera
+
+        for(ArrayList<String> fila : raw) {
+            float v;
+            Item i;
+            Usuari u;
+
+            //potser cal inicialitzar-ho pels catchs
+
+
+            //es podrien inicialitzar els trys i catchs si s'ajunten les excepcions en DataNotValidException o algo així
+            try {
+                v = Integer.parseInt(fila.get(2));
+            }
+            catch(NumberFormatException e) {
+                throw new RatingNotValidException(fila.get(2));
+            }
+
+            if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
+
+            try {
+                i = ci.getItem(Integer.parseInt(fila.get(1)));
+            }
+            catch(NumberFormatException e) {
+                throw new ItemIdNotValidException(fila.get(1));
+            }
+
+            try {
+                u = cu.getUsuari(Integer.parseInt(fila.get(0)));
+            }
+            catch(NumberFormatException e) {
+                throw new ItemIdNotValidException(fila.get(0));
+            }
+
+            Recomanacio r = new Recomanacio(u, i, v);
+            this.add(r);
+
+            if(v != Recomanacio.nul) u.getValoracions().add(r);
+            else u.getRecomanacions().add(r);
+        }
+
+        //Collections.sort(this); No cal perquè l'add està override i afegeix ordenadament
     }
 
 

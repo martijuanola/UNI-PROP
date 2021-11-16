@@ -1,15 +1,13 @@
 package src.drivers;
 
-import src.recomanador.domini.Recomanacio;
 
 //canviar quan es testeja
 import src.recomanador.domini.Usuari;
 //import src.stubs.Usuari;
 
-
-public class DriverRecomanacio {
+public class DriverUsuari {
     
-    static private Recomanacio c;
+    static private Usuari c;
     static private inout io;
     
     public static void main(String[] args) {
@@ -18,21 +16,14 @@ public class DriverRecomanacio {
 			
 			String s = "Options: \n" +
 			"0. exit\n" +
-			"\n - Constructors - \n" +
-			"1. Recomacio(Usuari, Item)\n" +
-			"2. Recomanacio(Usuari, Item)\n" +
-			"\n - Setters - \n" +
-			"3. void setVal(float)\n" +
-			"\n - Getters - \n" +
-			"4. Usuari getUsuari()\n" +
-			"5. Item getItem()\n" +
-			"6. float getVal()\n" +
-			"7. boolean recomanacioValorada()\n" +
-			"8. boolean checkIds(int, int)\n" +
-			"9. boolean checkKeys(int, int)\n" +
-			"10. int compareTo(Recomanacio)\n";
+			"1. option 1\n" +
+			"2. option 2\n" +
+			"3. option 3\n" +
+			"4. option 4\n" +
+			"5. option 5\n" +
+			"6. option 6\n";
 			
-			io.writeln("Testing class Recomanacio");
+			io.writeln("Testing class Usuari");
 			int x;
 			do {
 				io.writeln("\n--------------------------------------------------\n");

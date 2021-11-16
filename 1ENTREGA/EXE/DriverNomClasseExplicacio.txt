@@ -1,0 +1,15 @@
+Objecte de la prova:
+
+Altres elements integrats a la prova:
+
+Drivers:
+
+Stubs:
+
+Fitxers de dades necessaris:
+
+Valors estudiats:
+
+Efectes estudiats:
+
+Operativa:

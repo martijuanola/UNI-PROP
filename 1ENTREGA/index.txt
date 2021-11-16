@@ -1,0 +1,5 @@
+Directori arrel de l'entrega
+
+/DOCS:	Documentacio i Diagrames
+/EXE:	Executables per provar les classes
+/FONTS:	Codi font

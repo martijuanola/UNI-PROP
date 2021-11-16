@@ -1,7 +1,9 @@
 package src.recomanador.domini;
 
 /**
- * @author Martí i Jaume
+ * This class represents a user from the dataset, with its id, recommendations
+ *  and ratings.
+ * @author Martí J. i Jaume
  */
 public class Usuari implements Comparable<Usuari> {
     
