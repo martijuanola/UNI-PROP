@@ -92,6 +92,19 @@ public class ControladorPersistencia {
 	}
     
 /*-----LECTURA-----*/	
+	
+	private ArrayList<ArrayList<String>> carregarArxiuCarpeta(String s) throws FolderNotValidException
+	{
+		File f = new File(carpeta, s);
+		if (!f.exists()) throw new FolderNotValidException(carpeta.getName(), s);
+		
+		try
+		{
+			return cl.carregarArxiu(f);
+		} catch (IOException e) {
+			throw new FolderNotValidException(carpeta.getName(), s);
+		}
+	}
 		
 	/**
 	 * Returns the recomendations read from memory
@@ -106,15 +119,7 @@ public class ControladorPersistencia {
      */
 	public ArrayList<ArrayList<String>> carregarRecomanacionsCarpeta() throws FolderNotValidException
 	{
-		File f = new File(carpeta, "ratings.db.csv");
-		if (!f.exists()) throw new FolderNotValidException(carpeta.getName(), "ratings.db.csv");
-		
-		try
-		{
-			return cl.carregarArxiu(f);
-		} catch (IOException e) {
-			throw new FolderNotValidException(carpeta.getName(), "ratings.db.csv");
-		}
+		return carregarArxiuCarpeta("recomanacions.db.csv");
 	}
 	
 	/**
@@ -130,15 +135,7 @@ public class ControladorPersistencia {
      */
 	public ArrayList<ArrayList<String>> carregarItemsCarpeta() throws FolderNotValidException
 	{
-		File f = new File(carpeta, "items.csv");
-		if (!f.exists()) throw new FolderNotValidException(carpeta.getName(), "items.csv");
-		
-		try
-		{
-			return cl.carregarArxiu(f);
-		} catch (IOException e) {
-			throw new FolderNotValidException(carpeta.getName(), "items.csv");
-		}
+		return carregarArxiuCarpeta("items.csv");
 	}
 	
 	/**
@@ -239,7 +236,7 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "ratings.db.csv");
 	}
 	
-	public void guardarRecomanacions(ArrayList<ArrayList<String>> D) throws FolderNotValidException
+	public void guardarItems(ArrayList<ArrayList<String>> D) throws FolderNotValidException
 	{
 		this.guardarDades(D, "items.csv");
 	}
