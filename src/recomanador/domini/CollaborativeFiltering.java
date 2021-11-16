@@ -132,7 +132,7 @@ public class CollaborativeFiltering {
                 //firstly, we set the sum and the quant, which we'll use to calculate the averages
                 for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                     int centroid = closest_centroid.get(idx_usuari);
-                    ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getRecomanacions();
+                    ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
 
                     for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
                         Recomanacio rec = valoracionsUser.get(idx_rec);
@@ -191,7 +191,7 @@ public class CollaborativeFiltering {
     private float distance(int idx_usuari, int centroid) {
         float distance = 0;
 
-        ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getRecomanacions();
+        ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
 
         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
             Recomanacio rec = valoracionsUser.get(idx_rec);
