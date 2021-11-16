@@ -15,7 +15,7 @@ public class Item implements Comparable<Item>{
      * @param id Identificador de l'Item
      */
     public Item(int id) {
-        this.atributs = new ArrayList<ArrayList<String>>(ConjuntItems.getNumAtributs());
+        this.atributs = new ArrayList<ArrayList<String>>();
         ArrayList<String> c = new ArrayList<String>();
         c.add(""+id);
         atributs.add(c);
