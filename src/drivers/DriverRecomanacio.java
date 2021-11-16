@@ -14,7 +14,6 @@ public class DriverRecomanacio {
     
     static private Recomanacio c;
 
-    static private inout io;
     static private Scanner scanner;
 
     static private boolean class_initalised;
@@ -32,82 +31,76 @@ public class DriverRecomanacio {
     	class_initalised = false;
     	scanner = new Scanner(System.in);
         
-        try{
-			io = new inout();
-			
-			String s = "Options: \n\n" +
-			"0. exit\n" +
-			" - Constructors - \n" +
-			"1. Recomanacio(Usuari, Item)\n" +
-			"2. Recomanacio(Usuari, Item, int)\n" +
-			" - Setters - \n" +
-			"3. void setVal(float)\n" +
-			" - Getters - \n" +
-			"4. Usuari getUsuari()\n" +
-			"5. Item getItem()\n" +
-			"6. float getVal()\n" +
-			"7. boolean recomanacioValorada()\n" +
-			"8. boolean checkIds(int, int)\n" +
-			"9. boolean checkKeys(Item, Usuari)\n" +
-			"10. int compareTo(Recomanacio)\n";
+		String s = "Options: \n\n" +
+		"-1. exit\n" +
+		"0. show options\n" +
+		" - Constructors - \n" +
+		"1. Recomanacio(Usuari, Item)\n" +
+		"2. Recomanacio(Usuari, Item, int)\n" +
+		" - Setters - \n" +
+		"3. void setVal(float)\n" +
+		" - Getters - \n" +
+		"4. Usuari getUsuari()\n" +
+		"5. Item getItem()\n" +
+		"6. float getVal()\n" +
+		"7. boolean recomanacioValorada()\n" +
+		"8. boolean checkIds(int, int)\n" +
+		"9. boolean checkKeys(Item, Usuari)\n" +
+		"10. int compareTo(Recomanacio)\n";
 
+		System.out.println(s);
+		System.out.println("Testing class Recomanacio");
+		int x;
+		do {
+			System.out.println("\n--------------------------------------------------\n");
+			System.out.println("Enter the number of the function you want to test. \n");
+			System.out.print("Option: ");
+			x = scanner.nextInt();
 			
+			switch(x)
+			{
+				case 0:
+					System.out.println(s);
+					break;
+				case 1:
+					mostra_1();
+					break;
+				case 2:
+					mostra_2();
+					break;
+				case 3:
+					mostra_3();
+					break;
+				case 4:
+					mostra_4();
+					break;
+				case 5:
+					mostra_5();
+					break;
+				case 6:
+					mostra_6();
+					break;
+				case 7:
+					mostra_7();
+					break;
+				case 8:
+					mostra_8();
+					break;
+				case 9:
+					mostra_9();
+					break;
+				case 10:
+					mostra_10();
+					break;
+				default:
+			}
 			
-			System.out.println("Testing class Recomanacio");
-			int x;
-			do {
-				System.out.println("\n--------------------------------------------------\n");
-				System.out.println("Enter the number of the function you want to test. \n");
-				System.out.println(s);
-				System.out.print("Option: ");
-				
-				x = scanner.nextInt();
-				
-				switch(x)
-				{
-					case 1:
-						mostra_1();
-						break;
-					case 2:
-						mostra_2();
-						break;
-					case 3:
-						mostra_3();
-						break;
-					case 4:
-						mostra_4();
-						break;
-					case 5:
-						mostra_5();
-						break;
-					case 6:
-						mostra_6();
-						break;
-					case 7:
-						mostra_7();
-						break;
-					case 8:
-						mostra_8();
-						break;
-					case 9:
-						mostra_9();
-						break;
-					case 10:
-						mostra_10();
-						break;
-					default:
-				}
-				
-			} while (x != 0);
-			
-			System.out.println("Test ended");
-			
-		}catch(Exception e){
-			System.out.println(e.toString());
-		}
+		} while (x != -1);
+		
+		System.out.println("Test ended");
     }
     
-    static private void mostra_1() throws Exception {
+    static private void mostra_1() {
 		System.out.println("Testing function Recomanacio(Usuari, Item)");
 
 		//demanar dades usuari i item
@@ -129,7 +122,7 @@ public class DriverRecomanacio {
 		//output
 		System.out.print("New Recomanacio has been initialised with the given Item and User. Data can be checked with getter operations.\n");
 	}
-    static private void mostra_2() throws Exception {
+    static private void mostra_2() {
 		System.out.println("Testing function Recomanacio(Usuari, Item, int)");
 
 		//demanar dades usuari i item
@@ -158,7 +151,7 @@ public class DriverRecomanacio {
 
 		System.out.print("New Recomanacio has been initialised with the given Item, User and rating. Data can be checked with getter operations.\n");
 	}
-    static private void mostra_3() throws Exception {
+    static private void mostra_3() {
 		System.out.println("Testing function void setVal(float)");
 		if(!class_initalised) {
 			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
@@ -177,7 +170,7 @@ public class DriverRecomanacio {
 		}
 		System.out.println("Rating changed. Data can be checked with getter operations.");
 	}
-    static private void mostra_4() throws Exception {
+    static private void mostra_4() {
 		System.out.println("Testing function Usuari getUsuari()");
 		if(!class_initalised) {
 			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
@@ -187,7 +180,7 @@ public class DriverRecomanacio {
 		n = c.getUsuari().getId();
 		System.out.println("The recommendation has a User with ID=" + n + ".");
 	}
-    static private void mostra_5() throws Exception {
+    static private void mostra_5() {
 		System.out.println("Testing function Item getItem()");
 		if(!class_initalised) {
 			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
@@ -197,7 +190,7 @@ public class DriverRecomanacio {
 		n = c.getItem().getId();
 		System.out.println("The recommendation has an Item with ID=" + n + ".");
 	}
-    static private void mostra_6() throws Exception {
+    static private void mostra_6() {
 		System.out.println("Testing function float getVal()");
 		if(!class_initalised) {
 			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
@@ -207,7 +200,7 @@ public class DriverRecomanacio {
 		f = c.getVal();
 		System.out.println("The recommendation has rating with value " + f + ".");
 	}
-	static private void mostra_7() throws Exception {
+	static private void mostra_7() {
 		System.out.println("Testing function boolean recomanacioValorada()");
 		if(!class_initalised) {
 			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
@@ -219,8 +212,12 @@ public class DriverRecomanacio {
 		if(b) System.out.println("The recommendation IS rated by the user.");
 		else System.out.println("The recommendation IS NOT rated by the user.");
 	}
-	static private void mostra_8() throws Exception {
+	static private void mostra_8() {
 		System.out.println("Testing function boolean checkIds(int, int)");
+		if(!class_initalised) {
+			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
+			return;
+		}
 		
 		System.out.print("Item ID: ");
 		m = scanner.nextInt();
@@ -233,7 +230,7 @@ public class DriverRecomanacio {
 		if(b) System.out.println("The Item and User IDs of the recommendation coincide with the once entered.");
 		else System.out.println("The Item and User IDs of the recommendation do NOT coincide with the once entered.");
 	}
-	static private void mostra_9() throws Exception {
+	static private void mostra_9() {
 		System.out.println("Testing function boolean checkKeys(Item, Usuari)");
 		if(!class_initalised) {
 			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
@@ -252,9 +249,10 @@ public class DriverRecomanacio {
 
 		b = c.checkKeys(i,u);
 		if(b) System.out.println("The Item and User of the recommendation coincide with the once entered.");
-		else System.out.println("The Item and User of the recommendation do NOT coincide with the once entered.");
+		else System.out.println("The Item and User of the recommendation do NOT coincide with the once entered.\n" +
+		 "This result is expected in this test regardless of the input because the two users or items will be different objects.");
 	}
-	static private void mostra_10() throws Exception {
+	static private void mostra_10() {
 		System.out.println("Testing function int compareTo(Recomanacio)");
 		System.out.println("Sorting in ascendent value of Item ID(primary) and User ID.");
 		if(!class_initalised) {
