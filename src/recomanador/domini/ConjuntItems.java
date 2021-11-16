@@ -104,9 +104,10 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(posItem).getAtribut(atribut);
     }
 
-    static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException {
+    static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
+        if (a < 0 || a >= pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
         else ConjuntItems.pesos.set(a, pes);
     }
 
@@ -185,7 +186,7 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     static public int getNumAtributs() {
-        return pesos.size();
+        return nomAtribut.size();
     }
 
     static public String getSTipus(int i) {
