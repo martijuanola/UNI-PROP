@@ -91,15 +91,24 @@ public class ControladorDomini {
         }
     }
     
-    
-    public void carregarRatings(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
-        //cp.funcio(fitxer);
+    public void carregarItems(String fitxer) throws FileNotValidException, FileNotFoundException {
+        try {
+            ci = new ConjuntItems(cp.carregarFitxerExtern(fitxer));
+        }
+        catch(Exception e) {
+            //s'han de mirar les que pugen
+        }
     }
 
-    public void carregarItems(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
-        //cp.funcio(fitxer);
+    public void carregarRatings(String fitxer) throws FileNotValidException, FileNotFoundException {
+        try {
+            cu = new ConjuntUsuaris(cp.carregarFitxerExtern(fitxer));
+            cr = new ConjuntRecomanacions(ci,cu,cp.carregarFitxerExtern(fitxer));
+        }
+        catch(Exception e) {
+            //s'han de mirar les que pugen
+        }
     }
-
 
 
     //Funcions per obtenir i guardar info del sistema:
