@@ -138,6 +138,18 @@ public class ControladorPersistencia {
 		return carregarArxiuCarpeta("items.csv");
 	}
 	
+	public ArrayList<String> carregarPesosAtributs() throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("pesos.csv");
+		return temp.get(0);
+	}
+	
+	public ArrayList<String> carregarTipusAtributs() throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("tipus.csv");
+		return temp.get(0);
+	}
+	
 	/**
 	 * Returns a csv table read from memory
 	 * 
@@ -240,4 +252,31 @@ public class ControladorPersistencia {
 	{
 		this.guardarDades(D, "items.csv");
 	}
+
+	public void guardarPesosAtributs(ArrayList<Float> pesos) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(new ArrayList<String>());
+		
+		for (int i = 0; i < pesos.size(); ++i)D.get(0).add(pesos.get(i).toString());
+		
+		this.guardarDades(D, "pesos.csv");
+	}
+	
+	/*public void guardarPesosAtributs(ArrayList<String> pesos) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(pesos);
+		
+		this.guardarDades(D, "pesos.csv");
+	}*/
+	
+	public void guardarTipusAtributs(ArrayList<String> tip) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(tip);
+		
+		this.guardarDades(D, "tipus.csv");
+	}
+	
 }
