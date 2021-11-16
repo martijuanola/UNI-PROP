@@ -48,5 +48,7 @@ public class ControladorSave {
 			
 			f.write("\n", 0, 1);
 		}
+		
+		f.close();
 	}
 }
