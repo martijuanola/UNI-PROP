@@ -312,4 +312,8 @@ public class ConjuntItems extends ArrayList<Item> {
         }
         if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
     }
+
+    public static float similitud(Item iNV, Item item) {
+        return 0;
+    }
 }
