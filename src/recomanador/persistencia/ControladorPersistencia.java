@@ -189,6 +189,16 @@ public class ControladorPersistencia {
 		return temp.get(0);
 	}
 	
+	public ArrayList<ArrayList<String>> carregarTestKnown() throws FolderNotValidException
+	{
+		return carregarArxiuCarpeta("ratings.test.known.csv");
+	}
+	
+	public ArrayList<ArrayList<String>> carregarTestUnknown() throws FolderNotValidException
+	{
+		return carregarArxiuCarpeta("ratings.test.unknown.csv");
+	}
+	
 	/**
 	 * Returns a csv table read from memory
 	 * 
@@ -214,15 +224,6 @@ public class ControladorPersistencia {
 		}
 	}
 
-	public ArrayList<ArrayList<String>> carregarTestKnown() throws FolderNotValidException
-	{
-		return carregarArxiuCarpeta("ratings.test.known.csv");
-	}
-	
-	public ArrayList<ArrayList<String>> carregarTestUnknown() throws FolderNotValidException
-	{
-		return carregarArxiuCarpeta("ratings.test.unknown.csv");
-	}
 	
 /*-----ESCRIPTURA-----*/
 	/**
