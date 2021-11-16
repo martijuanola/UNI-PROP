@@ -2,11 +2,15 @@ Jaume:
 
 	-Min i max d'un atribut
 	-distancies entre dades
+	-Constructor dades preprocessades
+	-eliminarItem
+	-afegirItem
 	-Documentar ConjuntItem
 	-Driver de Item
 	-Driver de ConjuntItem
 	-Passar atributs al tipus correcte
 	-Excepció a assignarPes(a, p) comprovar a vàlid
+
 
 	-(FET)getCapceleres
 	-(FET)getAtributs

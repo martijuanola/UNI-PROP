@@ -11,9 +11,14 @@ public class Item implements Comparable<Item>{
     private ArrayList<ArrayList<String>> atributs; //Vector on cada atribut té un vector. Pot ser buit
 
     /**
-     * Constructor buit
+     * Constructor amb només l'atribut id. No respecta els atributs, pesos i tipus de ConjuntItems
+     * @param id Identificador de l'Item
      */
-    public Item() {
+    public Item(int id) {
+        this.atributs = new ArrayList<ArrayList<String>>(ConjuntItems.getNumAtributs());
+        ArrayList<String> c = new ArrayList<String>();
+        c.add(""+id);
+        atributs.add(c);
     }
 
     /**
