@@ -15,7 +15,7 @@ import src.recomanador.excepcions.*;
 */
 public class ControladorPersistencia {
     private File carpeta;
-    private static File dades; 		//Carpeta de dades
+    private File dades; 		//Carpeta de dades
     ControladorLoad cl;
     
     /**
@@ -29,8 +29,20 @@ public class ControladorPersistencia {
 		carpeta = null;
 		cl = new ControladorLoad();
 		
-		//Comprovar si existeix dades
-		//Sinó, crear-ne la carpeta
+		dades = new File("data");
+		if (!dades.exists()) dades.mkdir();	//It will create the folder if it doesn't exist
+	}
+    
+    /**
+	 * Estableix el nom de la carpeta que s'usarà epr carregar les dàdes en el projecte
+	 * 
+	 * @param      s     Representa el nom de la carpeta, que s'haurà d'escollir entre la llista de les carpetes existents
+	 * @exception 	FolderNotFoundException Throws a FolderNotValidException if the file is corrupted or is missing.
+	 */
+    public String getNomProjecte() throws FolderNotFoundException
+    {
+		if (carpeta == null) return null;
+		else return carpeta.getName();
 	}
     
 	/**
@@ -41,14 +53,8 @@ public class ControladorPersistencia {
 	 */
     public void escollirProjecte(String s) throws FolderNotFoundException
     {
-		try
-		{
-			carpeta = new File(s);
-		}
-		catch(NullPointerException n)
-		{
-			throw new FolderNotFoundException(s);
-		}
+		carpeta = new File(dades, s);
+		if (!carpeta.exists()) throw new FolderNotFoundException(s);
 	}
 	
 	/**
@@ -58,7 +64,14 @@ public class ControladorPersistencia {
 	 */
 	public ArrayList<String> llistatCarpetes()
 	{
-		return null;
+		ArrayList<String> projectes = new ArrayList<String>();
+		File[] pr_files= dades.listFiles();
+		
+		for (int i = 0; i < pr_files.length; ++i)
+			if (pr_files[i].isDirectory() /*&& is_valid_project(pr_files[i])*/)
+				projectes.add(pr_files[i].getName());
+		
+		return projectes;
 	}
 	
 	
@@ -74,11 +87,13 @@ public class ControladorPersistencia {
      */
 	public ArrayList<ArrayList<String>> carregarRecomanacionsCarpeta() throws FolderNotValidException
 	{
+		File f = new File(carpeta, "ratings.db.csv");
+		if (!f.exists()) throw new FolderNotValidException(carpeta.getName(), "ratings.db.csv");
+		
 		try
 		{
-			return cl.carregarArxiu(new File(carpeta, "ratings.db.csv"));
-		} catch (IOException e)
-		{
+			return cl.carregarArxiu(f);
+		} catch (IOException e) {
 			throw new FolderNotValidException(carpeta.getName(), "ratings.db.csv");
 		}
 	}
@@ -96,30 +111,27 @@ public class ControladorPersistencia {
      */
 	public ArrayList<ArrayList<String>> carregarItemsCarpeta() throws FolderNotValidException
 	{
+		File f = new File(carpeta, "items.csv");
+		if (!f.exists()) throw new FolderNotValidException(carpeta.getName(), "items.csv");
+		
 		try
 		{
-			return cl.carregarArxiu(new File(carpeta, "items.csv"));
-		} catch (IOException e)
-		{
+			return cl.carregarArxiu(f);
+		} catch (IOException e) {
 			throw new FolderNotValidException(carpeta.getName(), "items.csv");
 		}
 	}
 	
 	public ArrayList<ArrayList<String>> carregarFitxerExtern(String s) throws FileNotValidException, FileNotFoundException
 	{
-		File extern;
-		try 
+		File extern = new File(s);
+		if (!extern.exists()) throw new FileNotFoundException(s);
+		
+		try
 		{
-			extern = new File(s);
-			try
-			{
-				return cl.carregarArxiu(extern);
-			} catch (IOException e) {
-				throw new FileNotValidException(s);
-			}
-			
-		} catch (Exception e) {
-			throw new FileNotFoundException(s);
+			return cl.carregarArxiu(extern);
+		} catch (IOException e) {
+			throw new FileNotValidException(s);
 		}
 	}
 }

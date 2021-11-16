@@ -94,12 +94,13 @@ public class DriverControladorLoad {
 		
 		Scanner scanner = new Scanner(System.in);
 		File f = null;
-		try
+		
+		p = scanner.nextLine();
+		f = new File(p);
+		if (!f.exists()) 
 		{
-			p = scanner.nextLine();
-			f = new File(p);
-		}catch(Exception e){
 			io.writeln("Wrong path");
+			return;
 		}
 		
 		//executar la funcionalitat
