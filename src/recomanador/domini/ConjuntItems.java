@@ -33,8 +33,7 @@ public class ConjuntItems extends ArrayList<Item> {
         super(c);
     }
 
-    public ConjuntItems() {
-    }
+    public ConjuntItems() {}
 
     public ConjuntItems(int size) {
         super(size);

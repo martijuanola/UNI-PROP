@@ -34,7 +34,7 @@ public class ControladorDominiAlgorisme {
 
     public ControladorDominiAlgorisme() {}
 
-    public void setK(int k) throws DataNotValidException {
+    public void set_k(int k) throws DataNotValidException {
         if(k <= 0) throw new DataNotValidException(k, "El valor de K ha de ser superior a 0.");
         this.K = k;
     }
@@ -43,7 +43,7 @@ public class ControladorDominiAlgorisme {
         this.Q = Q;
     }
 
-    public void setAlgorisme(int a) throws DataNotValidException {
+    public void seleccionar_algorisme(int a) throws DataNotValidException {
         if(a >= 0 && a <= 2) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 2");
         this.ALGORISME_SELECCIONAT = a;
     }

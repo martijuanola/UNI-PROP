@@ -7,6 +7,7 @@ import src.recomanador.domini.ControladorDomini;
 import src.recomanador.domini.ControladorDominiAlgorisme;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
+import src.recomanador.excepcions.DataNotValidException;
 
 /**
  * This class is meant to test the class Algorisme.
@@ -31,8 +32,13 @@ public class DriverAlgorisme {
         ConjuntUsuaris usuaris = domini.cu;
 
         ControladorDominiAlgorisme algorisme = new ControladorDominiAlgorisme();
-        algorisme.set_Q(5);
-        algorisme.seleccionar_algorisme(0);
-        algorisme.set_k(usuaris.size()/20);
+        try {
+            algorisme.set_Q(5);
+            algorisme.seleccionar_algorisme(0);
+            algorisme.set_k(usuaris.size()/20);
+        }
+        catch(DataNotValidException e) {
+            //de moment re però s'hauran de tractar(Martí)
+        }
     }
 }

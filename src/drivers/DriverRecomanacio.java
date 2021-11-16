@@ -119,7 +119,7 @@ public class DriverRecomanacio {
 		System.out.print("Data for new Item:\n");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(/*n*/);
+		i = new Item(n);
 
 		
 		//construir Recomanació
@@ -141,7 +141,7 @@ public class DriverRecomanacio {
 		System.out.print("Data for new Item:\n");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(/*n*/);
+		i = new Item(n);
 
 		System.out.print("Rating value: ");
 		f = scanner.nextFloat();
@@ -248,7 +248,7 @@ public class DriverRecomanacio {
 		System.out.print("Data for new Item:\n");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(/*n*/);
+		i = new Item(n);
 
 		b = c.checkKeys(i,u);
 		if(b) System.out.println("The Item and User of the recommendation coincide with the once entered.");
@@ -272,7 +272,7 @@ public class DriverRecomanacio {
 		System.out.print("Data for new Item:\n");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(/*n*/);
+		i = new Item(n);
 
 		Recomanacio rr = new Recomanacio(u,i);
 		n = c.compareTo(rr);

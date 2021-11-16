@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import src.recomanador.excepcions.UserNotFoundException;
 import java.util.Collections;
 
+//Per si s'ha d'utilitzar StubUsuari.java
+import src.stubs.*;
+
 /**
  * This class implements the recomendation algorithm content based filtering.
  * We have thought of some variations of k-NN that we think might make the algorithm better,
@@ -40,7 +43,7 @@ public class ContentBasedFiltering {
      * @return     a sorted set the recommended item IDs
      */
     public ArrayList<Item> contentBasedFiltering(int Q, int user_ID) throws UserNotFoundException {
-        
+       
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
 
         Usuari user = usuaris.getUsuari(user_ID);
@@ -52,8 +55,8 @@ public class ContentBasedFiltering {
             float puntuacio_estimada = 0f;
             for (int idxV = 0; idxV < valUser.size(); ++idxV) {
                 Recomanacio val = valoracions.get(idxV);
-                float similitud = ConjuntItems.similitud(iNV, val.getItem());
-                
+                float similitud = 0.5f;//= ConjuntItems.similitud(iNV, val.getItem());
+               
                 //Així, un ítem exactament igual que un que ha valorat com a 0 restaria 2.5 a la puntuació
                 //i viceversa. Això està ponderat per la similitud i per la valoració.
                 //Una valoració "meh" de 2.5 no afectaria a la puntuació estimada

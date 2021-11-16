@@ -131,11 +131,11 @@ public class ControladorDomini {
      */
     public void setAlgorithm(int a) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException();
-        cda.setAlgorisme(a);
+        cda.seleccionar_algorisme(a);
     }
 
     public void setK(int kk) throws DataNotValidException {
-        cda.setK(kk);
+        cda.set_k(kk);
     }
 
     /**
@@ -183,54 +183,6 @@ public class ControladorDomini {
         }
         //ci.printItems();
         //ci.printId();
-    }
-
-
-    /**
-     * Calls the persistence controler to get all the data from a previous stored session
-     * and initilizes all the necessari arrays of data(ConjuntItems, ConjuntUsuaris, ConjuntRecomanacions and others)   
-     *
-     * @param      directory  the directory where the files have been stored
-     */
-    public void carregarCarpeta(String directory) {
-
-        //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
-        try {
-            cp.escollirProjecte(directory);
-        }
-        catch (FolderNotFoundException ex) {
-            //passar-ho al driver per tornar a preguntar la carpeta
-        }
-
-        try {
-            ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
-
-            ci = new ConjuntItems(items);
-            //TODO: Falta inicialitzar el nom del conjunt
-
-        }
-        catch (FolderNotValidException e1) {
-            //passar-ho al driver per tornar a preguntar la carpeta
-        }
-        catch (ItemTypeNotValidException e) {
-            //l'atribut id no existeix o hi ha algun que no és int
-        }
-
-        try {
-            ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
-            
-            //crea ususaris buits
-            cu = new ConjuntUsuaris(valoracions);
-
-            //es creen les recomanacions/valoracions i s'afegeixen a usuaris 
-            cr = new ConjuntRecomanacions(ci,cu,valoracions);
-        }
-        catch(FolderNotValidException e) {
-            //processar error amb el driver
-        }
-        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
-            //throw new invalid file o algo d'aquest estil
-        }
     }
 
 }
