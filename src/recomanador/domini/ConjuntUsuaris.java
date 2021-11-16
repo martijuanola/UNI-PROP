@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 //Per si s'ha d'utilitzar StubUsuari.java
-//import src.stubs.*;
+import src.stubs.*;
 
 /**
  * This class describes a set of users as a extension of a users ArrayList.

@@ -3,22 +3,35 @@ package src.recomanador.domini;
 import java.util.ArrayList;
 
 import src.recomanador.excepcions.UserNotFoundException;
+import src.recomanador.excepcions.DataNotValidException;
 
 public class ControladorDominiAlgorisme {
-    //0 - collaborative filtering
-    //1 - content-based filtering
-    //2 - hybrid approaches
+
+    /*----- ATRIBUTS -----*/
+
+    /**
+     * Indicates which algorithm to use. Options are:
+     * 0 - collaborative filtering(Kmeans + Slope1)
+     * 1 - content-based filtering(KNN)
+     * 2 - hybrid approaches
+     */
     int ALGORISME_SELECCIONAT = 0;
 
+    /**
+     * Value used in the Kmeans algorithm. Determines how many centroids are used.
+     */
+    int K = 5;
+
+    //s'ha d'acabar de mirar
     //how many items to give
     int Q = 5;
 
-    //for kmeans
-    int K = 5;
+    
 
     public ControladorDominiAlgorisme() {}
 
-    public void set_k(int k) {
+    public void setK(int k) throws DataNotValidException {
+        if(k <= 0) throw new DataNotValidException(k, "El valor de K ha de ser superior a 0.");
         this.K = k;
     }
 
@@ -26,7 +39,8 @@ public class ControladorDominiAlgorisme {
         this.Q = Q;
     }
 
-    public void seleccionar_algorisme(int a) {
+    public void setAlgorisme(int a) throws DataNotValidException {
+        if(a >= 0 && a <= 2) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 2");
         this.ALGORISME_SELECCIONAT = a;
     }
 

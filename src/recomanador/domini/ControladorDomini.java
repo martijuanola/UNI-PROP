@@ -16,6 +16,8 @@ public class ControladorDomini {
 	
     ControladorPersistencia cp;
 
+    ControladorDominiAlgorisme cda;
+
     //Potser faltarà afegir-ne d'altres per utiltizar amb els testos
     ConjuntUsuaris cu;
     ConjuntRecomanacions cr;
@@ -25,18 +27,6 @@ public class ControladorDomini {
      * Id of the user/actor of the application
      */
     int id;
-
-    /**
-     * Indicates which algorithm to use. Options are:
-     * 0 - Kmeans + Slope1
-     * 1 - KNN
-     */
-    int algorithm;
-
-    /**
-     * Value used in the Kmeans algorithm. Determines how many centroids are used.
-     */
-    int k; // s'ha de fer servir bé si no te valor
 
     /**
      * True if active user/actor has admin privileges
@@ -49,13 +39,13 @@ public class ControladorDomini {
     public ControladorDomini() {
         cp = new ControladorPersistencia();
 
+        cda = new ControladorDominiAlgorisme();
+
         cu = new ConjuntUsuaris();
         cr = new ConjuntRecomanacions();
         ci = new ConjuntItems();
 
         id = NULL_ID;
-        algorithm = 0;
-        k = 0;
         admin = false;
     }
     
@@ -150,14 +140,11 @@ public class ControladorDomini {
      */
     public void setAlgorithm(int a) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException();
-        if(a >= 0 && a <= 5) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 5");
-
-        algorithm = a;
+        cda.setAlgorisme(a);
     }
 
     public void setK(int kk) throws DataNotValidException {
-        if(k <= 0) throw new DataNotValidException(k, "El valor de K ha de ser superior a 0.");
-        k = kk;
+        cda.setK(kk);
     }
 
     /**

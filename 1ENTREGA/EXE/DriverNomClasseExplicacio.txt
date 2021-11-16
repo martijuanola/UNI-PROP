@@ -13,3 +13,7 @@ Valors estudiats:
 Efectes estudiats:
 
 Operativa:
+	- Es selecciona la funció que es vol provar utilitzant el menú que es mostra introduint el valor indicat
+		- S'introdueixen les dades necessaries que es demanen
+		- Observar els resultats
+		- Tornar a provar una altra funcionalitat o sortir introduint el valor 0
