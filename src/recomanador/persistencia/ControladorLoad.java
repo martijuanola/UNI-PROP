@@ -51,65 +51,98 @@ public class ControladorLoad {
 		n = f.read();
 		//read will return a -1 if it has encountered the end.
 		//If this occurs at this point, it means that the file is empty
-		if (n == -1) throw new IOException();
 		c = (char)n;
+		if (n == -1) throw new IOException();
 		
-		///* Read original		
-		while (n != -1)
+		//-----Eliminació linies en blanc-----
+		while (n != -1 && c == '\n') {
+			n = f.read();
+			c = (char)n;
+		}
+		//------------------------------------
+		
+		if (n == -1) throw new IOException();
+		
+		//Establir header de la taula: llegir totes les columnes
+		int cols = 0;
+		data.add(new ArrayList<String>());
+		boolean finished_header = false;
+		while (!finished_header)
 		{
-			data.add(new ArrayList<String>());
-			while (c != '\n')
-			{
-				String column_name = "";
-				
-				while (c != ',' && c != '\n') 
-				{				
-					if (c == '"')
-					{
-						do
-						{
-							column_name += c;
-							n = f.read();
-							c = (char)n;
-						} while (c != '"');
-					}
-					
-					column_name += c;
-					n = f.read();
-					c = (char)n;
-				}
-				
-				//always add to the last line
-				if (c == '\n' && column_name == "" && data.get(data.size()-1).size() == 0) data.remove(data.size()-1);
-				else data.get(data.size()-1).add(column_name);
-				
-				if (c != '\n')
-				{
-					n = f.read();
-					c = (char)n;
-				}
-			}
+			String column_name = "";
 			
-			if (n != -1)
-			{
+			while (c != ',' && c != '\n') 
+			{				
+				if (c == '"')
+				{
+					do
+					{
+						column_name += c;
+						n = f.read();
+						c = (char)n;
+					} while (c != '"');
+				}
+				
+				column_name += c;
 				n = f.read();
 				c = (char)n;
 			}
+			
+			++cols;
+			data.get(0).add(column_name);
+			
+			if (c == '\n') finished_header = true;
+
+			n = f.read();
+			c = (char)n;
 		}
 		
-		//*/
+		while (n != -1)
+		{
+			//-----Eliminació linies en blanc-----
+			while (n != -1 && c == '\n') {
+				n = f.read();
+				c = (char)n;
+			}
+			//------------------------------------
+			
+			if (n != -1)
+			{
+				data.add(new ArrayList<String>());
+				
+				char END_CHAR = ',';
+				for (int i = 0; i < cols; ++i)
+				{
+					if (i == cols-1) END_CHAR = '\n';
+					String column_value = "";
+			
+					while (c != END_CHAR) 
+					{				
+						if (c == '"')
+						{
+							do
+							{
+								column_value += c;
+								n = f.read();
+								c = (char)n;
+							} while (c != '"');
+						}
+						
+						column_value += c;
+						n = f.read();
+						c = (char)n;
+					}
+					
+					data.get(data.size() - 1).add(column_value);
+					
+					n = f.read();
+					c = (char)n;
+				}
+			}
+		}
+		
 		
 		f.close();
-		
-		int cols = data.get(0).size();
-		
-		for (int i = 1; i < data.size(); ++i)
-		{
-			int temp_cols = data.get(i).size();
-			if (cols > 1 & temp_cols == cols - 1) data.get(i).add("");
-			//else if (temp_cols == 0) data.remove(i);
-			else if (temp_cols != cols) throw new IOException();
-		}
 		
 		return data;
 	}
