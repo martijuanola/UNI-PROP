@@ -154,7 +154,7 @@ public class DriverControladorPersistencia {
 		io.writeln("...");
 	}
     static private void testCarregarItemsCarpeta() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+		io.writeln("Testing function testCarregarItemsCarpeta()");
 		//demanar l'input
 		if (c.getNomProjecte() == null)
 		{
@@ -183,9 +183,35 @@ public class DriverControladorPersistencia {
     static private void testCarregarFitxerExtern() throws Exception {
 		io.writeln("Testing function testCarregarFitxerExtern()");
 		//demanar l'input
+		io.writeln("Write the path of the .csv file that you want to read");
+		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
+		io.write("Path: ");
 		
+		Scanner scanner = new Scanner(System.in);		
+		String p = scanner.nextLine();
+				
 		//executar la funcionalitat
+		ArrayList<ArrayList<String>> sol = new ArrayList<ArrayList<String>>();
+		try
+		{
+			sol = c.carregarFitxerExtern(p);
+		}catch(Exception e)
+		{
+			io.writeln("Error loading the file. it odesn't exist or is not valid.");
+		}
 		
 		//mostrar output
+		io.writeln("Head of the file read:");
+		int n = sol.size();
+		if (11 < n) n = 11;
+		
+		for (int i = 0; i < n; ++i)
+		{
+			io.write("\t");
+			for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
+			io.writeln();
+		}
+		
+		io.writeln("...");
 	}
 }
