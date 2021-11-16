@@ -38,7 +38,18 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * to int
      */
     public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws UserIdNotValidException {
-       this.afegirDades(raw);
+        int prev = -1;
+        for(int i = 1; i < raw.size(); i++) {
+            try {
+                int newID = Integer.parseInt(raw.get(i).get(0));
+                if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
+                prev = newID;
+            }
+            catch(NumberFormatException e) {
+                throw new UserIdNotValidException(raw.get(i).get(0));
+            }
+        }
+        Collections.sort(this);
     }
 
 
@@ -97,28 +108,6 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         return true;
     }
 
-    /**
-     * Users are added to the already initialized set from a raw file. Created especially
-     *  to add rating users to testing files users.
-     *
-     * @param      raw                      The raw data from a file
-     *
-     * @throws     UserIdNotValidException  Thrown when the id is not an integer
-     */
-    public void afegirDades(ArrayList<ArrayList<String>> raw) throws UserIdNotValidException {
-        int prev = -1;
-        for(int i = 1; i < raw.size(); i++) {
-            try {
-                int newID = Integer.parseInt(raw.get(i).get(0));
-                if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
-                prev = newID;
-            }
-            catch(NumberFormatException e) {
-                throw new UserIdNotValidException(raw.get(i).get(0));
-            }
-        }
-        //Collections.sort(this); No cal perquè l'add està override i afegeix ordenadament
-    }
 
     /*----- ALTRES -----*/
 

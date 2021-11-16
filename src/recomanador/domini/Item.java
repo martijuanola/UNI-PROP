@@ -2,7 +2,6 @@ package src.recomanador.domini;
 
 import java.util.ArrayList;
 
-import src.recomanador.excepcions.ItemTypeNotValidException;
 /**
  * Classe Item
  * @author Jaume
@@ -12,9 +11,22 @@ public class Item implements Comparable<Item>{
     private ArrayList<ArrayList<String>> atributs; //Vector on cada atribut té un vector. Pot ser buit
 
     /**
-     * Constructor buit
+     * Constructor amb només l'atribut id. No respecta els atributs, pesos i tipus de ConjuntItems
+     * @param id Identificador de l'Item
      */
-    public Item() {
+    public Item(int id) {
+        this.atributs = new ArrayList<ArrayList<String>>(ConjuntItems.getNumAtributs());
+        ArrayList<String> c = new ArrayList<String>();
+        c.add(""+id);
+        atributs.add(c);
+    }
+
+    /**
+     * Serveix més per comprovar que per funcionalitat
+     * @return retorna el nombre d'atributs que té l'item
+     */
+    public int getNumAtributs() {
+        return atributs.size();
     }
 
     /**
@@ -57,6 +69,14 @@ public class Item implements Comparable<Item>{
      */
     public int getId(){
         return Integer.parseInt(atributs.get(ConjuntItems.id).get(0));
+    }
+
+    /**
+     * Retorna tots els atributs
+     * @return atributs en forma de llista de llistes d'atributs
+     */
+    public ArrayList<ArrayList<String>> getAtributs() {
+        return atributs;
     }
 
     @Override

@@ -19,9 +19,9 @@ public class ControladorDomini {
     ControladorDominiAlgorisme cda;
 
     //Potser faltarà afegir-ne d'altres per utiltizar amb els testos
-    ConjuntUsuaris cu;
-    ConjuntRecomanacions cr;
-    ConjuntItems ci;
+    public ConjuntUsuaris cu;
+    public ConjuntRecomanacions cr;
+    public ConjuntItems ci;
 
     /**
      * Id of the user/actor of the application
@@ -81,24 +81,15 @@ public class ControladorDomini {
         }
     }
     
-    public void carregarItems(String fitxer) throws FileNotValidException, FileNotFoundException {
-        try {
-            ci = new ConjuntItems(cp.carregarFitxerExtern(fitxer));
-        }
-        catch(Exception e) {
-            //s'han de mirar les que pugen
-        }
+    
+    public void carregarRatings(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
+        //cp.funcio(fitxer);
     }
 
-    public void carregarRatings(String fitxer) throws FileNotValidException, FileNotFoundException {
-        try {
-            cu = new ConjuntUsuaris(cp.carregarFitxerExtern(fitxer));
-            cr = new ConjuntRecomanacions(ci,cu,cp.carregarFitxerExtern(fitxer));
-        }
-        catch(Exception e) {
-            //s'han de mirar les que pugen
-        }
+    public void carregarItems(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
+        //cp.funcio(fitxer);
     }
+
 
 
     //Funcions per obtenir i guardar info del sistema:
@@ -182,27 +173,64 @@ public class ControladorDomini {
 
     /*----- PROVES I COSES QUE ES TREURAN -----*/
 
-    public void provaItems(ArrayList<ArrayList<String>> items) {
-        System.out.println("Num items: " + (items.size()-1) + " Num atributs: " + items.get(0).size());
-        for (int i = 0; i < items.size(); ++i) {
-            if (items.get(i).size() != items.get(0).size()) System.out.println("NoPe: " + i + " id: "+items.get(i).get(5));
-        }
-        try {
-            ci = new ConjuntItems(items);
-        } catch (ItemTypeNotValidException e1) {
-            e1.printStackTrace();
-        }
+    public void prova2() {
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
-
+        System.out.println("Natributs: " + ConjuntItems.getNumAtributs());
+        for (int i = 0; i < ci.size(); ++i) System.out.println("Item "+i+" tamany atributs:" + ci.get(i).getNumAtributs());
         for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
-            try {
-                ConjuntItems.assignarPes(i, ((float)100.0));
-            } catch (Exception e) {
-                //Improbable que passi xd
-            }
+            System.out.println("Minim: " + ConjuntItems.getNomAtribut(i) + " " + ci.getMinMaxAtribut(i, false));
+            System.out.println("Maxim: " + ConjuntItems.getNomAtribut(i) + " " + ci.getMinMaxAtribut(i, true));
         }
-        ci.printItems();
-        ci.printId();
+        //ci.printItems();
+        //ci.printId();
+    }
+
+
+    /**
+     * Calls the persistence controler to get all the data from a previous stored session
+     * and initilizes all the necessari arrays of data(ConjuntItems, ConjuntUsuaris, ConjuntRecomanacions and others)   
+     *
+     * @param      directory  the directory where the files have been stored
+     */
+    public void carregarCarpeta(String directory) {
+
+        //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
+        try {
+            cp.escollirProjecte(directory);
+        }
+        catch (FolderNotFoundException ex) {
+            //passar-ho al driver per tornar a preguntar la carpeta
+        }
+
+        try {
+            ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
+
+            ci = new ConjuntItems(items);
+            //TODO: Falta inicialitzar el nom del conjunt
+
+        }
+        catch (FolderNotValidException e1) {
+            //passar-ho al driver per tornar a preguntar la carpeta
+        }
+        catch (ItemTypeNotValidException e) {
+            //l'atribut id no existeix o hi ha algun que no és int
+        }
+
+        try {
+            ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
+            
+            //crea ususaris buits
+            cu = new ConjuntUsuaris(valoracions);
+
+            //es creen les recomanacions/valoracions i s'afegeixen a usuaris 
+            cr = new ConjuntRecomanacions(ci,cu,valoracions);
+        }
+        catch(FolderNotValidException e) {
+            //processar error amb el driver
+        }
+        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+            //throw new invalid file o algo d'aquest estil
+        }
     }
 
 }

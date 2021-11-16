@@ -18,7 +18,7 @@ class Centroid {
 } 
 
 /**
- * This class implements the recomendation algorithms.
+ * This class implements the recomendation algorithm collaborative filtering.
  * @author Adrià F.
  */
 public class CollaborativeFiltering {
