@@ -81,10 +81,7 @@ public class ControladorDomini {
 
         try {
             ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
-            System.out.println("items: " +items.size());
-            for (int i = 0; i < items.size(); ++i) {
-                System.out.println(items.get(i));
-            }
+
             ci = new ConjuntItems(items);
             //TODO: Falta inicialitzar el nom del conjunt
 
@@ -97,10 +94,10 @@ public class ControladorDomini {
             System.out.println("Item not valid");
             //l'atribut id no existeix o hi ha algun que no és int
         }
-        prova2();
+
         try {
             ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
-            
+
             //crea ususaris buits
             cu = new ConjuntUsuaris(valoracions);
 
