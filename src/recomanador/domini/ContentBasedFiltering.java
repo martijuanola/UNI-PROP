@@ -52,7 +52,7 @@ public class ContentBasedFiltering {
             float puntuacio_estimada = 0f;
             for (int idxV = 0; idxV < valUser.size(); ++idxV) {
                 Recomanacio val = valoracions.get(idxV);
-                float similitud = ConjuntItems.similitud(iNV, val.getItem());
+                float similitud = 0.5f;//ConjuntItems.similitud(iNV, val.getItem());
                 
                 //Així, un ítem exactament igual que un que ha valorat com a 0 restaria 2.5 a la puntuació
                 //i viceversa. Això està ponderat per la similitud i per la valoració.

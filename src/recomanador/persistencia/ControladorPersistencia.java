@@ -77,7 +77,7 @@ public class ControladorPersistencia {
 		boolean pesos = false;
 		boolean tipus = false;
 		
-		for (int i = 0; i < pr_files.length; ++i)
+		for (int i = 0; i < inside.length; ++i)
 		{
 			if (!inside[i].isDirectory())
 			{
@@ -87,6 +87,26 @@ public class ControladorPersistencia {
 		}
 		
 		return pesos && tipus;
+	}
+	
+	public boolean existeixenTestos()
+	{
+		if (carpeta == null) return false;
+		
+		File[] inside = carpeta.listFiles();
+		boolean known = false;
+		boolean unknown = false;
+		
+		for (int i = 0; i < inside.length; ++i)
+		{
+			if (!inside[i].isDirectory())
+			{
+				if (inside[i].getName() == "ratings.test.known.csv") known = true;
+				else if (inside[i].getName() == "ratings.test.unknown.csv") unknown = true;
+			}
+		}
+		
+		return known && unknown;
 	}
 
 /*-----MODIFICADORES-----*/   
@@ -194,7 +214,16 @@ public class ControladorPersistencia {
 		}
 	}
 
-
+	public ArrayList<ArrayList<String>> carregarTestKnown() throws FolderNotValidException
+	{
+		return carregarArxiuCarpeta("ratings.test.known.csv");
+	}
+	
+	public ArrayList<ArrayList<String>> carregarTestUnknown() throws FolderNotValidException
+	{
+		return carregarArxiuCarpeta("ratings.test.unknown.csv");
+	}
+	
 /*-----ESCRIPTURA-----*/
 	/**
 	 * Creates an empty folder to store all the files. It also sets the
