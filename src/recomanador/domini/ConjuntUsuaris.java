@@ -42,8 +42,14 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         for(int i = 1; i < raw.size(); i++) {
             try {
                 int newID = Integer.parseInt(raw.get(i).get(0));
-                if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
-                prev = newID;
+                if(i == 1) {
+                    this.add(0, new Usuari(newID));;
+                    prev = newID;
+                }
+                else {
+                    if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
+                    prev = newID;
+                }
             }
             catch(NumberFormatException e) {
                 throw new UserIdNotValidException(raw.get(i).get(0));
