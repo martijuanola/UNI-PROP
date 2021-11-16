@@ -10,4 +10,7 @@ public class FolderNotValidException extends Exception {
 		super("The folder named " + s + " does not contain the file " + f + ".");
 	}
 
+	public FolderNotValidException(String s, boolean b) {
+		super(s);
+	}
 }
