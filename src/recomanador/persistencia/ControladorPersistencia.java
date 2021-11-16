@@ -68,7 +68,26 @@ public class ControladorPersistencia {
 		
 		return projectes;
 	}
-
+	
+	public boolean existeixenDadesPreprocesades()
+	{
+		if (carpeta == null) return false;
+		
+		File[] inside = carpeta.listFiles();
+		boolean pesos = false;
+		boolean tipus = false;
+		
+		for (int i = 0; i < pr_files.length; ++i)
+		{
+			if (!inside[i].isDirectory())
+			{
+				if (inside[i].getName() == "pesos.csv") pesos = true;
+				else if (inside[i].getName() == "tipus.csv") tipus = true;
+			}
+		}
+		
+		return pesos && tipus;
+	}
 
 /*-----MODIFICADORES-----*/   
 	/**
