@@ -6,18 +6,31 @@ import java.util.ArrayList;
 
 import src.recomanador.excepcions.*;
 
+/**
+* La classe ControladorPersistencia implementa controlador de lectura
+* i d'escriptura de les dades en memòria. Gestiona també les carpetes
+* on es guardarà part de la informació.
+* 
+* @author Pol Sturlese 
+*/
 public class ControladorPersistencia {
     private File carpeta;
-    
+    private static File dades; 		//Carpeta de dades
     ControladorLoad cl;
     
     /**
-	 * Creates a new instance of the class ControladorPersistencia.
+	 * Creates a new instance of the class ControladorPersistencia. It also finds the
+	 * data folder, and if it doen't exist, it creates it.
+	 * 
+	 * @return			 Returns a new instance of ControladorPersistencia.
 	 */
     public ControladorPersistencia()
     {
 		carpeta = null;
 		cl = new ControladorLoad();
+		
+		//Comprovar si existeix dades
+		//Sinó, crear-ne la carpeta
 	}
     
 	/**
@@ -63,11 +76,10 @@ public class ControladorPersistencia {
 	{
 		try
 		{
-			//usar files guardades en el main
-			return cl.carregarArxiu(new File(carpeta, "valoracions.csv"));
+			return cl.carregarArxiu(new File(carpeta, "ratings.db.csv"));
 		} catch (IOException e)
 		{
-			throw new FolderNotValidException(carpeta.getName(), "valoracions.csv");
+			throw new FolderNotValidException(carpeta.getName(), "ratings.db.csv");
 		}
 	}
 	
@@ -93,5 +105,21 @@ public class ControladorPersistencia {
 		}
 	}
 	
-	
+	public ArrayList<ArrayList<String>> carregarFitxerExtern(String s) throws FileNotValidException, FileNotFoundException
+	{
+		File extern;
+		try 
+		{
+			extern = new File(s);
+			try
+			{
+				return cl.carregarArxiu(extern);
+			} catch (IOException e) {
+				throw new FileNotValidException(s);
+			}
+			
+		} catch (Exception e) {
+			throw new FileNotFoundException(s);
+		}
+	}
 }

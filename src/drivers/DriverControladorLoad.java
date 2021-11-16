@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DriverControladorLoad {
     
@@ -35,6 +36,18 @@ public class DriverControladorLoad {
 				
 				x = io.readint();
 				
+				/*es queda en un bucle infinit
+				do {
+					try {
+						x = io.readint();
+					}catch(Exception e) {
+						io.writeln("Please, write a number which belongs to the interval indicated.");
+						io.write("Option: ");
+						x = -1;
+					}
+				}while (x == -1);
+				//*/
+				
 				switch(x)
 				{
 					case 1:
@@ -56,6 +69,8 @@ public class DriverControladorLoad {
 						mostra_6();
 						break;
 					default:
+						//is always shown, even with the break
+						//io.writeln("Please, write a number which belongs to the interval indicated.");
 				}
 				
 			} while (x != 0);
@@ -68,23 +83,33 @@ public class DriverControladorLoad {
     }
     
     static private void testCarregarArxiu() throws Exception {
-		///home/r5d8/Desktop
 		io.writeln("Testing function carregarArxiu()");
+		
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
-		String p = "/home/r5d8/Desktop/ratings.db.csv";
-		/*try
+		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
+		
+		String p = "data/Movies-2250/ratings.db.csv";
+		io.write("Path: ");
+		
+		Scanner scanner = new Scanner(System.in);
+		File f = null;
+		try
 		{
-			p = io.readline();
+			p = scanner.nextLine();
+			f = new File(p);
 		}catch(Exception e){
 			io.writeln("Wrong path");
-		}*/
+		}
 		
 		//executar la funcionalitat
 		ArrayList<ArrayList<String>> sol = new ArrayList<ArrayList<String>>();
 		try
 		{
-			sol = c.carregarArxiu(new File("", p));
+			//Path absolut
+			//sol = c.carregarArxiu(new File("", p));
+			//Path relatiu
+			sol = c.carregarArxiu(f);
 		}catch(Exception e)
 		{
 			io.writeln("Error carregar arxiu");

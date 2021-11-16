@@ -60,11 +60,19 @@ public class ControladorLoad {
 			while (c != '\n')
 			{
 				String column_name = "";
-				//No hauria de donar problemes, però si se sobreescriu
-				//la string, fer un new String()
 				
 				while (c != ',' && c != '\n') 
-				{
+				{				
+					if (c == '"')
+					{
+						do
+						{
+							column_name += c;
+							n = f.read();
+							c = (char)n;
+						} while (c != '"');
+					}
+					
 					column_name += c;
 					n = f.read();
 					c = (char)n;
