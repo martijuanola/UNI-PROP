@@ -22,6 +22,14 @@ public class Item implements Comparable<Item>{
     }
 
     /**
+     * Serveix més per comprovar que per funcionalitat
+     * @return retorna el nombre d'atributs que té l'item
+     */
+    public int getNumAtributs() {
+        return atributs.size();
+    }
+
+    /**
      * Es crea l'item i s'assigna els atributs a l'item
      * @param atributs llista d'atributs d'items on cada atribut pot tenir diversos atributs
      */
