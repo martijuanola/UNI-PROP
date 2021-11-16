@@ -51,9 +51,10 @@ public class ControladorLoad {
 		n = f.read();
 		//read will return a -1 if it has encountered the end.
 		//If this occurs at this point, it means that the file is empty
-		if (n == -1) return null;
+		if (n == -1) throw new IOException();
 		c = (char)n;
-				
+		
+		///* Read original		
 		while (n != -1)
 		{
 			data.add(new ArrayList<String>());
@@ -79,7 +80,8 @@ public class ControladorLoad {
 				}
 				
 				//always add to the last line
-				data.get(data.size()-1).add(column_name);
+				if (c == '\n' && column_name == "" && data.get(data.size()-1).size() == 0) data.remove(data.size()-1);
+				else data.get(data.size()-1).add(column_name);
 				
 				if (c != '\n')
 				{
@@ -95,18 +97,18 @@ public class ControladorLoad {
 			}
 		}
 		
+		//*/
+		
 		f.close();
 		
-		if (data.size() > 0)
+		int cols = data.get(0).size();
+		
+		for (int i = 1; i < data.size(); ++i)
 		{
-			int cols = data.get(0).size();
-			
-			for (int i = 1; i < data.size(); ++i)
-			{
-				int temp_cols = data.get(i).size();
-				if (temp_cols == cols - 1) data.get(i).add("");
-				else if (temp_cols != cols) throw new IOException();
-			}
+			int temp_cols = data.get(i).size();
+			if (cols > 1 & temp_cols == cols - 1) data.get(i).add("");
+			//else if (temp_cols == 0) data.remove(i);
+			else if (temp_cols != cols) throw new IOException();
 		}
 		
 		return data;

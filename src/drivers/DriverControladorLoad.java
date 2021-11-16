@@ -69,13 +69,13 @@ public class DriverControladorLoad {
 		io.writeln("Write the path of the .csv file that you want to read");
 		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
 		
-		String p = "data/Movies-2250/ratings.db.csv";
+		String p = "data/Movies-2250/items.csv";
 		io.write("Path: ");
 		
 		Scanner scanner = new Scanner(System.in);
 		File f = null;
 		
-		p = scanner.nextLine();
+		//p = scanner.nextLine();
 		f = new File(p);
 		if (!f.exists()) 
 		{
@@ -95,7 +95,8 @@ public class DriverControladorLoad {
 		}
 		
 		//mostrar output
-		int cols = sol.get(0).size();;
+		int cols = sol.get(0).size();
+		io.writeln("Rows read: " + sol.size());
 		//for (int i = 0; i < sol.get(0).size(); ++i) ++cols;
 		
 		
