@@ -2,7 +2,7 @@ package src.recomanador.persistencia;
 
 //import java.io.*;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -24,18 +24,29 @@ public class ControladorSave {
     public ControladorSave() {}
     
     /**
-     * Returns the content of the file specified read as a table separated
-     * with commas and enters.
+     * Stores the content of data at the file specified. It's stored as a csv table,
+     * where the first row is the header of the table. All rows have the same number
+     * of columns.
      * 
-     * @param      file      This is the file that is going to be used for the loading
-     * @return      Returns an array of arrays of the values. Each array of arrays(line)
-     * contains an array of strings (columns). 
-     * The first line corresponds to the header of the file, where each
-     * column its identifier. 
-     * The rest of the lines contain the values read. <p>
+     * @param      file      This is the file that is going to be used for the saving
+     * @param      data      This is the data that is going to be stored
+     * 
      * @exception	IOException If there's an error reading, the IOException will be thrown
      */
     public void guardarArxiu(File file, ArrayList<ArrayList<String>> data) throws IOException
     {
+		FileWriter f = new FileWriter(file);
+		
+		for (int i = 0; i < data.size(); ++i)
+		{
+			for (int j = 0; j < data.get(i).size(); ++j)
+			{
+				String s = data.get(i).get(j);
+				f.write(s, 0, s.length());
+				if (j != data.get(i).size()-1) f.write(",", 0, 1);
+			}
+			
+			f.write("\n", 0, 1);
+		}
 	}
 }
