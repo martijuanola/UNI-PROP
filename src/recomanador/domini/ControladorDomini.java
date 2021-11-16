@@ -17,9 +17,9 @@ public class ControladorDomini {
     ControladorPersistencia cp;
 
     //Potser faltarà afegir-ne d'altres per utiltizar amb els testos
-    ConjuntUsuaris cu;
-    ConjuntRecomanacions cr;
-    ConjuntItems ci;
+    public ConjuntUsuaris cu;
+    public ConjuntRecomanacions cr;
+    public ConjuntItems ci;
 
     /**
      * Id of the user/actor of the application
