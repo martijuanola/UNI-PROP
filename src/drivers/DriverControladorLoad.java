@@ -19,12 +19,7 @@ public class DriverControladorLoad {
 			
 			String s = "Options: \n" +
 			"0. exit\n" +
-			"1. Load .csv file\n" +
-			"2. option 2\n" +
-			"3. option 3\n" +
-			"4. option 4\n" +
-			"5. option 5\n" +
-			"6. option 6\n";
+			"1. Load .csv file\n";
 			
 			io.writeln("Testing class ControladorLoad");
 			int x;
@@ -52,21 +47,6 @@ public class DriverControladorLoad {
 				{
 					case 1:
 						testCarregarArxiu();
-						break;
-					case 2:
-						mostra_2();
-						break;
-					case 3:
-						mostra_3();
-						break;
-					case 4:
-						mostra_4();
-						break;
-					case 5:
-						mostra_5();
-						break;
-					case 6:
-						mostra_6();
 						break;
 					default:
 						//is always shown, even with the break
@@ -107,8 +87,6 @@ public class DriverControladorLoad {
 		ArrayList<ArrayList<String>> sol = new ArrayList<ArrayList<String>>();
 		try
 		{
-			//Path absolut
-			//sol = c.carregarArxiu(new File("", p));
 			//Path relatiu
 			sol = c.carregarArxiu(f);
 		}catch(Exception e)
@@ -117,59 +95,24 @@ public class DriverControladorLoad {
 		}
 		
 		//mostrar output
-		int cols = 0;
-		for (int i = 0; i < sol.get(0).size(); ++i) ++cols;
+		int cols = sol.get(0).size();;
+		//for (int i = 0; i < sol.get(0).size(); ++i) ++cols;
 		
 		
 		for (int i = 0; i < sol.size(); ++i)
 		{
 			//for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
 			//io.writeln();
-			int temp_cols = 0;
-			for (int j = 0; j < sol.get(i).size(); ++j) ++temp_cols;
-			if (temp_cols != cols) io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
+			int temp_cols = sol.get(i).size();
+			//for (int j = 0; j < sol.get(i).size(); ++j) ++temp_cols;
+			if (temp_cols != cols)
+			{
+				io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
+				for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + "|");
+				io.writeln();
+			}
 			//io.writeln();
 		}
 		io.writeln("Cols: " + cols);
-	}
-    static private void mostra_2() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_3() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_4() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_5() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-	}
-    static private void mostra_6() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
 	}
 }

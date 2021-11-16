@@ -96,6 +96,19 @@ public class ControladorLoad {
 		}
 		
 		f.close();
+		
+		if (data.size() > 0)
+		{
+			int cols = data.get(0).size();
+			
+			for (int i = 1; i < data.size(); ++i)
+			{
+				int temp_cols = data.get(i).size();
+				if (temp_cols == cols - 1) data.get(i).add("");
+				else if (temp_cols != cols) throw new IOException();
+			}
+		}
+		
 		return data;
 	}
 }
