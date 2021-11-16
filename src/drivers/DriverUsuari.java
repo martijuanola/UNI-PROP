@@ -2,8 +2,8 @@ package src.drivers;
 
 
 //canviar quan es testeja
-import src.recomanador.domini.Usuari;
-//import src.stubs.Usuari;
+//import src.recomanador.domini.Usuari;
+import src.stubs.Usuari;
 
 public class DriverUsuari {
     

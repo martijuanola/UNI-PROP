@@ -9,7 +9,7 @@ import src.recomanador.excepcions.RecommendationNotFoundException;
 import src.recomanador.excepcions.UserNotFoundException;
 
 //Per si s'ha d'utilitzar StubUsuari.java
-//import src.stubs.*;
+import src.stubs.*;
 
 class Centroid {
     HashMap<Item,Float> valoracio;
@@ -18,7 +18,7 @@ class Centroid {
 } 
 
 /**
- * This class implements the recomendation algorithms.
+ * This class implements the recomendation algorithm collaborative filtering.
  * @author Adrià F.
  */
 public class CollaborativeFiltering {

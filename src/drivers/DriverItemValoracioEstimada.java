@@ -3,8 +3,6 @@ package src.drivers;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.sound.sampled.SourceDataLine;
-
 import src.recomanador.domini.ItemValoracioEstimada;
 
 /**

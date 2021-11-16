@@ -67,9 +67,9 @@ public class DriverControladorLoad {
 		
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
-		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
+		io.writeln("(If you don't know what to chose, you have an example at data/movies-2250/ratings.db.csv)");
 		
-		String p = "data/Movies-2250/items.csv";
+		String p = "data/movies-2250/items.csv";
 		io.write("Path: ");
 		
 		Scanner scanner = new Scanner(System.in);

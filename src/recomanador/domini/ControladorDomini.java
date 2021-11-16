@@ -16,27 +16,17 @@ public class ControladorDomini {
 	
     ControladorPersistencia cp;
 
+    ControladorDominiAlgorisme cda;
+
     //Potser faltarà afegir-ne d'altres per utiltizar amb els testos
-    ConjuntUsuaris cu;
-    ConjuntRecomanacions cr;
-    ConjuntItems ci;
+    public ConjuntUsuaris cu;
+    public ConjuntRecomanacions cr;
+    public ConjuntItems ci;
 
     /**
      * Id of the user/actor of the application
      */
     int id;
-
-    /**
-     * Indicates which algorithm to use. Options are:
-     * 0 - Kmeans + Slope1
-     * 1 - KNN
-     */
-    int algorithm;
-
-    /**
-     * Value used in the Kmeans algorithm. Determines how many centroids are used.
-     */
-    int k; // s'ha de fer servir bé si no te valor
 
     /**
      * True if active user/actor has admin privileges
@@ -49,13 +39,13 @@ public class ControladorDomini {
     public ControladorDomini() {
         cp = new ControladorPersistencia();
 
+        cda = new ControladorDominiAlgorisme();
+
         cu = new ConjuntUsuaris();
         cr = new ConjuntRecomanacions();
         ci = new ConjuntItems();
 
         id = NULL_ID;
-        algorithm = 0;
-        k = 0;
         admin = false;
     }
     
@@ -91,24 +81,15 @@ public class ControladorDomini {
         }
     }
     
-    public void carregarItems(String fitxer) throws FileNotValidException, FileNotFoundException {
-        try {
-            ci = new ConjuntItems(cp.carregarFitxerExtern(fitxer));
-        }
-        catch(Exception e) {
-            //s'han de mirar les que pugen
-        }
+    
+    public void carregarRatings(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
+        //cp.funcio(fitxer);
     }
 
-    public void carregarRatings(String fitxer) throws FileNotValidException, FileNotFoundException {
-        try {
-            cu = new ConjuntUsuaris(cp.carregarFitxerExtern(fitxer));
-            cr = new ConjuntRecomanacions(ci,cu,cp.carregarFitxerExtern(fitxer));
-        }
-        catch(Exception e) {
-            //s'han de mirar les que pugen
-        }
+    public void carregarItems(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
+        //cp.funcio(fitxer);
     }
+
 
 
     //Funcions per obtenir i guardar info del sistema:
@@ -150,14 +131,11 @@ public class ControladorDomini {
      */
     public void setAlgorithm(int a) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException();
-        if(a >= 0 && a <= 5) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 5");
-
-        algorithm = a;
+        cda.seleccionar_algorisme(a);
     }
 
     public void setK(int kk) throws DataNotValidException {
-        if(k <= 0) throw new DataNotValidException(k, "El valor de K ha de ser superior a 0.");
-        k = kk;
+        cda.set_k(kk);
     }
 
     /**
@@ -195,27 +173,16 @@ public class ControladorDomini {
 
     /*----- PROVES I COSES QUE ES TREURAN -----*/
 
-    public void provaItems(ArrayList<ArrayList<String>> items) {
-        System.out.println("Num items: " + (items.size()-1) + " Num atributs: " + items.get(0).size());
-        for (int i = 0; i < items.size(); ++i) {
-            if (items.get(i).size() != items.get(0).size()) System.out.println("NoPe: " + i + " id: "+items.get(i).get(5));
-        }
-        try {
-            ci = new ConjuntItems(items);
-        } catch (ItemTypeNotValidException e1) {
-            e1.printStackTrace();
-        }
+    public void prova2() {
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
-
+        System.out.println("Natributs: " + ConjuntItems.getNumAtributs());
+        for (int i = 0; i < ci.size(); ++i) System.out.println("Item "+i+" tamany atributs:" + ci.get(i).getNumAtributs());
         for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
-            try {
-                ConjuntItems.assignarPes(i, ((float)100.0));
-            } catch (Exception e) {
-                //Improbable que passi xd
-            }
+            System.out.println("Minim: " + ConjuntItems.getNomAtribut(i) + " " + ci.getMinMaxAtribut(i, false));
+            System.out.println("Maxim: " + ConjuntItems.getNomAtribut(i) + " " + ci.getMinMaxAtribut(i, true));
         }
-        ci.printItems();
-        ci.printId();
+        //ci.printItems();
+        //ci.printId();
     }
 
 }

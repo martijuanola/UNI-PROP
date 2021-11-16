@@ -22,9 +22,7 @@ public class ControladorLoad {
      * 
      * @return Returns a new instance of ControladorLoad
      */     
-    public ControladorLoad()
-    {
-	}
+    public ControladorLoad() {}
     
     /**
      * Returns the content of the file specified read as a table separated
