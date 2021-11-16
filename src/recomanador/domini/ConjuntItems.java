@@ -269,7 +269,8 @@ public class ConjuntItems extends ArrayList<Item> {
                 }
             }
         }
-        return s;
+        if (!s.equals(StringOperations.infinitString()))return s;
+        else return "BAD DETECTION";
     }
 
     public void detectarTipusAtributs() throws ItemTypeNotValidException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment

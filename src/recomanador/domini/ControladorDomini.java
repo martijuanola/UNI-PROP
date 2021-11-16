@@ -75,23 +75,29 @@ public class ControladorDomini {
             cp.escollirProjecte(directory);
         }
         catch (FolderNotFoundException ex) {
+            System.out.println("not found");
             //passar-ho al driver per tornar a preguntar la carpeta
         }
 
         try {
             ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
-
+            System.out.println("items: " +items.size());
+            for (int i = 0; i < items.size(); ++i) {
+                System.out.println(items.get(i));
+            }
             ci = new ConjuntItems(items);
             //TODO: Falta inicialitzar el nom del conjunt
 
         }
         catch (FolderNotValidException e1) {
+            System.out.println("Folder not valid");
             //passar-ho al driver per tornar a preguntar la carpeta
         }
         catch (ItemTypeNotValidException e) {
+            System.out.println("Item not valid");
             //l'atribut id no existeix o hi ha algun que no és int
         }
-
+        prova2();
         try {
             ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
             
