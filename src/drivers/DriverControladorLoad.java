@@ -75,7 +75,7 @@ public class DriverControladorLoad {
 		Scanner scanner = new Scanner(System.in);
 		File f = null;
 		
-		//p = scanner.nextLine();
+		p = scanner.nextLine();
 		f = new File(p);
 		if (!f.exists()) 
 		{
