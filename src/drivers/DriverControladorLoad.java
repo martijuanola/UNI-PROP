@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DriverControladorLoad {
     
@@ -68,23 +69,33 @@ public class DriverControladorLoad {
     }
     
     static private void testCarregarArxiu() throws Exception {
-		///home/r5d8/Desktop
 		io.writeln("Testing function carregarArxiu()");
+		
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
-		String p = "/home/r5d8/Desktop/ratings.db.csv";
-		/*try
+		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
+		//String p = "/home/r5d8/Desktop/ratings.db.csv";
+		String p = "data/Movies-2250/ratings.db.csv";
+		//String p = "/home/r5d8/fib/PROP/subgrup-prop5-5/data/Movies-2250/ratings.db.csv";
+		
+		Scanner scanner = new Scanner(System.in);
+		File f = null;
+		try
 		{
-			p = io.readline();
+			p = scanner.nextLine();
+			f = new File(p);
 		}catch(Exception e){
 			io.writeln("Wrong path");
-		}*/
+		}
 		
 		//executar la funcionalitat
 		ArrayList<ArrayList<String>> sol = new ArrayList<ArrayList<String>>();
 		try
 		{
-			sol = c.carregarArxiu(new File("", p));
+			//Path absolut
+			//sol = c.carregarArxiu(new File("", p));
+			//Path relatiu
+			sol = c.carregarArxiu(f);
 		}catch(Exception e)
 		{
 			io.writeln("Error carregar arxiu");
