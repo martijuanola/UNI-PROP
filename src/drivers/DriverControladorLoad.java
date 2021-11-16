@@ -117,12 +117,20 @@ public class DriverControladorLoad {
 		}
 		
 		//mostrar output
+		int cols = 0;
+		for (int i = 0; i < sol.get(0).size(); ++i) ++cols;
+		
 		
 		for (int i = 0; i < sol.size(); ++i)
 		{
-			for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
-			io.writeln();
+			//for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
+			//io.writeln();
+			int temp_cols = 0;
+			for (int j = 0; j < sol.get(i).size(); ++j) ++temp_cols;
+			if (temp_cols != cols) io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
+			//io.writeln();
 		}
+		io.writeln("Cols: " + cols);
 	}
     static private void mostra_2() throws Exception {
 		io.writeln("Testing function <NAME_FUNCTION>");
