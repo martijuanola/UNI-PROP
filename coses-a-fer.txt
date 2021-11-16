@@ -9,9 +9,9 @@ Jaume:
 	-Driver de Item
 	-Driver de ConjuntItem
 	-Passar atributs al tipus correcte
-	-Excepció a assignarPes(a, p) comprovar a vàlid
-
-
+	
+	
+	-(FET)Excepció a assignarPes(a, p) comprovar a vàlid
 	-(FET)getCapceleres
 	-(FET)getAtributs
 	-(FET)Documentar Item

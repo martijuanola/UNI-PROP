@@ -236,25 +236,38 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    public String getMinAtribut(int col) {
+    public String getMinMaxAtribut(int col, boolean Max) { //If max == true, agafes max, else agafes min
         tipus t = getTipus(col);
         String s = "";
-        if (t == tipus.B) s = "True";
-        if (t == tipus.S) s = StringOperations.infinitString();
-        if (t == tipus.N) s = StringOperations.infinitString();
-        if (t == tipus.I) s = ""+Integer.MAX_VALUE;
-        if (t == tipus.D) s = "9999-12-31";
-        if (t == tipus.F) s = ""+Float.MAX_VALUE;
+        if (Max) {
+            if (t == tipus.B) s = "True";
+            if (t == tipus.S) s = "";
+            if (t == tipus.N) s = "";
+            if (t == tipus.I) s = ""+Integer.MIN_VALUE;
+            if (t == tipus.D) s = "0000-00-00";
+            if (t == tipus.F) s = ""+Float.MIN_VALUE; 
+        }
+        else {
+            if (t == tipus.B) s = "True";
+            if (t == tipus.S) s = StringOperations.infinitString();
+            if (t == tipus.N) s = StringOperations.infinitString();
+            if (t == tipus.I) s = ""+Integer.MAX_VALUE;
+            if (t == tipus.D) s = "9999-12-31";
+            if (t == tipus.F) s = ""+Float.MAX_VALUE;
+        }
 
         for (int i = 0; i < size(); ++i) { //TODO: NO ES CORRECTE PERQUE ELS ITEMS NO ESTAN BEN AGAFATS
             if (col < get(i).getAtributs().size()) {
-            ArrayList<String> atr = get(i).getAtribut(col);
-            for (int j = 0; j < atr.size(); ++j) {
-                if (StringOperations.compararAtributs(atr.get(j), s, t) < 0) { //atribut és menor que j
-                    s = atr.get(j);
+                ArrayList<String> atr = get(i).getAtribut(col);
+                for (int j = 0; j < atr.size(); ++j) {
+                    if (Max && StringOperations.compararAtributs(atr.get(j), s, t) > 0) {
+                        s = atr.get(j);
+                    }
+                    else if (!Max && StringOperations.compararAtributs(atr.get(j), s, t) < 0) { //atribut és menor que j
+                        s = atr.get(j);
+                    }
                 }
             }
-        }
         }
         return s;
     }
