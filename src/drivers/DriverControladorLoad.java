@@ -36,6 +36,18 @@ public class DriverControladorLoad {
 				
 				x = io.readint();
 				
+				/*es queda en un bucle infinit
+				do {
+					try {
+						x = io.readint();
+					}catch(Exception e) {
+						io.writeln("Please, write a number which belongs to the interval indicated.");
+						io.write("Option: ");
+						x = -1;
+					}
+				}while (x == -1);
+				//*/
+				
 				switch(x)
 				{
 					case 1:
@@ -57,6 +69,8 @@ public class DriverControladorLoad {
 						mostra_6();
 						break;
 					default:
+						//is always shown, even with the break
+						//io.writeln("Please, write a number which belongs to the interval indicated.");
 				}
 				
 			} while (x != 0);
@@ -74,9 +88,9 @@ public class DriverControladorLoad {
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
 		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
-		//String p = "/home/r5d8/Desktop/ratings.db.csv";
+		
 		String p = "data/Movies-2250/ratings.db.csv";
-		//String p = "/home/r5d8/fib/PROP/subgrup-prop5-5/data/Movies-2250/ratings.db.csv";
+		io.write("Path: ");
 		
 		Scanner scanner = new Scanner(System.in);
 		File f = null;
