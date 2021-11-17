@@ -16,11 +16,22 @@ public class ControladorDomini {
 	
     ControladorPersistencia cp;
 
-    ConjuntUsuaris cu;
-    ConjuntRecomanacions cr;
-    ConjuntItems ci;
+    ControladorDominiAlgorisme cda;
 
+    //Potser faltarà afegir-ne d'altres per utiltizar amb els testos
+    public ConjuntUsuaris cu;
+    public ConjuntRecomanacions cr;
+    public ConjuntItems ci;
+
+    /**
+     * Id of the user/actor of the application
+     */
     int id;
+
+    /**
+     * True if active user/actor has admin privileges
+     */
+    boolean admin;
     
 
     /*----- CONSTRUCTORS -----*/
@@ -28,26 +39,150 @@ public class ControladorDomini {
     public ControladorDomini() {
         cp = new ControladorPersistencia();
 
+        cda = new ControladorDominiAlgorisme();
+
         cu = new ConjuntUsuaris();
         cr = new ConjuntRecomanacions();
         ci = new ConjuntItems();
 
         id = NULL_ID;
+        admin = false;
     }
     
+
+     /**
+     * Calls the persistence controler to get all the data from a previous stored session
+     * and initilizes all the necessari arrays of data(ConjuntItems, ConjuntUsuaris, ConjuntRecomanacions and others)   
+     *
+     * @param      directory  the directory where the files have been stored
+     */
+
+    /*----- DATA & FILES -----*/
+
+    public void carregarCarpeta(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
+
+        //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
+        cp.escollirProjecte(directory);
+       
+        try {
+            ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
+            ci = new ConjuntItems(items);
+
+            ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();            
+            cu = new ConjuntUsuaris(valoracions);
+            cr = new ConjuntRecomanacions(ci,cu,valoracions);
+        }
+        catch(ItemTypeNotValidException e) {
+            //també un altre not valid file o algo així, es pot diferenciar de la resta passant un string a cada cas
+            //o sigui mateixa excepcion però amb missatges d'error diferents
+        }
+        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+            //throw new invalid file o algo d'aquest estil
+        }
+    }
+    
+    
+    public void carregarRatings(String fitxer) throws FileNotValidException, FileNotFoundException {
+        try {
+            cu = new ConjuntUsuaris(cp.carregarFitxerExtern(fitxer));
+            cr = new ConjuntRecomanacions(ci,cu,cp.carregarFitxerExtern(fitxer));
+        }
+        catch(Exception e) {
+            //s'han de mirar les que pugen
+        }
+    }
+
+    public void carregarItems(String fitxer) throws FileNotValidException, FileNotFoundException {
+        try {
+            ci = new ConjuntItems(cp.carregarFitxerExtern(fitxer));
+        }
+        catch(Exception e) {
+            //s'han de mirar les que pugen
+        }
+    }
+
+
+
+    //Funcions per obtenir i guardar info del sistema:
+        //Get pesos
+        //Get algorithm(int)
+        //Get k(int)
+        //??
+    
+    //Guardar
+
+    //Funcions per obtenir informació(per display):
+        //Get recomanacions usuari actiu
+        //Get capçalera items(només per Admin)
+        //Get info item
+        //*Get pesos
+        //*Get algorithm(int)
+        //*Get k(int)
+
     /*----- ALTRES -----*/
     
-    //Pre: identificador és vàlida (i.e. identificador és diferent a NULL_ID)
-    //Post: s'iguala l'id de la classe a identificador
-    public void establir_id_activa(int identificador) {
+    /**
+     * Logs out: id of active user is set to null and privileges to regular.
+     */
+    public void logout() {
+        id = NULL_ID;
+        admin = false;
+    }
+
+
+    /*----- Funcions d'ADMIN -----*/
+
+    /**
+     * Sets the algorithm that the application will use.
+     *
+     * @param      a                      The value to determine the algorithm
+     *
+     * @throws     DataNotValidException  Thrown when the input is not a possible value
+     * @throws     PrivilegesException    Thrown if the active user is not loged in as an admin
+     */
+    public void setAlgorithm(int a) throws PrivilegesException, DataNotValidException {
+        if(!admin) throw new PrivilegesException();
+        cda.seleccionar_algorisme(a);
+    }
+
+    public void setK(int kk) throws DataNotValidException {
+        cda.set_k(kk);
+    }
+
+    /**
+     * Sets the weight of an atribute on the set of items.
+     *
+     * @param      a                              Index of the atribute
+     * @param      w                              New weight
+     *
+     * @throws     ItemWeightNotCorrectException  Thrown when the weight value is not valid
+     */
+    public void setPes(int a, float w) throws ItemWeightNotCorrectException {
+        ci.assignarPes(a, w);
+    }
+
+
+
+
+    /*----- Funcions d'USER -----*/
+    
+    //Comprovar tema excepcions d'ID
+    /**
+     * Enters as a regular active user.
+     *
+     * @param      identificador  Id of the active user
+     */
+    public void establirIdActiva(int identificador) {
 		id = identificador;
+        admin = false;
 	}
-	
-	//Pre: cert
-	//Post: s'iguala la id a NULL_ID, indicant que ningú està com a usuari
-	public void logout() {
-		id = NULL_ID;
-	}
+
+    //get new recomendations
+
+ 
+
+
+    /*----- PROVES I COSES QUE ES TREURAN -----*/
 
     public void prova2() {
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
@@ -60,56 +195,4 @@ public class ControladorDomini {
         //ci.printItems();
         //ci.printId();
     }
-
-
-    /**
-     * Calls the persistence controler to get all the data from a previous stored session
-     * and initilizes all the necessari arrays of data(ConjuntItems, ConjuntUsuaris, ConjuntRecomanacions and others)   
-     *
-     * @param      directory  the directory where the files have been stored
-     */
-    public void carregarCarpeta(String directory) {
-
-        //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
-        try {
-            cp.escollirProjecte(directory);
-        }
-        catch (FolderNotFoundException ex) {
-            System.out.println("not found");
-            //passar-ho al driver per tornar a preguntar la carpeta
-        }
-
-        try {
-            ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
-
-            ci = new ConjuntItems(items);
-            //TODO: Falta inicialitzar el nom del conjunt
-
-        }
-        catch (FolderNotValidException e1) {
-            System.out.println("Folder not valid");
-            //passar-ho al driver per tornar a preguntar la carpeta
-        }
-        catch (ItemTypeNotValidException e) {
-            System.out.println("Item not valid");
-            //l'atribut id no existeix o hi ha algun que no és int
-        }
-
-        try {
-            ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();
-
-            //crea ususaris buits
-            cu = new ConjuntUsuaris(valoracions);
-
-            //es creen les recomanacions/valoracions i s'afegeixen a usuaris 
-            cr = new ConjuntRecomanacions(ci,cu,valoracions);
-        }
-        catch(FolderNotValidException e) {
-            //processar error amb el driver
-        }
-        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
-            //throw new invalid file o algo d'aquest estil
-        }
-    }
-
 }

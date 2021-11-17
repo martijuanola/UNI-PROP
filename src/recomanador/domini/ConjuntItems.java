@@ -35,15 +35,14 @@ public class ConjuntItems extends ArrayList<Item> {
     static int id; //posició del atribut id al tipus atribut
     static int nomA; //posició del atribut nom al al tipus atrbut. -1 si no en té
 
-    private ArrayList<Float> maxAtributs;
-    private ArrayList<Float> minAtributs;
+    private static ArrayList<Float> maxAtributs;
+    private static ArrayList<Float> minAtributs;
 
     public ConjuntItems(Collection<? extends Item> c) {
         super(c);
     }
 
-    public ConjuntItems() {
-    }
+    public ConjuntItems() {}
 
     public ConjuntItems(int size) {
         super(size);
@@ -74,8 +73,8 @@ public class ConjuntItems extends ArrayList<Item> {
         
         ConjuntItems.assginarPesos(pesos);
         ConjuntItems.assgnarTipusAtributs(tipusAtribut);
-        assignarMaxAtributs(maxAtributs);
-        assignarMinAtributs(minAtributs);
+        ConjuntItems.assignarMaxAtributs(maxAtributs);
+        ConjuntItems.assignarMinAtributs(minAtributs);
         ConjuntItems.assignarNomAtributs(items.get(0));
 
         for (int i = 1; i < items.size(); ++i) {
@@ -88,12 +87,12 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    private void assignarMinAtributs(ArrayList<Float> minAtributs2) {
-        this.minAtributs = minAtributs2;
+    private static void assignarMinAtributs(ArrayList<Float> minAtributs2) {
+        ConjuntItems.minAtributs = minAtributs2;
     }
 
-    private void assignarMaxAtributs(ArrayList<Float> maxAtributs2) {
-        this.maxAtributs = maxAtributs2;
+    private static void assignarMaxAtributs(ArrayList<Float> maxAtributs2) {
+        ConjuntItems.maxAtributs = maxAtributs2;
     }
 
     private static void assgnarTipusAtributs(ArrayList<tipus> tipusAtribut2) {
@@ -237,7 +236,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return !empty;
     }
 
-    private boolean tipusCorrecte(String s, tipus t) {
+    private static boolean tipusCorrecte(String s, tipus t) {
         if (t == tipus.I) {
             if (StringOperations.esNombre(s) || s.equals("") && !s.equals(" ")) return true;
         }
@@ -413,7 +412,7 @@ public class ConjuntItems extends ArrayList<Item> {
         if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
     }
 
-    private float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
+    private static float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
         tipus t = getTipus(columna);
         if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + tipusToString(t));
 
@@ -445,7 +444,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return sim;
     }
 
-    public float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException, ItemNotCompatibleException {
+    public static float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException, ItemNotCompatibleException {
         if (i1.getNumAtributs() != i2.getNumAtributs()) throw new ItemNotCompatibleException("Different sizes");
 
         float res = (float)0.0, pesTotal = (float)0.0;

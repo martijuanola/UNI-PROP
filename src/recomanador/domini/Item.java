@@ -85,7 +85,7 @@ public class Item implements Comparable<Item>{
      * @param otherItem L'altre item que compara
      * @return Retorna un nombre depenent de la comparació entre l'item al que es fa la crida de la funció i el paràmetre
      * 1 si implícit > otherItem, 
-     * 0 si implícit > otherItem, 
+     * 0 si implícit = otherItem, 
      * -1 si implícit < otherItem
      */
     public int compareTo(Item otherItem) {

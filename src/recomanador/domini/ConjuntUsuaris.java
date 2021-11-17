@@ -1,6 +1,9 @@
 package src.recomanador.domini;
 
-import src.recomanador.excepcions.*;
+//Exceptions Used
+import src.recomanador.excepcions.UserIdNotValidException;
+import src.recomanador.excepcions.UserNotFoundException;
+import src.recomanador.excepcions.DataNotValidException;
 
 import java.util.Collections;  
 import java.util.ArrayList;
@@ -34,25 +37,8 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @exception  UserIdNotValidException Gets thrown if the string for a user id is can not be converted
      * to int
      */
-    public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws UserIdNotValidException {
-        int prev = -1;
-        for(int i = 1; i < raw.size(); i++) {
-            try {
-                int newID = Integer.parseInt(raw.get(i).get(0));
-                if(i == 1) {
-                    this.add(0, new Usuari(newID));
-                    prev = newID;
-                }
-                else {
-                    if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
-                    prev = newID;
-                }
-            }
-            catch(NumberFormatException e) {
-                throw new UserIdNotValidException(raw.get(i).get(0));
-            }
-        }
-        Collections.sort(this);
+    public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws DataNotValidException, UserIdNotValidException {
+        this.afegirDades(raw);
     }
 
 
@@ -66,7 +52,9 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @return     A boolean indicating if the user can be found or not
      */
     public boolean existeixUsuari(int id) {
-        int pos = cercaBinaria(0,this.size()-1,id);
+        if(this.size() == 0) return false;
+
+        int pos = cercaBinaria(id);
         if(pos < this.size() && this.get(pos).getId() == id) return true;
         else return false;
     }
@@ -81,8 +69,10 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @throws     UserNotFoundException  The user with that id didn't exist
      */
     public Usuari getUsuari(int id) throws UserNotFoundException {
-        int pos = cercaBinaria(0,this.size()-1,id);
-        if(this.get(pos).getId() == id) return this.get(pos);
+        if(this.size() == 0) throw new UserNotFoundException(id);
+
+        int pos = cercaBinaria(id);
+        if(pos < this.size() && this.get(pos).getId() == id) return this.get(pos);
         else throw new UserNotFoundException(id);
     }
 
@@ -97,7 +87,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @return     true (as specified by Collection.add(E))
      */
     @Override public boolean add(Usuari u) {
-        int pos = cercaBinaria(0,this.size()-1,u.getId());
+        int pos = cercaBinaria(u.getId());
         try {
             this.add(pos,u);
         }
@@ -107,9 +97,28 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         return true;
     }
 
+    public void afegirDades(ArrayList<ArrayList<String>> raw) throws UserIdNotValidException, DataNotValidException {
+        int prev = 0;
+        for(int i = 1; i < raw.size(); i++) {
+            try {
+                int newID = Integer.parseInt(raw.get(i).get(0));
+                if((prev == 0 || newID != prev) && ! existeixUsuari(newID)) this.add(new Usuari(newID));
+               
+                prev = newID;
+            }
+            catch(NumberFormatException e) {
+                throw new UserIdNotValidException(raw.get(i).get(0));
+            }
+            catch(IndexOutOfBoundsException e) {
+                throw new DataNotValidException(i,"Error amb l'input raw de ConjuntsUsuaris a l'iteració: ");
+            }
+        }
+    }
+
 
     /*----- ALTRES -----*/
 
+    //hauria de ser privat però per testejar l'he posat public
     /**
      * Returns de index of the element with id = <i>id</i>, or if it doesn't exist,
      *  the position where it should be added. It uses a binary search.
@@ -120,8 +129,11 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      *
      * @return     The index where the user should be
      */
-    private int cercaBinaria(int first, int last, int id) {  
-        while(first <= last) {
+    public int cercaBinaria(int id) { 
+        int first = 0;
+        int last = this.size()-1;
+        
+        while(first <= last) {  
             int mid = (first+last)/2;
             int mid_id = this.get(mid).getId();
             
@@ -129,13 +141,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
             else if(mid_id < id) first = mid + 1;
             else return mid;
         }
-        
-        if(first >= 0 && first < this.size() && this.get(first).getId() > id) return first;
-        else if(last >= 0 && last < this.size()) return last;
-        else {
-            System.out.println("Error s'ha d'acabar de mirar el final de la cerca binaria");
-            return -1;
-        }
+        return first;
     }
 
 }

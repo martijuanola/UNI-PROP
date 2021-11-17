@@ -1,5 +1,7 @@
 package src.recomanador.domini;
 
+import src.recomanador.excepcions.RatingNotValidException;
+
 /**
  * @author Martí i Jaume
  */
@@ -131,7 +133,7 @@ public class Usuari implements Comparable<Usuari> {
      * @param pun valor de la puntuació, ha de ser entre 0 i 5
      * @return retorna la nova valoració
      */
-    public Recomanacio valorarRecomanacio(int rec, float pun) {
+    public Recomanacio valorarRecomanacio(int rec, float pun) throws RatingNotValidException {
         Recomanacio r = cr.get(rec);
         cr.remove(rec);
         r.setVal(pun);
@@ -144,7 +146,7 @@ public class Usuari implements Comparable<Usuari> {
      * @param val índex de la valoració, ha de estar en el rang de valoracions de l'usuari
      * @param pun valor de la puntuació, ha de ser entre 0 i 5
      */
-    public void valorarValoracio(int val, float pun) {
+    public void valorarValoracio(int val, float pun) throws RatingNotValidException{
         cv.get(val).setVal(pun);
     }
 
