@@ -1,8 +1,8 @@
 Jaume:
 
+	-Driver de ConjuntItem
 	-Driver de Item
 	-Documentar ConjuntItem
-	-Driver de ConjuntItem
 	
 	-(FET)Passar atributs al tipus correcte
 	-(FET)eliminarItem

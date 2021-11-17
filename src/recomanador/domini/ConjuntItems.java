@@ -138,9 +138,11 @@ public class ConjuntItems extends ArrayList<Item> {
         remove(pos);
     }
 
-    public void afegirItem(Item i) {
+    @Override
+    public boolean add(Item i) {
         int pos = Search.findClosest(this, i.getId());
         this.add(pos, i);
+        return (get(pos).getId() == i.getId());
     }
 
     public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
