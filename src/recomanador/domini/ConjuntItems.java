@@ -1,11 +1,17 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.CountDownLatch;
 
-import src.recomanador.Search;
-import src.recomanador.StringOperations;
+import javax.swing.plaf.multi.MultiButtonUI;
+
+import src.recomanador.domini.Utils.Search;
+import src.recomanador.domini.Utils.StringOperations;
+import src.recomanador.domini.Utils.UnionIntersection;
+import src.recomanador.excepcions.ItemNotCompatibleException;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
@@ -28,6 +34,9 @@ public class ConjuntItems extends ArrayList<Item> {
 
     static int id; //posició del atribut id al tipus atribut
     static int nomA; //posició del atribut nom al al tipus atrbut. -1 si no en té
+
+    private ArrayList<Float> maxAtributs;
+    private ArrayList<Float> minAtributs;
 
     public ConjuntItems(Collection<? extends Item> c) {
         super(c);
@@ -56,8 +65,46 @@ public class ConjuntItems extends ArrayList<Item> {
         detectarTipusAtributs();
     }
 
+    public ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos,
+    ArrayList<tipus> tipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, 
+    ArrayList<Float> minAtributs) throws ItemTypeNotValidException {
+        ConjuntItems.nom = nom;
+        ConjuntItems.id = id;
+        ConjuntItems.nomA = nomA;
+        
+        ConjuntItems.assginarPesos(pesos);
+        ConjuntItems.assgnarTipusAtributs(tipusAtribut);
+        assignarMaxAtributs(maxAtributs);
+        assignarMinAtributs(minAtributs);
+        ConjuntItems.assignarNomAtributs(items.get(0));
 
-    static private void inicialitzar(int nAtributs) { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
+        for (int i = 1; i < items.size(); ++i) {
+            ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
+            for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
+                str.add(StringOperations.divideString(items.get(i).get(j), ';'));
+            }
+            Item it = new Item(str);
+            add(it);
+        }
+    }
+
+    private void assignarMinAtributs(ArrayList<Float> minAtributs2) {
+        this.minAtributs = minAtributs2;
+    }
+
+    private void assignarMaxAtributs(ArrayList<Float> maxAtributs2) {
+        this.maxAtributs = maxAtributs2;
+    }
+
+    private static void assgnarTipusAtributs(ArrayList<tipus> tipusAtribut2) {
+        ConjuntItems.tipusAtribut = tipusAtribut2;
+    }
+
+    private static void assginarPesos(ArrayList<Float> pesos2) {
+        ConjuntItems.pesos = pesos2;
+    }
+
+    private static void inicialitzar(int nAtributs) { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
         id = -1;
         nomA = -1;
         pesos = new ArrayList<Float>(nAtributs);
@@ -104,7 +151,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(posItem).getAtribut(atribut);
     }
 
-    static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
+    public static void assignarPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
         if (a < 0 || a >= pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
@@ -112,7 +159,7 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     public void assignarTipus(int atribut, tipus t) throws ItemTypeNotValidException {
-        if (!tipusCorrecte(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + tipusToString(t));
+        if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + tipusToString(t));
         ConjuntItems.tipusAtribut.set(atribut, t);
         canvisTipusAtribut(atribut, t);
     }
@@ -132,70 +179,113 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    private boolean tipusCorrecte(int columna, tipus t) {
+    private boolean tipusCorrecteColumna(int columna, tipus t) {
+        boolean empty = true;
         if (t == tipus.I) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esNombre(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esNombre(id.get(0))) return false;
+                }
             }
         }
         else if (t == tipus.B) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esBool(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esBool(id.get(0))) return false;
+                }
             }
         }
         else if (t == tipus.F) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esFloat(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esFloat(id.get(0))){
+                        System.out.println("columna "+getNomAtribut(columna)+" no es float:"+id.get(0));
+                        return false;
+                    } 
+                }
             }
         }
         else if (t == tipus.D) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esData(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esData(id.get(0))) return false;
+                }
             }
         }
         // Nom i String sempre estaran bé
-        return true;
+        return !empty;
     }
 
-    static public void assignarNomAtributs(ArrayList<String> n) {
+    private boolean tipusCorrecte(String s, tipus t) {
+        if (t == tipus.I) {
+            if (StringOperations.esNombre(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.B) {
+            if (StringOperations.esBool(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.F) {
+            if (StringOperations.esFloat(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.D) {
+            if (StringOperations.esData(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.S) return true;
+        else if (t == tipus.N) return true;
+        // Nom i String sempre estaran bé
+        return false;
+    }
+
+    public static void assignarNomAtributs(ArrayList<String> n) {
         ConjuntItems.nomAtribut = n;
     }
 
-    static public void assignarNom(String n) {
+    public static void assignarNom(String n) {
         ConjuntItems.nom = n;
     }
 
-    static public String getNomAtribut(int i) {
+    public static String getNomAtribut(int i) {
         return nomAtribut.get(i);
     }
 
-    static public ArrayList<String> getCapçalera() {
+    public static ArrayList<String> getCapçalera() {
         return nomAtribut;
     }
 
-    static public Float getPes(int i) {
+    public static ArrayList<Float> getPesos() {
+        return pesos;
+    }
+
+    public static ArrayList<tipus> getTipus() {
+        return tipusAtribut;
+    }
+
+    public static Float getPes(int i) {
         return pesos.get(i);
     }
 
-    static public int getNumAtributs() {
+    public static int getNumAtributs() {
         return nomAtribut.size();
     }
 
-    static public String getSTipus(int i) {
+    public static String getSTipus(int i) {
         tipus t = tipusAtribut.get(i);
         return tipusToString(t);
 
     }
 
-    static public String tipusToString(tipus t) {
+    public static String tipusToString(tipus t) {
         String s = "";
         switch (t) {
             case I:
@@ -223,7 +313,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return s;
     }
 
-    static public tipus getTipus(int i) {
+    public static tipus getTipus(int i) {
         return tipusAtribut.get(i);
     }
 
@@ -256,7 +346,7 @@ public class ConjuntItems extends ArrayList<Item> {
             if (t == tipus.F) s = ""+Float.MAX_VALUE;
         }
 
-        for (int i = 0; i < size(); ++i) { //TODO: NO ES CORRECTE PERQUE ELS ITEMS NO ESTAN BEN AGAFATS
+        for (int i = 0; i < size(); ++i) {
             if (col < get(i).getAtributs().size()) {
                 ArrayList<String> atr = get(i).getAtribut(col);
                 for (int j = 0; j < atr.size(); ++j) {
@@ -269,7 +359,8 @@ public class ConjuntItems extends ArrayList<Item> {
                 }
             }
         }
-        return s;
+        if (!s.equals(StringOperations.infinitString()))return s;
+        else return "BAD DETECTION";
     }
 
     public void detectarTipusAtributs() throws ItemTypeNotValidException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
@@ -279,7 +370,7 @@ public class ConjuntItems extends ArrayList<Item> {
             String nom = nomAtribut.get(i);
 
             if (nom.equalsIgnoreCase("id")) { //Comprova si es id
-                if (tipusCorrecte(i, tipus.I)) {
+                if (tipusCorrecteColumna(i, tipus.I)) {
                     tipusAtribut.set(i, tipus.I);
                     canvisTipusAtribut(i, tipus.I);
                     found = true;
@@ -288,19 +379,19 @@ public class ConjuntItems extends ArrayList<Item> {
                 else throw new ItemTypeNotValidException("columna id no correspon a Identificador");
             }
             if (!found){ //Comprova si es bool
-                if (tipusCorrecte(i, tipus.B)) {
+                if (tipusCorrecteColumna(i, tipus.B)) {
                     tipusAtribut.set(i, tipus.B);
                     found = true;
                 }
             }
             if (!found) { //Comprova si es float/int
-                if (tipusCorrecte(i, tipus.F)) {
+                if (tipusCorrecteColumna(i, tipus.F)) {
                     tipusAtribut.set(i, tipus.F);
                     found = true;
                 }
             }
             if (!found) { //Comprovar si es una data
-                if (tipusCorrecte(i, tipus.D)) {
+                if (tipusCorrecteColumna(i, tipus.D)) {
                     tipusAtribut.set(i, tipus.D);
                     found = true;
                 }
@@ -313,7 +404,56 @@ public class ConjuntItems extends ArrayList<Item> {
         if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
     }
 
-    public static float similitud(Item iNV, Item item) {
-        return 0;
+    private float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
+        tipus t = getTipus(columna);
+        if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + tipusToString(t));
+
+        float sim = (float)0.0;
+        if (t == tipus.I) {
+            int i1 = Integer.parseInt(a1), i2 = Integer.parseInt(a2);
+            sim = 1 - (Math.abs(i1 - i2) / (maxAtributs.get(columna) - minAtributs.get(columna)));
+        }
+        else if (t == tipus.B) {
+            boolean b1 = Boolean.parseBoolean(a1), b2 = Boolean.parseBoolean(a2);
+            if (b1 == b2) sim = (float)1.0;
+            else sim = (float)0.0;
+        }
+        else if (t == tipus.D) {
+            float dataMax = maxAtributs.get(columna), dataMin = minAtributs.get(columna); //TODO: canviar que es guarden les dates
+            sim = 1 - (Math.abs(StringOperations.dataToTime(a1) - StringOperations.dataToTime(a2)) / (dataMax - dataMin));
+        }
+        else if (t == tipus.F) {
+            float i1 = Float.parseFloat(a1), i2 = Float.parseFloat(a2);
+            sim = 1 - (Math.abs(i1 - i2) / (maxAtributs.get(columna) - minAtributs.get(columna)));
+        }
+        else if (t == tipus.S || t == tipus.N) {
+            int n= a1.length(), m = a2.length();    
+            int[][] dp = new int[n + 1][m + 1];
+            for(int i = 0; i < n + 1; i++) Arrays.fill(dp[i], -1);                
+            int a = StringOperations.minDis(a1, a2, n, m, dp);
+            sim = a/Math.max(n, m);
+        }
+        return sim;
+    }
+
+    public float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException, ItemNotCompatibleException {
+        if (i1.getNumAtributs() != i2.getNumAtributs()) throw new ItemNotCompatibleException("Different sizes");
+
+        float res = (float)0.0, pesTotal = (float)0.0;
+        for (int i = 0; i < i1.getNumAtributs(); ++i) {
+            float dist = (float)0.0;
+            if (getTipus(i) == tipus.S) {
+                float temp;
+                temp = UnionIntersection.getIntersection(i1.getAtribut(i), i2.getAtribut(i)).size();
+                res = temp / UnionIntersection.getUnion(i1.getAtribut(i), i2.getAtribut(i)).size();
+            }
+            else {
+                dist = distanciaAtribut(i1.getAtribut(0).get(0), i2.getAtribut(i).get(0), i);
+            }
+            res = dist*(getPes(i)/100);
+            pesTotal += getPes(i)/100;
+        }
+        res = res/pesTotal;
+        return res;
     }
 }
