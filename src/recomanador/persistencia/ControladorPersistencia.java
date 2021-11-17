@@ -421,7 +421,7 @@ public class ControladorPersistencia {
 		return this.carregarArxiuCarpeta(s);
 	}
 	
-	private void TESTguardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
+	public void TESTguardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
 	{
 		this.guardarDades(D, s);
 	}
