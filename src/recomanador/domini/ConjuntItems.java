@@ -147,6 +147,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
     public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
         int pos = Search.binarySearchItem(this, id, 0, size()-1);
+        if (pos < 0) throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
         return get(pos);
     }
 
