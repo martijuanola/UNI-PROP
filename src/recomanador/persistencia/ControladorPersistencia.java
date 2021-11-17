@@ -312,7 +312,7 @@ public class ControladorPersistencia {
 		
 		File f = new File(carpeta, s);
 		
-		//If the file doesn't exist, it tores the data into the correct one
+		//If the file doesn't exist, it stores the data into the correct one
 		//Otherwise, a temporal file is created, to prevent data losses from the prevoius
 		//executions, in case there's a failure during the execution (like a power outage)
 		if (!f.exists())

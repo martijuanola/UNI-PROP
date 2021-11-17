@@ -35,6 +35,13 @@ public class DriverControladorPersistencia {
 			"13.Load test known\n" +
 			"14.Load test unknown\n" +
 			"15.Load algorithm's attributes\n" +
+			"16.Create a new project save data\n" +
+			"17.Save data (any into any file)\n" +
+			"18.Save recomendations and valorations\n" +
+			"19.Save items\n" +
+			"20.Save items' attributes' weights\n" +
+			"21.Save items' atrributes' type\n" +
+			"22.Save algorithm's attributes\n" +
 			"-1. exit\n";
 			
 			String reduced = "Options: \n" +
@@ -45,13 +52,16 @@ public class DriverControladorPersistencia {
 			do {
 				io.writeln("\n--------------------------------------------------\n");
 				io.writeln("Enter the number of the function you want to test. \n");
-				io.writeln(s);
+				io.writeln(reduced);
 				io.write("Option: ");
 				
 				x = io.readint();
 				
 				switch(x)
 				{
+					case 0:
+						io.writeln(s);
+						break;
 					case 1:
 						testEscollirProjecte();
 						break;
@@ -84,6 +94,7 @@ public class DriverControladorPersistencia {
     
     static private void testEscollirProjecte() throws Exception {
 		io.writeln("Testing function testEscollirProjecte()");
+		
 		//demanar l'input
 		io.writeln("\nChoose a project to load from the list. " +
 		"Enter the number of the project you want to load");
@@ -151,7 +162,14 @@ public class DriverControladorPersistencia {
 		}
 		
 		//executar la funcionalitat
-		ArrayList<ArrayList<String>> sol = c.carregarRecomanacionsCarpeta();
+		try
+		{		
+			ArrayList<ArrayList<String>> sol = c.carregarRecomanacionsCarpeta();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage);
+		}
 		
 		//mostrar output
 		io.writeln("File ratings.db.csv from the poject " + c.getNomProjecte() + ":");
@@ -178,7 +196,15 @@ public class DriverControladorPersistencia {
 		}
 		
 		//executar la funcionalitat
-		ArrayList<ArrayList<String>> sol = c.carregarItemsCarpeta();
+		try
+		{		
+			ArrayList<ArrayList<String>> sol = c.carregarItemsCarpeta();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage);
+		}
+		
 		
 		//mostrar output
 		io.writeln("File items.csv from the poject " + c.getNomProjecte() + ":");
@@ -195,29 +221,27 @@ public class DriverControladorPersistencia {
 		io.writeln("...");
 		
 		//mostrar output
+		io.writeln("More information about the file read:");
 		int cols = sol.get(0).size();
 		io.writeln("Rows read: " + sol.size());
-		//for (int i = 0; i < sol.get(0).size(); ++i) ++cols;
 		
 		
 		for (int i = 0; i < sol.size(); ++i)
 		{
-			//for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
-			//io.writeln();
 			int temp_cols = sol.get(i).size();
-			//for (int j = 0; j < sol.get(i).size(); ++j) ++temp_cols;
 			if (temp_cols != cols)
 			{
 				io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
 				for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + "|");
 				io.writeln();
 			}
-			//io.writeln();
 		}
-		io.writeln("Cols: " + cols);
+		
+		io.writeln("Columns read per row: " + cols);
 	}
     static private void testCarregarFitxerExtern() throws Exception {
 		io.writeln("Testing function testCarregarFitxerExtern()");
+		
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
 		io.writeln("(If you don't know what to chose, you have an example at data/Movies-2250/ratings.db.csv)");
@@ -233,7 +257,8 @@ public class DriverControladorPersistencia {
 			sol = c.carregarFitxerExtern(p);
 		}catch(Exception e)
 		{
-			io.writeln("Error loading the file. it odesn't exist or is not valid.");
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage);
 		}
 		
 		//mostrar output
