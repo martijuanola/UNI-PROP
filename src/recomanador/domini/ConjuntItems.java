@@ -1,11 +1,13 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
 
+import javax.print.attribute.standard.MediaSize.NA;
 import javax.swing.plaf.multi.MultiButtonUI;
 
 import src.recomanador.domini.Utils.Search;
@@ -16,6 +18,12 @@ import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
 
+/**
+ * This class represents a set of items in the form of an ArrayList extension. 
+ * It keeps the items sorted according to the item's ID, 
+ * to achieve better performance when modifying this list.
+ * @author Jaume
+ */
 public class ConjuntItems extends ArrayList<Item> {
 
     public enum tipus {
@@ -27,31 +35,23 @@ public class ConjuntItems extends ArrayList<Item> {
         D //Date
     }
 
+    /*----- ATRIBUTS -----*/
     public static String nom; //Nom del conjunt d'items
     public static ArrayList<Float> pesos;
     public static ArrayList<tipus> tipusAtribut; //I i N haurien de ser únics en els atributs
     public static ArrayList<String> nomAtribut;
+    private static ArrayList<Float> maxAtributs;
+    private static ArrayList<Float> minAtributs;
 
     static int id; //posició del atribut id al tipus atribut
     static int nomA; //posició del atribut nom al al tipus atrbut. -1 si no en té
 
-    private static ArrayList<Float> maxAtributs;
-    private static ArrayList<Float> minAtributs;
-
-    public ConjuntItems(Collection<? extends Item> c) {
-        super(c);
-    }
-
     public ConjuntItems() {}
-
-    public ConjuntItems(int size) {
-        super(size);
-    }
 
     public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
-        inicialitzar(nAtributs.size());
         ConjuntItems.assignarNomAtributs(nAtributs);
+        if (!inicialitzar(nAtributs.size())) throw new ItemTypeNotValidException("Items has no column named \"id\"");
 
         for (int i = 1; i < items.size(); ++i) {
             ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
@@ -59,7 +59,7 @@ public class ConjuntItems extends ArrayList<Item> {
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
             Item it = new Item(str);
-            add(it);
+            add(it);//Afegeix ordenant
         }
         detectarTipusAtributs();
     }
@@ -103,19 +103,28 @@ public class ConjuntItems extends ArrayList<Item> {
         ConjuntItems.pesos = pesos2;
     }
 
-    private static void inicialitzar(int nAtributs) { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
-        id = -1;
+    private static boolean inicialitzar(int nAtributs) { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
         nomA = -1;
         pesos = new ArrayList<Float>(nAtributs);
         tipusAtribut = new ArrayList<tipus>(nAtributs);
-        nomAtribut = new ArrayList<String>(nAtributs);
         int i = 0;
         while (i < nAtributs) {
             pesos.add((float) 100.0);
             tipusAtribut.add(i, tipus.S);
-            nomAtribut.add("Not A Name" + i);
             ++i;
         }
+
+        int c = 0;
+        boolean found = false;
+        while (c < nAtributs && !found) {
+            if (ConjuntItems.nomAtribut.get(c).equalsIgnoreCase("id")) {
+                ConjuntItems.id = c;
+                tipusAtribut.set(c, tipus.I);
+                found = true;
+            }
+            ++c;
+        }
+        return found;
     }
 
     public void printItems() {
@@ -152,7 +161,8 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     public boolean existeixItem(int id) {
-        return Search.binarySearchItem(this, id, 0, size()-1) > -1;
+        int res = Search.binarySearchItem(this, id, 0, size()-1);
+        return res > -1;
     }
 
     public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut

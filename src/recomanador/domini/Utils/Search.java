@@ -18,13 +18,14 @@ public class Search {
     } // binarySearch
 
     public static <T extends Comparable<T>> int binarySearchItem(ArrayList<Item> list, int id, int lo, int hi) {
-        if (lo < hi) {
-            int mid = (lo / 2) + (hi / 2);
-            //Agafes l'id. Amb les precondicions de que l'id ha de ser correcte, no hauria de passar res
+        if (hi >= lo) {
+            int mid = lo + (hi - lo) / 2;
             int cmp = list.get(mid).getId();
-            if (cmp < id) return binarySearchItem(list, id, lo, mid - 1);
-            if (cmp > id) return binarySearchItem(list, id, mid + 1, hi);
-            return mid;
+            
+            if (cmp == id) return mid;
+            if (cmp > id) return binarySearchItem(list, id, lo, mid-1);
+            return binarySearchItem(list, id, mid+1, hi);
+
         }
         return -1;
 	}
@@ -59,6 +60,7 @@ public class Search {
 
     public static int findClosest(ArrayList<Item> list, int id) {
         int n = list.size();
+        if (n == 0) return 0;
  
         // Corner cases
         if (id <= list.get(0).getId())
