@@ -1,8 +1,5 @@
 package src.recomanador.domini;
 
-//Per quan s'ha d'utilitzar StubUsuari.java
-import src.stubs.*;
-
 import src.recomanador.excepcions.RatingNotValidException;
 
 /**
@@ -48,7 +45,7 @@ public class Recomanacio implements Comparable<Recomanacio> {
      * @param      i     item
      * @param      v     rating
      */
-    public Recomanacio(Usuari u, Item i, float v) throws RatingNotValidException{
+    public Recomanacio(Usuari u, Item i, float v) throws RatingNotValidException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
         usr = u;
         item = i;

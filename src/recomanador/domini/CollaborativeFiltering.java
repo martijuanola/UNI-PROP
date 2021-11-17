@@ -8,9 +8,6 @@ import java.util.Collections;
 import src.recomanador.excepcions.RecommendationNotFoundException;
 import src.recomanador.excepcions.UserNotFoundException;
 
-//Per si s'ha d'utilitzar StubUsuari.java
-import src.stubs.*;
-
 class Centroid {
     HashMap<Item,Float> valoracio;
     HashMap<Item,Float> sum;

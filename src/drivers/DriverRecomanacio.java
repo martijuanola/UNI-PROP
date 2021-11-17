@@ -2,9 +2,9 @@ package src.drivers;
 
 import src.recomanador.domini.Recomanacio;
 import src.recomanador.domini.Item;
-//canviar quan es testeja
-//import src.recomanador.domini.Usuari;
-import src.stubs.Usuari;
+
+import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable!!!!!!
+//import src.stubs.Usuari;
 
 import src.recomanador.excepcions.*;
 

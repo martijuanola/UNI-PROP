@@ -5,9 +5,6 @@ import src.recomanador.excepcions.*;
 import java.util.Collections;  
 import java.util.ArrayList;
 
-//Per si s'ha d'utilitzar StubUsuari.java
-import src.stubs.*;
-
 /**
  * This class describes a set of recommendations as an extenssion of ArrayList of recommendations.
  * It always has the array sorted by item id and user id to improve efficency on certain calls.

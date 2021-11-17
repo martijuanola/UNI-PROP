@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import src.recomanador.excepcions.UserNotFoundException;
 import java.util.Collections;
 
-//Per si s'ha d'utilitzar StubUsuari.java
-import src.stubs.*;
-
 /**
  * This class implements the recomendation algorithm content based filtering.
  * We have thought of some variations of k-NN that we think might make the algorithm better,
