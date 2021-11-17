@@ -105,8 +105,10 @@ public class DriverControladorPersistencia {
 						testCarregarTestKnown();
 						break;
 					case 15:
+						testCarregarTestUnknown();
 						break;
 					case 16:
+						testCarregarAtributsAlgorisme();
 						break;
 					case 17:
 						break;
@@ -395,14 +397,7 @@ public class DriverControladorPersistencia {
 	}
 	static private void testCarregarArxiuCarpeta() throws Exception {
 		io.writeln("Testing function carregarArxiuCarpeta()\n");
-		//demanar l'input
-		if (c.getNomProjecte() == null)
-		{
-			io.writeln("Choose a project before reading the files");
-			io.writeln("You can do it by choosing the option 1 on the main menu");
-			return;
-		}
-		
+		//demanar l'input	
 		io.writeln("Choose a file to load. Write the name below.");
 		io.writeln("Remember that the file will be read as if it were a " +
 			".csv with the same bumber of columns on every row and allowing " +
@@ -421,6 +416,11 @@ public class DriverControladorPersistencia {
 		{
 			System.out.println("ERROR!!!");
 			System.out.println(e.getMessage());
+			if (c.getNomProjecte() == null)
+			{
+				io.writeln("Choose a project before reading the files");
+				io.writeln("You can do it by choosing the option 1 on the main menu");
+			}
 			return;
 		}
 		
@@ -546,6 +546,81 @@ public class DriverControladorPersistencia {
 		io.writeln("More information about the file read:");
 		io.writeln("Rows read: " + sol.size());
 		io.writeln("Columns read: " + sol.get(0).size());
+	}
+	static private void testCarregarTestUnknown() throws Exception {
+		io.writeln("Testing function carregarTestUnknown()\n");
+		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		
+		//executar la funcionalitat
+		ArrayList<ArrayList<String>> sol = null;
+		try
+		{		
+			sol = c.carregarTestUnknown();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		
+		//mostrar output
+		io.writeln("File ratings.test.unknown.csv from the poject " + c.getNomProjecte() + ":");
+		int n = sol.size();
+		if (11 < n) n = 11;
+		
+		for (int i = 0; i < n; ++i)
+		{
+			io.write("\t");
+			for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
+			io.writeln();
+		}
+		
+		io.writeln("...");
+		
+		io.writeln("More information about the file read:");
+		io.writeln("Rows read: " + sol.size());
+		io.writeln("Columns read: " + sol.get(0).size());
+	}
+	static private void testCarregarAtributsAlgorisme() throws Exception {
+		io.writeln("Testing function carregarAtributsAlgorisme()\n");
+		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		
+		//executar la funcionalitat
+		ArrayList<String> sol = null;
+		try
+		{		
+			sol = c.carregarAtributsAlgorisme();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		
+		//mostrar output
+		io.writeln("File algorisme.csv from the poject " + c.getNomProjecte() + ":");
+		int n = sol.size();
+		
+		for (int i = 0; i < n; ++i) io.writeln(sol.get(i));
+				
+		//mostrar output
+		io.writeln("More information about the file read:");
+		io.writeln("Rows read: 1");
+		io.writeln("Columns read: " + sol.size());
 	}
 	
 	

@@ -168,6 +168,8 @@ public class ControladorPersistencia {
 	
 	private ArrayList<ArrayList<String>> carregarArxiuCarpeta(String s) throws FolderNotValidException
 	{
+		if (carpeta == null) throw new FolderNotValidException();
+		
 		File f = new File(carpeta, s);
 		if (!f.exists()) throw new FolderNotValidException(carpeta.getName(), s);
 		
