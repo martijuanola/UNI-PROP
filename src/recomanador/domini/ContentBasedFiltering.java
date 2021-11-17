@@ -1,6 +1,9 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
+
+import src.recomanador.excepcions.ItemNotCompatibleException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.UserNotFoundException;
 import java.util.Collections;
 
@@ -52,7 +55,13 @@ public class ContentBasedFiltering {
             float puntuacio_estimada = 0f;
             for (int idxV = 0; idxV < valUser.size(); ++idxV) {
                 Recomanacio val = valoracions.get(idxV);
-                float similitud = ConjuntItems.similitud(iNV, val.getItem());
+                float similitud = (float)0.0;
+                try {
+                    similitud = ConjuntItems.distanciaItem(iNV, val.getItem());
+                } catch (ItemTypeNotValidException | ItemNotCompatibleException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 
                 //Així, un ítem exactament igual que un que ha valorat com a 0 restaria 2.5 a la puntuació
                 //i viceversa. Això està ponderat per la similitud i per la valoració.
