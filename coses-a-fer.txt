@@ -1,7 +1,6 @@
 Jaume:
 
-	-distancies entre dades
-	-distancies entre Items
+
 	-Constructor dades preprocessades
 	-eliminarItem
 	-afegirItem
@@ -10,6 +9,8 @@ Jaume:
 	-Driver de ConjuntItem
 	-Passar atributs al tipus correcte
 	
+	-(FET)distancies entre dades
+	-(FET)distancies entre Items
 	-(FET)Min i max d'un atribut
 	-(FET)Excepció a assignarPes(a, p) comprovar a vàlid
 	-(FET)getCapceleres

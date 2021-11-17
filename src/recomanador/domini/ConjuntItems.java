@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.CountDownLatch;
+
+import javax.swing.plaf.multi.MultiButtonUI;
 
 import src.recomanador.domini.Utils.Search;
 import src.recomanador.domini.Utils.StringOperations;
@@ -62,8 +65,46 @@ public class ConjuntItems extends ArrayList<Item> {
         detectarTipusAtributs();
     }
 
+    public ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos,
+    ArrayList<tipus> tipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, 
+    ArrayList<Float> minAtributs) throws ItemTypeNotValidException {
+        ConjuntItems.nom = nom;
+        ConjuntItems.id = id;
+        ConjuntItems.nomA = nomA;
+        
+        ConjuntItems.assginarPesos(pesos);
+        ConjuntItems.assgnarTipusAtributs(tipusAtribut);
+        assignarMaxAtributs(maxAtributs);
+        assignarMinAtributs(minAtributs);
+        ConjuntItems.assignarNomAtributs(items.get(0));
 
-    static private void inicialitzar(int nAtributs) { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
+        for (int i = 1; i < items.size(); ++i) {
+            ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
+            for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
+                str.add(StringOperations.divideString(items.get(i).get(j), ';'));
+            }
+            Item it = new Item(str);
+            add(it);
+        }
+    }
+
+    private void assignarMinAtributs(ArrayList<Float> minAtributs2) {
+        this.minAtributs = minAtributs2;
+    }
+
+    private void assignarMaxAtributs(ArrayList<Float> maxAtributs2) {
+        this.maxAtributs = maxAtributs2;
+    }
+
+    private static void assgnarTipusAtributs(ArrayList<tipus> tipusAtribut2) {
+        ConjuntItems.tipusAtribut = tipusAtribut2;
+    }
+
+    private static void assginarPesos(ArrayList<Float> pesos2) {
+        ConjuntItems.pesos = pesos2;
+    }
+
+    private static void inicialitzar(int nAtributs) { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
         id = -1;
         nomA = -1;
         pesos = new ArrayList<Float>(nAtributs);
@@ -110,7 +151,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(posItem).getAtribut(atribut);
     }
 
-    static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
+    public static void assignarPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
         if (a < 0 || a >= pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
@@ -206,45 +247,45 @@ public class ConjuntItems extends ArrayList<Item> {
         return false;
     }
 
-    static public void assignarNomAtributs(ArrayList<String> n) {
+    public static void assignarNomAtributs(ArrayList<String> n) {
         ConjuntItems.nomAtribut = n;
     }
 
-    static public void assignarNom(String n) {
+    public static void assignarNom(String n) {
         ConjuntItems.nom = n;
     }
 
-    static public String getNomAtribut(int i) {
+    public static String getNomAtribut(int i) {
         return nomAtribut.get(i);
     }
 
-    static public ArrayList<String> getCapçalera() {
+    public static ArrayList<String> getCapçalera() {
         return nomAtribut;
     }
 
-    static public ArrayList<Float> getPesos() {
+    public static ArrayList<Float> getPesos() {
         return pesos;
     }
 
-    static public ArrayList<tipus> getTipus() {
+    public static ArrayList<tipus> getTipus() {
         return tipusAtribut;
     }
 
-    static public Float getPes(int i) {
+    public static Float getPes(int i) {
         return pesos.get(i);
     }
 
-    static public int getNumAtributs() {
+    public static int getNumAtributs() {
         return nomAtribut.size();
     }
 
-    static public String getSTipus(int i) {
+    public static String getSTipus(int i) {
         tipus t = tipusAtribut.get(i);
         return tipusToString(t);
 
     }
 
-    static public String tipusToString(tipus t) {
+    public static String tipusToString(tipus t) {
         String s = "";
         switch (t) {
             case I:
@@ -272,7 +313,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return s;
     }
 
-    static public tipus getTipus(int i) {
+    public static tipus getTipus(int i) {
         return tipusAtribut.get(i);
     }
 

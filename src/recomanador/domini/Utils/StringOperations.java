@@ -6,7 +6,7 @@ import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.ConjuntItems.tipus;
 
 public class StringOperations {
-    static public boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
+    public static boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
         for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);
             if (!esNombre(c)){
@@ -16,11 +16,11 @@ public class StringOperations {
         return true;
     }
 
-    static public boolean esNombre(char s) {
+    public static boolean esNombre(char s) {
         return s == '0' || s == '1' || s == '2' || s == '3' || s == '4' || s == '5' || s == '6' || s == '7' || s == '8' || s == '9';
     }
 
-    static public boolean esFloat(String s) { //Els ints també s'accepten com a floats
+    public static boolean esFloat(String s) { //Els ints també s'accepten com a floats
         boolean eUtilitzat = false; //es pot utilitzar una e per marcar un exponent
         boolean pUtilitzat = false; //Només pot tenir un punt
         for (int i = 0; i < s.length(); ++i) {
@@ -35,7 +35,7 @@ public class StringOperations {
         return s.length() > 0;
     }
 
-    static public boolean esData(String s) {
+    public static boolean esData(String s) {
         int p1, p2; //Marquen les posicions dels separadors
         if (s.length() == 10) {//xxxx-xx-xx o xx-xx-xxxx
             if (StringOperations.esNombre(s.substring(0, 4))) { //Té l'any primer xxxx-xx-xx 
@@ -57,11 +57,11 @@ public class StringOperations {
         return false;
     }
 
-    static public boolean esBool(String s) {
+    public static boolean esBool(String s) {
         return s.equalsIgnoreCase("false") || s.equalsIgnoreCase("true");
     }
 
-    static public int compararAtributs(String s1, String s2, tipus tipus) { //-1 si s1 < s2, 0 si son iguals, 1 si s1 > s2
+    public static int compararAtributs(String s1, String s2, tipus tipus) { //-1 si s1 < s2, 0 si son iguals, 1 si s1 > s2
         boolean s1Bigger = false, s2Bigger = false;
         if (s1 == "" && s2 == "") {}
         else if (s1 == "") s2Bigger = true;
@@ -139,7 +139,7 @@ public class StringOperations {
         else return 0;
     }
 
-    static public int dataToTime(String s) {
+    public static int dataToTime(String s) {
         int p1, p2, dia, mes, any;
         if (s.charAt(4) == '-') {
             p1 = 4;
@@ -159,7 +159,7 @@ public class StringOperations {
         return any*365 + mes*30 + dia;
     }
     
-    static public ArrayList<String> divideString(String s, char divider) {
+    public static ArrayList<String> divideString(String s, char divider) {
         ArrayList<String> str = new ArrayList<String>();
         int ini = 0; //Últim ';' trobat
 
@@ -176,7 +176,7 @@ public class StringOperations {
         return str;
     }
 
-    static public String infinitString() { //4097 caracters
+    public static String infinitString() { //4097 caracters
         String s = "Z";
         for (int i = 0; i < 12; ++i) {
             s = s+s;
@@ -184,7 +184,7 @@ public class StringOperations {
         return s;
     }
 
-    static public int minDis(String s1, String s2, int n, int m, int[][]dp)
+    public static int minDis(String s1, String s2, int n, int m, int[][]dp)
     {
         // If any String is empty,
         // return the remaining characters of other String

@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 public class UnionIntersection {
     
-    static public ArrayList<String> getUnion(ArrayList<String> list1, ArrayList<String> list2) {
+    public static ArrayList<String> getUnion(ArrayList<String> list1, ArrayList<String> list2) {
         HashSet<String> hs = new HashSet<>();
  
         for (int i = 0; i < list1.size(); i++) {
@@ -19,7 +19,7 @@ public class UnionIntersection {
     }
  
     // Prints intersection of arr1[0..m-1] and arr2[0..n-1]
-    static public ArrayList<String> getIntersection(ArrayList<String> list1, ArrayList<String> list2)
+    public static ArrayList<String> getIntersection(ArrayList<String> list1, ArrayList<String> list2)
     {
         HashSet<String> hs = new HashSet<>();
  
