@@ -20,8 +20,10 @@ public class ControladorPersistencia {
     private File dades; 		//Carpeta de dades
     ControladorLoad cl;
     ControladorSave cs;
-
-
+	
+	//Atributs de l'algorisme: algorisme_seleccionat, q, k (en aquest ordre) 
+	//private ArrayList<String> atributs_algorisme;
+	
 /*-----CREADORES-----*/   
     /**
 	 * Creates a new instance of the class ControladorPersistencia. It also finds the
@@ -32,7 +34,9 @@ public class ControladorPersistencia {
     public ControladorPersistencia()
     {
 		carpeta = null;
-		cl = new ControladorLoad();
+		cl = new ControladorLoad();		
+		cs = new ControladorSave();		
+		//atributs_algorisme = null;
 		
 		dades = new File("data");
 		if (!dades.exists()) dades.mkdir();	//It will create the folder if it doesn't exist
@@ -68,9 +72,78 @@ public class ControladorPersistencia {
 		
 		return projectes;
 	}
+	
+	public boolean existeixenDadesPreprocesades()
+	{
+		if (carpeta == null) return false;
+		
+		File[] inside = carpeta.listFiles();
+		boolean pesos = false;
+		boolean tipus = false;
+		
+		for (int i = 0; i < inside.length; ++i)
+		{
+			if (!inside[i].isDirectory())
+			{
+				if (inside[i].getName() == "pesos.csv") pesos = true;
+				else if (inside[i].getName() == "tipus.csv") tipus = true;
+			}
+		}
+		
+		return pesos && tipus;
+	}
+	
+	public boolean existeixenDadesAlgorisme()
+	{
+		if (carpeta == null) return false;
+		
+		File[] inside = carpeta.listFiles();
+		
+		for (int i = 0; i < inside.length; ++i)
+			if (!inside[i].isDirectory() && inside[i].getName() == "algorisme.csv")
+				return true;
+		
+		return false;
+	}
+	
+	public boolean existeixenTestos()
+	{
+		if (carpeta == null) return false;
+		
+		File[] inside = carpeta.listFiles();
+		boolean known = false;
+		boolean unknown = false;
+		
+		for (int i = 0; i < inside.length; ++i)
+		{
+			if (!inside[i].isDirectory())
+			{
+				if (inside[i].getName() == "ratings.test.known.csv") known = true;
+				else if (inside[i].getName() == "ratings.test.unknown.csv") unknown = true;
+			}
+		}
+		
+		return known && unknown;
+	}
 
-
+	/** Get k
+	 * Returns the atribute k for the algorithm.
+	 * 
+	 * @return It returns the atribute k as an int. On error, it returns -1
+	 * 
+	 * /
+	public int getKAlgorisme()
+	{
+		if (atributs_algorisme = null) return -1;
+		try
+		{
+			
+			return atributs_algorisme.get(1).toInt();
+		}
+	}/*
+	
 /*-----MODIFICADORES-----*/   
+	
 	/**
 	 * Estableix el nom de la carpeta que s'usarà epr carregar les dàdes en el projecte
 	 * 
@@ -119,7 +192,7 @@ public class ControladorPersistencia {
      */
 	public ArrayList<ArrayList<String>> carregarRecomanacionsCarpeta() throws FolderNotValidException
 	{
-		return carregarArxiuCarpeta("recomanacions.db.csv");
+		return carregarArxiuCarpeta("ratings.db.csv");
 	}
 	
 	/**
@@ -136,6 +209,42 @@ public class ControladorPersistencia {
 	public ArrayList<ArrayList<String>> carregarItemsCarpeta() throws FolderNotValidException
 	{
 		return carregarArxiuCarpeta("items.csv");
+	}
+	
+	public ArrayList<String> carregarPesosAtributs() throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("pesos.csv");
+		return temp.get(0);
+	}
+	
+	public ArrayList<String> carregarTipusAtributs() throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("tipus.csv");
+		return temp.get(0);
+	}
+	
+	public ArrayList<ArrayList<String>> carregarTestKnown() throws FolderNotValidException
+	{
+		return carregarArxiuCarpeta("ratings.test.known.csv");
+	}
+	
+	public ArrayList<ArrayList<String>> carregarTestUnknown() throws FolderNotValidException
+	{
+		return carregarArxiuCarpeta("ratings.test.unknown.csv");
+	}
+	
+	/**
+	 * This function returns the 3 attributes that the class ControladorDominiAlgorisme needs.
+	 * The values are returned in the following order: algorithms_used, q, k
+	 * 
+	 * @return Returns an ArrayList of length 3 made of strings. The dirst one corresponds to
+	 * the algorithm_used parameter. The second one is Q, and the third one is K.
+	 */
+	public ArrayList<String> carregarAtributsAlgorisme() throws FolderNotValidException
+	{
+		ArrayList<String> a = carregarArxiuCarpeta("algorisme.csv").get(1);
+		if (a.size() != 3) throw new FolderNotValidException(carpeta.getName(), "algorisme.csv");
+		return a;
 	}
 	
 	/**
@@ -163,7 +272,7 @@ public class ControladorPersistencia {
 		}
 	}
 
-
+	
 /*-----ESCRIPTURA-----*/
 	/**
 	 * Creates an empty folder to store all the files. It also sets the
@@ -239,5 +348,48 @@ public class ControladorPersistencia {
 	public void guardarItems(ArrayList<ArrayList<String>> D) throws FolderNotValidException
 	{
 		this.guardarDades(D, "items.csv");
+	}
+
+	public void guardarPesosAtributs(ArrayList<Float> pesos) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(new ArrayList<String>());
+		
+		for (int i = 0; i < pesos.size(); ++i)D.get(0).add(pesos.get(i).toString());
+		
+		this.guardarDades(D, "pesos.csv");
+	}
+	
+	/*public void guardarPesosAtributs(ArrayList<String> pesos) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(pesos);
+		
+		this.guardarDades(D, "pesos.csv");
+	}*/
+	
+	public void guardarTipusAtributs(ArrayList<String> tip) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(tip);
+		
+		this.guardarDades(D, "tipus.csv");
+	}
+	
+	public void guardarAtributsAlgorisme(int alg, int q, int k) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> a = new ArrayList<ArrayList<String>>();
+		
+		a.add(new ArrayList<String>());
+		a.get(0).add("algorisme_seleccionat");
+		a.get(0).add("q");
+		a.get(0).add("k");
+		
+		a.add(new ArrayList<String>());
+		a.get(1).add(Integer.toString(alg));
+		a.get(1).add(Integer.toString(q));
+		a.get(1).add(Integer.toString(k));
+		
+		this.guardarDades(a, "algorisme.csv");
 	}
 }
