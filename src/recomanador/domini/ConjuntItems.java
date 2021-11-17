@@ -1,15 +1,10 @@
 package src.recomanador.domini;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
-
-import javax.crypto.SealedObject;
 
 import src.recomanador.Search;
-import src.recomanador.StringChecker;
 import src.recomanador.StringOperations;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
@@ -38,8 +33,7 @@ public class ConjuntItems extends ArrayList<Item> {
         super(c);
     }
 
-    public ConjuntItems() {
-    }
+    public ConjuntItems() {}
 
     public ConjuntItems(int size) {
         super(size);
@@ -72,7 +66,7 @@ public class ConjuntItems extends ArrayList<Item> {
         while (i < nAtributs) {
             pesos.add((float) 100.0);
             tipusAtribut.add(i, tipus.S);
-            nomAtribut.add("holi" + i);
+            nomAtribut.add("Not A Name" + i);
             ++i;
         }
     }
@@ -109,14 +103,10 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(posItem).getAtribut(atribut);
     }
 
-    private int getId(int ind) {
-        Item i = get(ind);
-        return i.getId();
-    }
-
-    static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException {
+    static public void assignarPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
+        if (a < 0 || a >= pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
         else ConjuntItems.pesos.set(a, pes);
     }
 
@@ -146,28 +136,28 @@ public class ConjuntItems extends ArrayList<Item> {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esNombre(id.get(0))) return false;
+                if (!StringOperations.esNombre(id.get(0))) return false;
             }
         }
         else if (t == tipus.B) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esBool(id.get(0))) return false;
+                if (!StringOperations.esBool(id.get(0))) return false;
             }
         }
         else if (t == tipus.F) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esFloat(id.get(0))) return false;
+                if (!StringOperations.esFloat(id.get(0))) return false;
             }
         }
         else if (t == tipus.D) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
                 if (id.size() != 1) return false;
-                if (!StringChecker.esData(id.get(0))) return false;
+                if (!StringOperations.esData(id.get(0))) return false;
             }
         }
         // Nom i String sempre estaran bé
@@ -186,12 +176,16 @@ public class ConjuntItems extends ArrayList<Item> {
         return nomAtribut.get(i);
     }
 
+    static public ArrayList<String> getCapçalera() {
+        return nomAtribut;
+    }
+
     static public Float getPes(int i) {
         return pesos.get(i);
     }
 
     static public int getNumAtributs() {
-        return pesos.size();
+        return nomAtribut.size();
     }
 
     static public String getSTipus(int i) {
@@ -235,10 +229,46 @@ public class ConjuntItems extends ArrayList<Item> {
     public void printId() {
         for (int i = 0; i < size(); ++i) {
             Item it = get(i);
-            String id = "NOT HERE PAL";
+            String id = "Not An ID";
             id = "" + it.getId();
             System.out.println("ID" + (i + 1) + ": " + id);
         }
+    }
+
+    public String getMinMaxAtribut(int col, boolean Max) { //If max == true, agafes max, else agafes min
+        tipus t = getTipus(col);
+        String s = "";
+        if (Max) {
+            if (t == tipus.B) s = "True";
+            if (t == tipus.S) s = "";
+            if (t == tipus.N) s = "";
+            if (t == tipus.I) s = ""+Integer.MIN_VALUE;
+            if (t == tipus.D) s = "0000-00-00";
+            if (t == tipus.F) s = ""+Float.MIN_VALUE; 
+        }
+        else {
+            if (t == tipus.B) s = "True";
+            if (t == tipus.S) s = StringOperations.infinitString();
+            if (t == tipus.N) s = StringOperations.infinitString();
+            if (t == tipus.I) s = ""+Integer.MAX_VALUE;
+            if (t == tipus.D) s = "9999-12-31";
+            if (t == tipus.F) s = ""+Float.MAX_VALUE;
+        }
+
+        for (int i = 0; i < size(); ++i) { //TODO: NO ES CORRECTE PERQUE ELS ITEMS NO ESTAN BEN AGAFATS
+            if (col < get(i).getAtributs().size()) {
+                ArrayList<String> atr = get(i).getAtribut(col);
+                for (int j = 0; j < atr.size(); ++j) {
+                    if (Max && StringOperations.compararAtributs(atr.get(j), s, t) > 0) {
+                        s = atr.get(j);
+                    }
+                    else if (!Max && StringOperations.compararAtributs(atr.get(j), s, t) < 0) { //atribut és menor que j
+                        s = atr.get(j);
+                    }
+                }
+            }
+        }
+        return s;
     }
 
     public void detectarTipusAtributs() throws ItemTypeNotValidException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
@@ -280,5 +310,9 @@ public class ConjuntItems extends ArrayList<Item> {
             }
         }
         if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
+    }
+
+    public static float similitud(Item iNV, Item item) {
+        return 0;
     }
 }
