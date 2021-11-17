@@ -56,8 +56,8 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @return     True if the recommendation has been found
      */
-    public boolean existeixRecomacio(int itemid, int userid) {
-    	int pos = cercaBinaria(0,this.size()-1,itemid,userid);
+    public boolean existeixRecomanacio(int itemid, int userid) {
+    	int pos = cercaBinaria(itemid,userid);
     	if(this.get(pos).checkIds(itemid, userid)) return true;
     	else return false;
     }
@@ -72,7 +72,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @return     True if the recommendation has been found
      */
     public boolean existeixRecomanacio(Item i, Usuari u) {
-    	int pos = cercaBinaria(0,this.size()-1,i.getId(),u.getId());
+    	int pos = cercaBinaria(i.getId(),u.getId());
     	if(this.get(pos).checkKeys(i,u)) return true;
     	else return false;
     }
@@ -87,7 +87,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @return     True if the rated recomndation has been found
      */
     public boolean existeixValoracio(int itemid, int userid) {
-    	int pos = cercaBinaria(0,this.size()-1,itemid,userid);
+    	int pos = cercaBinaria(itemid,userid);
     	if(this.get(pos).checkIds(itemid, userid) && this.get(pos).getVal() != Recomanacio.nul) return true;
     	else return false;
     }
@@ -102,7 +102,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @return     True if the rated recommendation has been found
      */
     public boolean existeixValoracio(Item i, Usuari u) {
-    	int pos = cercaBinaria(0,this.size()-1,i.getId(),u.getId());
+    	int pos = cercaBinaria(i.getId(),u.getId());
     	if(this.get(pos).checkKeys(i,u) && this.get(pos).getVal() != Recomanacio.nul) return true;
     	else return false;
     }
@@ -118,13 +118,13 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @throws     RecommendationNotFoundException  Thrown if the recommendation doesen't exist.
      */
     public Recomanacio getRecomanacio(int itemid, int userid) throws RecommendationNotFoundException {
-		int pos = cercaBinaria(0,this.size()-1,itemid,userid);
+		int pos = cercaBinaria(itemid,userid);
     	if(this.get(pos).checkIds(itemid, userid)) return this.get(pos);
     	else throw new RecommendationNotFoundException(itemid, userid);
     }
 
     public Recomanacio getRecomanacio(Item i, Usuari u) throws RecommendationNotFoundException {
-		int pos = cercaBinaria(0,this.size()-1,i.getId(),u.getId());
+		int pos = cercaBinaria(i.getId(),u.getId());
     	if(this.get(pos).checkKeys(i,u)) return this.get(pos);
     	else throw new RecommendationNotFoundException(i.getId(), u.getId());
     }
@@ -139,7 +139,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     public ConjuntUsuaris usuarisRecomanats(Item item) {
     	ConjuntUsuaris cu = new ConjuntUsuaris();
     	
-    	int pos = cercaBinaria(0,this.size()-1,item.getId(),0);
+    	int pos = cercaBinaria(item.getId(),0);
 
     	while(pos < this.size() && this.get(pos).getItem() == item) {
     		cu.add(this.get(pos).getUsuari());
@@ -160,7 +160,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @return     true (as specified by Collection.add(E))
      */
     @Override public boolean add(Recomanacio r) {
-        int pos = cercaBinaria(0, this.size(), r.getItem().getId(), r.getUsuari().getId());
+        int pos = cercaBinaria(r.getItem().getId(), r.getUsuari().getId());
         try {
             this.add(pos,r);
         }
@@ -217,6 +217,8 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
     /*----- ALTRES -----*/
 
+    //hauria de ser private
+
     /**
      * Returns de index of the element with item id = <i>item_id</i> and user 
      * id = <i>user_id</i>, or if it doesn't exist, the position where it should be added. 
@@ -229,7 +231,9 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @return     The index where the user should be
      */
-    private int cercaBinaria(int first, int last, int item_id, int usuari_id) {  
+    public int cercaBinaria(int item_id, int usuari_id) {  
+        int first = 0;
+        int last = this.size()-1;
         while(first <= last) {
             int mid = (first+last)/2;
             int mid_item_id = this.get(mid).getItem().getId();
@@ -241,7 +245,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             else if(mid_usuari_id < usuari_id) first = mid + 1;
             else return mid;
         }
-        if(this.get(first).getItem().getId() > item_id || (this.get(first).getItem().getId() == item_id && this.get(first).getUsuari().getId() > usuari_id)) return first;
-        else return last;
+        return first;
     }
 }
