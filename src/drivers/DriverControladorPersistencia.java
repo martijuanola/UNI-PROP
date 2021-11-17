@@ -26,22 +26,22 @@ public class DriverControladorPersistencia {
 			"5. Load the items from the project chosen\n" +
 			"6. Load a .csv file (from anywhere)\n" +
 			"7. Exit the project folder \n" +
-			"7. Exists preprocessed data? \n" +
-			"8. Exists data saved to use with the algoritm (internal attributes)? \n" +
-			"9. Exists tests? \n" +
-			"10.Load any .csv file from the folder\n" +
-			"11.Load items' atrributes' weights\n" +
-			"12.Load items' atrributes' type\n" +
-			"13.Load test known\n" +
-			"14.Load test unknown\n" +
-			"15.Load algorithm's attributes\n" +
-			"16.Create a new project save data\n" +
-			"17.Save data (any into any file)\n" +
-			"18.Save recomendations and valorations\n" +
-			"19.Save items\n" +
-			"20.Save items' attributes' weights\n" +
-			"21.Save items' atrributes' type\n" +
-			"22.Save algorithm's attributes\n" +
+			"8. Exists preprocessed data? \n" +
+			"9. Exists data saved to use with the algoritm (internal attributes)? \n" +
+			"10 Exists tests? \n" +
+			"11.Load any .csv file from the folder\n" +
+			"12.Load items' atrributes' weights\n" +
+			"13.Load items' atrributes' type\n" +
+			"14.Load test known\n" +
+			"15.Load test unknown\n" +
+			"16.Load algorithm's attributes\n" +
+			"17.Create a new project save data\n" +
+			"18.Save data (any into any file)\n" +
+			"19.Save recomendations and valorations\n" +
+			"20.Save items\n" +
+			"21.Save items' attributes' weights\n" +
+			"22.Save items' atrributes' type\n" +
+			"23.Save algorithm's attributes\n" +
 			"-1. exit\n";
 			
 			String reduced = "Options: \n" +
@@ -80,6 +80,44 @@ public class DriverControladorPersistencia {
 					case 6:
 						testCarregarFitxerExtern();
 						break;
+					case 7:
+						testSortirDelProjecte();
+						break;
+					case 8:
+						testExisteixenDadesPreprocesades();
+						break;
+					case 9:
+						testExisteixenDadesAlgorisme();
+						break;
+					case 10:
+						testExisteixenTestos();
+						break;
+					case 11:
+						break;
+					case 12:
+						break;
+					case 13:
+						break;
+					case 14:
+						break;
+					case 15:
+						break;
+					case 16:
+						break;
+					case 17:
+						break;
+					case 18:
+						break;
+					case 19:
+						break;
+					case 20:
+						break;
+					case 21:
+						break;
+					case 22:
+						break;
+					case 23:
+						break;
 					default:
 				}
 				
@@ -93,7 +131,7 @@ public class DriverControladorPersistencia {
     }
     
     static private void testEscollirProjecte() throws Exception {
-		io.writeln("Testing function testEscollirProjecte()");
+		io.writeln("Testing function escollirProjecte()");
 		
 		//demanar l'input
 		io.writeln("\nChoose a project to load from the list. " +
@@ -129,7 +167,7 @@ public class DriverControladorPersistencia {
 		
 	}
     static private void testLlistatCarpetes() throws Exception {
-		io.writeln("Testing function testLlistatCarpetes()");
+		io.writeln("Testing function llistatCarpetes()");
 		//demanar l'input
 				
 		//executar la funcionalitat
@@ -141,7 +179,7 @@ public class DriverControladorPersistencia {
 			io.writeln("\t" + a.get(i));	
 	}
 	static private void testGetNomProjecte() throws Exception {
-		io.writeln("Testing function testGetNomProjecte()");
+		io.writeln("Testing function getNomProjecte()");
 		//demanar l'input
 				
 		//executar la funcionalitat
@@ -152,7 +190,7 @@ public class DriverControladorPersistencia {
 		else io.writeln("The project " + p + " is now being used");	
 	}
     static private void testCarregarRecomanacionsCarpeta() throws Exception {
-		io.writeln("Testing function testCarregarRecomanacionsCarpeta()");
+		io.writeln("Testing function carregarRecomanacionsCarpeta()");
 		//demanar l'input
 		if (c.getNomProjecte() == null)
 		{
@@ -162,13 +200,15 @@ public class DriverControladorPersistencia {
 		}
 		
 		//executar la funcionalitat
+		ArrayList<ArrayList<String>> sol = null;
 		try
 		{		
-			ArrayList<ArrayList<String>> sol = c.carregarRecomanacionsCarpeta();
+			sol = c.carregarRecomanacionsCarpeta();
 		} catch(Exception e)
 		{
 			System.out.println("ERROR!!!");
-			System.out.println(e.getMessage);
+			System.out.println(e.getMessage());
+			return;
 		}
 		
 		//mostrar output
@@ -186,7 +226,7 @@ public class DriverControladorPersistencia {
 		io.writeln("...");
 	}
     static private void testCarregarItemsCarpeta() throws Exception {
-		io.writeln("Testing function testCarregarItemsCarpeta()");
+		io.writeln("Testing function carregarItemsCarpeta()");
 		//demanar l'input
 		if (c.getNomProjecte() == null)
 		{
@@ -196,13 +236,15 @@ public class DriverControladorPersistencia {
 		}
 		
 		//executar la funcionalitat
+		ArrayList<ArrayList<String>> sol = null;
 		try
 		{		
-			ArrayList<ArrayList<String>> sol = c.carregarItemsCarpeta();
+			sol = c.carregarItemsCarpeta();
 		} catch(Exception e)
 		{
 			System.out.println("ERROR!!!");
-			System.out.println(e.getMessage);
+			System.out.println(e.getMessage());
+			return;
 		}
 		
 		
@@ -240,7 +282,7 @@ public class DriverControladorPersistencia {
 		io.writeln("Columns read per row: " + cols);
 	}
     static private void testCarregarFitxerExtern() throws Exception {
-		io.writeln("Testing function testCarregarFitxerExtern()");
+		io.writeln("Testing function carregarFitxerExtern()");
 		
 		//demanar l'input
 		io.writeln("Write the path of the .csv file that you want to read");
@@ -258,7 +300,8 @@ public class DriverControladorPersistencia {
 		}catch(Exception e)
 		{
 			System.out.println("ERROR!!!");
-			System.out.println(e.getMessage);
+			System.out.println(e.getMessage());
+			return;
 		}
 		
 		//mostrar output
@@ -275,4 +318,76 @@ public class DriverControladorPersistencia {
 		
 		io.writeln("...");
 	}
+	static private void testSortirDelProjecte() throws Exception {
+		io.writeln("Testing function sortirDelProjecte()");
+		//demanar l'input
+		
+		//executar la funcionalitat
+		c.sortirDelProjecte();
+		
+		//mostrar output
+		io.writeln("\nYou are now not assigned to any project");
+		io.writeln("You can check it out by choosing the option 3 at the main menu");
+	}
+	static private void testExisteixenDadesPreprocesades() throws Exception {
+		io.writeln("Testing function existeixenDadesPreprocesades()\n");
+		//demanar l'input
+		io.writeln("Does the preprocessed data exist in the project folder?");
+		io.writeln("(If you are not on one, you can change it by choosing option 1 at the main menu.)");
+		//executar la funcionalitat
+		if (c.existeixenDadesPreprocesades()) io.writeln("ANSWER: yes");
+		else io.writeln("ANSWER: no");
+		
+		//mostrar output
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("\nYou aren't in any project folder.");
+		}
+		else
+		{
+			io.writeln("\nYou can check its veracity by going to the folder " + c.getNomProjecte() + 
+				" and checking if both files exist: pesos.csv and tipus.csv");
+		}
+	}
+	static private void testExisteixenDadesAlgorisme() throws Exception {
+		io.writeln("Testing function existeixenDadesAlgorisme()\n");
+		//demanar l'input
+		io.writeln("Does the algorithm attributes data exist in the project folder?");
+		io.writeln("(If you are not on one, you can change it by choosing option 1 at the main menu.)");
+		//executar la funcionalitat
+		if (c.existeixenDadesPreprocesades()) io.writeln("ANSWER: yes");
+		else io.writeln("ANSWER: no");
+		
+		//mostrar output
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("\nYou aren't in any project folder.");
+		}
+		else
+		{
+			io.writeln("\nYou can check its veracity by going to the folder " + c.getNomProjecte() + 
+				" and checking if the file algorisme.csv exists.");
+		}
+	}
+	static private void testExisteixenTestos() throws Exception {
+		io.writeln("Testing function existeixenTestos()\n");
+		//demanar l'input
+		io.writeln("Does the tests data exist in the project folder?");
+		io.writeln("(If you are not on one, you can change it by choosing option 1 at the main menu.)");
+		//executar la funcionalitat
+		if (c.existeixenDadesPreprocesades()) io.writeln("ANSWER: yes");
+		else io.writeln("ANSWER: no");
+		
+		//mostrar output
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("\nYou aren't in any project folder.");
+		}
+		else
+		{
+			io.writeln("\nYou can check its veracity by going to the folder " + c.getNomProjecte() + 
+				" and checking if both files exist: ratings.test.known.csv and ratings.test.unknown.csv");
+		}
+	}
+	
 }
