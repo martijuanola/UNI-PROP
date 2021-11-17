@@ -47,7 +47,19 @@ public class ControladorDominiAlgorisme {
         if(a >= 0 && a <= 2) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 2");
         this.ALGORISME_SELECCIONAT = a;
     }
-
+	
+	public int get_k() {
+		return k;
+	}
+	
+	public int get_Q() {
+		return Q;
+	}
+	
+	public int get_algorisme() {
+		return ALGORISME_SELECCIONAT;
+	}
+	
     public ArrayList<Item> run_algorithm(int user_ID, ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) throws UserNotFoundException{
         switch(ALGORISME_SELECCIONAT) {
             //collaborative filtering
