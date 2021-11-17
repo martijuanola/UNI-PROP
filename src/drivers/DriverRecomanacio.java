@@ -9,6 +9,10 @@ import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable
 
 import src.recomanador.excepcions.RatingNotValidException;
 
+/**
+ * Driver tot test the class Recomanacio.
+ * @author     Martí J.
+ */
 public class DriverRecomanacio {
     
 	static private Scanner scanner;

@@ -18,6 +18,10 @@ import src.recomanador.excepcions.DataNotValidException;
 import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 
+/**
+ * Driver tot test the class ConjuntUsuaris.
+ * @author     Martí J.
+ */
 public class DriverConjuntUsuaris {
 	static private Scanner scanner;
     
@@ -42,13 +46,17 @@ public class DriverConjuntUsuaris {
 		String s = "Options: \n" +
 		"-1. exit\n" +
 		"0. show options\n" +
+		" - Constructors - \n" +
 		"1. ConjuntUsuaris()\n" +
 		"2. ConjuntUsuaris(ArrayList<ArrayList<String>>)\n" +
-		"3. existeixUsuari(int)\n" +
-		"4. getUsuari(int)\n" +
-		"5. add(Usuari)\n" +
-		"6. afegirDades(ArrayList<ArrayList<String>>)\n" +
-		"7. cercaBinaria(int)";
+		" - Getters - \n" +
+		"3. boolean existeixUsuari(int)\n" +
+		"4. Usuari getUsuari(int)\n" +
+		" - Setters - \n" +
+		"5. boolean add(Usuari)\n" +
+		"6. void afegirDades(ArrayList<ArrayList<String>>)\n" +
+		" - Altres - \n" +
+		"7. int cercaBinaria(int)";
 		
 		System.out.println("Testing class ConjuntUsuaris");
 		System.out.println(s);
