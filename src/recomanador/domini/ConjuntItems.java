@@ -133,8 +133,21 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
+    public void eliminarItem(int id) { //Cerca dicotòmica
+        int pos = Search.binarySearchItem(this, id, 0, size()-1);
+        remove(pos);
+    }
+
+    @Override
+    public boolean add(Item i) {
+        int pos = Search.findClosest(this, i.getId());
+        this.add(pos, i);
+        return (get(pos).getId() == i.getId());
+    }
+
     public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
         int pos = Search.binarySearchItem(this, id, 0, size()-1);
+        if (pos < 0) throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
         return get(pos);
     }
 
