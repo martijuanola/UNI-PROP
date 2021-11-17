@@ -1,4 +1,4 @@
-package src.recomanador;
+package src.recomanador.domini.Utils;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,7 @@ public class StringOperations {
             if (!esNombre(c)){
                 if (c == 'e' && !eUtilitzat) eUtilitzat = true;
                 else if (c == '.' && !pUtilitzat) pUtilitzat = true;
+                else if (c == '-' && (i == 0 || s.charAt(i-1) == 'e')) {}
                 else return false;
             }
         }

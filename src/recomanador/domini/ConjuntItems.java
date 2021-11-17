@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import src.recomanador.Search;
-import src.recomanador.StringOperations;
+import src.recomanador.domini.Utils.Search;
+import src.recomanador.domini.Utils.StringOperations;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
@@ -133,36 +133,52 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     private boolean tipusCorrecte(int columna, tipus t) {
+        boolean empty = true;
         if (t == tipus.I) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esNombre(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esNombre(id.get(0))) return false;
+                }
             }
         }
         else if (t == tipus.B) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esBool(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esBool(id.get(0))) return false;
+                }
             }
         }
         else if (t == tipus.F) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esFloat(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esFloat(id.get(0))){
+                        System.out.println("columna "+getNomAtribut(columna)+" no es float:"+id.get(0));
+                        return false;
+                    } 
+                }
             }
         }
         else if (t == tipus.D) {
             for (int i = 0; i < size(); ++i) {
                 ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() != 1) return false;
-                if (!StringOperations.esData(id.get(0))) return false;
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esData(id.get(0))) return false;
+                }
             }
         }
         // Nom i String sempre estaran bé
-        return true;
+        return !empty;
     }
 
     static public void assignarNomAtributs(ArrayList<String> n) {
@@ -256,7 +272,7 @@ public class ConjuntItems extends ArrayList<Item> {
             if (t == tipus.F) s = ""+Float.MAX_VALUE;
         }
 
-        for (int i = 0; i < size(); ++i) { //TODO: NO ES CORRECTE PERQUE ELS ITEMS NO ESTAN BEN AGAFATS
+        for (int i = 0; i < size(); ++i) {
             if (col < get(i).getAtributs().size()) {
                 ArrayList<String> atr = get(i).getAtribut(col);
                 for (int j = 0; j < atr.size(); ++j) {

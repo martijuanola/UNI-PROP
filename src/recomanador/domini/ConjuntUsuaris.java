@@ -39,8 +39,14 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         for(int i = 1; i < raw.size(); i++) {
             try {
                 int newID = Integer.parseInt(raw.get(i).get(0));
-                if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
-                prev = newID;
+                if(i == 1) {
+                    this.add(0, new Usuari(newID));
+                    prev = newID;
+                }
+                else {
+                    if(newID != prev && ! existeixUsuari(newID)) this.add(new Usuari(newID));
+                    prev = newID;
+                }
             }
             catch(NumberFormatException e) {
                 throw new UserIdNotValidException(raw.get(i).get(0));
@@ -91,7 +97,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @return     true (as specified by Collection.add(E))
      */
     @Override public boolean add(Usuari u) {
-        int pos = cercaBinaria(0,this.size(),u.getId());
+        int pos = cercaBinaria(0,this.size()-1,u.getId());
         try {
             this.add(pos,u);
         }
@@ -123,8 +129,13 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
             else if(mid_id < id) first = mid + 1;
             else return mid;
         }
-        if(this.get(first).getId() > id) return first;
-        else return last;
+        
+        if(first >= 0 && first < this.size() && this.get(first).getId() > id) return first;
+        else if(last >= 0 && last < this.size()) return last;
+        else {
+            System.out.println("Error s'ha d'acabar de mirar el final de la cerca binaria");
+            return -1;
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package src.recomanador;
+package src.recomanador.domini.Utils;
 
 import java.util.ArrayList;
 

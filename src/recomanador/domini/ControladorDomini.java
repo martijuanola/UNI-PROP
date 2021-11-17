@@ -52,10 +52,10 @@ public class ControladorDomini {
     public void prova2() {
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
         System.out.println("Natributs: " + ConjuntItems.getNumAtributs());
-        for (int i = 0; i < ci.size(); ++i) System.out.println("Item "+i+" tamany atributs:" + ci.get(i).getNumAtributs());
         for (int i = 0; i < ConjuntItems.getNumAtributs(); ++i) {
-            System.out.println("Minim: " + ConjuntItems.getNomAtribut(i) + " " + ci.getMinMaxAtribut(i, false));
-            System.out.println("Maxim: " + ConjuntItems.getNomAtribut(i) + " " + ci.getMinMaxAtribut(i, true));
+            System.out.println("---->" + ConjuntItems.getNomAtribut(i) + " " + ConjuntItems.getSTipus(i));
+            System.out.println("Minim: " + " " + ci.getMinMaxAtribut(i, false));
+            System.out.println("Maxim: " + " " + ci.getMinMaxAtribut(i, true));
         }
         //ci.printItems();
         //ci.printId();
