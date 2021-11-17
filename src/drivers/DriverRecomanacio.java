@@ -1,20 +1,19 @@
 package src.drivers;
 
+import java.util.Scanner;
+
 import src.recomanador.domini.Recomanacio;
 import src.recomanador.domini.Item;
-
 import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable!!!!!!
 //import src.stubs.Usuari;
 
-import src.recomanador.excepcions.*;
-
-import java.util.Scanner;
+import src.recomanador.excepcions.RatingNotValidException;
 
 public class DriverRecomanacio {
     
-    static private Recomanacio c;
+	static private Scanner scanner;
 
-    static private Scanner scanner;
+    static private Recomanacio c;
 
     static private boolean class_initalised;
     static private Item i;
@@ -26,11 +25,11 @@ public class DriverRecomanacio {
     static private int m;
     static private float f;
 
-
     public static void main(String[] args) {
-    	class_initalised = false;
     	scanner = new Scanner(System.in);
-        
+    	class_initalised = false;  
+    	int x;
+
 		String s = "Options: \n\n" +
 		"-1. exit\n" +
 		"0. show options\n" +
@@ -48,9 +47,10 @@ public class DriverRecomanacio {
 		"9. boolean checkKeys(Item, Usuari)\n" +
 		"10. int compareTo(Recomanacio)\n";
 
-		System.out.println(s);
+		
 		System.out.println("Testing class Recomanacio");
-		int x;
+		System.out.println(s);
+		
 		do {
 			System.out.println("\n--------------------------------------------------\n");
 			System.out.println("Enter the number of the function you want to test. \n");
