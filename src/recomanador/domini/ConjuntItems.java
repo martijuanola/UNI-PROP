@@ -197,6 +197,14 @@ public class ConjuntItems extends ArrayList<Item> {
         return nomAtribut;
     }
 
+    static public ArrayList<Float> getPesos() {
+        return pesos;
+    }
+
+    static public ArrayList<tipus> getTipus() {
+        return tipusAtribut;
+    }
+
     static public Float getPes(int i) {
         return pesos.get(i);
     }
