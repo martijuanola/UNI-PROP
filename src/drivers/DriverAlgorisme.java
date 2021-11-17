@@ -7,6 +7,7 @@ import src.recomanador.domini.ControladorDomini;
 import src.recomanador.domini.ControladorDominiAlgorisme;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
+import src.recomanador.excepcions.UserNotFoundException;
 import src.recomanador.excepcions.DataNotValidException;
 
 /**
@@ -18,10 +19,10 @@ import src.recomanador.excepcions.DataNotValidException;
  */
 public class DriverAlgorisme {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UserNotFoundException{
         ControladorDomini domini = new ControladorDomini();
         try {
-            domini.carregarCarpeta("src/data/movies-250");
+            domini.carregarCarpeta("movies-250");
         }
         catch(FolderNotFoundException | FolderNotValidException e) {
             System.out.println("cagaste we");
@@ -43,5 +44,11 @@ public class DriverAlgorisme {
         catch(DataNotValidException e) {
             //de moment re però s'hauran de tractar(Martí)
         }
+
+        System.out.println("---------------------------");
+        System.out.println("Running Collabortive-Filtering Algorithm");
+
+        int user_ID = usuaris.get(0).getId();
+        algorisme.run_algorithm(user_ID, items, usuaris, recomanacions);
     }
 }
