@@ -1,12 +1,12 @@
 Jaume:
 
-	-eliminarItem
-	-afegirItem
-	-Documentar ConjuntItem
 	-Driver de Item
+	-Documentar ConjuntItem
 	-Driver de ConjuntItem
-	-Passar atributs al tipus correcte
 	
+	-(FET)Passar atributs al tipus correcte
+	-(FET)eliminarItem
+	-(FET)afegirItem
 	-(FET)Constructor dades preprocessades
 	-(FET)distancies entre dades
 	-(FET)distancies entre Items

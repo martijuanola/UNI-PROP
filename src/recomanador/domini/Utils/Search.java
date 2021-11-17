@@ -72,7 +72,7 @@ public class Search {
             mid = (i + j) / 2;
  
             if (list.get(mid).getId() == id)
-                return list.get(mid).getId();
+                return mid;
  
             /* If target is less than array element,
                then search in left */
@@ -81,8 +81,9 @@ public class Search {
                 // If target is greater than previous
                 // to mid, return closest of two
                 if (mid > 0 && id > list.get(mid - 1).getId())
-                    return getClosest(list.get(mid - 1).getId(),
-                                  list.get(mid).getId(), id);
+                    if (getClosest(list.get(mid - 1).getId(), 
+					list.get(mid).getId(), id) == list.get(mid - 1).getId()) return mid-1;
+					else return mid;
                  
                 /* Repeat for left half */
                 j = mid;             
@@ -91,8 +92,9 @@ public class Search {
             // If target is greater than mid
             else {
                 if (mid < n-1 && id < list.get(mid + 1).getId())
-                    return getClosest(list.get(mid).getId(),
-					list.get(mid + 1).getId(), id);               
+                    if (getClosest(list.get(mid).getId(),
+					list.get(mid + 1).getId(), id) == list.get(mid).getId()) return mid;
+					else return mid+1;               
                 i = mid + 1; // update i
             }
         }
