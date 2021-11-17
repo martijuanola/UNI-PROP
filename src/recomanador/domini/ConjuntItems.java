@@ -134,6 +134,11 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
+    public void eliminarItem(int id) { //Cerca dicotòmica
+        int pos = Search.binarySearchItem(this, id, 0, size()-1);
+        remove(pos);
+    }
+
     public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
         int pos = Search.binarySearchItem(this, id, 0, size()-1);
         return get(pos);

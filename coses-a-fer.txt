@@ -1,7 +1,5 @@
 Jaume:
 
-
-	-Constructor dades preprocessades
 	-eliminarItem
 	-afegirItem
 	-Documentar ConjuntItem
@@ -9,6 +7,7 @@ Jaume:
 	-Driver de ConjuntItem
 	-Passar atributs al tipus correcte
 	
+	-(FET)Constructor dades preprocessades
 	-(FET)distancies entre dades
 	-(FET)distancies entre Items
 	-(FET)Min i max d'un atribut
