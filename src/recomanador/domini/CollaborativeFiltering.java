@@ -9,9 +9,9 @@ import src.recomanador.excepcions.RecommendationNotFoundException;
 import src.recomanador.excepcions.UserNotFoundException;
 
 class Centroid {
-    HashMap<Item,Float> valoracio;
-    HashMap<Item,Float> sum;
-    HashMap<Item,Integer> quant;
+    public HashMap<Item,Float> valoracio;
+    public HashMap<Item,Float> sum;
+    public HashMap<Item,Integer> quant;
 } 
 
 /**
@@ -87,22 +87,25 @@ public class CollaborativeFiltering {
         Centroid[] centroids = new Centroid[K];
         closest_centroid = new HashMap<Integer, Integer>(usuaris.size());
 
-        System.out.println("we fill each centroid with random values");
         for (int centroid = 0; centroid < K; ++centroid) {
             centroids[centroid] = new Centroid();
             for(int item = 0; item < items.size(); ++item) {
-                float valoracio = rand.nextFloat()*5;
-
                 centroids[centroid].valoracio = new HashMap<Item,Float>();
-                centroids[centroid].valoracio.put(items.get(item), valoracio);
-                //System.out.println("Initialiced centroid " + centroid + " with value " +  centroids[centroid].valoracio.get(items.get(item)));
-
                 centroids[centroid].sum = new HashMap<Item,Float>();
-                centroids[centroid].sum.put(items.get(item), 0f);
-
                 centroids[centroid].quant = new HashMap<Item,Integer>();
+            }
+
+        }
+
+        System.out.println("we fill each centroid with random values");
+        for (int centroid = 0; centroid < K; ++centroid) {
+            for(int item = 0; item < items.size(); ++item) {
+                float valoracio = rand.nextFloat()*5;
+                centroids[centroid].valoracio.put(items.get(item), valoracio);
+                centroids[centroid].sum.put(items.get(item), 0f);
                 centroids[centroid].quant.put(items.get(item), 0);
             }
+
         }
         
         boolean has_changed = true;
@@ -114,6 +117,13 @@ public class CollaborativeFiltering {
             System.out.println("we find the closest centroid of each user");
             for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                 
+                System.out.println();
+                System.out.println("TEST");
+                System.out.println(centroids[0].valoracio.get(items.get(2)) + " " +
+                centroids[0].sum.get(items.get(2)) + " " +
+                centroids[0].quant.get(items.get(2)));
+                System.out.println();
+
                 int min_centroid = 0;
                 float min_distance = distance(idx_usuari, 0);
                
@@ -129,9 +139,10 @@ public class CollaborativeFiltering {
                     }
                 }
 
-                if (closest_centroid.get(idx_usuari) != min_centroid) {
+                if (!closest_centroid.containsKey(idx_usuari) || closest_centroid.get(idx_usuari) != min_centroid) {
                     has_changed = true;
                     closest_centroid.put(idx_usuari, min_centroid);
+                    System.out.println("User " + idx_usuari + " is closest to centroid " + min_centroid);
                 }
             }
 
@@ -140,7 +151,9 @@ public class CollaborativeFiltering {
                 System.out.println("firstly, we set the sum and the quant, which we'll use to calculate the averages");
                 for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                     int centroid = closest_centroid.get(idx_usuari);
+                    
                     ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
+                    System.out.println("loaded " + valoracionsUser.size() + " ratings");
 
                     for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
                         Recomanacio rec = valoracionsUser.get(idx_rec);
@@ -159,11 +172,20 @@ public class CollaborativeFiltering {
                 System.out.println("now we calculate the new averages");
                 for (int centroid = 0; centroid < K; ++centroid) {
                     for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
+
+                        System.out.println("Loading item " + idx_item);
                         Item item = items.get(idx_item);
+
+                        System.out.println("item =  " + item.getId());
+                        System.out.println("centroid =  " + centroid);
+                        System.out.println("quant =  " + centroids[centroid].quant.get(item));
+                        System.out.println("sum = " + centroids[centroid].sum.get(item));
 
                         float valoracio;
                         if(centroids[centroid].quant.get(item) == 0) valoracio = rand.nextFloat()*5;
                         else valoracio = centroids[centroid].sum.get(item) / centroids[centroid].quant.get(item);
+
+                        System.out.println("New centroid rating is " + valoracio);
                         
                         centroids[centroid].valoracio.replace(item, valoracio);
                         centroids[centroid].sum.replace(item, 0f);
@@ -203,6 +225,13 @@ public class CollaborativeFiltering {
 
         ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
         System.out.println("loaded " + valoracionsUser.size() + " ratings");
+
+        System.out.println();
+        System.out.println("TEST");
+        System.out.println(centroids[0].valoracio.get(items.get(2)) + " " +
+        centroids[0].sum.get(items.get(2)) + " " +
+        centroids[0].quant.get(items.get(2)));
+        System.out.println();
 
         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
             Recomanacio rec = valoracionsUser.get(idx_rec);
