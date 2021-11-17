@@ -43,7 +43,7 @@ public class ContentBasedFiltering {
      * @return     a sorted set the recommended item IDs
      */
     public ArrayList<Item> contentBasedFiltering(int Q, int user_ID) throws UserNotFoundException {
-        
+       
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
 
         Usuari user = usuaris.getUsuari(user_ID);

@@ -1,110 +1,120 @@
 package src.drivers;
 
+import java.util.Scanner;
+
 import src.recomanador.<NOM_CAPA>.<NOM_CLASSE>;
 
 public class Driver<NOM_CLASSE> {
+	static private Scanner scanner;
     
     static private <NOM_CLASSE> c;
-    static private inout io;
+
+    static private boolean class_initalised;
+    //static private Classe1 c1;
+    //static private Classe2 c2;
+    static private String s1;
+    static private String s2;
+    static private boolean b;
+    static private int n;
+    static private int m;
+    static private float f;
     
     public static void main(String[] args) {
-        try{
-			c = new <NOM_CLASSE>();
-			io = new inout();
+   		scanner = new Scanner(System.in);
+		class_initalised = false;
+		
+		String s = "Options: \n" +
+		"-1. exit\n" +
+		"0. show options\n" +
+		"1. option 1\n" +
+		"2. option 2\n" +
+		"3. option 3\n" +
+		"4. option 4\n" +
+		"5. option 5\n" +
+		"6. option 6\n";
+		
+		System.out.println("Testing class <NOM_CLASSE>");
+		System.out.println(s);
+		int x;
+		do {
+			System.out.println("\n--------------------------------------------------\n");
+			System.out.println("Enter the number of the function you want to test. \n");
+			System.out.print("Option: ");
+			x = scanner.nextInt();
 			
-			String s = "Options: \n" +
-			"0. exit\n" +
-			"1. option 1\n" +
-			"2. option 2\n" +
-			"3. option 3\n" +
-			"4. option 4\n" +
-			"5. option 5\n" +
-			"6. option 6\n";
+			switch(x)
+			{
+				case 0:
+					System.out.println(s);
+					break;
+				case 1:
+					mostra_1();
+					break;
+				case 2:
+					mostra_2();
+					break;
+				case 3:
+					mostra_3();
+					break;
+				case 4:
+					mostra_4();
+					break;
+				case 5:
+					mostra_5();
+					break;
+				case 6:
+					mostra_6();
+					break;
+				default:
+			}
 			
-			io.writeln("Testing class <NOM_CLASSE>");
-			int x;
-			do {
-				io.writeln("\n--------------------------------------------------\n");
-				io.writeln("Enter the number of the function you want to test. \n");
-				io.writeln(s);
-				io.write("Option: ");
-				
-				x = io.readint();
-				
-				switch(x)
-				{
-					case 1:
-						mostra_1();
-						break;
-					case 2:
-						mostra_2();
-						break;
-					case 3:
-						mostra_3();
-						break;
-					case 4:
-						mostra_4();
-						break;
-					case 5:
-						mostra_5();
-						break;
-					case 6:
-						mostra_6();
-						break;
-					default:
-				}
-				
-			} while (x != 0);
-			
-			io.writeln("Test ended");
-			
-		}catch(Exception e){
-			System.out.println("An error has occurred");
-		}
+		} while (x != -1);
+		
+		System.out.println("Test ended.");
     }
     
-    static private void mostra_1() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+    static private void mostra_1() {
+		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
 		//executar la funcionalitat
 		
 		//mostrar output
 	}
-    static private void mostra_2() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+    static private void mostra_2() {
+		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
 		//executar la funcionalitat
 		
 		//mostrar output
 	}
-    static private void mostra_3() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+    static private void mostra_3() {
+		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
 		//executar la funcionalitat
 		
 		//mostrar output
 	}
-    static private void mostra_4() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+    static private void mostra_4() {
+		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
 		//executar la funcionalitat
 		
 		//mostrar output
 	}
-    static private void mostra_5() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+    static private void mostra_5() {
+		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
 		//executar la funcionalitat
 		
 		//mostrar output
 	}
-    static private void mostra_6() throws Exception {
-		io.writeln("Testing function <NAME_FUNCTION>");
+    static private void mostra_6() {
+		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
 		//executar la funcionalitat
