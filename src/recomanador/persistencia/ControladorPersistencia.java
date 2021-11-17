@@ -85,8 +85,8 @@ public class ControladorPersistencia {
 		{
 			if (!inside[i].isDirectory())
 			{
-				if (inside[i].getName() == "pesos.csv") pesos = true;
-				else if (inside[i].getName() == "tipus.csv") tipus = true;
+				if (inside[i].getName().equals("pesos.csv")) pesos = true;
+				else if (inside[i].getName().equals("tipus.csv")) tipus = true;
 			}
 		}
 		
@@ -100,7 +100,7 @@ public class ControladorPersistencia {
 		File[] inside = carpeta.listFiles();
 		
 		for (int i = 0; i < inside.length; ++i)
-			if (!inside[i].isDirectory() && inside[i].getName() == "algorisme.csv")
+			if (!inside[i].isDirectory() && inside[i].getName().equals("algorisme.csv"))
 				return true;
 		
 		return false;
@@ -118,8 +118,8 @@ public class ControladorPersistencia {
 		{
 			if (!inside[i].isDirectory())
 			{
-				if (inside[i].getName() == "ratings.test.known.csv") known = true;
-				else if (inside[i].getName() == "ratings.test.unknown.csv") unknown = true;
+				if (inside[i].getName().equals("ratings.test.known.csv")) known = true;
+				else if (inside[i].getName().equals("ratings.test.unknown.csv")) unknown = true;
 			}
 		}
 		
@@ -168,6 +168,8 @@ public class ControladorPersistencia {
 	
 	private ArrayList<ArrayList<String>> carregarArxiuCarpeta(String s) throws FolderNotValidException
 	{
+		if (carpeta == null) throw new FolderNotValidException();
+		
 		File f = new File(carpeta, s);
 		if (!f.exists()) throw new FolderNotValidException(carpeta.getName(), s);
 		
@@ -312,7 +314,7 @@ public class ControladorPersistencia {
 		
 		File f = new File(carpeta, s);
 		
-		//If the file doesn't exist, it tores the data into the correct one
+		//If the file doesn't exist, it stores the data into the correct one
 		//Otherwise, a temporal file is created, to prevent data losses from the prevoius
 		//executions, in case there's a failure during the execution (like a power outage)
 		if (!f.exists())
@@ -391,5 +393,38 @@ public class ControladorPersistencia {
 		a.get(1).add(Integer.toString(k));
 		
 		this.guardarDades(a, "algorisme.csv");
+	}
+
+
+/*-----TESTING-----*/
+/* Aquestes són funcions que criden les funcions privades de la classe
+ * Serverixen només per a poder testejar-les. En la implementació
+ * final s'hauran d'eliminar*/
+
+/* Per aquestes funcions no es faran testos especifics, sinó que s'usaran per
+ * a provar les classes privades que es criden.
+ * Demostració formal de que la seva correctesa d'una funció depèn de la funció que crida:
+ * És facil veure que aquestes classes funcionaran si i només si funcionen les classes
+ * que criden (ja que aquestes classes es componen d'una unica crida).
+ * 
+ * L'entrada d'aquestes classes és la mateixa que la que es crida
+ * (i es passen els paràmetres si n'hi ha cap a l'altre). També la sortida és
+ * la mateixa, ja que es retorna directament la de la funció cridada (si 
+ * es retorna alguna cosa). I les excepcions tampoc canvien, ja que en 
+ * tots els casos es poden generar les mateixes que en les funcions 
+ * cridades, i la funció de testing no n'afegeix cap extra.
+ * 
+ * Per tant, queda demostrat que aquestes classes funcionaran si i només si
+ * ho fan les classes privades que es criden
+ * */
+ 
+	public ArrayList<ArrayList<String>> TESTcarregarArxiuCarpeta(String s) throws FolderNotValidException
+	{
+		return this.carregarArxiuCarpeta(s);
+	}
+	
+	public void TESTguardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
+	{
+		this.guardarDades(D, s);
 	}
 }
