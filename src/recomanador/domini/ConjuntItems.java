@@ -29,6 +29,9 @@ public class ConjuntItems extends ArrayList<Item> {
     static int id; //posició del atribut id al tipus atribut
     static int nomA; //posició del atribut nom al al tipus atrbut. -1 si no en té
 
+    private ArrayList<Float> maxAtributs;
+    private ArrayList<Float> minAtributs;
+
     public ConjuntItems(Collection<? extends Item> c) {
         super(c);
     }
@@ -112,7 +115,7 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     public void assignarTipus(int atribut, tipus t) throws ItemTypeNotValidException {
-        if (!tipusCorrecte(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + tipusToString(t));
+        if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + tipusToString(t));
         ConjuntItems.tipusAtribut.set(atribut, t);
         canvisTipusAtribut(atribut, t);
     }
@@ -132,7 +135,7 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    private boolean tipusCorrecte(int columna, tipus t) {
+    private boolean tipusCorrecteColumna(int columna, tipus t) {
         boolean empty = true;
         if (t == tipus.I) {
             for (int i = 0; i < size(); ++i) {
@@ -179,6 +182,25 @@ public class ConjuntItems extends ArrayList<Item> {
         }
         // Nom i String sempre estaran bé
         return !empty;
+    }
+
+    private boolean tipusCorrecte(String s, tipus t) {
+        if (t == tipus.I) {
+            if (StringOperations.esNombre(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.B) {
+            if (StringOperations.esBool(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.F) {
+            if (StringOperations.esFloat(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.D) {
+            if (StringOperations.esData(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.S) return true;
+        else if (t == tipus.N) return true;
+        // Nom i String sempre estaran bé
+        return false;
     }
 
     static public void assignarNomAtributs(ArrayList<String> n) {
@@ -304,7 +326,7 @@ public class ConjuntItems extends ArrayList<Item> {
             String nom = nomAtribut.get(i);
 
             if (nom.equalsIgnoreCase("id")) { //Comprova si es id
-                if (tipusCorrecte(i, tipus.I)) {
+                if (tipusCorrecteColumna(i, tipus.I)) {
                     tipusAtribut.set(i, tipus.I);
                     canvisTipusAtribut(i, tipus.I);
                     found = true;
@@ -313,19 +335,19 @@ public class ConjuntItems extends ArrayList<Item> {
                 else throw new ItemTypeNotValidException("columna id no correspon a Identificador");
             }
             if (!found){ //Comprova si es bool
-                if (tipusCorrecte(i, tipus.B)) {
+                if (tipusCorrecteColumna(i, tipus.B)) {
                     tipusAtribut.set(i, tipus.B);
                     found = true;
                 }
             }
             if (!found) { //Comprova si es float/int
-                if (tipusCorrecte(i, tipus.F)) {
+                if (tipusCorrecteColumna(i, tipus.F)) {
                     tipusAtribut.set(i, tipus.F);
                     found = true;
                 }
             }
             if (!found) { //Comprovar si es una data
-                if (tipusCorrecte(i, tipus.D)) {
+                if (tipusCorrecteColumna(i, tipus.D)) {
                     tipusAtribut.set(i, tipus.D);
                     found = true;
                 }
@@ -336,5 +358,29 @@ public class ConjuntItems extends ArrayList<Item> {
             }
         }
         if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
+    }
+
+    private float distanciaAtribut(String a1, String a2, tipus t) throws ItemTypeNotValidException {
+        if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + tipusToString(t));
+
+        float sim = (float)0.0;
+        if (t == tipus.I) {
+            int i1 = Integer.parseInt(a1), i2 = Integer.parseInt(a2);
+        }
+        else if (t == tipus.B) {
+            boolean b1 = Boolean.parseBoolean(a1), b2 = Boolean.parseBoolean(a2);
+            if (b1 == b2) sim = (float)1.0;
+            else sim = (float)0.0;
+        }
+        else if (t == tipus.D) {
+
+        }
+        else if (t == tipus.F) {
+
+        }
+        else if (t == tipus.S || t == tipus.N) {
+
+        }
+        return sim;
     }
 }
