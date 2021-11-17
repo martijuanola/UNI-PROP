@@ -85,8 +85,8 @@ public class ControladorPersistencia {
 		{
 			if (!inside[i].isDirectory())
 			{
-				if (inside[i].getName() == "pesos.csv") pesos = true;
-				else if (inside[i].getName() == "tipus.csv") tipus = true;
+				if (inside[i].getName().equals("pesos.csv")) pesos = true;
+				else if (inside[i].getName().equals("tipus.csv")) tipus = true;
 			}
 		}
 		
@@ -100,7 +100,7 @@ public class ControladorPersistencia {
 		File[] inside = carpeta.listFiles();
 		
 		for (int i = 0; i < inside.length; ++i)
-			if (!inside[i].isDirectory() && inside[i].getName() == "algorisme.csv")
+			if (!inside[i].isDirectory() && inside[i].getName().equals("algorisme.csv"))
 				return true;
 		
 		return false;
@@ -118,8 +118,8 @@ public class ControladorPersistencia {
 		{
 			if (!inside[i].isDirectory())
 			{
-				if (inside[i].getName() == "ratings.test.known.csv") known = true;
-				else if (inside[i].getName() == "ratings.test.unknown.csv") unknown = true;
+				if (inside[i].getName().equals("ratings.test.known.csv")) known = true;
+				else if (inside[i].getName().equals("ratings.test.unknown.csv")) unknown = true;
 			}
 		}
 		

@@ -96,10 +96,13 @@ public class DriverControladorPersistencia {
 						testCarregarArxiuCarpeta();
 						break;
 					case 12:
+						testCarregarPesosAtributs();
 						break;
 					case 13:
+						testCarregarTipusAtributs();
 						break;
 					case 14:
+						testCarregarTestKnown();
 						break;
 					case 15:
 						break;
@@ -403,7 +406,7 @@ public class DriverControladorPersistencia {
 		io.writeln("Choose a file to load. Write the name below.");
 		io.writeln("Remember that the file will be read as if it were a " +
 			".csv with the same bumber of columns on every row and allowing " +
-			"the file to contain some empty lines (with just a 'next line symbol': \n)");
+			"the file to contain some empty lines (with just a 'next line symbol': \\" + "n)");
 		io.write("File: ");
 		
 		Scanner scanner = new Scanner(System.in);		
@@ -435,7 +438,124 @@ public class DriverControladorPersistencia {
 		
 		io.writeln("...");
 	}
+	static private void testCarregarPesosAtributs() throws Exception {
+		io.writeln("Testing function carregarPesosAtributs()\n");
+		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		
+		//executar la funcionalitat
+		ArrayList<String> sol = null;
+		try
+		{		
+			sol = c.carregarPesosAtributs();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		
+		//mostrar output
+		io.writeln("File pesos.csv from the poject " + c.getNomProjecte() + ":");
+		int n = sol.size();
+		
+		for (int i = 0; i < n; ++i) io.writeln(sol.get(i));
+				
+		//mostrar output
+		io.writeln("More information about the file read:");
+		io.writeln("Rows read: 1");
+		io.writeln("Columns read: " + sol.size());
+	}
+	static private void testCarregarTipusAtributs() throws Exception {
+		io.writeln("Testing function carregarTipusAtributs()\n");
+		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		
+		//executar la funcionalitat
+		ArrayList<String> sol = null;
+		try
+		{		
+			sol = c.carregarTipusAtributs();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		
+		//mostrar output
+		io.writeln("File tipus.csv from the poject " + c.getNomProjecte() + ":");
+		int n = sol.size();
+		
+		for (int i = 0; i < n; ++i) io.writeln(sol.get(i));
+				
+		//mostrar output
+		io.writeln("More information about the file read:");
+		io.writeln("Rows read: 1");
+		io.writeln("Columns read: " + sol.size());
+	}
+	static private void testCarregarTestKnown() throws Exception {
+		io.writeln("Testing function carregarTestKnown()\n");
+		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		
+		//executar la funcionalitat
+		ArrayList<ArrayList<String>> sol = null;
+		try
+		{		
+			sol = c.carregarTestKnown();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		
+		//mostrar output
+		io.writeln("File ratings.test.known.csv from the poject " + c.getNomProjecte() + ":");
+		int n = sol.size();
+		if (11 < n) n = 11;
+		
+		for (int i = 0; i < n; ++i)
+		{
+			io.write("\t");
+			for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
+			io.writeln();
+		}
+		
+		io.writeln("...");
+		
+		io.writeln("More information about the file read:");
+		io.writeln("Rows read: " + sol.size());
+		io.writeln("Columns read: " + sol.get(0).size());
+	}
 	
 	
 	
+	static private void test() throws Exception {
+		io.writeln("Testing function ()\n");
+		//demanar l'input
+		
+		//executar la funcionalitat
+		
+		//mostrar output
+	}
 }
