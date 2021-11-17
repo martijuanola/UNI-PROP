@@ -49,7 +49,7 @@ public class ControladorDominiAlgorisme {
     }
 	
 	public int get_k() {
-		return k;
+		return K;
 	}
 	
 	public int get_Q() {

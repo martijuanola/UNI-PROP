@@ -11,7 +11,7 @@ public class FolderNotValidException extends Exception {
 	}
 	
 	public FolderNotValidException(String s, String f) {
-		super("The folder named " + s + " does not contain the file " + f + ".");
+		super("The folder named " + s + " does not contain the file " + f + ", or it's not valid.");
 	}
 
 	public FolderNotValidException(String s, boolean b) {

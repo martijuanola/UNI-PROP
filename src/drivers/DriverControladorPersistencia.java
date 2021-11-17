@@ -18,13 +18,27 @@ public class DriverControladorPersistencia {
 			io = new inout();
 			
 			String s = "Options: \n" +
-			"0. exit\n" +
+			"0. Show options\n" +
 			"1. Chose which project to load\n" +
 			"2. List all the available projects for loading\n" +
 			"3. Show the project that is being used\n" +
 			"4. Load the recomendations and valorations from the project chosen\n" +
 			"5. Load the items from the project chosen\n" +
-			"6. Load a .csv file\n";
+			"6. Load a .csv file (from anywhere)\n" +
+			"7. Exit the project folder \n" +
+			"7. Exists preprocessed data? \n" +
+			"8. Exists data saved to use with the algoritm (internal attributes)? \n" +
+			"9. Exists tests? \n" +
+			"10.Load any .csv file from the folder\n" +
+			"11.Load items' atrributes' weights\n" +
+			"12.Load items' atrributes' type\n" +
+			"13.Load test known\n" +
+			"14.Load test unknown\n" +
+			"15.Load algorithm's attributes\n" +
+			"-1. exit\n";
+			
+			String reduced = "Options: \n" +
+			"0. Show options\n" + "-1. exit\n";
 			
 			io.writeln("Testing class ControladorPersistencia");
 			int x;
@@ -59,7 +73,7 @@ public class DriverControladorPersistencia {
 					default:
 				}
 				
-			} while (x != 0);
+			} while (x != -1);
 			
 			io.writeln("Test ended");
 			
