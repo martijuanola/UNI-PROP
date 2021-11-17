@@ -22,12 +22,11 @@ Fitxers de dades necessaris:
 
 Valors estudiats:
 	- Dades tipus caixa blanca
-	-!!!!
+	- !!
 
-!!!
 Efectes estudiats:
 	- Constructors funcionen correctament
-	- Es poden carregar/afegir usuaris de fitxers de ratings
+	- Es poden carregar/afegir usuaris de fitxers de ratings i items
 	- Els metodes d'ordenacio i de cerca binaria funcionen correctament
 	- Les diferents funcions consultores funcionen correctament
 

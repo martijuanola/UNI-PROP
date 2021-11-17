@@ -40,6 +40,7 @@ public class DriverConjuntRecomanacions {
     static private ConjuntItems ci;
     static private Item i;
     static private ConjuntUsuaris cu;
+    static private Recomanacio r;
     static private Usuari u;
     static private String s1;
     static private String s2;
@@ -157,6 +158,8 @@ public class DriverConjuntRecomanacions {
             return;
         }
 
+		System.out.println("Cjt aux inicailitzats");
+
         try {
        		c = new ConjuntRecomanacions(ci,cu,raw);
        	}
@@ -253,7 +256,17 @@ public class DriverConjuntRecomanacions {
 			return;
 		}
 
+		System.out.print("Item ID: ");
+		m = scanner.nextInt();
+		i = new Item(m);
 		
+		ConjuntUsuaris ru = c.usuarisRecomanats(i);
+		System.out.println("ConjuntUsuaris returned:");
+
+		for(int j = 0; j < ru.size(); j++) {
+			System.out.println("ID Usuari 1: " + ru.get(j).getId());
+		}
+
 	}
 	static private void mostra_7() {
 		System.out.println("Testing function boolean add(Recomanacio)");
@@ -262,7 +275,29 @@ public class DriverConjuntRecomanacions {
 			return;
 		}
 
+		System.out.print("Item ID: ");
+		m = scanner.nextInt();
+		i = new Item(m);
 		
+		System.out.print("User ID: ");
+		n = scanner.nextInt();
+		u = new Usuari(n);
+
+		System.out.print("Rating: ");
+		f = scanner.nextFloat();
+
+		try{
+			r = new Recomanacio(u,i,f);
+		}
+		catch(RatingNotValidException e) {
+			System.out.println("ERROR: "+ e.getMessage());
+			return;
+		}
+
+		c.add(r);
+
+		System.out.print("New Recomanacio has been added to the already existing ones.\n");
+		printCR();
 	}
 	static private void mostra_8() {
 		System.out.println("Testing function ConjuntUsuaris void afegirDades(ConjuntItems, ConjuntUsuaris, ArrayList<ArrayList<String>>)");
@@ -324,8 +359,8 @@ public class DriverConjuntRecomanacions {
 
 	static private void printCR() {
 		System.out.println("Current state of the set(Users IDs)");
-		for(int i = 0; i < c.size(); i++) {
-			System.out.println("Position "+ i + ": ID Item = " + c.get(i).getItem().getId() + " & ID Usuari = " + c.get(i).getUsuari().getId() + " & Rating = " + c.get(i).getUsuari().getId());
+		for(int j = 0; j < c.size(); j++) {
+			System.out.println("Position "+ j + ": ID Item = " + c.get(j).getItem().getId() + " & ID Usuari = " + c.get(j).getUsuari().getId() + " & Rating = " + c.get(j).getVal());
 		}
 		System.out.println();
 	}

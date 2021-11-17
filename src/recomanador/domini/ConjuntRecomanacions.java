@@ -141,7 +141,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	
     	int pos = cercaBinaria(item.getId(),0);
 
-    	while(pos < this.size() && this.get(pos).getItem() == item) {
+    	while(pos < this.size() && this.get(pos).getItem().getId() == item.getId()) {
     		cu.add(this.get(pos).getUsuari());
     		pos += 1;
     	}
@@ -192,7 +192,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
 
             try {
-                System.out.println("id Item demanat"+Integer.parseInt(fila.get(1)));
                 i = ci.getItem(Integer.parseInt(fila.get(1)));
             }
             catch(NumberFormatException e) {
@@ -200,6 +199,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             }
 
             try {
+                //no es fa existei perquè ja hauria d'existir(previament inicialitzat) sino dona l'excepció que toca
                 u = cu.getUsuari(Integer.parseInt(fila.get(0)));
             }
             catch(NumberFormatException e) {
