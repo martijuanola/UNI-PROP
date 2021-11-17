@@ -86,7 +86,6 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         else throw new UserNotFoundException(id);
     }
 
-
     /*----- MODIFICADORES -----*/
 
     /**

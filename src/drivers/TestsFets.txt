@@ -1,0 +1,24 @@
+Classes sense errors i amb driver:
+	- Recomanacio (faltaria en realitat testejar-ho amb Item ja correcte fet per ser estrictament correcte)
+
+
+
+
+Falten(amb ordre aproximat de testing):
+	- ControladorLoad
+	- ControladorSave
+	- Controlador
+	- Item
+	- ConjuntItems
+	- ConjuntUsuaris
+	- ConjuntRecomanacions
+	- Usuari
+	- Fitxers Algorismes:
+		- DriverValoracioEstimada
+		- CollaborativeFiltering
+		- ContentBaseFiltering
+		- ControladorDominiAlgorisme
+
+
+Per entrega final:
+	- ControladorDomini
