@@ -392,4 +392,37 @@ public class ControladorPersistencia {
 		
 		this.guardarDades(a, "algorisme.csv");
 	}
+
+
+/*-----TESTING-----*/
+/* Aquestes són funcions que criden les funcions privades de la classe
+ * Serverixen només per a poder testejar-les. En la implementació
+ * final s'hauran d'eliminar*/
+
+/* Per aquestes funcions no es faran testos especifics, sinó que s'usaran per
+ * a provar les classes privades que es criden.
+ * Demostració formal de que la seva correctesa d'una funció depèn de la funció que crida:
+ * És facil veure que aquestes classes funcionaran si i només si funcionen les classes
+ * que criden (ja que aquestes classes es componen d'una unica crida).
+ * 
+ * L'entrada d'aquestes classes és la mateixa que la que es crida
+ * (i es passen els paràmetres si n'hi ha cap a l'altre). També la sortida és
+ * la mateixa, ja que es retorna directament la de la funció cridada (si 
+ * es retorna alguna cosa). I les excepcions tampoc canvien, ja que en 
+ * tots els casos es poden generar les mateixes que en les funcions 
+ * cridades, i la funció de testing no n'afegeix cap extra.
+ * 
+ * Per tant, queda demostrat que aquestes classes funcionaran si i només si
+ * ho fan les classes privades que es criden
+ * */
+ 
+	public ArrayList<ArrayList<String>> TESTcarregarArxiuCarpeta(String s) throws FolderNotValidException
+	{
+		return this.carregarArxiuCarpeta(s);
+	}
+	
+	private void TESTguardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
+	{
+		this.guardarDades(D, s);
+	}
 }

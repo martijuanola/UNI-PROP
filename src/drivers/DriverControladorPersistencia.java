@@ -28,20 +28,20 @@ public class DriverControladorPersistencia {
 			"7. Exit the project folder \n" +
 			"8. Exists preprocessed data? \n" +
 			"9. Exists data saved to use with the algoritm (internal attributes)? \n" +
-			"10 Exists tests? \n" +
-			"11.Load any .csv file from the folder\n" +
-			"12.Load items' atrributes' weights\n" +
-			"13.Load items' atrributes' type\n" +
-			"14.Load test known\n" +
-			"15.Load test unknown\n" +
-			"16.Load algorithm's attributes\n" +
-			"17.Create a new project save data\n" +
-			"18.Save data (any into any file)\n" +
-			"19.Save recomendations and valorations\n" +
-			"20.Save items\n" +
-			"21.Save items' attributes' weights\n" +
-			"22.Save items' atrributes' type\n" +
-			"23.Save algorithm's attributes\n" +
+			"10. Exists tests? \n" +
+			"11. Load any .csv file from the folder\n" +
+			"12. Load items' atrributes' weights\n" +
+			"13. Load items' atrributes' type\n" +
+			"14. Load test known\n" +
+			"15. Load test unknown\n" +
+			"16. Load algorithm's attributes\n" +
+			"17. Create a new project save data\n" +
+			"18. Save data (any into any file)\n" +
+			"19. Save recomendations and valorations\n" +
+			"20. Save items\n" +
+			"21. Save items' attributes' weights\n" +
+			"22. Save items' atrributes' type\n" +
+			"23. Save algorithm's attributes\n" +
 			"-1. exit\n";
 			
 			String reduced = "Options: \n" +
@@ -93,6 +93,7 @@ public class DriverControladorPersistencia {
 						testExisteixenTestos();
 						break;
 					case 11:
+						testCarregarArxiuCarpeta();
 						break;
 					case 12:
 						break;
@@ -355,7 +356,7 @@ public class DriverControladorPersistencia {
 		io.writeln("Does the algorithm attributes data exist in the project folder?");
 		io.writeln("(If you are not on one, you can change it by choosing option 1 at the main menu.)");
 		//executar la funcionalitat
-		if (c.existeixenDadesPreprocesades()) io.writeln("ANSWER: yes");
+		if (c.existeixenDadesAlgorisme()) io.writeln("ANSWER: yes");
 		else io.writeln("ANSWER: no");
 		
 		//mostrar output
@@ -375,7 +376,7 @@ public class DriverControladorPersistencia {
 		io.writeln("Does the tests data exist in the project folder?");
 		io.writeln("(If you are not on one, you can change it by choosing option 1 at the main menu.)");
 		//executar la funcionalitat
-		if (c.existeixenDadesPreprocesades()) io.writeln("ANSWER: yes");
+		if (c.existeixenTestos()) io.writeln("ANSWER: yes");
 		else io.writeln("ANSWER: no");
 		
 		//mostrar output
@@ -389,5 +390,52 @@ public class DriverControladorPersistencia {
 				" and checking if both files exist: ratings.test.known.csv and ratings.test.unknown.csv");
 		}
 	}
+	static private void testCarregarArxiuCarpeta() throws Exception {
+		io.writeln("Testing function carregarArxiuCarpeta()\n");
+		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		
+		io.writeln("Choose a file to load. Write the name below.");
+		io.writeln("Remember that the file will be read as if it were a " +
+			".csv with the same bumber of columns on every row and allowing " +
+			"the file to contain some empty lines (with just a 'next line symbol': \n)");
+		io.write("File: ");
+		
+		Scanner scanner = new Scanner(System.in);		
+		String s = scanner.nextLine();
+		
+		//executar la funcionalitat
+		ArrayList<ArrayList<String>> sol = null;
+		try
+		{		
+			sol = c.TESTcarregarArxiuCarpeta(s);
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("File loaded:");
+		int n = sol.size();
+		if (11 < n) n = 11;
+		
+		for (int i = 0; i < n; ++i)
+		{
+			io.write("\t");
+			for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
+			io.writeln();
+		}
+		
+		io.writeln("...");
+	}
+	
+	
 	
 }
