@@ -1,5 +1,7 @@
 package src.drivers;
 
+import java.util.Scanner;
+
 import src.recomanador.<NOM_CAPA>.<NOM_CLASSE>;
 
 public class Driver<NOM_CLASSE> {
@@ -71,7 +73,7 @@ public class Driver<NOM_CLASSE> {
 		System.out.println("Test ended.");
     }
     
-    static private void mostra_1() throws Exception {
+    static private void mostra_1() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -79,7 +81,7 @@ public class Driver<NOM_CLASSE> {
 		
 		//mostrar output
 	}
-    static private void mostra_2() throws Exception {
+    static private void mostra_2() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -87,7 +89,7 @@ public class Driver<NOM_CLASSE> {
 		
 		//mostrar output
 	}
-    static private void mostra_3() throws Exception {
+    static private void mostra_3() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -95,7 +97,7 @@ public class Driver<NOM_CLASSE> {
 		
 		//mostrar output
 	}
-    static private void mostra_4() throws Exception {
+    static private void mostra_4() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -103,7 +105,7 @@ public class Driver<NOM_CLASSE> {
 		
 		//mostrar output
 	}
-    static private void mostra_5() throws Exception {
+    static private void mostra_5() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -111,7 +113,7 @@ public class Driver<NOM_CLASSE> {
 		
 		//mostrar output
 	}
-    static private void mostra_6() throws Exception {
+    static private void mostra_6() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
