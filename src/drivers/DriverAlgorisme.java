@@ -26,6 +26,9 @@ public class DriverAlgorisme {
         catch(FolderNotFoundException | FolderNotValidException e) {
             System.out.println("cagaste we");
         }
+        catch(DataNotValidException e) {
+            System.out.println("cagaste we2");
+        }
 
         ConjuntItems items = domini.ci;
         ConjuntRecomanacions recomanacions = domini.cr;

@@ -1,6 +1,7 @@
 Classes sense errors i amb driver:
-	- Recomanacio (faltaria en realitat testejar-ho amb Item ja correcte fet per ser estrictament correcte)
-
+	- Recomanacio 
+	- ConjuntUsuaris
+(faltaria en realitat testejar-les amb Item ja correcte per ser estrictament correcte)
 
 
 

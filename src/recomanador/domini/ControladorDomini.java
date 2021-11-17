@@ -59,7 +59,7 @@ public class ControladorDomini {
 
     /*----- DATA & FILES -----*/
 
-    public void carregarCarpeta(String directory) throws FolderNotFoundException, FolderNotValidException {
+    public void carregarCarpeta(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
 
         //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
         cp.escollirProjecte(directory);
@@ -82,12 +82,23 @@ public class ControladorDomini {
     }
     
     
-    public void carregarRatings(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
-        //cp.funcio(fitxer);
+    public void carregarRatings(String fitxer) throws FileNotValidException, FileNotFoundException {
+        try {
+            cu = new ConjuntUsuaris(cp.carregarFitxerExtern(fitxer));
+            cr = new ConjuntRecomanacions(ci,cu,cp.carregarFitxerExtern(fitxer));
+        }
+        catch(Exception e) {
+            //s'han de mirar les que pugen
+        }
     }
 
-    public void carregarItems(String fitxer) /*throws FileNotFoundException, FileNotValidException*/ {
-        //cp.funcio(fitxer);
+    public void carregarItems(String fitxer) throws FileNotValidException, FileNotFoundException {
+        try {
+            ci = new ConjuntItems(cp.carregarFitxerExtern(fitxer));
+        }
+        catch(Exception e) {
+            //s'han de mirar les que pugen
+        }
     }
 
 

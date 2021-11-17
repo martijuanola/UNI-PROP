@@ -104,12 +104,12 @@ public class DriverRecomanacio {
 		System.out.println("Testing function Recomanacio(Usuari, Item)");
 
 		//demanar dades usuari i item
-		System.out.print("Data for new User:\n");
+		System.out.println("Data for new User:");
 		System.out.print("User ID: ");
 		n = scanner.nextInt();
 		u = new Usuari(n);
 		
-		System.out.print("Data for new Item:\n");
+		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
 		i = new Item(n);
@@ -126,12 +126,12 @@ public class DriverRecomanacio {
 		System.out.println("Testing function Recomanacio(Usuari, Item, int)");
 
 		//demanar dades usuari i item
-		System.out.print("Data for new User:\n");
+		System.out.println("Data for new User:");
 		System.out.print("User ID: ");
 		n = scanner.nextInt();
 		u = new Usuari(n);
 		
-		System.out.print("Data for new Item:\n");
+		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
 		i = new Item(n);
@@ -207,9 +207,7 @@ public class DriverRecomanacio {
 			return;
 		}
 
-		b = c.recomanacioValorada();
-
-		if(b) System.out.println("The recommendation IS rated by the user.");
+		if(c.recomanacioValorada()) System.out.println("The recommendation IS rated by the user.");
 		else System.out.println("The recommendation IS NOT rated by the user.");
 	}
 	static private void mostra_8() {
@@ -225,9 +223,7 @@ public class DriverRecomanacio {
 		System.out.print("User ID: ");
 		n = scanner.nextInt();
 		
-		b = c.checkIds(m,n);
-
-		if(b) System.out.println("The Item and User IDs of the recommendation coincide with the once entered.");
+		if(c.checkIds(m,n)) System.out.println("The Item and User IDs of the recommendation coincide with the once entered.");
 		else System.out.println("The Item and User IDs of the recommendation do NOT coincide with the once entered.");
 	}
 	static private void mostra_9() {
@@ -247,8 +243,7 @@ public class DriverRecomanacio {
 		n = scanner.nextInt();
 		i = new Item(n);
 
-		b = c.checkKeys(i,u);
-		if(b) System.out.println("The Item and User of the recommendation coincide with the once entered.");
+		if(c.checkKeys(i,u)) System.out.println("The Item and User of the recommendation coincide with the once entered.");
 		else System.out.println("The Item and User of the recommendation do NOT coincide with the once entered.\n" +
 		 "This result is expected in this test regardless of the input because the two users or items will be different objects.");
 	}
