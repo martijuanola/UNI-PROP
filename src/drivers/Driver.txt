@@ -1,8 +1,13 @@
 package src.drivers;
 
+//Utils
 import java.util.Scanner;
 
+//Classes
 import src.recomanador.<NOM_CAPA>.<NOM_CLASSE>;
+
+//Excepcions
+import java.io.IOException;
 
 public class Driver<NOM_CLASSE> {
 	static private Scanner scanner;
