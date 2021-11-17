@@ -216,7 +216,6 @@ public class ConjuntItems extends ArrayList<Item> {
                 if (!id.get(0).equals("") && !id.get(0).equals(" ")){
                     empty = false;
                     if (!StringOperations.esFloat(id.get(0))){
-                        System.out.println("columna "+getNomAtribut(columna)+" no es float:"+id.get(0));
                         return false;
                     } 
                 }
