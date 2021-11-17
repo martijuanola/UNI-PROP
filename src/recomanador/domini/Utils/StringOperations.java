@@ -86,28 +86,33 @@ public class StringOperations {
             int s1p1, s1p2, dia1, mes1, any1;
             int s2p1, s2p2, dia2, mes2, any2;
             if (s1.charAt(4) == '-') {
-                s1p1 = 4;
-                s1p2 = 7;
+                int p1 = 4;
+                int p2 = 7;
+                any1 = Integer.parseInt(s1.substring(0, p1));
+                mes1 = Integer.parseInt(s1.substring(p1+1, p2));
+                dia1 = Integer.parseInt(s1.substring(p2+1, s1.length()));
             }
             else {
-                s1p1 = 2;
-                s1p2 = 5;
+                int p1 = 2;
+                int p2 = 5;
+                dia1 = Integer.parseInt(s1.substring(0, p1));
+                mes1 = Integer.parseInt(s1.substring(p1+1, p2));
+                any1 = Integer.parseInt(s1.substring(p2+1, s1.length()));
             }
-            if (s1.charAt(4) == '-') {
-                s2p1 = 4;
-                s2p2 = 7;
+            if (s2.charAt(4) == '-') {
+                int p1 = 4;
+                int p2 = 7;
+                any2 = Integer.parseInt(s2.substring(0, p1));
+                mes2 = Integer.parseInt(s2.substring(p1+1, p2));
+                dia2 = Integer.parseInt(s2.substring(p2+1, s2.length()));
             }
             else {
-                s2p1 = 2;
-                s2p2 = 5;
+                int p1 = 2;
+                int p2 = 5;
+                dia2 = Integer.parseInt(s2.substring(0, p1));
+                mes2 = Integer.parseInt(s2.substring(p1+1, p2));
+                any2 = Integer.parseInt(s2.substring(p2+1, s2.length()));
             }
-            any1 = Integer.parseInt(s1.substring(0, s1p1));
-            mes1 = Integer.parseInt(s1.substring(s1p1+1, s1p2));
-            dia1 = Integer.parseInt(s1.substring(s1p2+1, s1.length()));
-        
-            any2 = Integer.parseInt(s2.substring(0, s2p1));
-            mes2 = Integer.parseInt(s2.substring(s2p1+1, s2p2));
-            dia2 = Integer.parseInt(s2.substring(s2p2+1, s2.length()));
             
             if (any1 == any2) {
                 if (mes1 == mes2) {
@@ -132,6 +137,26 @@ public class StringOperations {
         if (s1Bigger) return 1;
         else if (s2Bigger) return -1;
         else return 0;
+    }
+
+    static public int dataToTime(String s) {
+        int p1, p2, dia, mes, any;
+        if (s.charAt(4) == '-') {
+            p1 = 4;
+            p2 = 7;
+            any = Integer.parseInt(s.substring(0, p1));
+            mes = Integer.parseInt(s.substring(p1+1, p2));
+            dia = Integer.parseInt(s.substring(p2+1, s.length()));
+        }
+        else {
+            p1 = 2;
+            p2 = 5;
+            dia = Integer.parseInt(s.substring(0, p1));
+            mes = Integer.parseInt(s.substring(p1+1, p2));
+            any = Integer.parseInt(s.substring(p2+1, s.length()));
+        }
+
+        return any*365 + mes*30 + dia;
     }
     
     static public ArrayList<String> divideString(String s, char divider) {

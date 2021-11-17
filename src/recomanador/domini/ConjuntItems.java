@@ -360,12 +360,14 @@ public class ConjuntItems extends ArrayList<Item> {
         if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
     }
 
-    private float distanciaAtribut(String a1, String a2, tipus t) throws ItemTypeNotValidException {
+    private float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
+        tipus t = getTipus(columna);
         if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + tipusToString(t));
 
         float sim = (float)0.0;
         if (t == tipus.I) {
             int i1 = Integer.parseInt(a1), i2 = Integer.parseInt(a2);
+            sim = 1 - (Math.abs(i1 - i2) / (maxAtributs.get(columna) - minAtributs.get(columna)));
         }
         else if (t == tipus.B) {
             boolean b1 = Boolean.parseBoolean(a1), b2 = Boolean.parseBoolean(a2);
@@ -373,14 +375,24 @@ public class ConjuntItems extends ArrayList<Item> {
             else sim = (float)0.0;
         }
         else if (t == tipus.D) {
-
+            float dataMax = maxAtributs.get(columna), dataMin = minAtributs.get(columna); //TODO: canviar que es guarden les dates
+            sim = 1 - (Math.abs(StringOperations.dataToTime(a1) - StringOperations.dataToTime(a2)) / (dataMax - dataMin));
         }
         else if (t == tipus.F) {
-
+            float i1 = Float.parseFloat(a1), i2 = Float.parseFloat(a2);
+            sim = 1 - (Math.abs(i1 - i2) / (maxAtributs.get(columna) - minAtributs.get(columna)));
         }
         else if (t == tipus.S || t == tipus.N) {
-
+            //size(inteseccio)/size(unio)
         }
         return sim;
     }
 }
+    //K-NN
+        //volem que ens doni 0-1
+            //(string, string) = 1-edit_distance/max(size)
+            //(int, int) = 1-(abs((a-b))/(max(atribut)-min(atribut)))
+            //(bool, bool) = (bool == bool)
+            //(Array, Array) = size(interseccio)/size(unio)
+            //(Data, Data) =.....
+            // (0..1p, 0..1*p)/(1*p+1*p) = 0..1*(vo-2.5)
