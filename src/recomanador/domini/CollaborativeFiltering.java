@@ -63,7 +63,7 @@ public class CollaborativeFiltering {
     public ArrayList<Item> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
-        ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
+        /*ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
         ArrayList<Item> Q_items = new ArrayList<Item>(0);
 
         for(int i = 0; i < Q; ++i){
@@ -71,6 +71,8 @@ public class CollaborativeFiltering {
         }
 
         return Q_items;
+        */
+        return null;
     }
 
     /**
@@ -82,26 +84,34 @@ public class CollaborativeFiltering {
      */
     private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) {
 
-        centroids = new Centroid[K];
+        Centroid[] centroids = new Centroid[K];
         closest_centroid = new HashMap<Integer, Integer>(usuaris.size());
 
-        //we fill each centroid with random values
+        System.out.println("we fill each centroid with random values");
         for (int centroid = 0; centroid < K; ++centroid) {
+            centroids[centroid] = new Centroid();
             for(int item = 0; item < items.size(); ++item) {
                 float valoracio = rand.nextFloat()*5;
+
+                centroids[centroid].valoracio = new HashMap<Item,Float>();
                 centroids[centroid].valoracio.put(items.get(item), valoracio);
+                //System.out.println("Initialiced centroid " + centroid + " with value " +  centroids[centroid].valoracio.get(items.get(item)));
+
+                centroids[centroid].sum = new HashMap<Item,Float>();
                 centroids[centroid].sum.put(items.get(item), 0f);
+
+                centroids[centroid].quant = new HashMap<Item,Integer>();
                 centroids[centroid].quant.put(items.get(item), 0);
             }
         }
         
         boolean has_changed = true;
         
-        //calculate the k-means
+        System.out.println("calculate the k-means");
         while (has_changed){
             has_changed = false;
 
-            //we find the closest centroid of each user
+            System.out.println("we find the closest centroid of each user");
             for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                 
                 int min_centroid = 0;
@@ -111,6 +121,7 @@ public class CollaborativeFiltering {
                 for(int centroid = 1; centroid < K; ++centroid) {
                     
                     dist_aux = distance(idx_usuari,centroid);
+                    System.out.println(dist_aux);
                     
                     if (dist_aux < min_distance) {
                         min_distance = dist_aux;
@@ -124,9 +135,9 @@ public class CollaborativeFiltering {
                 }
             }
 
-            //we recalculate the centroids
+            System.out.println("we recalculate the centroids");
             if(has_changed) {
-                //firstly, we set the sum and the quant, which we'll use to calculate the averages
+                System.out.println("firstly, we set the sum and the quant, which we'll use to calculate the averages");
                 for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                     int centroid = closest_centroid.get(idx_usuari);
                     ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
@@ -145,7 +156,7 @@ public class CollaborativeFiltering {
 
                 }
 
-                //now we calculate the new averages
+                System.out.println("now we calculate the new averages");
                 for (int centroid = 0; centroid < K; ++centroid) {
                     for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
                         Item item = items.get(idx_item);
@@ -164,7 +175,7 @@ public class CollaborativeFiltering {
 
         }        
 
-        //now we return the set of users in the same centroid than user_ID
+        System.out.println("now we return the set of users in the same centroid than user_ID");
         ArrayList<Usuari> usuaris_cluster = new ArrayList<Usuari>();
         int centroid = closest_centroid.get(user_ID);
         for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
@@ -186,15 +197,18 @@ public class CollaborativeFiltering {
      * @return     the distance between the user and the centroid
      */
     private float distance(int idx_usuari, int centroid) {
+        System.out.println("calculating the distance between " + idx_usuari + " and centroid " + centroid);
+        
         float distance = 0;
 
         ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
+        System.out.println("loaded " + valoracionsUser.size() + " ratings");
 
         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
             Recomanacio rec = valoracionsUser.get(idx_rec);
             Item item = rec.getItem();
             if (rec.recomanacioValorada()) {
-                float distance_add = rec.getVal()-centroids[centroid].valoracio.get(item);
+                float distance_add = rec.getVal()-centroids[centroid].valoracio.get(item); 
                 distance += distance_add*distance_add;
             }
         }
