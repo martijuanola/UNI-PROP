@@ -1,11 +1,14 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
 import src.recomanador.domini.Utils.Search;
 import src.recomanador.domini.Utils.StringOperations;
+import src.recomanador.domini.Utils.UnionIntersection;
+import src.recomanador.excepcions.ItemNotCompatibleException;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
@@ -383,16 +386,33 @@ public class ConjuntItems extends ArrayList<Item> {
             sim = 1 - (Math.abs(i1 - i2) / (maxAtributs.get(columna) - minAtributs.get(columna)));
         }
         else if (t == tipus.S || t == tipus.N) {
-            //size(inteseccio)/size(unio)
+            int n= a1.length(), m = a2.length();    
+            int[][] dp = new int[n + 1][m + 1];
+            for(int i = 0; i < n + 1; i++) Arrays.fill(dp[i], -1);                
+            int a = StringOperations.minDis(a1, a2, n, m, dp);
+            sim = a/Math.max(n, m);
         }
         return sim;
     }
+
+    public float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException, ItemNotCompatibleException {
+        if (i1.getNumAtributs() != i2.getNumAtributs()) throw new ItemNotCompatibleException("Different sizes");
+
+        float res = (float)0.0, pesTotal = (float)0.0;
+        for (int i = 0; i < i1.getNumAtributs(); ++i) {
+            float dist = (float)0.0;
+            if (getTipus(i) == tipus.S) {
+                float temp;
+                temp = UnionIntersection.getIntersection(i1.getAtribut(i), i2.getAtribut(i)).size();
+                res = temp / UnionIntersection.getUnion(i1.getAtribut(i), i2.getAtribut(i)).size();
+            }
+            else {
+                dist = distanciaAtribut(i1.getAtribut(0).get(0), i2.getAtribut(i).get(0), i);
+            }
+            res = dist*(getPes(i)/100);
+            pesTotal += getPes(i)/100;
+        }
+        res = res/pesTotal;
+        return res;
+    }
 }
-    //K-NN
-        //volem que ens doni 0-1
-            //(string, string) = 1-edit_distance/max(size)
-            //(int, int) = 1-(abs((a-b))/(max(atribut)-min(atribut)))
-            //(bool, bool) = (bool == bool)
-            //(Array, Array) = size(interseccio)/size(unio)
-            //(Data, Data) =.....
-            // (0..1p, 0..1*p)/(1*p+1*p) = 0..1*(vo-2.5)
