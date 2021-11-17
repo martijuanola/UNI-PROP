@@ -2,6 +2,7 @@ package src.drivers;
 
 //Utils
 import java.util.Scanner;
+import java.util.ArrayList;
 
 //Classes
 import src.recomanador.persistencia.ControladorPersistencia;
@@ -10,6 +11,7 @@ import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.ConjuntUsuaris;
 import src.recomanador.domini.Item;
 import src.recomanador.domini.Usuari;
+import src.recomanador.domini.Recomanacio;
 
 //Excepcions
 import java.io.IOException;
@@ -19,6 +21,10 @@ import src.recomanador.excepcions.UserNotFoundException;
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.UserIdNotValidException;
 import src.recomanador.excepcions.ItemIdNotValidException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
+import src.recomanador.excepcions.FileNotValidException;
+import src.recomanador.excepcions.FileNotFoundException;
+import src.recomanador.excepcions.DataNotValidException;
 
 /**
  * Driver tot test the class ConjuntRecomanacions.
@@ -137,16 +143,32 @@ public class DriverConjuntRecomanacions {
 		try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(s2));
         }
-        catch(Exception e) {
-            //s'han de mirar les que pugen
+        catch(FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
+            System.out.print("ERROR: " + e.getMessage());
+            return;
+        }
+        ArrayList<ArrayList<String>> raw;
+        try {
+        	raw = cp.carregarFitxerExtern(s1);
+            cu = new ConjuntUsuaris(raw);
+        }
+        catch(FileNotValidException | FileNotFoundException | DataNotValidException | UserIdNotValidException e) {
+            System.out.print("ERROR: " + e.getMessage());
+            return;
         }
 
-		//carrega 2 fitxers
-		//inicialitzar items
-		//inicalitzar usuaris
-		
-		//inicalitzar recomanacions
+        try {
+       		c = new ConjuntRecomanacions(ci,cu,raw);
+       	}
+       	catch(ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+       		System.out.print("ERROR: " + e.getMessage());
+            return;
+       	}
 
+       	class_initalised = true;
+		System.out.print("New ConjuntRecomanacions has been initialised with the data from the 2 files\n");
+		
+		printCR();
 	}
     static private void mostra_3() {
 		System.out.println("Testing function boolean existeixRecomanacio(int, int) & boolean existeixRecomanacio(Item, Usuari)");
@@ -173,22 +195,56 @@ public class DriverConjuntRecomanacions {
 		}
 	}
     static private void mostra_4() {
-		System.out.println("Testing function boolean existeixValoracio(int, int) & boolean existeixValoracio(Item, Usuari)");
+		System.out.println("Testing function boolean existeixRecomanacio(int, int) & boolean existeixRecomanacio(Item, Usuari)");
 		if(!class_initalised) {
 			System.out.println("!! ConjuntRecomanacions not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
 
+		System.out.print("Item ID: ");
+		m = scanner.nextInt();
+		i = new Item(m);
+		
+		System.out.print("User ID: ");
+		n = scanner.nextInt();
+		u = new Usuari(n);
+		
+		b1 = c.existeixValoracio(m,n);
+		b2 = c.existeixValoracio(i,u);
 
+		if(b1 != b2) System.out.println("ERROR: either 'boolean existeixValoracio(int, int)' or 'boolean existeixValoracio(Item, Usuari)' is not working correctlly.");
+		else {
+			if(b1) System.out.println("The rating of a the recommendation with ITEM id " + m + " and USER ID " + n + " IS in the set.");
+			else System.out.println("The rating of a the recommendation with ITEM id " + m + " and USER ID " + n + " IS NOT in the set.");
+		}
 	}
     static private void mostra_5() {
-		System.out.println("Testing function Recomanacio getRecomanacio(int,int)");
+		System.out.println("Testing function Recomanacio getRecomanacio(int,int) & Recomanacio getRecomanacio(Item, Usuari)");
 		if(!class_initalised) {
 			System.out.println("!! ConjuntRecomanacions not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
 
+		System.out.print("Item ID: ");
+		m = scanner.nextInt();
+		i = new Item(m);
 		
+		System.out.print("User ID: ");
+		n = scanner.nextInt();
+		u = new Usuari(n);
+
+		Recomanacio r1, r2;
+		try {
+			r1 = c.getRecomanacio(m,n);
+			r2 = c.getRecomanacio(i,u);
+		}
+		catch(RecommendationNotFoundException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		
+		if(r1 != r2) System.out.println("ERROR: either 'Recomanacio getRecomanacio(int,int)' & 'Recomanacio getRecomanacio(Item, Usuari)' is not working correctlly.");
+		else System.out.println("The recommendation with ITEM id " + m + " and USER ID " + n + " has been obtained from the set. It's rating is " + r1.getVal() + ".");
 	}
     static private void mostra_6() {
 		System.out.println("Testing function ConjuntUsuaris usuarisRecomanats(Item)");
@@ -215,7 +271,39 @@ public class DriverConjuntRecomanacions {
 			return;
 		}
 
-		
+		System.out.print("Enter (relative) path to a rating file: ");
+		s1 = scanner.next();
+
+		System.out.print("Enter (relative) path to a items file: ");
+		s2 = scanner.next();
+
+		try {
+            ci = new ConjuntItems(cp.carregarFitxerExtern(s2));
+        }
+        catch(FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
+            System.out.print("ERROR: " + e.getMessage());
+            return;
+        }
+        ArrayList<ArrayList<String>> raw;
+        try {
+        	raw = cp.carregarFitxerExtern(s1);
+            cu = new ConjuntUsuaris(raw);
+        }
+        catch(FileNotValidException | FileNotFoundException | DataNotValidException | UserIdNotValidException e) {
+            System.out.print("ERROR: " + e.getMessage());
+            return;
+        }
+
+        try {
+       		c.afegirDades(ci,cu,raw);
+       	}
+       	catch(ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+       		System.out.print("ERROR: " + e.getMessage());
+            return;
+       	}
+
+		System.out.print("New data has been added to the ConjuntRecomanacions fromt the 2 files.\n");
+		printCR();
 	}
 	static private void mostra_9() {
 		System.out.println("int cercaBinaria(int,int)");
@@ -237,7 +325,7 @@ public class DriverConjuntRecomanacions {
 	static private void printCR() {
 		System.out.println("Current state of the set(Users IDs)");
 		for(int i = 0; i < c.size(); i++) {
-			System.out.println("Position "+ i + ": ID Item = " + c.get(i).getItem().getId() + " & ID Usuari = " + c.get(i).getUsuari().getId());
+			System.out.println("Position "+ i + ": ID Item = " + c.get(i).getItem().getId() + " & ID Usuari = " + c.get(i).getUsuari().getId() + " & Rating = " + c.get(i).getUsuari().getId());
 		}
 		System.out.println();
 	}

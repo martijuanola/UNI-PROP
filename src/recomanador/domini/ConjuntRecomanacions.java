@@ -183,7 +183,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
             //es podrien inicialitzar els trys i catchs si s'ajunten les excepcions en DataNotValidException o algo així
             try {
-                v = Integer.parseInt(fila.get(2));
+                v = Float.parseFloat(fila.get(2));
             }
             catch(NumberFormatException e) {
                 throw new RatingNotValidException(fila.get(2));
@@ -192,6 +192,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
 
             try {
+                System.out.println("id Item demanat"+Integer.parseInt(fila.get(1)));
                 i = ci.getItem(Integer.parseInt(fila.get(1)));
             }
             catch(NumberFormatException e) {
