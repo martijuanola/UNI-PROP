@@ -166,6 +166,14 @@ public class Item implements Comparable<Item>{
         Item.id= id;
     }
 
+    public static int getPosId() {
+        return Item.id;
+    }
+
+    public static int getPosNomA() {
+        return Item.nomA;
+    }
+
     public static void setPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");

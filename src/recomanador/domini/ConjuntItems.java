@@ -1,25 +1,17 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.concurrent.CountDownLatch;
-
-import javax.print.attribute.standard.MediaSize.NA;
-import javax.swing.plaf.multi.MultiButtonUI;
 
 import src.recomanador.domini.Utils.Search;
 import src.recomanador.domini.Utils.StringOperations;
 import src.recomanador.domini.Utils.UnionIntersection;
+import src.recomanador.domini.Item.tipus;
 
 import src.recomanador.excepcions.ItemNotCompatibleException;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-
-import src.recomanador.domini.Item.tipus;
 
 /**
  * This class represents a set of items in the form of an ArrayList extension. 
@@ -241,6 +233,21 @@ public class ConjuntItems extends ArrayList<Item> {
         return get(pos);
     }
 
+    public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
+        ArrayList<ArrayList<ArrayList<String>>> result = new ArrayList<ArrayList<ArrayList<String>>>();
+        ArrayList<ArrayList<String>> aux = new ArrayList<ArrayList<String>>();
+        for (int i = 0; i < Item.getNumAtributs(); ++i) {
+            ArrayList<String> a2 = new ArrayList<String>();
+            a2.add(Item.getNomAtribut(i));
+            aux.add(a2);
+        }
+        result.add(aux);
+        for (int i = 0; i < this.size(); ++i) {
+            result.add(get(i).getAtributs());
+        }
+        return result;
+    }
+
     //check
     public boolean existeixItem(int id) {
         int res = Search.binarySearchItem(this, id, 0, size()-1);
@@ -455,5 +462,13 @@ public class ConjuntItems extends ArrayList<Item> {
 
     public Float getMinAtribut(int i) {
         return minAtributs.get(i);
+    }
+
+    public ArrayList<Float> getMaxAtributs() {
+        return maxAtributs;
+    }
+
+    public ArrayList<Float> getMinAtributs() {
+        return minAtributs;
     }
 }
