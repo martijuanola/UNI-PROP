@@ -12,12 +12,16 @@ public class DriverControladorPersistencia {
     static private ControladorPersistencia c;
     static private inout io;
     static private ArrayList<ArrayList<String>> testData;
+    static private ArrayList<ArrayList<ArrayList<String>>> testItemsData;
+    static private ArrayList<String> testSimpleHeader;
     
     public static void main(String[] args) {
         try{
 			c = new ControladorPersistencia();
 			io = new inout();
 			initializeDummyData();
+			initializeDummyItems();
+			initializeDummyHeader();
 			
 			String s = "Options: \n" +
 			"0. Show options\n" +
@@ -120,8 +124,10 @@ public class DriverControladorPersistencia {
 						testGuardarDades();
 						break;
 					case 19:
+						testGuardarRecomanacions();
 						break;
 					case 20:
+						testGuardarItems();
 						break;
 					case 21:
 						break;
@@ -665,7 +671,62 @@ public class DriverControladorPersistencia {
 		io.writeln("DONE!");
 		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
 	}
-	
+	static private void testGuardarRecomanacions() throws Exception {
+		io.writeln("Testing function guardarRecomanacions()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+		}
+		
+		io.writeln("Some data will be stored to the ratings.db.csv.");
+		
+		//executar la funcionalitat
+		try
+		{
+			c.guardarRecomanacions(testData);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
+	static private void testGuardarItems() throws Exception {
+		io.writeln("Testing function guardarRecomanacions()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+		}
+		
+		io.writeln("Some data will be stored to the items.csv.");
+		
+		//executar la funcionalitat
+		try
+		{
+			c.guardarItems(testSimpleHeader, testItemsData);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
 	
 	
 	static private void test() throws Exception {
@@ -723,5 +784,59 @@ public class DriverControladorPersistencia {
 			" de limón. Cocer. Introducir de nuevo los filetes en la salsa para" + 
 			" que den unos hervores, colocarlos en una fuente y cubrirlos con la" + 
 			" salsa. Servirlos calientes con arroz basmati.\"");
+	}
+	static private void initializeDummyItems() {
+		testItemsData = new ArrayList<ArrayList<ArrayList<String>>>();
+		
+		testItemsData.add(new ArrayList<ArrayList<String>>());
+		testItemsData.get(0).add(new ArrayList<String>());
+		testItemsData.get(0).get(0).add("3");
+		testItemsData.get(0).add(new ArrayList<String>());
+		testItemsData.get(0).get(1).add("entrecot");
+		testItemsData.get(0).add(new ArrayList<String>());
+		testItemsData.get(0).get(2).add("patatas");
+		testItemsData.get(0).get(2).add("ensalada");
+		testItemsData.get(0).get(2).add("arroz");
+		
+		testItemsData.add(new ArrayList<ArrayList<String>>());
+		testItemsData.get(1).add(new ArrayList<String>());
+		testItemsData.get(1).get(0).add("14");
+		testItemsData.get(1).add(new ArrayList<String>());
+		testItemsData.get(1).get(1).add("lomo_a_la_plancha");
+		testItemsData.get(1).add(new ArrayList<String>());
+		testItemsData.get(1).get(2).add("zanahoria");
+		testItemsData.get(1).get(2).add("croquetas");
+		
+		testItemsData.add(new ArrayList<ArrayList<String>>());
+		testItemsData.get(2).add(new ArrayList<String>());
+		testItemsData.get(2).get(0).add("15");
+		testItemsData.get(2).add(new ArrayList<String>());
+		testItemsData.get(2).get(1).add("strogonof");
+		testItemsData.get(2).add(new ArrayList<String>());
+		testItemsData.get(2).get(2).add("patatas");
+		
+		testItemsData.add(new ArrayList<ArrayList<String>>());
+		testItemsData.get(3).add(new ArrayList<String>());
+		testItemsData.get(3).get(0).add("92");
+		testItemsData.get(3).add(new ArrayList<String>());
+		testItemsData.get(3).get(1).add("arroz_con_feijao");
+		testItemsData.get(3).add(new ArrayList<String>());
+		testItemsData.get(3).get(2).add("\"salsa picante, con ajo y perejil\"");
+		testItemsData.get(3).get(2).add("farofa");
+		
+		testItemsData.add(new ArrayList<ArrayList<String>>());
+		testItemsData.get(4).add(new ArrayList<String>());
+		testItemsData.get(4).get(0).add("65");
+		testItemsData.get(4).add(new ArrayList<String>());
+		testItemsData.get(4).get(1).add("sopa");
+		testItemsData.get(4).add(new ArrayList<String>());
+		testItemsData.get(4).get(2).add("");
+	}
+	static private void initializeDummyHeader() {
+		testSimpleHeader = new ArrayList<String>();
+		
+		testSimpleHeader.add("id");
+		testSimpleHeader.add("plato_principal");
+		testSimpleHeader.add("acompañamientos_y_aderezo");
 	}
 }
