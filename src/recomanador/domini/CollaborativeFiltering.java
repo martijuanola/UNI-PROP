@@ -61,14 +61,22 @@ public class CollaborativeFiltering {
      * @return     a sorted set the recommended item IDs
      */
     public ArrayList<Item> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
+        if(!usuaris.existeixUsuari(user_ID)) {
+            System.out.println("Ususari no esta al set.");
+            throw new UserNotFoundException(user_ID);
+        }
         
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
+        //test1(usuaris_cluster,usuaris);
         ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
         ArrayList<Item> Q_items = new ArrayList<Item>(0);
 
-        for(int i = 0; i < Q; ++i){
+        for(int i = 0; i < Q && i < items_sorted.size(); ++i){
             Q_items.add(items_sorted.get(i).item);
+            System.out.println("ITEM " + i + ": ID=" + items_sorted.get(i).item.getId() + " | V=" + items_sorted.get(i).valoracioEstimada);
         }
+
+
 
         return Q_items;
     }
@@ -200,7 +208,10 @@ public class CollaborativeFiltering {
 		//~ for (int i = 0; i < K; ++i) {
 			//~ System.out.println(K + " = " + kas[i]);
 			//~ } 
-        
+        /*if(usuaris_cluster.size() == 0) {
+            System.out.println("Error a inicialitzafió de clusters");
+            throw new IndexOutOfBoundsException();
+        }*/
         return usuaris_cluster;
     }
 
@@ -243,23 +254,29 @@ public class CollaborativeFiltering {
      *
      * @return     the distance between the user and the centroid
      */
-    private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException{
+    private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException {
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valoracionsUser = usuaris.get(user_ID).getValoracions();
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
         
-        System.out.println("Checking every item");
+        //System.out.println("\n\nFOR1: Checking every item");
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
+            //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
             Item j_item = items.get(j_idx);
-            if (valoracions.existeixValoracio(j_item, user)) {System.out.println("Item had been rated"); continue;} 
+            if (valoracions.existeixValoracio(j_item, user)) {
+                System.out.println("Item had been rated");
+                continue;
+            } 
             
             
             int card_rj = 0;
             float sum1 = 0;
 			
-			System.out.println("Checking every rating of the user");
+			//System.out.println("\nFOR2: Checking every rating of the user");
             for (int val_user_idx = 0; val_user_idx < valoracionsUser.size(); ++val_user_idx) {
+                //System.out.println("(FOR2)REC INDEX = " + val_user_idx);
+                
                 Recomanacio valoracio = valoracionsUser.get(val_user_idx);
                 //if (!valoracio.recomanacioValorada()) continue;
                 Item i_item = valoracio.getItem();
@@ -269,13 +286,13 @@ public class CollaborativeFiltering {
                 int card_sij = 0;
                 float sum2 = 0;
 
-				System.out.println("Checking every user in the cluster");
+				//System.out.println("FOR3: Checking every user in the cluster");
                 for(int user_clust_index = 0; user_clust_index < usuaris_cluster.size(); ++user_clust_index){
-//ERROR!					
+//ERROR!			
+                    //System.out.println("(FOR3)USR INDEX = " + user_clust_index);		
+
                     if (valoracions.existeixValoracio(j_item, usuaris_cluster.get(user_clust_index)) 
                     && valoracions.existeixValoracio(i_item, usuaris_cluster.get(user_clust_index))) {
-						
-						System.out.println("There exists a rating for both items");
 						
                         ++card_sij;
                         
@@ -284,8 +301,10 @@ public class CollaborativeFiltering {
 							Recomanacio rec2 = valoracions.getRecomanacio(i_item, usuaris_cluster.get(user_clust_index));
 							sum2 += rec1.getVal() - rec2.getVal();
                         }
-						catch(RecommendationNotFoundException e) {/*mai hauria de passar donat que hem comprovat existeixValoracio*/}
-							System.out.println("WTF");
+						catch(RecommendationNotFoundException e) {/*mai hauria de passar donat que hem comprovat existeixValoracio*/
+                            System.out.println("WTF");
+                        }
+							
                     }
 
                     if (card_sij != 0) {
@@ -293,7 +312,6 @@ public class CollaborativeFiltering {
                         sum1 += sum2/card_sij + valoracio.getVal();
                     }
                 }
-                System.out.println("checked every user");
             }
 
             if(card_rj != 0){
@@ -304,6 +322,20 @@ public class CollaborativeFiltering {
         Collections.sort(items_estimats);
         return items_estimats;
     }
+
+
+    private void test1(ArrayList<Usuari> au, ConjuntUsuaris cu) {
+        for(int i = 0; i < au.size(); i++) {
+            int id = au.get(i).getId();
+            if(!cu.existeixUsuari(id)) {
+                System.out.println("Usuari amb id=" + id+" no existeix al conjunt original");
+                throw new IndexOutOfBoundsException();
+            }
+        }
+        System.out.println("Cluster amb usuaris correctes");
+    }
+
+
 }
     //K-NN
         //volem que ens doni 0-1

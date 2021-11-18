@@ -129,6 +129,7 @@ public class Recomanacio implements Comparable<Recomanacio> {
      */
     public boolean checkKeys(Item i, Usuari u) {
         return usr == u && item == i;
+        //return usr.getId() == u.getId() && item.getId() == i.getId();
     }
 
     /**
