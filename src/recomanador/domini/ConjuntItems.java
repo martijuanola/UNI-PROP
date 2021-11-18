@@ -55,9 +55,12 @@ public class ConjuntItems extends ArrayList<Item> {
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
             Item it = new Item(str);
-            add(it);//Afegeix ordenat
+            addIni(it);//Afegeix ordenat
         }
         detectarTipusAtributs();
+        for (int i = 0; i < Item.getNumAtributs(); ++i) {
+            setMinMaxAtribut(i);
+        }
     }
 
     //check
@@ -102,6 +105,12 @@ public class ConjuntItems extends ArrayList<Item> {
 
         ArrayList<Float> pesos = new ArrayList<Float>(nAtributs);
         ArrayList<tipus> tipusAtribut = new ArrayList<tipus>(nAtributs);
+        maxAtributs = new ArrayList<Float>();
+        minAtributs = new ArrayList<Float>();
+        for (int i = 0; i < nAtributs; ++i) {
+            maxAtributs.add(Float.MIN_VALUE);
+            minAtributs.add(Float.MAX_VALUE);
+        }
         
         int i = 0;
         while (i < nAtributs) {
@@ -195,7 +204,34 @@ public class ConjuntItems extends ArrayList<Item> {
         int pos = Collections.binarySearch(this, i);
         if (pos < 0) pos = ~pos;
         super.add(pos, i);
+        esMaxMin(i);
         return (get(pos).getId() == i.getId());
+    }
+
+    private boolean addIni(Item i) {
+        int pos = Collections.binarySearch(this, i);
+        if (pos < 0) pos = ~pos;
+        super.add(pos, i);
+        return (get(pos).getId() == i.getId());
+    }
+
+    private void esMaxMin(Item it) {
+        for (int i = 0; i < maxAtributs.size(); ++i) {
+            if (it.getAtribut(i).size() == 1) {
+                Float nou = (float)0;
+                if (Item.getTipus(i) == tipus.I) {
+                    nou = (float)Integer.parseInt(it.getAtribut(i).get(0));
+                }
+                else if (Item.getTipus(i) == tipus.F) {
+                    nou = Float.parseFloat(it.getAtribut(i).get(0));
+                }
+                else if (Item.getTipus(i) == tipus.D) {
+                    nou = (float) StringOperations.dataToTime(it.getAtribut(i).get(0));
+                }
+                if (nou > maxAtributs.get(i)) maxAtributs.set(i, (float)nou);
+                if (nou < minAtributs.get(i)) minAtributs.set(i, (float)nou);
+            }
+        }
     }
 
     //check
@@ -264,41 +300,44 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     //check
-    public String getMinMaxAtribut(int col, boolean Max) { //If max == true, agafes max, else agafes min
+    public void setMinMaxAtribut(int col) {
         tipus t = Item.getTipus(col);
-        String s = "";
-        if (Max) {
-            if (t == tipus.B) s = "True";
-            if (t == tipus.S) s = "";
-            if (t == tipus.N) s = "";
-            if (t == tipus.I) s = ""+Integer.MIN_VALUE;
-            if (t == tipus.D) s = "0000-00-00";
-            if (t == tipus.F) s = ""+Float.MIN_VALUE; 
-        }
-        else {
-            if (t == tipus.B) s = "True";
-            if (t == tipus.S) s = StringOperations.infinitString();
-            if (t == tipus.N) s = StringOperations.infinitString();
-            if (t == tipus.I) s = ""+Integer.MAX_VALUE;
-            if (t == tipus.D) s = "9999-12-31";
-            if (t == tipus.F) s = ""+Float.MAX_VALUE;
-        }
+        String sMin = "", sMax = "";
 
+        if (t == tipus.I) {
+            sMax = ""+Integer.MIN_VALUE;
+            sMin = ""+Integer.MAX_VALUE;
+        }
+        else if (t == tipus.D) {
+            sMax = "0000-00-00";
+            sMin = "9999-12-31";
+        }
+        else if (t == tipus.F) {
+            sMax = ""+Float.MIN_VALUE; 
+            sMin = ""+Float.MAX_VALUE;
+        }
+        else return;
         for (int i = 0; i < size(); ++i) {
             if (col < get(i).getAtributs().size()) {
                 ArrayList<String> atr = get(i).getAtribut(col);
                 for (int j = 0; j < atr.size(); ++j) {
-                    if (Max && StringOperations.compararAtributs(atr.get(j), s, t) > 0) {
-                        s = atr.get(j);
+                    if (StringOperations.compararAtributs(atr.get(j), sMax, t) > 0) {
+                        sMax = atr.get(j);
                     }
-                    else if (!Max && StringOperations.compararAtributs(atr.get(j), s, t) < 0) { //atribut és menor que j
-                        s = atr.get(j);
+                    else if (StringOperations.compararAtributs(atr.get(j), sMin, t) < 0) { //atribut és menor que j
+                        sMin = atr.get(j);
                     }
                 }
             }
         }
-        if (!s.equals(StringOperations.infinitString()))return s;
-        else return "BAD DETECTION";
+        if (t == tipus.D) {
+            if (sMax.length()==10) maxAtributs.set(col, (float)StringOperations.dataToTime(sMax));
+            if (sMin.length()==10) minAtributs.set(col, (float)StringOperations.dataToTime(sMin));
+        }
+        else {
+            maxAtributs.set(col, Float.parseFloat(sMax));
+            minAtributs.set(col, Float.parseFloat(sMin));
+        }
     }
 
     //Check
@@ -408,5 +447,13 @@ public class ConjuntItems extends ArrayList<Item> {
         for (int i = 0; i < size(); ++i) {
             get(i).print();
         }
+    }
+
+    public Float getMaxAtribut(int i) {
+        return maxAtributs.get(i);
+    }
+
+    public Float getMinAtribut(int i) {
+        return minAtributs.get(i);
     }
 }
