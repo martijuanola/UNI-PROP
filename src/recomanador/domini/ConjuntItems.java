@@ -55,7 +55,7 @@ public class ConjuntItems extends ArrayList<Item> {
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
             Item it = new Item(str);
-            add(it);//Afegeix ordenant
+            add(it);//Afegeix ordenat
         }
         detectarTipusAtributs();
     }
@@ -98,6 +98,7 @@ public class ConjuntItems extends ArrayList<Item> {
     //check
     private boolean inicialitzar(int nAtributs) throws ItemTypeNotValidException { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
         Item.setNomA(-1);
+        Item.setId(-1);
 
         ArrayList<Float> pesos = new ArrayList<Float>(nAtributs);
         ArrayList<tipus> tipusAtribut = new ArrayList<tipus>(nAtributs);
@@ -109,20 +110,18 @@ public class ConjuntItems extends ArrayList<Item> {
             ++i;
         }
 
+        Item.setPesos(pesos);
+        Item.setTipus(tipusAtribut);
+
         int c = 0;
         boolean found = false;
         while (c < nAtributs && !found) {
             if (Item.getNomAtribut(c).equalsIgnoreCase("id")) {
-                Item.setId(c);
-                assignarTipusItem(c, tipus.I);
+                Item.assignarTipus(c, tipus.I);
                 found = true;
             }
             ++c;
         }
-
-        Item.setPesos(pesos);
-        Item.setTipus(tipusAtribut);
-
         return found;
     }
 
@@ -179,7 +178,7 @@ public class ConjuntItems extends ArrayList<Item> {
             }
         }
         // Nom i String sempre estaran bé
-        return !empty;
+        return !empty || t == tipus.S || t == tipus.N;
     }
 
 
@@ -193,8 +192,9 @@ public class ConjuntItems extends ArrayList<Item> {
     //check
     @Override
     public boolean add(Item i) {
-        int pos = Search.findClosest(this, i.getId());
-        this.add(pos, i);
+        int pos = Collections.binarySearch(this, i);
+        if (pos < 0) pos = ~pos;
+        super.add(pos, i);
         return (get(pos).getId() == i.getId());
     }
 
@@ -310,7 +310,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
             if (nom.equalsIgnoreCase("id")) { //Comprova si es id
                 if (tipusCorrecteColumna(i, tipus.I)) {
-                    assignarTipusItem(i, tipus.I);
+                    //assignarTipusItem(i, tipus.I); Ja es fa abans
                     found = true;
                     idAssignat = true;
                 }
@@ -398,10 +398,10 @@ public class ConjuntItems extends ArrayList<Item> {
     public void printItems() {
         System.out.println("Nom conjunt: " + ConjuntItems.nom);
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            System.out.print(
-                    Item.getNomAtribut(i) + " " + ConjuntItems.getSTipus(i) + " " + Item.getPes(i));
-            if (i != Item.getNumAtributs() - 1)
-                System.out.print(" | ");
+            
+            System.out.print(Item.getNomAtribut(i) + " " + ConjuntItems.getSTipus(i) + " " + Item.getPes(i));
+
+            if (i != Item.getNumAtributs() - 1) System.out.print(" | ");
         }
         System.out.println("");
 

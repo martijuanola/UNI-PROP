@@ -66,7 +66,7 @@ public class Search {
         if (id <= list.get(0).getId())
             return 0;
         if (id >= list.get(n - 1).getId())
-            return n - 1;
+            return n;
  
         // Doing binary search
         int i = 0, j = n, mid = 0;
