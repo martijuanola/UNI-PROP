@@ -141,12 +141,16 @@ public class DriverControladorPersistencia {
 						testGuardarTipusAtributs();
 						break;
 					case 23:
+						testCarregarMinAtributsItems();
 						break;
 					case 24:
+						testCarregarMaxAtributsItems();
 						break;
 					case 25:
+						testGuardarMinAtributsItems();
 						break;
 					case 26:
+						testGuardarMaxAtributsItems();
 						break;
 					default:
 				}
@@ -800,16 +804,137 @@ public class DriverControladorPersistencia {
 		io.writeln("DONE!");
 		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
 	}
-	
-	static private void test() throws Exception {
-		io.writeln("Testing function ()\n");
+	static private void testCarregarMinAtributsItems() throws Exception {
+		io.writeln("Testing function carregarMinAtributsItems()\n");
 		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
 		
 		//executar la funcionalitat
+		ArrayList<String> sol = null;
+		try
+		{		
+			sol = c.carregarMinAtributsItems();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
 		
 		//mostrar output
+		io.writeln("File minAtributs.items.csv from the poject " + c.getNomProjecte() + ":");
+		int n = sol.size();
+		
+		for (int i = 0; i < n; ++i) io.write(sol.get(i) + "\t");
+				
+		//mostrar output
+		io.writeln();
+		io.writeln("More information about the file read:");
+		io.writeln("Rows read: 1");
+		io.writeln("Columns read: " + sol.size());
 	}
-
+	static private void testCarregarMaxAtributsItems() throws Exception {
+		io.writeln("Testing function carregarMaxAtributsItems()\n");
+		//demanar l'input
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		
+		//executar la funcionalitat
+		ArrayList<String> sol = null;
+		try
+		{		
+			sol = c.carregarMaxAtributsItems();
+		} catch(Exception e)
+		{
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		
+		//mostrar output
+		io.writeln("File maxAtributs.items.csv from the poject " + c.getNomProjecte() + ":");
+		int n = sol.size();
+		
+		for (int i = 0; i < n; ++i) io.write(sol.get(i) + "\t");
+				
+		//mostrar output
+		io.writeln();
+		io.writeln("More information about the file read:");
+		io.writeln("Rows read: 1");
+		io.writeln("Columns read: " + sol.size());
+	}
+	static private void testGuardarMinAtributsItems() throws Exception {
+		io.writeln("Testing function guardarMinAtributsItems()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+		}
+		
+		io.writeln("Some data will be stored in minAtributs.items.csv");
+		
+		//executar la funcionalitat
+		try
+		{
+			ArrayList<String> af = new ArrayList<String>();
+			for (int i = 0; i < 25; ++i) af.add("min_" + Integer.toString(i)); 
+			c.guardarMinAtributsItems(af);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
+	static private void testGuardarMaxAtributsItems() throws Exception {
+		io.writeln("Testing function guardarMaxAtributsItems()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+		}
+		
+		io.writeln("Some data will be stored in maxAtributs.items.csv");
+		
+		//executar la funcionalitat
+		try
+		{
+			ArrayList<String> af = new ArrayList<String>();
+			for (int i = 0; i < 25; ++i) af.add("max_" + Integer.toString(i));
+			c.guardarMaxAtributsItems(af);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
+	
 	static private boolean isWritable() {
 		String name;
 		try { name = c.getNomProjecte(); }
@@ -914,11 +1039,11 @@ public class DriverControladorPersistencia {
 	static private void initializeDummyArray6() {
 		testArray6Values = new ArrayList<String>();
 		
-		testSimpleHeader.add("0");
-		testSimpleHeader.add("3");
-		testSimpleHeader.add("8");
-		testSimpleHeader.add("dummy");
-		testSimpleHeader.add("42");
-		testSimpleHeader.add("97");
+		testArray6Values.add("0");
+		testArray6Values.add("3");
+		testArray6Values.add("8");
+		testArray6Values.add("dummy");
+		testArray6Values.add("42");
+		testArray6Values.add("97");
 	}
 }

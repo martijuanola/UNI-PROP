@@ -429,7 +429,7 @@ public class ControladorPersistencia {
 	
 	public ArrayList<String> carregarMinAtributsItems() throws FolderNotValidException
 	{
-		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("maxAtributs.items.csv");
+		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("minAtributs.items.csv");
 		return temp.get(0);
 	}
 	
