@@ -209,6 +209,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             Recomanacio r = new Recomanacio(u, i, v);
             this.add(r);
 
+            //afegeix les coses a les arrays dels usuaris
             if(v != Recomanacio.nul) u.getValoracions().add(r);
             else u.getRecomanacions().add(r);
         }
