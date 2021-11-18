@@ -1,6 +1,7 @@
 package src.recomanador.domini;
 
 import src.recomanador.excepcions.RatingNotValidException;
+import src.recomanador.excepcions.RecommendationNotRatedException;
 
 /**
  * @author Martí J. i Jaume
@@ -73,7 +74,6 @@ public class Usuari implements Comparable<Usuari> {
  
     /*----- SETTERS -----*/
 
-    //Possiblement Inutil
     /**
      * El punter de les recomanacions ara apunta a cr
      * @param cr ConjuntRecomanacions
@@ -82,7 +82,6 @@ public class Usuari implements Comparable<Usuari> {
         this.cr = cr;
     }
 
-    //Possiblement Inutil
     /**
      * El conjunt de valoracions ara apunta a cv
      * @param cv ConjuntRecomanacions
@@ -91,48 +90,20 @@ public class Usuari implements Comparable<Usuari> {
         this.cv = cv;
     }
 
+    //Aquestes 2 funcions no haurien d'existir!
+    //Pensar com poder canviar valors i actualitzar el conjunt
+    
     /**
-     * Elimina la recomanació que pertany al índex i
-     * @param i índex de la recomanació, ha de estar en el rang de recomanacions de l'usuari
-     * @return retorna la recomanació eliminada
+     * Used to move a recommendation from cr to cv when a a recommendations is rated
+     *
+     * @param      rec   The index of the recommendations in cr
      */
-    public Recomanacio eliminarRecomanacio(int i) {
-        return cr.remove(i);
-    }
-
-    /**
-     * Elimina la valoració que pertany al índex i 
-     * @param i índex de la valoració, ha de estar en el rang de valoracions de l'usuari
-     * @return retorna la valoració eliminada
-     */
-    public Recomanacio eliminarValoracio(int i) {
-        return cv.remove(i);
-    }
-
-    /**
-     * La recomanació s'elimina de recomanacions i s'afegeix com a valoració amb puntuació
-     * @param rec índex de la valoració, ha de estar en el rang de valoracions de l'usuari
-     * @param pun valor de la puntuació, ha de ser entre 0 i 5
-     * @return retorna la nova valoració
-     */
-    public Recomanacio valorarRecomanacio(int rec, float pun) throws RatingNotValidException {
+    public void moureRecomanacio(int rec) throws RecommendationNotRatedException{
         Recomanacio r = cr.get(rec);
+        if(r.getVal() == Recomanacio.nul) throw new RecommendationNotRatedException();
         cr.remove(rec);
-        r.setVal(pun);
         cv.add(r);
-        return r;
     }
-
-    /**
-     * La nova puntuació de la valoració és pun
-     * @param val índex de la valoració, ha de estar en el rang de valoracions de l'usuari
-     * @param pun valor de la puntuació, ha de ser entre 0 i 5
-     */
-    public void valorarValoracio(int val, float pun) throws RatingNotValidException{
-        cv.get(val).setVal(pun);
-    }
-
-
 
     /**
      * Compares the instance to a user u2.

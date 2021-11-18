@@ -12,6 +12,7 @@ import src.recomanador.domini.ConjuntRecomanacions;
 //Excepcions
 import java.io.IOException;
 import src.recomanador.excepcions.RatingNotValidException;
+import src.recomanador.excepcions.RecommendationNotRatedException;
 
 /**
  * Driver tot test the class Usuari.
@@ -26,6 +27,7 @@ public class DriverUsuari {
     static private Recomanacio r;
     static private ConjuntRecomanacions cr;
     static private ConjuntRecomanacions cv;
+    static private Usuari u;
     static private String s1;
     static private String s2;
     static private boolean b;
@@ -51,11 +53,8 @@ public class DriverUsuari {
 		" - Setters - \n" +
 		"6. void setRecomanacions(ConjuntRecomanacions cr)\n" +
 		"7. void setValoracions(ConjuntRecomanacions cv)\n" +
-		"8. Recomanacio eliminarRecomanacio(int i)\n" +
-		"9. Recomanacio eliminarValoracio(int i)\n" +
-		"10. Recomanacio valorarRecomanacio(int rec, float pun)\n" +
-		"11. void valorarValoracio(int val, float pun)\n" +
-		"12. int compareTo(Usuari u2)\n";
+		"8. void moureRecomanacio(int)\n" +
+		"9. int compareTo(Usuari u2)\n";
 		
 		System.out.println("Testing class Usuari");
 		System.out.println(s);
@@ -97,15 +96,6 @@ public class DriverUsuari {
 					break;
 				case 9:
 					mostra_9();
-					break;
-				case 10:
-					mostra_10();
-					break;
-				case 11:
-					mostra_11();
-					break;
-				case 12:
-					mostra_12();
 					break;
 				default:
 			}
@@ -206,7 +196,21 @@ public class DriverUsuari {
 			return;
 		}
 
+		cr = new ConjuntRecomanacions();
+		
+		System.out.println("Data for new recommendations:");
+		System.out.print("Number of recommendations(without rating): ");
+		m = scanner.nextInt();
 
+		for(int i = 0; i < m; i++) {
+			System.out.print("ItemID of Recomanacio " + i + ": ");
+			p = scanner.nextInt();
+			cr.add(new Recomanacio(c, new Item(p)));
+		}
+
+		c.setRecomanacions(cr);
+		System.out.println("Recomanacions:");
+		printCR(cv);
 	}
 	static private void mostra_7() {
 		System.out.println("Testing function void setValoracions(ConjuntRecomanacions cv)");
@@ -215,51 +219,71 @@ public class DriverUsuari {
 			return;
 		}
 
+		cv = new ConjuntRecomanacions();
 
+		System.out.println("Data for new recommendations:");
+		System.out.print("Number of recommendations with rating): ");
+		m = scanner.nextInt();
+
+		for(int i = 0; i < m; i++) {
+			System.out.print("ItemID of rated Recomanacio " + i + ": ");
+			p = scanner.nextInt();
+			System.out.print("Valoració of rated Recomanacio " + i + ": ");
+			f = scanner.nextFloat();
+			try {
+				cr.add(new Recomanacio(c, new Item(p),f));
+			}
+			catch(RatingNotValidException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
+		}
+		c.setValoracions(cv);
+		System.out.println("Valoracions:");
+		printCR(cv);
 	}
 	static private void mostra_8() {
-		System.out.println("Testing function Recomanacio eliminarRecomanacio(int i)");
+		System.out.println("Testing function Recomanacio void moureRecomanacio(int)");
 		if(!class_initalised) {
 			System.out.println("!! Usuari not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
+		}
+
+		System.out.print("Index of the recommendation that needs to be moved: ");
+		n = scanner.nextInt();
+
+		try {
+			c.moureRecomanacio(n);
+		}
+		catch(RecommendationNotRatedException e) {
+			System.out.println("The opperation couldn't be performed(as expected) because this functionality will only work if the recommendation had a rating.");
 		}
 
 
 	}
 	static private void mostra_9() {
-		System.out.println("Testing function Recomanacio eliminarValoracio(int i)");
-		if(!class_initalised) {
-			System.out.println("!! Usuari not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-
-
-	}
-	static private void mostra_10() {
-		System.out.println("Testing function Recomanacio valorarRecomanacio(int rec, float pun)");
-		if(!class_initalised) {
-			System.out.println("!! Usuari not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-
-
-	}
-	static private void mostra_11() {
-		System.out.println("Testing function void valorarValoracio(int val, float pun)");
-		if(!class_initalised) {
-			System.out.println("!! Usuari not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-
-
-	}
-	static private void mostra_12() {
 		System.out.println("Testing function int compareTo(Usuari u2)");
 		if(!class_initalised) {
 			System.out.println("!! Usuari not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
+		System.out.println("Testing function Recomanacio void moureRecomanacio(int)");
+		if(!class_initalised) {
+			System.out.println("!! Usuari not initalised. Use option 1 or 2 to construct a instance first. !!");
+			return;
+		}
 
+		System.out.println("Data for User to be compared:");
+		System.out.print("User ID: ");
+		n = scanner.nextInt();
+
+		u = new Usuari(n);
+
+		m = c.compareTo(u);
+
+		if(m < 0) System.out.println("The new user has a greater index than the current.");
+		else if(m > 0) System.out.println("The new user has a lower index than the current.");
+		else System.out.println("Both user would have the same index in the sorting.");
 
 	}
 

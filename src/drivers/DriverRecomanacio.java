@@ -8,6 +8,7 @@ import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable
 //import src.stubs.Usuari;
 
 import src.recomanador.excepcions.RatingNotValidException;
+import src.recomanador.excepcions.RecommendationRatedException;
 
 /**
  * Driver tot test the class Recomanacio.
@@ -168,6 +169,9 @@ public class DriverRecomanacio {
 		try {
 			c.setVal(f);
 		}
+		catch(RecommendationRatedException e) {
+			//en un cas real s'hauria d'actualitzar l'usuari que tenia la recomanació
+		}
 		catch(RatingNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
@@ -276,6 +280,6 @@ public class DriverRecomanacio {
 
 		if(n < 0) System.out.println("The new recommendation has a greater index than the current.");
 		else if(n > 0) System.out.println("The new recommendation has a lower index than the current.");
-		else System.out.println("Both items would have the same index in the sorting.");
+		else System.out.println("Both recommendations would have the same index in the sorting.");
 	}
 }

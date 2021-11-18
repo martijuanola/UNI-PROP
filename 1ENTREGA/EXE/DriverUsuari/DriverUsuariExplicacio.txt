@@ -18,7 +18,6 @@ Fitxers de dades necessaris:
 
 Valors estudiats:
 	- Dades tipus caixa blanca
-	- !!!
 
 Efectes estudiats:
 	- Constructors funcionen correctament
