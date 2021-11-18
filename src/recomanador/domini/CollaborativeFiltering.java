@@ -271,7 +271,7 @@ public class CollaborativeFiltering {
 
 				System.out.println("Checking every user in the cluster");
                 for(int user_clust_index = 0; user_clust_index < usuaris_cluster.size(); ++user_clust_index){
-					
+//ERROR!					
                     if (valoracions.existeixValoracio(j_item, usuaris_cluster.get(user_clust_index)) 
                     && valoracions.existeixValoracio(i_item, usuaris_cluster.get(user_clust_index))) {
 						
