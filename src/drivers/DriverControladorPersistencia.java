@@ -36,7 +36,7 @@ public class DriverControladorPersistencia {
 			"15. Load test unknown\n" +
 			"16. Load algorithm's attributes\n" +
 			"17. Create a new project save data\n" +
-			"18. Save data (any into any file)\n" +
+			"18. Save data (any .csv into any file)\n" +
 			"19. Save recomendations and valorations\n" +
 			"20. Save items\n" +
 			"21. Save items' attributes' weights\n" +
@@ -47,6 +47,7 @@ public class DriverControladorPersistencia {
 			String reduced = "Options: \n" +
 			"0. Show options\n" + "-1. exit\n";
 			
+			io.writeln("\n==================================================\n");
 			io.writeln("Testing class ControladorPersistencia");
 			int x;
 			do {
@@ -111,6 +112,7 @@ public class DriverControladorPersistencia {
 						testCarregarAtributsAlgorisme();
 						break;
 					case 17:
+						testCrearProjecte();
 						break;
 					case 18:
 						break;
@@ -130,6 +132,7 @@ public class DriverControladorPersistencia {
 			} while (x != -1);
 			
 			io.writeln("Test ended");
+			io.writeln("\n==================================================\n");
 			
 		}catch(Exception e){
 			System.out.println("An error has occurred");
@@ -621,6 +624,33 @@ public class DriverControladorPersistencia {
 		io.writeln("More information about the file read:");
 		io.writeln("Rows read: 1");
 		io.writeln("Columns read: " + sol.size());
+	}
+	static private void testCrearProjecte() throws Exception {
+		io.writeln("Testing function crearProjecte()\n");
+		//demanar l'input
+		io.writeln("Type the name of the project that you want to create.");
+		io.writeln("Keep in mind that the project will be named as dummy-<your_choice>.");
+		io.writeln("This is done to ensure that only projects that start with dummy are modified, " +
+			"to avoid data loss from the other tests.");
+		io.writeln("NOTE: Remember, you can only use letters, numbers, '-', '_', '.'\n");
+		io.write("Name: ");
+		
+		Scanner scanner = new Scanner(System.in);		
+		String s = scanner.nextLine();
+		
+		//executar la funcionalitat
+		try
+		{
+			c.crearProjecte("dummy-" + s);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it that it has been created using option 2 from the main menu.");
+		io.writeln("You can check it that you are in the folder using option 3 from the main menu.");
 	}
 	
 	

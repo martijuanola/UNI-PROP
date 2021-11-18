@@ -294,7 +294,7 @@ public class ControladorPersistencia {
 			char c = s.charAt(i);
 			if (!(c >= 'A' && c <= 'Z') &&
 				!(c >= 'a' && c <= 'z') &&
-				!(c == '-') && !(c == '_') )
+				!(c == '-') && !(c == '_') && !(c == '.'))
 				throw new FolderNotValidException("El nom conté caràcters invàlids." + 
 					" Només es poden usar lletres, nombres, '-', '_', '.'", false);
 		}
@@ -305,7 +305,11 @@ public class ControladorPersistencia {
 			carpeta = null;
 			throw new FolderNotValidException("Ja existeix un projecte annomenat " + s, false);
 		}
-		else carpeta.mkdir();
+		if (!carpeta.mkdirs())
+		{
+			carpeta = null;
+			throw new FolderNotValidException("No es pot crear el projecte", false);
+		}
 	}
 	
 	private void guardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
@@ -321,6 +325,7 @@ public class ControladorPersistencia {
 		{
 			try
 			{
+				f.createNewFile();
 				cs.guardarArxiu(f, D);
 			} catch (IOException e) {
 				throw new FolderNotValidException(false);

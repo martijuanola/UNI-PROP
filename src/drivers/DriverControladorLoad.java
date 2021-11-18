@@ -21,6 +21,7 @@ public class DriverControladorLoad {
 			"0. exit\n" +
 			"1. Load .csv file\n";
 			
+			io.writeln("\n==================================================\n");
 			io.writeln("Testing class ControladorLoad");
 			int x;
 			do {
@@ -56,6 +57,7 @@ public class DriverControladorLoad {
 			} while (x != 0);
 			
 			io.writeln("Test ended");
+			io.writeln("\n==================================================\n");
 			
 		}catch(Exception e){
 			System.out.println("An error has occurred");
@@ -97,22 +99,17 @@ public class DriverControladorLoad {
 		//mostrar output
 		int cols = sol.get(0).size();
 		io.writeln("Rows read: " + sol.size());
-		//for (int i = 0; i < sol.get(0).size(); ++i) ++cols;
 		
 		
 		for (int i = 0; i < sol.size(); ++i)
 		{
-			//for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + " ");
-			//io.writeln();
 			int temp_cols = sol.get(i).size();
-			//for (int j = 0; j < sol.get(i).size(); ++j) ++temp_cols;
 			if (temp_cols != cols)
 			{
 				io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
 				for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + "|");
 				io.writeln();
 			}
-			//io.writeln();
 		}
 		io.writeln("Cols: " + cols);
 	}
