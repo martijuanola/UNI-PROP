@@ -3,7 +3,7 @@ package src.recomanador.domini;
 import src.recomanador.excepcions.RatingNotValidException;
 
 /**
- * @author Martí i Jaume
+ * @author Martí J. i Jaume
  */
 public class Usuari implements Comparable<Usuari> {
     
@@ -64,15 +64,6 @@ public class Usuari implements Comparable<Usuari> {
     }
 
     /**
-     * Retorna la recomanació que pertany al índex i
-     * @param i índex de la recomanació, ha de estar en el rang de recomanacions de l'usuari
-     * @return retorna la recomanació indicada per l'índex i
-     */
-    public Recomanacio getRecomanacio(int i) {
-        return cr.get(i);
-    }
-
-    /**
      * Retorna el conjunt de valoracions del usuari
      * @return retorna el conjunt de valoracions de l'usuari
      */
@@ -80,15 +71,6 @@ public class Usuari implements Comparable<Usuari> {
         return cv;
     }
  
-    /**
-     * Retorna la valoració que pertany al índex i
-     * @param i índex de la valoració, ha de estar en el rang de valoracions de l'usuari
-     * @return retorna la valoració del índex i
-     */
-    public Recomanacio getValoracio(int i) {
-        return cv.get(i);
-    }
-
     /*----- SETTERS -----*/
 
     //Possiblement Inutil
