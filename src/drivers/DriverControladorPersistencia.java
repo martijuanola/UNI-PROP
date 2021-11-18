@@ -11,11 +11,13 @@ public class DriverControladorPersistencia {
     
     static private ControladorPersistencia c;
     static private inout io;
+    static private ArrayList<ArrayList<String>> testData;
     
     public static void main(String[] args) {
         try{
 			c = new ControladorPersistencia();
 			io = new inout();
+			initializeDummyData();
 			
 			String s = "Options: \n" +
 			"0. Show options\n" +
@@ -27,16 +29,16 @@ public class DriverControladorPersistencia {
 			"6. Load a .csv file (from anywhere)\n" +
 			"7. Exit the project folder \n" +
 			"8. Exists preprocessed data? \n" +
-			"9. Exists data saved to use with the algoritm (internal attributes)? \n" +
+			"9. Test set and get some preprocessed data\n" +
 			"10. Exists tests? \n" +
 			"11. Load any .csv file from the folder\n" +
-			"12. Load items' atrributes' weights\n" +
-			"13. Load items' atrributes' type\n" +
+			"12. Load item atrributes' weights\n" +
+			"13. Load item atrributes' type\n" +
 			"14. Load test known\n" +
 			"15. Load test unknown\n" +
-			"16. Load algorithm's attributes\n" +
+			"16. Load previous execution's state\n" +
 			"17. Create a new project folder\n" +
-			"18. Save data (any .csv into any file)\n" +
+			"18. Save data (any .csv into any file inside the folder (it can be created))\n" +
 			"19. Save recomendations and valorations\n" +
 			"20. Save items\n" +
 			"21. Save items' attributes' weights\n" +
@@ -109,12 +111,13 @@ public class DriverControladorPersistencia {
 						testCarregarTestUnknown();
 						break;
 					case 16:
-						testCarregarAtributsAlgorisme();
+						testCarregarEstat();
 						break;
 					case 17:
 						testCrearProjecte();
 						break;
 					case 18:
+						testGuardarDades();
 						break;
 					case 19:
 						break;
@@ -576,9 +579,12 @@ public class DriverControladorPersistencia {
 		io.writeln("Rows read: " + sol.size());
 		io.writeln("Columns read: " + sol.get(0).size());
 	}
-	static private void testCarregarAtributsAlgorisme() throws Exception {
-		io.writeln("Testing function carregarAtributsAlgorisme()\n");
+	static private void testCarregarEstat() throws Exception {
+		io.writeln("Testing function carregarEstat()\n");
 		//demanar l'input
+		io.writeln("This function is also executed when a project is chosen and there's the necessary files.");
+		io.writeln("You will only see a difference if you modify the data on the file and load it again");
+		
 		if (c.getNomProjecte() == null)
 		{
 			io.writeln("Choose a project before reading the files");
@@ -589,26 +595,15 @@ public class DriverControladorPersistencia {
 		//executar la funcionalitat
 		ArrayList<String> sol = null;
 		try
-		{		
-			//sol = c.carregarAtributsAlgorisme();
-		} catch(Exception e)
 		{
+			c.carregarEstat();		
+		} catch(Exception e) {
 			System.out.println("ERROR!!!");
 			System.out.println(e.getMessage());
 			return;
 		}
 		
-		
-		//mostrar output
-		io.writeln("File algorisme.csv from the poject " + c.getNomProjecte() + ":");
-		int n = sol.size();
-		
-		for (int i = 0; i < n; ++i) io.writeln(sol.get(i));
-				
-		//mostrar output
-		io.writeln("More information about the file read:");
-		io.writeln("Rows read: 1");
-		io.writeln("Columns read: " + sol.size());
+		io.writeln("DONE!");
 	}
 	static private void testCrearProjecte() throws Exception {
 		io.writeln("Testing function crearProjecte()\n");
@@ -638,6 +633,38 @@ public class DriverControladorPersistencia {
 		io.writeln("You can check it that it has been created using option 2 from the main menu.");
 		io.writeln("You can check it that you are in the folder using option 3 from the main menu.");
 	}
+	static private void testGuardarDades() throws Exception {
+		io.writeln("Testing function guardarDades()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+		}
+		
+		io.writeln("Some data will be stored to the file that you specify.");
+		io.write("File: ");
+		
+		Scanner scanner = new Scanner(System.in);		
+		String s = scanner.nextLine();
+		
+		//executar la funcionalitat
+		try
+		{
+			c.TESTguardarDades(testData, s);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
 	
 	
 	
@@ -648,5 +675,53 @@ public class DriverControladorPersistencia {
 		//executar la funcionalitat
 		
 		//mostrar output
+	}
+
+	static private boolean isWritable() {
+		String name;
+		try { name = c.getNomProjecte(); }
+		catch(Exception e) {return false;}
+		
+		if (name == null) return false;
+		else if (name.length() < 5) return false;
+		
+		String d = "dummy";
+		
+		for (int i = 0; i < 5; ++i)
+			if (name.charAt(i) != d.charAt(i)) return false;
+			
+		return true;
+	}
+	static private void initializeDummyData() {
+		testData = new ArrayList<ArrayList<String>>();
+		
+		testData.add(new ArrayList<String>());
+		testData.get(0).add("id");
+		testData.get(0).add("nombre_receta");
+		testData.get(0).add("descripción");
+		
+		testData.add(new ArrayList<String>());
+		testData.get(1).add(Integer.toString(10));
+		testData.get(1).add("\"Ensalada\"");
+		testData.get(1).add("\"Mezclar todo y aliñar con aceite, vinagre y sal." +
+			" Servir fresquito.\"");
+		
+		testData.add(new ArrayList<String>());
+		testData.get(2).add(Integer.toString(32));
+		testData.get(2).add("\"Spaguetti carbonara\"");
+		testData.get(2).add("\"Cocer los spaguetti Hacer el bacon a la plancha." + 
+			" Añadir los spaguetti. Por ultimo añadir la nata y pimienta al gusto\"");
+		
+		testData.add(new ArrayList<String>());
+		testData.get(3).add(Integer.toString(9678));
+		testData.get(3).add("\"Solomillo al oporto\"");
+		testData.get(3).add("\"Salpimentar las puntas de solomillo y freirlas en" + 
+			" la mantequilla derretida en una sartén durante un par de" + 
+			" minutos por cada lado. Sacarlos y reservarlos. Añadir a la" + 
+			" misma sartén el oporto, cocer 3 minutos a fuego vivo e incorporar" +
+			" la mostaza y la nata líquida con la Maizena disuelta y unas gotas" + 
+			" de limón. Cocer. Introducir de nuevo los filetes en la salsa para" + 
+			" que den unos hervores, colocarlos en una fuente y cubrirlos con la" + 
+			" salsa. Servirlos calientes con arroz basmati.\"");
 	}
 }

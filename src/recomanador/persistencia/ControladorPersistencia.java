@@ -573,6 +573,22 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "tipus.csv");
 	}
 	
+	public void guardarMaxAtributsItems(ArrayList<String> max_atr) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(max_atr);
+		
+		this.guardarDades(D, "maxAtributs.items.csv");
+	}
+	
+	public void guardarMinAtributsItems(ArrayList<String> min_atr) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(min_atr);
+		
+		this.guardarDades(D, "minAtributs.items.csv");
+	}
+	
 	public void guardarEstat() throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> a = new ArrayList<ArrayList<String>>();
