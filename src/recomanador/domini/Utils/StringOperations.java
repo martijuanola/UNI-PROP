@@ -3,7 +3,7 @@ package src.recomanador.domini.Utils;
 import java.util.ArrayList;
 
 import src.recomanador.domini.ConjuntItems;
-import src.recomanador.domini.ConjuntItems.tipus;
+import src.recomanador.domini.Item.tipus;
 
 public class StringOperations {
     public static boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
@@ -66,23 +66,23 @@ public class StringOperations {
         if (s1 == "" && s2 == "") {}
         else if (s1 == "") s2Bigger = true;
         else if (s2 == "") s1Bigger = true;
-        else if (tipus == ConjuntItems.tipus.I) { //Identificador
+        else if (tipus == tipus.I) { //Identificador
             int i1 = Integer.parseInt(s1);
             int i2 = Integer.parseInt(s2);
             s1Bigger = i1 > i2;
             s2Bigger = i1 < i2;
         }
-        else if (tipus == ConjuntItems.tipus.B) { //Boolea
+        else if (tipus == tipus.B) { //Boolea
             s1Bigger = Boolean.parseBoolean(s1);
             s2Bigger = Boolean.parseBoolean(s2);
         }
-        else if (tipus == ConjuntItems.tipus.F) { //Float
+        else if (tipus == tipus.F) { //Float
             float i1 = Float.parseFloat(s1);
             float i2 = Float.parseFloat(s2);
             s1Bigger = i1 > i2;
             s2Bigger = i1 < i2;
         }
-        else if (tipus == ConjuntItems.tipus.D) { //Data
+        else if (tipus == tipus.D) { //Data
             int s1p1, s1p2, dia1, mes1, any1;
             int s2p1, s2p2, dia2, mes2, any2;
             if (s1.charAt(4) == '-') {

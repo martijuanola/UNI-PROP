@@ -158,7 +158,7 @@ public class ControladorDomini {
      * @throws     ItemWeightNotCorrectException  Thrown when the weight value is not valid
      */
     public void setPes(int a, float w) throws ItemWeightNotCorrectException {
-        ci.assignarPes(a, w);
+        Item.setPes(a, w);
     }
 
 
