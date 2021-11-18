@@ -35,7 +35,7 @@ public class DriverControladorPersistencia {
 			"14. Load test known\n" +
 			"15. Load test unknown\n" +
 			"16. Load algorithm's attributes\n" +
-			"17. Create a new project save data\n" +
+			"17. Create a new project folder\n" +
 			"18. Save data (any .csv into any file)\n" +
 			"19. Save recomendations and valorations\n" +
 			"20. Save items\n" +
@@ -645,6 +645,7 @@ public class DriverControladorPersistencia {
 		}catch(Exception e) {
 			System.out.println("ERROR!!!");
 			System.out.println(e.getMessage());
+			return;
 		}
 		
 		//mostrar output
