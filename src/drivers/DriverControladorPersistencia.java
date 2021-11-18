@@ -88,7 +88,7 @@ public class DriverControladorPersistencia {
 						testExisteixenDadesPreprocesades();
 						break;
 					case 9:
-						testExisteixenDadesAlgorisme();
+						testDadesEstat();
 						break;
 					case 10:
 						testExisteixenTestos();
@@ -358,25 +358,10 @@ public class DriverControladorPersistencia {
 				" and checking if both files exist: pesos.csv and tipus.csv");
 		}
 	}
-	static private void testExisteixenDadesAlgorisme() throws Exception {
-		io.writeln("Testing function existeixenDadesAlgorisme()\n");
-		//demanar l'input
-		io.writeln("Does the algorithm attributes data exist in the project folder?");
-		io.writeln("(If you are not on one, you can change it by choosing option 1 at the main menu.)");
-		//executar la funcionalitat
-		if (c.existeixenDadesAlgorisme()) io.writeln("ANSWER: yes");
-		else io.writeln("ANSWER: no");
-		
-		//mostrar output
-		if (c.getNomProjecte() == null)
-		{
-			io.writeln("\nYou aren't in any project folder.");
-		}
-		else
-		{
-			io.writeln("\nYou can check its veracity by going to the folder " + c.getNomProjecte() + 
-				" and checking if the file algorisme.csv exists.");
-		}
+	static private void testDadesEstat() throws Exception { //Inacabat!!!!---------------
+		//------
+		//provar tots els setters i getters
+		//------
 	}
 	static private void testExisteixenTestos() throws Exception {
 		io.writeln("Testing function existeixenTestos()\n");
@@ -605,7 +590,7 @@ public class DriverControladorPersistencia {
 		ArrayList<String> sol = null;
 		try
 		{		
-			sol = c.carregarAtributsAlgorisme();
+			//sol = c.carregarAtributsAlgorisme();
 		} catch(Exception e)
 		{
 			System.out.println("ERROR!!!");

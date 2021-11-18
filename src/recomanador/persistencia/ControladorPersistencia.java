@@ -397,20 +397,6 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * This function returns the 3 attributes that the class ControladorDominiAlgorisme needs.
-	 * The values are returned in the following order: algorithms_used, q, k
-	 * 
-	 * @return Returns an ArrayList of length 3 made of strings. The dirst one corresponds to
-	 * the algorithm_used parameter. The second one is Q, and the third one is K.
-	 */
-	public ArrayList<String> carregarAtributsAlgorisme() throws FolderNotValidException
-	{
-		ArrayList<String> a = carregarArxiuCarpeta("algorisme.csv").get(1);
-		if (a.size() != 3) throw new FolderNotValidException(carpeta.getName(), "algorisme.csv");
-		return a;
-	}
-	
-	/**
 	 * Returns a csv table read from memory
 	 * 
      * @return Returns an array of arrays of the values. Each array of arrays(line)
@@ -531,9 +517,34 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "ratings.db.csv");
 	}
 	
-	public void guardarItems(ArrayList<ArrayList<String>> D) throws FolderNotValidException
+	public void guardarItems(ArrayList<String> head, ArrayList<ArrayList<ArrayList<String>>> body) throws FolderNotValidException
 	{
-		this.guardarDades(D, "items.csv");
+		ArrayList<ArrayList<String>> taula = new ArrayList<ArrayList<String>>();
+		
+		taula.add(head);
+		
+		for (int i = 0; i < body.size(); ++i)
+		{
+			ArrayList<String> temp = new ArrayList<String>();
+			ArrayList<ArrayList<String>> actual = body.get(i);
+			
+			for (int j = 0; j < actual.size(); ++j)
+			{
+				String s = "";
+				
+				for (int k = 0; k < actual.get(j).size(); ++k)
+				{
+					s += actual.get(j).get(k);
+					if (k != actual.get(j).size() - 1) s += ";";
+				}
+				
+				temp.add(s);
+			}
+			
+			taula.add(temp);
+		}
+		
+		this.guardarDades(taula, "items.csv");
 	}
 
 	public void guardarPesosAtributs(ArrayList<Float> pesos) throws FolderNotValidException
