@@ -14,6 +14,7 @@ public class DriverControladorPersistencia {
     static private ArrayList<ArrayList<String>> testData;
     static private ArrayList<ArrayList<ArrayList<String>>> testItemsData;
     static private ArrayList<String> testSimpleHeader;
+    static private ArrayList<String> testArray6Values;
     
     public static void main(String[] args) {
         try{
@@ -22,6 +23,7 @@ public class DriverControladorPersistencia {
 			initializeDummyData();
 			initializeDummyItems();
 			initializeDummyHeader();
+			initializeDummyArray6();
 			
 			String s = "Options: \n" +
 			"0. Show options\n" +
@@ -47,7 +49,10 @@ public class DriverControladorPersistencia {
 			"20. Save items\n" +
 			"21. Save items' attributes' weights\n" +
 			"22. Save items' atrributes' type\n" +
-			"23. Save algorithm's attributes\n" +
+			"23. Load items' minimum atributes\n" +
+			"24. Load items' maximum atributes\n" +
+			"25. Save items' minimum atributes\n" +
+			"26. Save items' maximum atributes\n" +
 			"-1. exit\n";
 			
 			String reduced = "Options: \n" +
@@ -130,10 +135,18 @@ public class DriverControladorPersistencia {
 						testGuardarItems();
 						break;
 					case 21:
+						testGuardarPesosAtributs();
 						break;
 					case 22:
+						testGuardarTipusAtributs();
 						break;
 					case 23:
+						break;
+					case 24:
+						break;
+					case 25:
+						break;
+					case 26:
 						break;
 					default:
 				}
@@ -683,7 +696,7 @@ public class DriverControladorPersistencia {
 				"create a new one by choosing option 17.");
 		}
 		
-		io.writeln("Some data will be stored to the ratings.db.csv.");
+		io.writeln("Some data will be stored in ratings.db.csv");
 		
 		//executar la funcionalitat
 		try
@@ -711,7 +724,7 @@ public class DriverControladorPersistencia {
 				"create a new one by choosing option 17.");
 		}
 		
-		io.writeln("Some data will be stored to the items.csv.");
+		io.writeln("Some data will be stored in items.csv");
 		
 		//executar la funcionalitat
 		try
@@ -727,7 +740,66 @@ public class DriverControladorPersistencia {
 		io.writeln("DONE!");
 		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
 	}
-	
+	static private void testGuardarPesosAtributs() throws Exception {
+		io.writeln("Testing function guardarPesosAtributs()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+		}
+		
+		io.writeln("Some data will be stored in pesos.csv");
+		
+		//executar la funcionalitat
+		try
+		{
+			ArrayList<Float> af = new ArrayList<Float>();
+			for (int i = 0; i < 25; ++i) af.add(new Float(Integer.toString(i))); 
+			c.guardarPesosAtributs(af);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
+	static private void testGuardarTipusAtributs() throws Exception {
+		io.writeln("Testing function guardarTipusAtributs()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+		}
+		
+		io.writeln("Some data will be stored in tipus.csv");
+		
+		//executar la funcionalitat
+		try
+		{
+			ArrayList<String> af = new ArrayList<String>();
+			for (int i = 0; i < 25; ++i) af.add("Type_" + Integer.toString(i)); 
+			c.guardarTipusAtributs(af);
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
 	
 	static private void test() throws Exception {
 		io.writeln("Testing function ()\n");
@@ -838,5 +910,15 @@ public class DriverControladorPersistencia {
 		testSimpleHeader.add("id");
 		testSimpleHeader.add("plato_principal");
 		testSimpleHeader.add("acompañamientos_y_aderezo");
+	}
+	static private void initializeDummyArray6() {
+		testArray6Values = new ArrayList<String>();
+		
+		testSimpleHeader.add("0");
+		testSimpleHeader.add("3");
+		testSimpleHeader.add("8");
+		testSimpleHeader.add("dummy");
+		testSimpleHeader.add("42");
+		testSimpleHeader.add("97");
 	}
 }
