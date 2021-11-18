@@ -42,7 +42,7 @@ public class ContentBasedFiltering {
      * 
      * @return     a sorted set the recommended item IDs
      */
-    public ArrayList<Item> contentBasedFiltering(int Q, int user_ID) throws UserNotFoundException {
+    public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID) throws UserNotFoundException {
        
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
 
@@ -72,10 +72,10 @@ public class ContentBasedFiltering {
         }
         Collections.sort(items_estimats);
         
-        ArrayList<Item> Q_items = new ArrayList<Item>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
 
         for(int i = 0; i < Q; ++i){
-            Q_items.add(items_estimats.get(i).item);
+            Q_items.add(items_estimats.get(i));
         }
 
         return Q_items;

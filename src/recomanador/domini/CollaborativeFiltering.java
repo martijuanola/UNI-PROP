@@ -60,20 +60,19 @@ public class CollaborativeFiltering {
      * 
      * @return     a sorted set the recommended item IDs
      */
-    public ArrayList<Item> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
-        if(!usuaris.existeixUsuari(user_ID)) {
-            System.out.println("Ususari no esta al set.");
-            throw new UserNotFoundException(user_ID);
-        }
+    public ArrayList<ItemValoracioEstimada> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         
+        System.out.println("Executant k-Means");
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
-        //test1(usuaris_cluster,usuaris);
+        System.out.println("L'usuari " + user_ID + " pertany a un cluster que conté " + usuaris_cluster.size() + " dels " + usuaris.size() + " usuaris." );
+        System.out.println("Executant slope-1");
+        System.out.println();
+
         ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
-        ArrayList<Item> Q_items = new ArrayList<Item>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
 
         for(int i = 0; i < Q && i < items_sorted.size(); ++i){
-            Q_items.add(items_sorted.get(i).item);
-            System.out.println("ITEM " + i + ": ID=" + items_sorted.get(i).item.getId() + " | V=" + items_sorted.get(i).valoracioEstimada);
+            Q_items.add(items_sorted.get(i));
         }
 
 
@@ -113,15 +112,8 @@ public class CollaborativeFiltering {
         while (has_changed){
             has_changed = false;
 
-            for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
-                
-                //~ System.out.println();
-                //~ System.out.println("TEST");
-                //~ System.out.println(centroids[0].valoracio.get(items.get(2)) + " " +
-                //~ centroids[0].sum.get(items.get(2)) + " " +
-                //~ centroids[0].quant.get(items.get(2)));
-                //~ System.out.println();
-				
+            for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {                
+
                 int min_centroid = 0;
                 float min_distance = distance(idx_usuari, 0);
                
@@ -169,11 +161,6 @@ public class CollaborativeFiltering {
                         //~ System.out.println("Loading item " + idx_item);
                         Item item = items.get(idx_item);
 
-                        //~ System.out.println("item =  " + item.getId());
-                        //~ System.out.println("centroid =  " + centroid);
-                        //~ System.out.println("quant =  " + centroids[centroid].quant.get(item));
-                        //~ System.out.println("sum = " + centroids[centroid].sum.get(item));
-
                         float valoracio;
                         if(centroids[centroid].quant.get(item) == 0) valoracio = rand.nextFloat()*5;
                         else valoracio = centroids[centroid].sum.get(item) / centroids[centroid].quant.get(item);
@@ -191,7 +178,8 @@ public class CollaborativeFiltering {
         }        
 
         ArrayList<Usuari> usuaris_cluster = new ArrayList<Usuari>();
-        int centroid = closest_centroid.get(user_ID);
+        System.out.println("the sussy is " + user_ID);
+        int centroid = closest_centroid.get(usuaris.cercaBinaria(user_ID));
         for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
             if (closest_centroid.get(idx_usuari) == centroid) {
                 usuaris_cluster.add(usuaris.get(idx_usuari));
@@ -199,19 +187,6 @@ public class CollaborativeFiltering {
             
         }
         
-        //~ int[] kas = new int[K];
-        //~ for (int i = 0; i < closest_centroid.size(); ++i) {
-			//~ //System.out.print(closest_centroid.get(i)+",");
-			//~ kas[closest_centroid.get(i)]++;
-			//~ }
-			
-		//~ for (int i = 0; i < K; ++i) {
-			//~ System.out.println(K + " = " + kas[i]);
-			//~ } 
-        /*if(usuaris_cluster.size() == 0) {
-            System.out.println("Error a inicialitzafió de clusters");
-            throw new IndexOutOfBoundsException();
-        }*/
         return usuaris_cluster;
     }
 
@@ -255,9 +230,8 @@ public class CollaborativeFiltering {
      * @return     the distance between the user and the centroid
      */
     private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException {
-
         Usuari user = usuaris.getUsuari(user_ID);
-        ConjuntRecomanacions valoracionsUser = usuaris.get(user_ID).getValoracions();
+        ConjuntRecomanacions valoracionsUser = user.getValoracions();
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
         
         //System.out.println("\n\nFOR1: Checking every item");
@@ -265,7 +239,7 @@ public class CollaborativeFiltering {
             //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
             Item j_item = items.get(j_idx);
             if (valoracions.existeixValoracio(j_item, user)) {
-                System.out.println("Item had been rated");
+                //System.out.println("Item had been rated");
                 continue;
             } 
             
@@ -287,8 +261,7 @@ public class CollaborativeFiltering {
                 float sum2 = 0;
 
 				//System.out.println("FOR3: Checking every user in the cluster");
-                for(int user_clust_index = 0; user_clust_index < usuaris_cluster.size(); ++user_clust_index){
-//ERROR!			
+                for(int user_clust_index = 0; user_clust_index < usuaris_cluster.size(); ++user_clust_index){			
                     //System.out.println("(FOR3)USR INDEX = " + user_clust_index);		
 
                     if (valoracions.existeixValoracio(j_item, usuaris_cluster.get(user_clust_index)) 
@@ -316,25 +289,13 @@ public class CollaborativeFiltering {
 
             if(card_rj != 0){
                 float puntuacio_estimada = sum1/card_rj;
+                //puntuacio_estimada = Math.min(Math.round(puntuacio_estimada*2f)/2f,5.0f);
                 items_estimats.add(new ItemValoracioEstimada(puntuacio_estimada, j_item));
             }
         }
         Collections.sort(items_estimats);
         return items_estimats;
     }
-
-
-    private void test1(ArrayList<Usuari> au, ConjuntUsuaris cu) {
-        for(int i = 0; i < au.size(); i++) {
-            int id = au.get(i).getId();
-            if(!cu.existeixUsuari(id)) {
-                System.out.println("Usuari amb id=" + id+" no existeix al conjunt original");
-                throw new IndexOutOfBoundsException();
-            }
-        }
-        System.out.println("Cluster amb usuaris correctes");
-    }
-
 
 }
     //K-NN
