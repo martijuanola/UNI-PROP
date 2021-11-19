@@ -1,6 +1,5 @@
 package src.recomanador.persistencia;
 
-//import java.io.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,8 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
-* La classe ControladorSave implementa controlador de guardat
-* de les dades en memòria.
+* The class ControladorSave implements the function for storing data in memory.
+* This data is stored with the format of a .csv file.
 * 
 * @author Pol Sturlese 
 */
