@@ -108,13 +108,19 @@ public class ControladorLoad {
 				data.add(new ArrayList<String>());
 				
 				char END_CHAR = ',';
+				char ANTI_END_CHAR = '\n';
 				for (int i = 0; i < cols; ++i)
 				{
-					if (i == cols-1) END_CHAR = '\n';
+					if (i == cols-1) 
+					{
+						END_CHAR = '\n';
+						ANTI_END_CHAR = ',';
+					}
 					String column_value = "";
 			
 					while (c != END_CHAR) 
-					{				
+					{
+						if (n == -1 | c == ANTI_END_CHAR) throw new IOException();				
 						if (c == '"')
 						{
 							do

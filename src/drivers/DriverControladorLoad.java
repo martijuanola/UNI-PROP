@@ -31,27 +31,13 @@ public class DriverControladorLoad {
 				io.write("Option: ");
 				
 				x = io.readint();
-				
-				/*es queda en un bucle infinit
-				do {
-					try {
-						x = io.readint();
-					}catch(Exception e) {
-						io.writeln("Please, write a number which belongs to the interval indicated.");
-						io.write("Option: ");
-						x = -1;
-					}
-				}while (x == -1);
-				//*/
-				
+								
 				switch(x)
 				{
 					case 1:
 						testCarregarArxiu();
 						break;
 					default:
-						//is always shown, even with the break
-						//io.writeln("Please, write a number which belongs to the interval indicated.");
 				}
 				
 			} while (x != 0);
@@ -93,24 +79,44 @@ public class DriverControladorLoad {
 			sol = c.carregarArxiu(f);
 		}catch(Exception e)
 		{
-			io.writeln("Error carregar arxiu");
+			io.writeln("ERROR!!!");
+			io.writeln("The file is not valid.");
+			return;
 		}
 		
 		//mostrar output
 		int cols = sol.get(0).size();
 		io.writeln("Rows read: " + sol.size());
-		
+		io.writeln("Columns: " + cols);
 		
 		for (int i = 0; i < sol.size(); ++i)
 		{
 			int temp_cols = sol.get(i).size();
 			if (temp_cols != cols)
 			{
-				io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
+				io.writeln("Error reading row" + i + ". Columns read: " + temp_cols);
 				for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + "|");
 				io.writeln();
 			}
 		}
-		io.writeln("Cols: " + cols);
+		
+		
+		io.writeln();
+		io.writeln("Head of the file read:");
+		int n = sol.size();
+		if (11 < n) n = 11;
+		
+		for (int i = 0; i < n; ++i)
+		{
+			io.write("\t");
+			for (int j = 0; j < sol.get(i).size(); ++j) 
+			{
+				io.write(sol.get(i).get(j));
+				if (j != sol.get(i).size()-1) io.write(" | ");
+			}
+			io.writeln();
+		}
+		
+		if (sol.size() > 11) io.writeln("...");
 	}
 }
