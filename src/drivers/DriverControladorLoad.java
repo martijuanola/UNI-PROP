@@ -87,18 +87,36 @@ public class DriverControladorLoad {
 		//mostrar output
 		int cols = sol.get(0).size();
 		io.writeln("Rows read: " + sol.size());
-		
+		io.writeln("Columns: " + cols);
 		
 		for (int i = 0; i < sol.size(); ++i)
 		{
 			int temp_cols = sol.get(i).size();
 			if (temp_cols != cols)
 			{
-				io.writeln("Error al llegir la fila " + i + ". LLegiex " + temp_cols);
+				io.writeln("Error reading row" + i + ". Columns read: " + temp_cols);
 				for (int j = 0; j < sol.get(i).size(); ++j) io.write(sol.get(i).get(j) + "|");
 				io.writeln();
 			}
 		}
-		io.writeln("Columns: " + cols);
+		
+		
+		io.writeln();
+		io.writeln("Head of the file read:");
+		int n = sol.size();
+		if (11 < n) n = 11;
+		
+		for (int i = 0; i < n; ++i)
+		{
+			io.write("\t");
+			for (int j = 0; j < sol.get(i).size(); ++j) 
+			{
+				io.write(sol.get(i).get(j));
+				if (j != sol.get(i).size()-1) io.write(" | ");
+			}
+			io.writeln();
+		}
+		
+		if (sol.size() > 11) io.writeln("...");
 	}
 }
