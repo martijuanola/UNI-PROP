@@ -15,6 +15,7 @@ import src.recomanador.domini.Utils.StringOperations;
 import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
+import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.persistencia.ControladorPersistencia;
 
@@ -34,20 +35,24 @@ public class DriverConjuntItems {
 		"-1. exit\n" +
 		"0. show options\n" +
 		" - Constructors - \n" +
-		"1. ConjuntItems(ArrayList<ArrayList<String>> items)\n" +
-		"2. ConjuntItems(items, pesos, tipusAtribut, id, nomA, nom, maxAtributs, minAtributs)\n" +
+		"1. ConjuntItems()\n" +
+		"2. ConjuntItems(ArrayList<ArrayList<String>> items)\n" +
+		"3. ConjuntItems(items, pesos, tipusAtribut, id, nomA, nom, maxAtributs, minAtributs)\n" +
 		" - Getters - \n" +
-		"3. option 4\n" +
-		"4. option 5\n" +
-		"5. option 5\n" +
-		"6. option 5\n" +
+		"4. getItem(int id)\n" +
+		"5. getAllItems()\n" +
+		"6. getAtributItemId(int id, int atribut)\n" +
+		"7. getAtributItem(int index, int atribut)\n" +
+		"8. getSTipus(int column)\n" +
+		"9. getAtributItem(int index, int atribut)\n" +
+		"10. getAtributItem(int index, int atribut)\n" +
 		" - Setters - \n" +
-		"7. option 5\n" +
 		"8. option 5\n" +
-		" - Altres - \n" +
 		"9. option 5\n" +
+		" - Altres - \n" +
 		"10. option 5\n" +
-		"11. option 6\n";
+		"11. option 5\n" +
+		"12. option 6\n";
 		
 		System.out.println("Testing class <NOM_CLASSE>");
 		System.out.println(s);
@@ -81,6 +86,24 @@ public class DriverConjuntItems {
 				case 6:
 					mostra_6();
 					break;
+				case 7:
+					mostra_7();
+					break;
+				case 8:
+					mostra_8();
+					break;
+				case 9:
+					mostra_9();
+					break;
+				case 10:
+					mostra_10();
+					break;
+				case 11:
+					mostra_11();
+					break;
+				case 12:
+					mostra_12();
+					break;
 				default:
 			}
 			
@@ -88,8 +111,39 @@ public class DriverConjuntItems {
 		
 		System.out.println("Test ended.");
     }
-    
-    static private void mostra_1() {
+	static private void mostra_1() {
+		String res = "y";
+		if (inicailitzat) {
+			System.out.println("WARNING!: Class ConjuntItems has already been initialized, all the previous data will be errased.");
+			System.out.println("Are you sure you want to continue? yes/no");
+			res = scanner.next();
+		}
+		if (res.equalsIgnoreCase("y") || res.equalsIgnoreCase("yes")) {
+			System.out.println("Testing function ConjuntItems()");
+
+			//demanar l'input
+
+			//executar la funcionalitat
+			try {
+				ConjuntItems.nom = null;
+				ConjuntItems.setMaxAtributs(null);
+				ConjuntItems.setMinAtributs(null);
+				Item.setPesos(null);
+				Item.setTipus(null);
+				Item.setNomAtributs(null);
+				Item.setId(-1);
+				Item.setNomA(-1);
+				ci = new ConjuntItems();
+			} catch (Exception e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
+			System.out.println("New ConjuntItems has been initialised and it's empty");
+			inicailitzat = false;
+		}
+	}
+
+    static private void mostra_2() {
 		String res = "y";
 		if (inicailitzat) {
 			System.out.println("WARNING!: Class ConjuntItems has already been initialized, all the previous data will be errased.");
@@ -131,7 +185,7 @@ public class DriverConjuntItems {
 		}
 	}
 
-	static private void mostra_2() {
+	static private void mostra_3() {
 		String res = "y";
 		if (inicailitzat) {
 			System.out.println("WARNING!: Class ConjuntItems has already been initialized, all the previous data will be errased.");
@@ -139,7 +193,7 @@ public class DriverConjuntItems {
 			res = scanner.next();
 		}
 		if (res.equalsIgnoreCase("y") || res.equalsIgnoreCase("yes")) {
-			System.out.println("Testing function ConjuntItems(ArrayList<ArrayList<String>> items)");
+			System.out.println("Testing function ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos, ArrayList<tipus>t ipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, ArrayList<Float> minAtributs))");
 
 			//demanar l'input
 			System.out.println("Choose one of this folders with preprocessed data:");
@@ -193,7 +247,91 @@ public class DriverConjuntItems {
 			printCurrentState();
 		}
 	}
-    static private void mostra_3() {
+    
+	static private void mostra_4() {
+		System.out.println("Testing function getItem(int id)");
+
+		//demanar l'input
+		System.out.println("Enter an item id:");
+		int id = scanner.nextInt();
+
+		//executar la funcionalitat
+		Item i;
+		try {
+			i = ci.getItem(id);
+		} catch (ItemNotFoundException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+
+		//mostrar output
+		System.out.println("Item " + id + " atributes: ");
+		i.print();
+	}
+    
+	static private void mostra_5() {
+		System.out.println("Testing function getAllItems()");
+
+		//executar la funcionalitat
+		ArrayList<ArrayList<ArrayList<String>>> items = ci.getAllItems();
+
+		//mostrar output
+		System.out.println(items);
+	}
+    
+	static private void mostra_6() {
+		System.out.println("Testing function getAtributItemId(int id, int atribut)");
+
+		//demanar l'input
+		System.out.println("Enter an item id:");
+		int id = scanner.nextInt();
+
+		System.out.println("Enter a column:");
+		int col = scanner.nextInt();
+
+		//executar la funcionalitat
+		ArrayList<String> res;
+		try {
+			res = ci.getAtributItemId(id, col);
+		} catch (ItemNotFoundException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		System.out.println(res);
+	}
+    
+	static private void mostra_7() {
+		System.out.println("Testing function getAtributItem(int index, int atribut)");
+		//demanar l'input
+		System.out.println("Enter an item position in the array:");
+		int id = scanner.nextInt();
+
+		System.out.println("Enter a column:");
+		int col = scanner.nextInt();
+
+		//executar la funcionalitat
+		ArrayList<String> res = ci.getAtributItem(id, col);
+		
+		//mostrar output
+		System.out.println(res);
+	}
+	
+	static private void mostra_8() {
+		System.out.println("Testing function getSTipus(int column)");
+		//demanar l'input
+		System.out.println("Enter a column:");
+		int col = scanner.nextInt();
+
+		//executar la funcionalitat
+		String res = ConjuntItems.getSTipus(col);
+
+		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_9() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -201,7 +339,8 @@ public class DriverConjuntItems {
 		
 		//mostrar output
 	}
-    static private void mostra_4() {
+
+	static private void mostra_10() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -209,7 +348,8 @@ public class DriverConjuntItems {
 		
 		//mostrar output
 	}
-    static private void mostra_5() {
+
+	static private void mostra_11() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		
@@ -217,7 +357,8 @@ public class DriverConjuntItems {
 		
 		//mostrar output
 	}
-    static private void mostra_6() {
+
+	static private void mostra_12() {
 		System.out.println("Testing function <NAME_FUNCTION>");
 		//demanar l'input
 		

@@ -19,18 +19,16 @@ import src.recomanador.excepcions.ItemTypeNotValidException;
 public class ConjuntItems extends ArrayList<Item> {
 
     /*----- ATRIBUTS -----*/
-    /**
-     * Nom conjunt d'items
-     */
+
     public static String nom; 
     
     private static ArrayList<Float> maxAtributs;
     private static ArrayList<Float> minAtributs;
 
-    //check
+    /*----- CONSTRUCTORS -----*/
+
     public ConjuntItems() {}
 
-    //check
     public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
         
@@ -52,7 +50,6 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    //check
     public ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos,
     ArrayList<tipus> tipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, 
     ArrayList<Float> minAtributs) throws ItemTypeNotValidException {
@@ -76,6 +73,61 @@ public class ConjuntItems extends ArrayList<Item> {
             addIni(it);
         }
     }
+
+    /*----- GETTERS -----*/
+
+    public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
+        int pos = binarySearchItem(this, id, 0, size()-1);
+        if (pos < 0) throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
+        return get(pos);
+    }
+
+    public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
+        ArrayList<ArrayList<ArrayList<String>>> result = new ArrayList<ArrayList<ArrayList<String>>>();
+        ArrayList<ArrayList<String>> aux = new ArrayList<ArrayList<String>>();
+        for (int i = 0; i < Item.getNumAtributs(); ++i) {
+            ArrayList<String> a2 = new ArrayList<String>();
+            a2.add(Item.getNomAtribut(i));
+            aux.add(a2);
+        }
+        result.add(aux);
+        for (int i = 0; i < this.size(); ++i) {
+            result.add(get(i).getAtributs());
+        }
+        return result;
+    }
+
+    public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
+        return getItem(id).getAtribut(i);
+    }
+
+    public ArrayList<String> getAtributItem(int posItem, int atribut) { //retornar atribut
+        return get(posItem).getAtribut(atribut);
+    }
+    
+    public static String getSTipus(int i) {
+    tipus t = Item.getTipus(i);
+    return StringOperations.tipusToString(t);
+
+}
+    
+    public Float getMaxAtribut(int i) {
+        return maxAtributs.get(i);
+    }
+
+    public Float getMinAtribut(int i) {
+        return minAtributs.get(i);
+    }
+
+    public ArrayList<Float> getMaxAtributs() {
+        return maxAtributs;
+    }
+
+    public ArrayList<Float> getMinAtributs() {
+        return minAtributs;
+    }
+
+    /*----- SETTERS -----*/
 
     //check
     public static void setMinAtributs(ArrayList<Float> minAtributs2) {
@@ -223,27 +275,6 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    //check
-    public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
-        int pos = binarySearchItem(this, id, 0, size()-1);
-        if (pos < 0) throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
-        return get(pos);
-    }
-
-    public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
-        ArrayList<ArrayList<ArrayList<String>>> result = new ArrayList<ArrayList<ArrayList<String>>>();
-        ArrayList<ArrayList<String>> aux = new ArrayList<ArrayList<String>>();
-        for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            ArrayList<String> a2 = new ArrayList<String>();
-            a2.add(Item.getNomAtribut(i));
-            aux.add(a2);
-        }
-        result.add(aux);
-        for (int i = 0; i < this.size(); ++i) {
-            result.add(get(i).getAtributs());
-        }
-        return result;
-    }
 
     //check
     public boolean existeixItem(int id) {
@@ -251,16 +282,6 @@ public class ConjuntItems extends ArrayList<Item> {
         return res > -1;
     }
 
-    //check
-    public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
-        return getItem(id).getAtribut(i);
-    }
-
-    //check
-    public ArrayList<String> getAtributItem(int posItem, int atribut) { //retornar atribut
-        return get(posItem).getAtribut(atribut);
-    }
-   
     //check
     private static boolean tipusCorrecte(String s, tipus t) {
         if (t == tipus.I) {
@@ -286,13 +307,7 @@ public class ConjuntItems extends ArrayList<Item> {
         ConjuntItems.nom = n;
     }
     
-    //check
-    public static String getSTipus(int i) {
-        tipus t = Item.getTipus(i);
-        return StringOperations.tipusToString(t);
 
-    }
-    
     //check
     public void printId() {
         for (int i = 0; i < size(); ++i) {
@@ -466,19 +481,4 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
-    public Float getMaxAtribut(int i) {
-        return maxAtributs.get(i);
-    }
-
-    public Float getMinAtribut(int i) {
-        return minAtributs.get(i);
-    }
-
-    public ArrayList<Float> getMaxAtributs() {
-        return maxAtributs;
-    }
-
-    public ArrayList<Float> getMinAtributs() {
-        return minAtributs;
-    }
 }
