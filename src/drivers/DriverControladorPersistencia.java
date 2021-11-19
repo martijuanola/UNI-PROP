@@ -53,6 +53,7 @@ public class DriverControladorPersistencia {
 			"24. Load items' maximum atributes\n" +
 			"25. Save items' minimum atributes\n" +
 			"26. Save items' maximum atributes\n" +
+			"27. Save state\n" +
 			"-1. exit\n";
 			
 			String reduced = "Options: \n" +
@@ -150,7 +151,7 @@ public class DriverControladorPersistencia {
 						testGuardarMinAtributsItems();
 						break;
 					case 26:
-						testGuardarMaxAtributsItems();
+						testGuardarEstat();
 						break;
 					default:
 				}
@@ -385,9 +386,243 @@ public class DriverControladorPersistencia {
 		}
 	}
 	static private void testDadesEstat() throws Exception { //Inacabat!!!!---------------
-		//------
-		//provar tots els setters i getters
-		//------
+		io.writeln("Testing functions related to set and get the pre-processed values\n");
+		
+		if (c.getNomProjecte() == null)
+		{
+			io.writeln("Choose a project before reading the files");
+			io.writeln("You can do it by choosing the option 1 on the main menu");
+			return;
+		}
+		else if (!isWritable())
+		{
+			io.writeln("Remember that you don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("If you want to write, you can either select one with the option 1 " + 
+				"from the main menu or create a new one by choosing option 17.");
+		}
+		
+		io.writeln("When a setter value is called, the set will change the internal "+
+			"structure that stores it adn will also call guardarEstat(), wich will " +
+			"save it in memory\n");
+		io.writeln("Choose an option from below to do something:\n");
+		
+		String s = "Options: \n" +
+			"0. Get Algorithm used (an integer is required)\n" +
+			"1. Get Q\n" +
+			"2. Get K\n" +
+			"3. Get item's set name\n" +
+			"4. Get id's position in the array\n" +
+			"5. Get name's position in the array\n" +
+			"6. Set Algorithm used (an integer is required)\n" +
+			"7. Set Q\n" +
+			"8. Set K\n" +
+			"9. Set item's set name\n" +
+			"10. Set id's position in the array\n" +
+			"11. Set name's position in the array\n";
+		
+		io.writeln(s);
+		io.writeln("Option: ");
+			
+		int x = 42;
+		
+		try { x = io.readint(); }
+		catch (Exception e){System.out.println("An integer was expected");}
+		
+		int n = 0;
+		String r = "";
+		
+		switch(x)
+		{
+			case 0:
+				try {
+					n = c.getAlgorismeSeleccionat();
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("The selected algorithm is: " + n);
+				break;
+				
+			case 1:
+				try {
+					n = c.getQAlgorisme();
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("The Q used is: " + n);
+				break;
+				
+			case 2:
+				try {
+					n = c.getKAlgorisme();
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("The K used is: " + n);
+				break;
+								
+			case 3:
+				try {
+					r = c.getNomConjuntItems();
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("The name used is: " + n);
+				break;
+				
+			case 4:
+				try {
+					n = c.getPosicioID();
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("The id's column position is: " + n);
+				break;
+				
+			case 5:
+				try {
+					n = c.getPosicioNom();
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("The name's column position is: " + n);
+				break;
+				
+			case 6:
+				if (!isWritable()) 
+				{
+					System.out.println("ERROR. You cannot write here");
+					return;
+				}
+				
+				try {
+					c.setAlgorismeSeleccionat("32");
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("DONE!");
+				io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+				break;
+				
+			case 7:
+				if (!isWritable()) 
+				{
+					System.out.println("ERROR. You cannot write here");
+					return;
+				}
+				
+				try {
+					c.setQAlgorisme("8");
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("DONE!");
+				io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+				break;
+				
+			case 8:
+				if (!isWritable()) 
+				{
+					System.out.println("ERROR. You cannot write here");
+					return;
+				}
+				
+				try {
+					c.setKAlgorisme("3");
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("DONE!");
+				io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+				break;
+				
+			case 9:
+				if (!isWritable()) 
+				{
+					System.out.println("ERROR. You cannot write here");
+					return;
+				}
+				
+				try {
+					c.setNomConjuntItems("Kvothe");
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("DONE!");
+				io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+				break;
+				
+			case 10:
+				if (!isWritable()) 
+				{
+					System.out.println("ERROR. You cannot write here");
+					return;
+				}
+				
+				try {
+					c.setPosicioID("5");
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("DONE!");
+				io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+				break;
+				
+			case 11:
+				if (!isWritable()) 
+				{
+					System.out.println("ERROR. You cannot write here");
+					return;
+				}
+				
+				try {
+					c.setPosicioNom("23");
+				} catch (Exception e) {
+					System.out.println("ERROR!!");
+					System.out.println(e.getMessage());
+					return;
+				}
+				
+				io.writeln("DONE!");
+				io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+				break;
+				
+			default:
+		}
 	}
 	static private void testExisteixenTestos() throws Exception {
 		io.writeln("Testing function existeixenTestos()\n");
@@ -666,6 +901,7 @@ public class DriverControladorPersistencia {
 				"you can only write on those projects that start with \"dummy\".");
 			io.writeln("You can either select one with the option 1 from the main menu or " + 
 				"create a new one by choosing option 17.");
+			return;
 		}
 		
 		io.writeln("Some data will be stored to the file that you specify.");
@@ -698,6 +934,7 @@ public class DriverControladorPersistencia {
 				"you can only write on those projects that start with \"dummy\".");
 			io.writeln("You can either select one with the option 1 from the main menu or " + 
 				"create a new one by choosing option 17.");
+			return;
 		}
 		
 		io.writeln("Some data will be stored in ratings.db.csv");
@@ -726,6 +963,7 @@ public class DriverControladorPersistencia {
 				"you can only write on those projects that start with \"dummy\".");
 			io.writeln("You can either select one with the option 1 from the main menu or " + 
 				"create a new one by choosing option 17.");
+			return;
 		}
 		
 		io.writeln("Some data will be stored in items.csv");
@@ -754,6 +992,7 @@ public class DriverControladorPersistencia {
 				"you can only write on those projects that start with \"dummy\".");
 			io.writeln("You can either select one with the option 1 from the main menu or " + 
 				"create a new one by choosing option 17.");
+			return;
 		}
 		
 		io.writeln("Some data will be stored in pesos.csv");
@@ -784,6 +1023,7 @@ public class DriverControladorPersistencia {
 				"you can only write on those projects that start with \"dummy\".");
 			io.writeln("You can either select one with the option 1 from the main menu or " + 
 				"create a new one by choosing option 17.");
+			return;
 		}
 		
 		io.writeln("Some data will be stored in tipus.csv");
@@ -884,6 +1124,7 @@ public class DriverControladorPersistencia {
 				"you can only write on those projects that start with \"dummy\".");
 			io.writeln("You can either select one with the option 1 from the main menu or " + 
 				"create a new one by choosing option 17.");
+			return;
 		}
 		
 		io.writeln("Some data will be stored in minAtributs.items.csv");
@@ -914,6 +1155,7 @@ public class DriverControladorPersistencia {
 				"you can only write on those projects that start with \"dummy\".");
 			io.writeln("You can either select one with the option 1 from the main menu or " + 
 				"create a new one by choosing option 17.");
+			return;
 		}
 		
 		io.writeln("Some data will be stored in maxAtributs.items.csv");
@@ -934,6 +1176,36 @@ public class DriverControladorPersistencia {
 		io.writeln("DONE!");
 		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
 	}
+	static private void testGuardarEstat() throws Exception {
+		io.writeln("Testing function guardarEstat()\n");
+		//demanar l'input
+		if (!isWritable())
+		{
+			io.writeln("You don't have permisions to write on this folder.");
+			io.writeln("To avoid the loss of data from other projects, " + 
+				"you can only write on those projects that start with \"dummy\".");
+			io.writeln("You can either select one with the option 1 from the main menu or " + 
+				"create a new one by choosing option 17.");
+			return;
+		}
+		
+		io.writeln("Some data will be stored in estat.csv");
+		
+		//executar la funcionalitat
+		try
+		{
+			c.guardarEstat();
+		}catch(Exception e) {
+			System.out.println("ERROR!!!");
+			System.out.println(e.getMessage());
+			return;
+		}
+		
+		//mostrar output
+		io.writeln("DONE!");
+		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+	}
+	
 	
 	static private boolean isWritable() {
 		String name;
