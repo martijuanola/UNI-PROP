@@ -246,7 +246,6 @@ public class ControladorPersistencia {
 	
 	
 /*-----MODIFICADORES-----*/   
-	
 	/**
 	 * Establishes the name of the project, which is the one that has the folder that contains the information
 	 * that will be loaded, and it's where the information will be stored. It also loads the state of the algorithm 
@@ -334,7 +333,7 @@ public class ControladorPersistencia {
 	 * Sets the value of the item's set name as the one specified.
 	 * It also stores into estat.csv all the parameters from the array estat. 
 	 * 
-	 * @param	name	Indicates the name nom that the items used. 
+	 * @param	nom		Indicates the name that the items used. 
 	 * @exception Exception		Throws an exception if you are not in a valid folder. 
 	 */
     public void setNomConjuntItems(String nom) throws Exception
@@ -360,6 +359,13 @@ public class ControladorPersistencia {
 		guardarEstat();
 	}
     
+    /**
+	 * Sets the value of the name column position from the item's set as the one specified.
+	 * It also stores into estat.csv all the parameters from the array estat. 
+	 * 
+	 * @param	pos_nom		Indicates the column position that is used. 
+	 * @exception Exception		Throws an exception if you are not in a valid folder. 
+	 */
     public void setPosicioNom(String pos_nom) throws Exception
     {
 		if (carpeta == null) throw new Exception("You cannot save data");
@@ -370,7 +376,16 @@ public class ControladorPersistencia {
     
     
 /*-----LECTURA-----*/	
-	
+	/**
+	 * Reads a file specified from the folder "carpeta". The file must be
+	 * a .csv file (or at least the content must have that structure), and
+	 * needs to have the same number of columns for every row.
+	 * 
+     * @return Returns an ArrayList of ArrayList of the values. Each ArrayList 
+     * of ArrayList(line) contains an array of strings (columns).
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted or is missing.
+     */
 	private ArrayList<ArrayList<String>> carregarArxiuCarpeta(String s) throws FolderNotValidException
 	{
 		if (carpeta == null) throw new FolderNotValidException();
@@ -387,12 +402,12 @@ public class ControladorPersistencia {
 	}
 		
 	/**
-	 * Returns the recomendations read from memory
+	 * Returns the recomendations and valorations read from memory
 	 * 
-     * @return Returns an array of arrays of the values. Each array of arrays(line)
-     * contains an array of strings (columns). 
+     * @return Returns an ArrayList of ArrayList of the values. Each ArrayList 
+     * of ArrayList(line) contains an array of strings (columns).
      * The first line corresponds to the header of the file, where each
-     * column its identifier. 
+     * column is its identifier. 
      * The rest of the lines contain the values read.
      * 
      * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
@@ -403,12 +418,12 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Returns the recomendations read from memory
+	 * Returns the items read from memory
 	 * 
-     * @return Returns an array of arrays of the values. Each array of arrays(line)
-     * contains an array of strings (columns). 
+     * @return Returns an ArrayList of ArrayList of the values. Each ArrayList 
+     * of ArrayList(line) contains an array of strings (columns).
      * The first line corresponds to the header of the file, where each
-     * column its identifier. 
+     * column is its identifier.  
      * The rest of the lines contain the values read.
      * 
      * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
@@ -418,6 +433,14 @@ public class ControladorPersistencia {
 		return carregarArxiuCarpeta("items.csv");
 	}
 	
+	/**
+	 * Returns some information read from memory about the items: the
+	 * weights of the attributes.
+	 * 
+     * @return Returns an ArrayList of the values (represented as Strings). 
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
+     */
 	public ArrayList<String> carregarPesosAtributs() throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("pesos.csv");
