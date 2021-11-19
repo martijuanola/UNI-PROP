@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.Item.tipus;
+import src.recomanador.excepcions.ItemTypeNotValidException;
 
 public class StringOperations {
     public static boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
@@ -233,4 +234,41 @@ public class StringOperations {
         }
     }
 
+    public static tipus stringToType(String s) throws ItemTypeNotValidException{
+        if (s.equalsIgnoreCase("identificador") || s.equalsIgnoreCase("I")) return tipus.I;
+        else if (s.equalsIgnoreCase("boolean") || s.equalsIgnoreCase("B")) return tipus.B;
+        else if (s.equalsIgnoreCase("nom") || s.equalsIgnoreCase("N")) return tipus.N;
+        else if (s.equalsIgnoreCase("float") || s.equalsIgnoreCase("F")) return tipus.F;
+        else if (s.equalsIgnoreCase("string") || s.equalsIgnoreCase("S")) return tipus.S;
+        else if (s.equalsIgnoreCase("data") || s.equalsIgnoreCase("D")) return tipus.D;
+        throw new ItemTypeNotValidException(s+" no conté un tipus");
+    }
+
+    public static String tipusToString(tipus t) {
+        String s = "";
+        switch (t) {
+            case I:
+                s = "Identificador";
+                break;
+            case N:
+                s = "Nom";
+                break;
+            case B:
+                s = "Boolean";
+                break;
+            case F:
+                s = "Float";
+                break;
+            case S:
+                s = "String";
+                break;
+            case D:
+                s = "Data";
+                break;
+            default:
+                s = "No assignat";
+                break;
+            }
+        return s;
+    }
 }

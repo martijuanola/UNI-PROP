@@ -126,7 +126,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
     //check
     private void assignarTipusItem(int atribut, tipus t) throws ItemTypeNotValidException {
-        if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + Item.tipusToString(t));
+        if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + StringOperations.tipusToString(t));
         Item.assignarTipus(atribut, t);
     }
 
@@ -289,7 +289,7 @@ public class ConjuntItems extends ArrayList<Item> {
     //check
     public static String getSTipus(int i) {
         tipus t = Item.getTipus(i);
-        return Item.tipusToString(t);
+        return StringOperations.tipusToString(t);
 
     }
     
@@ -388,7 +388,7 @@ public class ConjuntItems extends ArrayList<Item> {
     //check
     private static float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
         tipus t = Item.getTipus(columna);
-        if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + Item.tipusToString(t));
+        if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + StringOperations.tipusToString(t));
 
         float sim = (float)0.0;
         if (t == tipus.I) {

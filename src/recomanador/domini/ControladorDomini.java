@@ -1,6 +1,7 @@
 package src.recomanador.domini;
 
 import src.recomanador.persistencia.*;
+import src.recomanador.domini.Utils.StringOperations;
 import src.recomanador.excepcions.*;
 
 import java.util.ArrayList;
@@ -193,7 +194,7 @@ public class ControladorDomini {
             if (!ci.existeixItem(ci.get(i).getId())) System.out.println("No funciona!");
         }
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            System.out.println("\t tipus " + Item.tipusToString(Item.getTipus(i)) + " nom " + Item.getNomAtribut(i));
+            System.out.println("\t tipus " + StringOperations.tipusToString(Item.getTipus(i)) + " nom " + Item.getNomAtribut(i));
             System.out.println("maxAtr " + i + " " + ci.getMaxAtribut(i));
             System.out.println("minAtr " + i + " " + ci.getMinAtribut(i));
         }

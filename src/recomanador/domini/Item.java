@@ -210,32 +210,5 @@ public class Item implements Comparable<Item>{
         return Item.tipusAtribut.get(i);
     }
 
-    public static String tipusToString(tipus t) {
-        String s = "";
-        switch (t) {
-            case I:
-                s = "Identificador";
-                break;
-            case N:
-                s = "Nom";
-                break;
-            case B:
-                s = "Boolean";
-                break;
-            case F:
-                s = "Float";
-                break;
-            case S:
-                s = "String";
-                break;
-            case D:
-                s = "Data";
-                break;
-            default:
-                s = "No assignat";
-                break;
-            }
-        return s;
-    }
   
 }

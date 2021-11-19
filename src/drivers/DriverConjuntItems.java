@@ -1,13 +1,20 @@
 package src.drivers;
 
+import java.util.ArrayList;
 //Utils
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentSkipListMap;
+
+import javax.sound.sampled.Control;
 
 //Classes
 import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.Item;
+import src.recomanador.domini.Item.tipus;
+import src.recomanador.domini.Utils.StringOperations;
 import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
+import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.persistencia.ControladorPersistencia;
 
@@ -15,11 +22,13 @@ public class DriverConjuntItems {
 	static private Scanner scanner;
     
     static private ConjuntItems ci;
-	static private boolean inicailitzat = false;
+	static private boolean inicailitzat;
 	static private ControladorPersistencia cp;
     
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
+		inicailitzat = false;
+		cp = new ControladorPersistencia();
 		
 		String s = "Options: \n" +
 		"-1. exit\n" +
@@ -98,16 +107,13 @@ public class DriverConjuntItems {
 			try {
 				ci = new ConjuntItems(cp.carregarFitxerExtern(path));
 			} catch (ItemTypeNotValidException e) {
-				System.out.println("The inputs in the file are not correct. Make sure the id column only contains integers");
-				e.printStackTrace();
+				System.out.println("ERROR: " + e.getMessage());
 				return;
 			} catch (FileNotValidException e) {
-				System.out.println("The file is not valid. Check the file format in path: " + path);
-				e.printStackTrace();
+				System.out.println("ERROR: " + e.getMessage());
 				return;
 			} catch (Exception e) {
-				System.out.println("There is no \"items.csv\" in the specified path: " + path);
-				e.printStackTrace();
+				System.out.println("ERROR: " + e.getMessage());
 				return;
 			}
 			System.out.println("New ConjuntItems has been initialised with the data from " + path + "/items.csv");
@@ -118,13 +124,71 @@ public class DriverConjuntItems {
 	}
 
 	static private void mostra_2() {
-		System.out.println("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
-		//executar la funcionalitat
-		
-		//mostrar output
-		inicailitzat = true;
+		String res = "y";
+		if (inicailitzat) {
+			System.out.println("WARNING!: Class ConjuntItems has already been initialized, all the previous data will be errased.");
+			System.out.println("Are you sure you want to continue? yes/no");
+			res = scanner.next();
+		}
+		if (res.equalsIgnoreCase("y") || res.equalsIgnoreCase("yes")) {
+			System.out.println("Testing function ConjuntItems(ArrayList<ArrayList<String>> items)");
+
+			//demanar l'input
+			System.out.println("Choose one of this folders with preprocessed data:");
+			System.out.println(cp.llistatCarpetes());
+			String path = "testing-load-basic";//scanner.next();
+
+			//executar la funcionalitat
+			try {
+				cp.escollirProjecte(path);
+			}
+			catch (FolderNotFoundException e1) {
+				System.out.println("ERROR: " + e1.getMessage());
+				return;
+			}
+			if (!cp.existeixenDadesPreprocesades()) {
+				System.out.println("ERROR: No preprocessed data found");
+				return;
+			}
+
+			try {
+				ArrayList<String> pesosS = cp.carregarPesosAtributs();
+				ArrayList<Float> pesos = new ArrayList<>();
+				for (int i = 0; i < pesosS.size(); ++i) {
+					pesos.add(Float.parseFloat(pesosS.get(i)));
+				}
+				System.out.println("HOLA!");
+				ArrayList<String> tipusS = cp.carregarTipusAtributs();
+				ArrayList<tipus> tipus = new ArrayList<>();
+				for (int i = 0; i < tipusS.size(); ++i) {
+					tipus.add(StringOperations.stringToType(tipusS.get(i)));
+				}
+				System.out.println("HOLA!");
+				ArrayList<String> maxIS = cp.carregarMaxAtributsItems();
+				ArrayList<Float> maxI = new ArrayList<>();
+				for (int i = 0; i < maxIS.size(); ++i) {
+					maxI.add(Float.parseFloat(maxIS.get(i)));
+				}
+				System.out.println("HOLA!");
+				ArrayList<String> minIS = cp.carregarMinAtributsItems();
+				ArrayList<Float> minI = new ArrayList<>();
+				for (int i = 0; i < minIS.size(); ++i) {
+					maxI.add(Float.parseFloat(minIS.get(i)));
+				}
+				System.out.println("HOLA!");
+				ci = new ConjuntItems(cp.carregarItemsCarpeta(), pesos, tipus, 
+				5, -1, "test", maxI, minI);
+				System.out.println("funca");
+			}
+			catch (Exception e) {
+				System.out.println("ERROR: " + e.getMessage());
+			}
+
+			System.out.println("New ConjuntItems has been initialised with the data from " + path);
+			inicailitzat = true;
+			//mostrar output
+			printCurrentState();
+		}
 	}
     static private void mostra_3() {
 		System.out.println("Testing function <NAME_FUNCTION>");
@@ -160,8 +224,10 @@ public class DriverConjuntItems {
 	}
 
     private static void printCurrentState() {
+		System.out.println("HOLA!");
 		System.out.println(ci.size() + " items loaded with " + Item.getNumAtributs() + " atributes each one");
-		System.out.println("Autodetected types with default weight: ");
+		System.out.println("HOLA222!");
+		System.out.println("name_colum type weight: ");
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             
             System.out.print(Item.getNomAtribut(i) + " " + ConjuntItems.getSTipus(i) + " " + Item.getPes(i));
