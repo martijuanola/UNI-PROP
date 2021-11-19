@@ -1,6 +1,5 @@
 package src.recomanador.persistencia;
 
-//import java.io.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,8 +9,8 @@ import java.util.ArrayList;
 import src.recomanador.excepcions.*;
 
 /**
-* La classe ControladorLoad implementa controlador de lectura
-* de les dades en memòria.
+* The class ControladorLoad implements the function for loading data from memory. 
+* This data is read as .csv file.
 * 
 * @author Pol Sturlese 
 */

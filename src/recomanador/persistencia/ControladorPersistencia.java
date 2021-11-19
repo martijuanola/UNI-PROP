@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import src.recomanador.excepcions.*;
 
 /**
-* La classe ControladorPersistencia implementa controlador de lectura
-* i d'escriptura de les dades en memòria. Gestiona també les carpetes
-* on es guardarà part de la informació.
+* The class ControladorPersistencia implements the functionalities of writing
+* and reading data from memory. It also manages the folder structure
+* where the information will be stored.
 * 
 * @author Pol Sturlese 
 */
@@ -37,22 +37,22 @@ public class ControladorPersistencia {
     {
 		carpeta = null;
 		cl = new ControladorLoad();		
-		cs = new ControladorSave();		
-		//atributs_algorisme = null;
+		cs = new ControladorSave();
 		estat = null;
 		
 		dades = new File("data");
-		if (!dades.exists()) dades.mkdir();	//It will create the folder if it doesn't exist
+		if (!dades.exists() || !dades.isDirectory()) dades.mkdir();	//It will create the folder if it doesn't exist
 		
 	}
 
 
 /*-----CONSULTORES-----*/	
 	/**
-	 * Estableix el nom de la carpeta que s'usarà epr carregar les dàdes en el projecte
+	 * It returns the name of the project that is being used. This name represents 
+	 * a folder inside /data, where the information will be held.
 	 * 
-	 * @param      s     Representa el nom de la carpeta, que s'haurà d'escollir entre la llista de les carpetes existents
-	 * @exception 	FolderNotFoundException Throws a FolderNotValidException if the file is corrupted or is missing.
+	 * @return		The name of the folder is returned, or <b>null</b> in case there's no folder assigned to.
+	 * @exception 	FolderNotFoundException Throws a an exception if the folder is missing.
 	 */
     public String getNomProjecte() throws FolderNotFoundException
     {
@@ -61,7 +61,8 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Estableix el nom de la carpeta que s'usarà epr carregar les dàdes en el projecte
+	 * Shows all the folders that are inside /data. These folders represents
+	 * the projects that the user can choose.
 	 * 
 	 * @return			 Returns all the folders that are inside the saved projects folder.
 	 */
@@ -77,6 +78,13 @@ public class ControladorPersistencia {
 		return projectes;
 	}
 	
+	/**
+	 * Informs you if there are all the necessary files for loading ALL the 
+	 * preprocessed data.
+	 * 
+	 * @return			 Returns <b>true</b> if all the files needed for the preprocessed data
+	 * are in the folder. Otherwise it returns <b>false</b>;
+	 */
 	public boolean existeixenDadesPreprocesades()
 	{
 		if (carpeta == null) return false;
@@ -85,6 +93,8 @@ public class ControladorPersistencia {
 		boolean pesos = false;
 		boolean tipus = false;
 		boolean estat = false;
+		boolean minAt = false;
+		boolean maxAt = false;
 		
 		for (int i = 0; i < inside.length; ++i)
 		{
@@ -93,26 +103,21 @@ public class ControladorPersistencia {
 				if (inside[i].getName().equals("pesos.csv")) pesos = true;
 				else if (inside[i].getName().equals("tipus.csv")) tipus = true;
 				else if (inside[i].getName().equals("estat.csv")) estat = true;
+				else if (inside[i].getName().equals("minAtributs.items.csv")) minAt = true;
+				else if (inside[i].getName().equals("maxAtributs.items.csv")) maxAt = true;
 			}
 		}
 		
-		return pesos && tipus && estat;
+		return pesos && tipus && estat && minAt && maxAt;
 	}
 	
-	//-----------------------kbooom-----------------------------------------
-	public boolean existeixenDadesAlgorisme()
-	{
-		if (carpeta == null) return false;
-		
-		File[] inside = carpeta.listFiles();
-		
-		for (int i = 0; i < inside.length; ++i)
-			if (!inside[i].isDirectory() && inside[i].getName().equals("estat.csv"))
-				return true;
-		
-		return false;
-	}
-	
+	/**
+	 * Informs you if there are all the necessary files for loading the 
+	 * test data.
+	 * 
+	 * @return			 Returns <b>true</b> if all the files needed for testing 
+	 * the algorithm are in the folder. Otherwise it returns <b>false</b>;
+	 */
 	public boolean existeixenTestos()
 	{
 		if (carpeta == null) return false;
@@ -243,10 +248,12 @@ public class ControladorPersistencia {
 /*-----MODIFICADORES-----*/   
 	
 	/**
-	 * Estableix el nom de la carpeta que s'usarà epr carregar les dàdes en el projecte
+	 * Establishes the name of the project, which is the one that has the folder that contains the information
+	 * that will be loaded, and it's where the information will be stored. It also loads the state of the algorithm 
+	 * if it existed, or it creates one with -1 as all values.
 	 * 
-	 * @param      s     Representa el nom de la carpeta, que s'haurà d'escollir entre la llista de les carpetes existents
-	 * @exception 	FolderNotFoundException Throws a FolderNotValidException if the file is corrupted or is missing.
+	 * @param      s     Represents the name of the folder, which sholde be chosen among the list of existing folders.
+	 * @exception 	FolderNotFoundException Throws an exception if the folder is incorrect.
 	 */
     public void escollirProjecte(String s) throws FolderNotFoundException
     {
@@ -263,12 +270,13 @@ public class ControladorPersistencia {
 		{
 			estat = new ArrayList<String>();
 			for (int i = 0; i < 6; ++i) estat.add("-1");
+			estat.set(3, "ERROR_NameNotValid");
 		}
 		
 	}
 	
 	/**
-	 * Establishes the project folder as null 
+	 * Establishes the project folder and the estat ArrayList as null 
 	 */
 	public void sortirDelProjecte()
     {
