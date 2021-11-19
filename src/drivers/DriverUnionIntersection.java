@@ -1,6 +1,7 @@
 package src.drivers;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import src.recomanador.domini.Utils.UnionIntersection;
 
@@ -61,9 +62,38 @@ public class DriverUnionIntersection {
 		System.out.println("Testing function getUnion");
 		//demanar l'input
 		
-		//executar la funcionalitat
+		System.out.println("Enter the size of the first array:");
+		int n1 = -1;
+		while (n1 == -1) {
+            try {
+                int aux = scanner.nextInt();
+                n1 = aux;
+            }
+            catch (Exception e) {
+                System.out.println("Enter an Integer for the size of the first array");
+            }
+		}
+        System.out.println("Enter " + n1 + " strings in diferent lines:");
+		ArrayList<String> l1 = new ArrayList<String>();
+		scanner.nextLine();
+		for (int i = 0; i < n1; ++i) {
+            l1.add(scanner.nextLine());
+		}
 		
+		System.out.println("Enter the size of the second array:");
+		int n2 = scanner.nextInt();
+        System.out.println("Enter " + n2 + " strings in diferent lines:");
+		ArrayList<String> l2 = new ArrayList<String>();
+		scanner.nextLine();
+		for (int i = 0; i < n2; ++i) {
+            l2.add(scanner.nextLine());
+		}
+		//executar la funcionalitat
+		ArrayList<String> result = new ArrayList<String>();
+		result = UnionIntersection.getUnion(l1, l2);
 		//mostrar output
+		System.out.println("Union: ");
+        System.out.println(result);
 	}
     static private void mostra_2() {
 		System.out.println("Testing function getIntersection");
