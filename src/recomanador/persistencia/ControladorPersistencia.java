@@ -384,6 +384,8 @@ public class ControladorPersistencia {
 	 * a .csv file (or at least the content must have that structure), and
 	 * needs to have the same number of columns for every row.
 	 * 
+	 * @param		s		Specifies the file that will be read.
+	 * 
      * @return Returns an ArrayList of ArrayList of the values. Each ArrayList 
      * of ArrayList(line) contains an array of strings (columns).
      * 
@@ -576,7 +578,7 @@ public class ControladorPersistencia {
      * @param	s	It's the name that the folder will have. It can only contain
      * letters, numbers, '.', '-' and '_'
      * 
-     * @exception FolderNotValidException Throws a FileNotValidException if the file is corrupted.
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted.
      * 
      */
 	public void crearProjecte(String s) throws FolderNotValidException
@@ -618,7 +620,7 @@ public class ControladorPersistencia {
      * @param		s		It's the name that the file will have. It's recommended
      * that it ends with .csv, as the data will be stored in that format.
      * 
-     * @exception FolderNotValidException Throws a FileNotValidException if the file is corrupted.
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted.
      * 
      */
 	private void guardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
@@ -656,12 +658,33 @@ public class ControladorPersistencia {
 		}
 	}
 	
-	
+	/**
+	 * Save the data into the file ratings.db.csv <p>
+     * 
+     * @param		D		It's an ArrayList of ArrayList of Strings. The array
+     * needs to have the same number of columns for each row. The first
+     * line is interpreted as the header.
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted. 
+     */
 	public void guardarRecomanacions(ArrayList<ArrayList<String>> D) throws FolderNotValidException
 	{
 		this.guardarDades(D, "ratings.db.csv");
 	}
 	
+	/**
+	 * Save the data into the file items.csv <p>
+     * 
+     * @param		head		It's an ArrayList of Strings. It represents the header
+     * of the .csv table, and will be printed as the first line
+     * @param		body		It's an ArrayList of ArrayList of ArrayList of Strings.
+     * It represents for each row, an ArrayList of columns. Each column can contain
+     * a variable number of strings, so the content of the column is specified
+     * as an ArrayList of Strings. (These multiple values will be concatenated, adding a
+     * ';' betwen them.
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted.
+     */
 	public void guardarItems(ArrayList<String> head, ArrayList<ArrayList<ArrayList<String>>> body) throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> taula = new ArrayList<ArrayList<String>>();
@@ -691,7 +714,15 @@ public class ControladorPersistencia {
 		
 		this.guardarDades(taula, "items.csv");
 	}
-
+	
+	/**
+	 * Save the data into the file pesos.csv <p>
+     * 
+     * @param		pesos		It's an ArrayList of Floats wich represents
+     * the weight of each attribute from the item set.
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted. 
+     */
 	public void guardarPesosAtributs(ArrayList<Float> pesos) throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
@@ -701,7 +732,15 @@ public class ControladorPersistencia {
 		
 		this.guardarDades(D, "pesos.csv");
 	}
-		
+	
+	/**
+	 * Save the data into the file tipus.csv <p>
+     * 
+     * @param		tip		It's an ArrayList of Strings wich represents
+     * the type of each attribute from the item set.
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted. 
+     */	
 	public void guardarTipusAtributs(ArrayList<String> tip) throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
@@ -710,6 +749,14 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "tipus.csv");
 	}
 	
+	/**
+	 * Save the data into the file maxAtributs.items.csv <p>
+     * 
+     * @param		max_atr		It's an ArrayList of Strings wich contains
+     * the maximum value of each attribute from the item set.
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted. 
+     */	
 	public void guardarMaxAtributsItems(ArrayList<String> max_atr) throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
@@ -718,6 +765,14 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "maxAtributs.items.csv");
 	}
 	
+	/**
+	 * Save the data into the file minAtributs.items.csv <p>
+     * 
+     * @param		min_atr		It's an ArrayList of Strings wich contains
+     * the minimum value of each attribute from the item set.
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted. 
+     */	
 	public void guardarMinAtributsItems(ArrayList<String> min_atr) throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
@@ -726,6 +781,11 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "minAtributs.items.csv");
 	}
 	
+	/**
+	 * Save the data from the estat ArrayList into the file estat.csv <p>
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted. 
+     */	
 	public void guardarEstat() throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> a = new ArrayList<ArrayList<String>>();
@@ -749,8 +809,7 @@ public class ControladorPersistencia {
  * Serverixen només per a poder testejar-les. En la implementació
  * final s'hauran d'eliminar*/
 
-/**
- * Per aquestes funcions no es faran testos especifics, sinó que s'usaran per
+/* Per aquestes funcions no es faran testos especifics, sinó que s'usaran per
  * a provar les classes privades que es criden. <p>
  * Demostració formal de que la seva correctesa d'una funció depèn de la funció que crida:
  * És facil veure que aquestes classes funcionaran si i només si funcionen les classes
@@ -765,12 +824,43 @@ public class ControladorPersistencia {
  * 
  * Per tant, queda demostrat que aquestes classes funcionaran si i només si
  * ho fan les classes privades que es criden
- * */
+ */
+	/**
+	 * Implements a public format for the function guardarDades(...).
+	 * Reads the file specified from the folder "carpeta". <p>
+	 * After Testing, this function will be eliminated. <p>
+	 * For a demonstration that this function will work if and only if
+	 * guardarDades(...) works, go to line 812 on the source code. 
+	 * The demonstration lets us test the private class unsing this one.
+     * 
+     * @param		s		Specifies the file that will be read.
+     * 
+     * @return Returns an ArrayList of ArrayList of the values. Each ArrayList 
+     * of ArrayList(line) contains an array of strings (columns).
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted or is missing.
+     */
 	public ArrayList<ArrayList<String>> TESTcarregarArxiuCarpeta(String s) throws FolderNotValidException
 	{
 		return this.carregarArxiuCarpeta(s);
 	}
 	
+	/**
+	 * Implements a public format for the function guardarDades(...).
+	 * It saves the data into the file specified. <p>
+	 * After Testing, this function will be eliminated. <p>
+	 * For a demonstration that this function will work if and only if
+	 * guardarDades(...) works, go to line 812 on the source code. 
+	 * The demonstration lets us test the private class unsing this one.
+     * 
+     * @param		D		It's an ArrayList of ArrayList of Strings. The array
+     * needs to have the same number of columns for each row. Usually, the first
+     * line is interpreted as the header, but it's not mandatory.
+     * @param		s		It's the name that the file will have. It's recommended
+     * that it ends with .csv, as the data will be stored in that format.
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted. 
+     */
 	public void TESTguardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
 	{
 		this.guardarDades(D, s);
