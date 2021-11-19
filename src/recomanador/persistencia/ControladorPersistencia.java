@@ -250,7 +250,7 @@ public class ControladorPersistencia {
 	/**
 	 * Establishes the name of the project, which is the one that has the folder that contains the information
 	 * that will be loaded, and it's where the information will be stored. It also loads the state of the algorithm 
-	 * if it existed, or it creates one with -1 as all values.
+	 * if it existed, or it creates one with -1 as all values (except for the name, that will have "ERROR_NameNotValid").
 	 * 
 	 * @param      s     Represents the name of the folder, which sholde be chosen among the list of existing folders.
 	 * @exception 	FolderNotFoundException Throws an exception if the folder is incorrect.
@@ -277,6 +277,7 @@ public class ControladorPersistencia {
 	
 	/**
 	 * Establishes the project folder and the estat ArrayList as null 
+	 * to indicate that there's no project selected.
 	 */
 	public void sortirDelProjecte()
     {
@@ -300,6 +301,13 @@ public class ControladorPersistencia {
 		guardarEstat();
 	}
 	
+	/**
+	 * Sets the value of the algorithm selected as the one specified.
+	 * It also stores into estat.csv all the parameters from the array estat. 
+	 * 
+	 * @param	a	Indicates the number of the selected algorithm 
+	 * @exception Exception		Throws an exception if you are not in a valid folder. 
+	 */
     public void setAlgorismeSeleccionat(String a) throws Exception
     {
 		if (carpeta == null) throw new Exception("You cannot save data");
