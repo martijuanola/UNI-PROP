@@ -31,27 +31,13 @@ public class DriverControladorLoad {
 				io.write("Option: ");
 				
 				x = io.readint();
-				
-				/*es queda en un bucle infinit
-				do {
-					try {
-						x = io.readint();
-					}catch(Exception e) {
-						io.writeln("Please, write a number which belongs to the interval indicated.");
-						io.write("Option: ");
-						x = -1;
-					}
-				}while (x == -1);
-				//*/
-				
+								
 				switch(x)
 				{
 					case 1:
 						testCarregarArxiu();
 						break;
 					default:
-						//is always shown, even with the break
-						//io.writeln("Please, write a number which belongs to the interval indicated.");
 				}
 				
 			} while (x != 0);
@@ -93,7 +79,9 @@ public class DriverControladorLoad {
 			sol = c.carregarArxiu(f);
 		}catch(Exception e)
 		{
-			io.writeln("Error carregar arxiu");
+			io.writeln("ERROR!!!");
+			io.writeln("The file is not valid.");
+			return;
 		}
 		
 		//mostrar output
@@ -111,6 +99,6 @@ public class DriverControladorLoad {
 				io.writeln();
 			}
 		}
-		io.writeln("Cols: " + cols);
+		io.writeln("Columns: " + cols);
 	}
 }
