@@ -44,15 +44,17 @@ public class DriverConjuntItems {
 		"6. getAtributItemId(int id, int atribut)\n" +
 		"7. getAtributItem(int index, int atribut)\n" +
 		"8. getSTipus(int column)\n" +
-		"9. getAtributItem(int index, int atribut)\n" +
-		"10. getAtributItem(int index, int atribut)\n" +
+		"9. getMaxAtribut(int col)\n" +
+		"10. getMinAtribut(int col)\n" +
+		"11. getMaxAtributs()\n" +
+		"12. getMinAtributs()\n" +
 		" - Setters - \n" +
-		"8. option 5\n" +
-		"9. option 5\n" +
+		"13. option 5\n" +
+		"14. option 5\n" +
 		" - Altres - \n" +
-		"10. option 5\n" +
-		"11. option 5\n" +
-		"12. option 6\n";
+		"15. option 5\n" +
+		"16. option 5\n" +
+		"17. option 6\n";
 		
 		System.out.println("Testing class <NOM_CLASSE>");
 		System.out.println(s);
@@ -332,39 +334,119 @@ public class DriverConjuntItems {
 	}
 
 	static private void mostra_9() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function getMaxAtribut(int col)");
 		//demanar l'input
-		
+		System.out.println("Enter a column:");
+		int col = scanner.nextInt();
+
 		//executar la funcionalitat
-		
+		Float res = ci.getMaxAtribut(col);
+
 		//mostrar output
+		System.out.println(res);
 	}
 
 	static private void mostra_10() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function getMinAtribut(int col)");
 		//demanar l'input
-		
+		System.out.println("Enter a column:");
+		int col = scanner.nextInt();
+
 		//executar la funcionalitat
-		
+		Float res = ci.getMaxAtribut(col);
+
 		//mostrar output
+		System.out.println(res);
 	}
 
 	static private void mostra_11() {
-		System.out.println("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
+		System.out.println("Testing function getMaxAtributs()");
+
 		//executar la funcionalitat
-		
+		ArrayList<Float> res = ci.getMaxAtributs();
+
 		//mostrar output
+		System.out.println(res);
 	}
 
 	static private void mostra_12() {
-		System.out.println("Testing function <NAME_FUNCTION>");
-		//demanar l'input
-		
+		System.out.println("Testing function getMinAtributs()");
+
 		//executar la funcionalitat
-		
+		ArrayList<Float> res = ci.getMinAtributs();
+
 		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_13() {
+		System.out.println("Testing function getMinAtributs()");
+
+		//executar la funcionalitat
+		ArrayList<Float> res = ci.getMaxAtributs();
+
+		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_14() {
+		System.out.println("Testing function getMinAtributs()");
+
+		//executar la funcionalitat
+		ArrayList<Float> res = ci.getMaxAtributs();
+
+		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_15() {
+		System.out.println("Testing function getMinAtributs()");
+
+		//executar la funcionalitat
+		ArrayList<Float> res = ci.getMaxAtributs();
+
+		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_16() {
+		System.out.println("Testing function getMinAtributs()");
+
+		//executar la funcionalitat
+		ArrayList<Float> res = ci.getMaxAtributs();
+
+		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_17() {
+		System.out.println("Testing function getMinAtributs()");
+
+		//executar la funcionalitat
+		ArrayList<Float> res = ci.getMaxAtributs();
+
+		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_18() {
+		System.out.println("Testing function getMinAtributs()");
+
+		//executar la funcionalitat
+		ArrayList<Float> res = ci.getMaxAtributs();
+
+		//mostrar output
+		System.out.println(res);
+	}
+
+	static private void mostra_19() {
+		System.out.println("Testing function getMinAtributs()");
+
+		//executar la funcionalitat
+		ArrayList<Float> res = ci.getMaxAtributs();
+
+		//mostrar output
+		System.out.println(res);
 	}
 
     private static void printCurrentState() {
