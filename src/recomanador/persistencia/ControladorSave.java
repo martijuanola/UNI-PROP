@@ -28,7 +28,7 @@ public class ControladorSave {
      * where the first row is the header of the table. All rows have the same number
      * of columns.
      * 
-     * @param      file      This is the file that is going to be used for the saving
+     * @param      file      This is the file that is going to be used for the saving. It needs to exist.
      * @param      data      This is the data that is going to be stored
      * 
      * @exception	IOException If there's an error reading, the IOException will be thrown

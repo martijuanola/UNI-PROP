@@ -21,8 +21,10 @@ public class ControladorPersistencia {
     ControladorLoad cl;
     ControladorSave cs;
 	
-	//Atributs de l'algorisme: algorisme_seleccionat, q, k (en aquest ordre) 
-	//private ArrayList<String> atributs_algorisme;
+	//Atributs que son usats per diverses parts del programa. Es troben en el següent ordre:
+	//			0		    | 1 | 2 | 		3	    | 	4	 | 	 5
+	//algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
+	private ArrayList<String>  estat;
 	
 /*-----CREADORES-----*/   
     /**
@@ -37,9 +39,11 @@ public class ControladorPersistencia {
 		cl = new ControladorLoad();		
 		cs = new ControladorSave();		
 		//atributs_algorisme = null;
+		estat = null;
 		
 		dades = new File("data");
 		if (!dades.exists()) dades.mkdir();	//It will create the folder if it doesn't exist
+		
 	}
 
 
@@ -80,6 +84,7 @@ public class ControladorPersistencia {
 		File[] inside = carpeta.listFiles();
 		boolean pesos = false;
 		boolean tipus = false;
+		boolean estat = false;
 		
 		for (int i = 0; i < inside.length; ++i)
 		{
@@ -87,12 +92,14 @@ public class ControladorPersistencia {
 			{
 				if (inside[i].getName().equals("pesos.csv")) pesos = true;
 				else if (inside[i].getName().equals("tipus.csv")) tipus = true;
+				else if (inside[i].getName().equals("estat.csv")) estat = true;
 			}
 		}
 		
-		return pesos && tipus;
+		return pesos && tipus && estat;
 	}
 	
+	//-----------------------kbooom-----------------------------------------
 	public boolean existeixenDadesAlgorisme()
 	{
 		if (carpeta == null) return false;
@@ -100,7 +107,7 @@ public class ControladorPersistencia {
 		File[] inside = carpeta.listFiles();
 		
 		for (int i = 0; i < inside.length; ++i)
-			if (!inside[i].isDirectory() && inside[i].getName().equals("algorisme.csv"))
+			if (!inside[i].isDirectory() && inside[i].getName().equals("estat.csv"))
 				return true;
 		
 		return false;
@@ -126,21 +133,112 @@ public class ControladorPersistencia {
 		return known && unknown;
 	}
 
-	/** Get k
-	 * Returns the atribute k for the algorithm.
+	/** 
+	 * Returns the attribute K for the algorithm.
 	 * 
-	 * @return It returns the atribute k as an int. On error, it returns -1
+	 * @return		It returns the atribute K as an int.
+	 * @exception	It throws an exception if the conversion fails or if the data is not found
 	 * 
-	 * /
-	public int getKAlgorisme()
+	 */
+	public int getKAlgorisme() throws Exception
 	{
-		if (atributs_algorisme = null) return -1;
+		if (estat == null) throw new Exception("There's no data for this attribute");
 		try
 		{
-			
-			return atributs_algorisme.get(1).toInt();
+			return Integer.parseInt(estat.get(2));
+		}catch (Exception e)
+		{
+			throw new Exception("The data is invalid.");
 		}
-	}/*
+	}
+	
+	/** 
+	 * Returns the attribute Q for the algorithm.
+	 * 
+	 * @return		It returns the atribute Q as an int.
+	 * @exception	It throws an exception if the conversion fails or if the data is not found
+	 * 
+	 */
+	public int getQAlgorisme() throws Exception
+	{
+		if (estat == null) throw new Exception("There's no data for this attribute");
+		try
+		{
+			return Integer.parseInt(estat.get(1));
+		}catch (Exception e)
+		{
+			throw new Exception("The data is invalid.");
+		}
+	}
+	
+	/** 
+	 * Returns the algorithm that was being used.
+	 * 
+	 * @return		It returns the algorithm as an int. 
+	 * @exception	It throws an exception if the conversion fails or if the data is not found
+	 * 
+	 */
+	public int getAlgorismeSeleccionat() throws Exception
+	{
+		if (estat == null) throw new Exception("There's no data for this attribute");
+		try
+		{
+			return Integer.parseInt(estat.get(0));
+		}catch (Exception e)
+		{
+			throw new Exception("The data is invalid.");
+		}
+	}
+	
+	/** 
+	 * Returns the static attribute nom for ConjuntItems class.
+	 * 
+	 * @return		It returns the name of the item set.
+	 * @exception	It throws an exception if the conversion fails or if the data is not found
+	 * 
+	 */
+	public String getNomConjuntItems() throws Exception
+	{
+		if (estat == null) throw new Exception("There's no data for this attribute");
+		return estat.get(3);
+	}
+	
+	/** 
+	 * Returns the attribute for the item's id column position.
+	 * 
+	 * @return		It returns the position of the columns with the id
+	 * @exception	It throws an exception if the conversion fails or if the data is not found
+	 */
+	public int getPosicioID() throws Exception
+	{
+		if (estat == null) throw new Exception("There's no data for this attribute");
+		try
+		{
+			return Integer.parseInt(estat.get(4));
+		}catch (Exception e)
+		{
+			throw new Exception("The data is invalid.");
+		}
+	}
+	
+	/** 
+	 * Returns the attribute for the item's name column position.
+	 * 
+	 * @return		It returns the position of the columns with the name
+	 * @exception	It throws an exception if the conversion fails or if the data is not found
+	 */
+	public int getPosicioNom() throws Exception
+	{
+		if (estat == null) throw new Exception("There's no data for this attribute");
+		try
+		{
+			return Integer.parseInt(estat.get(5));
+		}catch (Exception e)
+		{
+			throw new Exception("The data is invalid.");
+		}
+	}
+	
 	
 /*-----MODIFICADORES-----*/   
 	
@@ -154,6 +252,19 @@ public class ControladorPersistencia {
     {
 		carpeta = new File(dades, s);
 		if (!carpeta.exists()) throw new FolderNotFoundException(s);
+		
+		
+		if (existeixenDadesPreprocesades())
+		{
+			 try { carregarEstat(); }
+			 catch (Exception e) {}
+		}
+		else
+		{
+			estat = new ArrayList<String>();
+			for (int i = 0; i < 6; ++i) estat.add("-1");
+		}
+		
 	}
 	
 	/**
@@ -162,7 +273,57 @@ public class ControladorPersistencia {
 	public void sortirDelProjecte()
     {
 		carpeta = null;
+		estat = null;
 	}
+    
+    public void setKAlgorisme(String k) throws Exception
+    {
+		if (carpeta == null) throw new Exception("You cannot save data");
+		else estat.set(2, k);
+		
+		guardarEstat();
+	}
+    
+    public void setQAlgorisme(String q) throws Exception
+    {
+		if (carpeta == null) throw new Exception("You cannot save data");
+		else estat.set(1, q);
+		
+		guardarEstat();
+	}
+	
+    public void setAlgorismeSeleccionat(String a) throws Exception
+    {
+		if (carpeta == null) throw new Exception("You cannot save data");
+		else estat.set(0, a);
+		
+		guardarEstat();
+	}
+    
+    public void setNomConjuntItems(String nom) throws Exception
+    {
+		if (carpeta == null) throw new Exception("You cannot save data");
+		else estat.set(3, nom);
+		
+		guardarEstat();
+	}
+    
+    public void setPosicioID(String pos_id) throws Exception
+    {
+		if (carpeta == null) throw new Exception("You cannot save data");
+		else estat.set(4, pos_id);
+		
+		guardarEstat();
+	}
+    
+    public void setPosicioNom(String pos_nom) throws Exception
+    {
+		if (carpeta == null) throw new Exception("You cannot save data");
+		else estat.set(5, pos_nom);
+		
+		guardarEstat();
+	}
+    
     
 /*-----LECTURA-----*/	
 	
@@ -236,20 +397,6 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * This function returns the 3 attributes that the class ControladorDominiAlgorisme needs.
-	 * The values are returned in the following order: algorithms_used, q, k
-	 * 
-	 * @return Returns an ArrayList of length 3 made of strings. The dirst one corresponds to
-	 * the algorithm_used parameter. The second one is Q, and the third one is K.
-	 */
-	public ArrayList<String> carregarAtributsAlgorisme() throws FolderNotValidException
-	{
-		ArrayList<String> a = carregarArxiuCarpeta("algorisme.csv").get(1);
-		if (a.size() != 3) throw new FolderNotValidException(carpeta.getName(), "algorisme.csv");
-		return a;
-	}
-	
-	/**
 	 * Returns a csv table read from memory
 	 * 
      * @return Returns an array of arrays of the values. Each array of arrays(line)
@@ -274,6 +421,23 @@ public class ControladorPersistencia {
 		}
 	}
 
+	public ArrayList<String> carregarMaxAtributsItems() throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("maxAtributs.items.csv");
+		return temp.get(0);
+	}
+	
+	public ArrayList<String> carregarMinAtributsItems() throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("minAtributs.items.csv");
+		return temp.get(0);
+	}
+	
+	public void carregarEstat() throws FolderNotValidException
+	{
+		estat = carregarArxiuCarpeta("estat.csv").get(1);
+		if (estat.size() != 6) throw new FolderNotValidException(carpeta.getName(), "estat.csv");
+	}
 	
 /*-----ESCRIPTURA-----*/
 	/**
@@ -294,7 +458,8 @@ public class ControladorPersistencia {
 			char c = s.charAt(i);
 			if (!(c >= 'A' && c <= 'Z') &&
 				!(c >= 'a' && c <= 'z') &&
-				!(c == '-') && !(c == '_') )
+				!(c >= '0' && c <= '9') &&
+				!(c == '-') && !(c == '_') && !(c == '.'))
 				throw new FolderNotValidException("El nom conté caràcters invàlids." + 
 					" Només es poden usar lletres, nombres, '-', '_', '.'", false);
 		}
@@ -305,7 +470,11 @@ public class ControladorPersistencia {
 			carpeta = null;
 			throw new FolderNotValidException("Ja existeix un projecte annomenat " + s, false);
 		}
-		else carpeta.mkdir();
+		if (!carpeta.mkdirs())
+		{
+			carpeta = null;
+			throw new FolderNotValidException("No es pot crear el projecte", false);
+		}
 	}
 	
 	private void guardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
@@ -321,6 +490,7 @@ public class ControladorPersistencia {
 		{
 			try
 			{
+				f.createNewFile();
 				cs.guardarArxiu(f, D);
 			} catch (IOException e) {
 				throw new FolderNotValidException(false);
@@ -347,9 +517,34 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "ratings.db.csv");
 	}
 	
-	public void guardarItems(ArrayList<ArrayList<String>> D) throws FolderNotValidException
+	public void guardarItems(ArrayList<String> head, ArrayList<ArrayList<ArrayList<String>>> body) throws FolderNotValidException
 	{
-		this.guardarDades(D, "items.csv");
+		ArrayList<ArrayList<String>> taula = new ArrayList<ArrayList<String>>();
+		
+		taula.add(head);
+		
+		for (int i = 0; i < body.size(); ++i)
+		{
+			ArrayList<String> temp = new ArrayList<String>();
+			ArrayList<ArrayList<String>> actual = body.get(i);
+			
+			for (int j = 0; j < actual.size(); ++j)
+			{
+				String s = "";
+				
+				for (int k = 0; k < actual.get(j).size(); ++k)
+				{
+					s += actual.get(j).get(k);
+					if (k != actual.get(j).size() - 1) s += ";";
+				}
+				
+				temp.add(s);
+			}
+			
+			taula.add(temp);
+		}
+		
+		this.guardarDades(taula, "items.csv");
 	}
 
 	public void guardarPesosAtributs(ArrayList<Float> pesos) throws FolderNotValidException
@@ -378,7 +573,23 @@ public class ControladorPersistencia {
 		this.guardarDades(D, "tipus.csv");
 	}
 	
-	public void guardarAtributsAlgorisme(int alg, int q, int k) throws FolderNotValidException
+	public void guardarMaxAtributsItems(ArrayList<String> max_atr) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(max_atr);
+		
+		this.guardarDades(D, "maxAtributs.items.csv");
+	}
+	
+	public void guardarMinAtributsItems(ArrayList<String> min_atr) throws FolderNotValidException
+	{
+		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+		D.add(min_atr);
+		
+		this.guardarDades(D, "minAtributs.items.csv");
+	}
+	
+	public void guardarEstat() throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> a = new ArrayList<ArrayList<String>>();
 		
@@ -386,13 +597,13 @@ public class ControladorPersistencia {
 		a.get(0).add("algorisme_seleccionat");
 		a.get(0).add("q");
 		a.get(0).add("k");
+		a.get(0).add("nom_cjt_items");
+		a.get(0).add("pos_id");
+		a.get(0).add("pos_nom");
 		
-		a.add(new ArrayList<String>());
-		a.get(1).add(Integer.toString(alg));
-		a.get(1).add(Integer.toString(q));
-		a.get(1).add(Integer.toString(k));
+		a.add(estat);
 		
-		this.guardarDades(a, "algorisme.csv");
+		this.guardarDades(a, "estat.csv");
 	}
 
 
