@@ -7,7 +7,6 @@ import java.util.Collections;
 import src.recomanador.domini.Utils.*;
 import src.recomanador.domini.Item.tipus;
 
-import src.recomanador.excepcions.ItemNotCompatibleException;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 
@@ -419,11 +418,10 @@ public class ConjuntItems extends ArrayList<Item> {
         return sim;
     }
 
-    public static float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException, ItemNotCompatibleException {
-        if (i1.getNumAtributs() != i2.getNumAtributs()) throw new ItemNotCompatibleException("Different sizes");
+    public static float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException {
 
         float res = (float)0.0, pesTotal = (float)0.0;
-        for (int i = 0; i < i1.getNumAtributs(); ++i) {
+        for (int i = 0; i < Item.getNumAtributs(); ++i) {
             float dist = (float)0.0;
             if (Item.getTipus(i) == tipus.S) {
                 float temp;

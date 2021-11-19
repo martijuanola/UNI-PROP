@@ -2,7 +2,6 @@ package src.recomanador.domini;
 
 import java.util.ArrayList;
 
-import src.recomanador.excepcions.ItemNotCompatibleException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.UserNotFoundException;
 import java.util.Collections;
@@ -58,7 +57,7 @@ public class ContentBasedFiltering {
                 float similitud = (float)0.0;
                 try {
                     similitud = ConjuntItems.distanciaItem(iNV, val.getItem());
-                } catch (ItemTypeNotValidException | ItemNotCompatibleException e) {
+                } catch (ItemTypeNotValidException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }

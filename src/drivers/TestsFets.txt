@@ -1,6 +1,7 @@
 Classes sense errors i amb driver:
 	- Recomanacio 
 	- ConjuntUsuaris
+	- UnionIntersection
 (faltaria en realitat testejar-les amb Item ja correcte per ser estrictament correcte)
 
 
