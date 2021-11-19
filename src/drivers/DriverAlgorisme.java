@@ -42,14 +42,14 @@ public class DriverAlgorisme {
         System.out.print(">>>>> ");
 
         Boolean bool1 = true;
-        String string1 = "";
+        String PROJECTE = "";
         int int1 = 0;
 
         while (bool1) {
-            string1 = in.next();
+            PROJECTE = in.next();
 
             try {
-                domini.carregarCarpeta(string1);
+                domini.carregarCarpeta(PROJECTE);
                 bool1 = false;
             }
             catch(FolderNotFoundException | FolderNotValidException e) {
@@ -66,27 +66,10 @@ public class DriverAlgorisme {
         ConjuntRecomanacions recomanacions = domini.cr;
         ConjuntUsuaris usuaris = domini.cu;
 
-        System.out.println("Carregat projecte " + string1 + ".");
+        System.out.println("Carregat projecte " + PROJECTE + ".");
         System.out.println();
 
-        System.out.println("Selecciona quants Items vols recomanats (i.e. 5):");
-        System.out.print(">>>>> ");
-        bool1 = true;
-        while(bool1) {
-            int1 = in.nextInt();
-            try {
-                algorisme.set_Q(int1);
-                bool1 = false;
-            }
-            catch (DataNotValidException e) {
-                System.out.println(e);
-                System.out.print(">>>>> ");
-            }
-        }
-
-        System.out.println();
-
-        System.out.println("Selecciona el valor K (i.e. 10):");
+        System.out.println("Selecciona el valor K (i.e. " + usuaris.size()/1000 + "):");
         System.out.print(">>>>> ");
         bool1 = true;
         while(bool1) {
@@ -138,8 +121,25 @@ public class DriverAlgorisme {
         switch (MODE_SELECCIONAT) {
             case 0:
 
+            System.out.println("Selecciona quants Items vols recomanats (i.e. 5):");
+            System.out.print(">>>>> ");
+            bool1 = true;
+            while(bool1) {
+                int1 = in.nextInt();
+                try {
+                    algorisme.set_Q(int1);
+                    bool1 = false;
+                }
+                catch (DataNotValidException e) {
+                    System.out.println(e);
+                    System.out.print(">>>>> ");
+                }
+            }
+            System.out.println();
+
             int user_ID = 0;
             System.out.println("Escull una ID d'usuari:");
+            System.out.println("(p.ex.: " + usuaris.get(0).getId() + ", " + usuaris.get(1).getId() + ", " + usuaris.get(2).getId() + ")");
             System.out.print(">>>>> ");
             bool1 = true;
             while(bool1) {
@@ -168,30 +168,61 @@ public class DriverAlgorisme {
             break;
 
             case 1:
+                try {algorisme.set_Q(items.size());}
+                catch (DataNotValidException e) {System.out.println(e); break;}
+
+                ConjuntUsuaris usuarisUnknown = new ConjuntUsuaris();
+                ConjuntRecomanacions recomanacionsUnknown = new ConjuntRecomanacions();
+            
                 try {
-                    ArrayList<ArrayList<String>> raw = persistencia.carregarFitxerExtern("data/movies-250/ratings.test.known.csv");
-                    System.out.println("USUARIS1 = " + usuaris.size());
+                    ArrayList<ArrayList<String>> raw = persistencia.carregarFitxerExtern("data/" +PROJECTE+ "/ratings.test.known.csv");
                     usuaris.afegirDades(raw);
                     recomanacions.afegirDades(items,usuaris,raw);
+
+                    raw = persistencia.carregarFitxerExtern("data/" +PROJECTE+ "/ratings.test.unknown.csv");
+                    usuarisUnknown.afegirDades(raw);
+                    recomanacionsUnknown.afegirDades(items, usuarisUnknown, raw);
                 }
                 catch(Exception e) {
                     System.out.println("data not added!!!");
                     System.out.println("ERROR: " + e.getMessage());
-                }
-                
-                System.out.println("INDEX = " + usuaris.cercaBinaria(159588));
-                System.out.println("USUARIS2 = " + usuaris.size());
-                items_recomanats = algorisme.run_algorithm(159588, items, usuaris, recomanacions);
-            
-
-                System.out.println("Et recomanem aquests items dels " + items.size() + " del nostre catàleg:");
-                System.out.println("(ID item, puntuacio estimada)");
-                for (int i = 0; i < items_recomanats.size(); ++i) {
-                    ItemValoracioEstimada it = items_recomanats.get(i);
-                    System.out.println("(" + it.item.getId() + "," + it.valoracioEstimada +")");
+                    break;
                 }
 
-            break;
+                int DCG = 0;
+                int IDCG = 0;
+                for(int idx_unknown = 0; idx_unknown < usuarisUnknown.size(); ++idx_unknown) {
+                    int id_unknown = usuarisUnknown.get(idx_unknown).getId();
+                    ConjuntRecomanacions val_unknown = usuarisUnknown.get(idx_unknown).getValoracions();
+
+                    items_recomanats = algorisme.run_algorithm(id_unknown, items, usuaris, recomanacions);
+
+                    int DCG_user = 0;
+
+                    for (int val_idx = 0; val_idx < val_unknown.size(); ++val_idx) {
+                        int item_unknown = val_unknown.get(val_idx).getItem().getId();
+
+                        //System.out.println(val_unknown.get(val_idx).getVal());
+
+                        int i = 0;
+                        while (i < items_recomanats.size() && items_recomanats.get(i).item.getId() != item_unknown) ++i;
+                        
+                        ++i; //the first index is 1. zero gives infinity and we wouldn't want to claim our algorithm is infinitely good.
+
+                        if (i < items_recomanats.size()) {
+                            DCG_user += (int) Math.round((Math.pow(2, val_unknown.get(val_idx).getVal()) - 1)/(Math.log(i+1)/Math.log(2)));
+                            //IDCG += (int) Math.round((Math.pow(2, val_unknown.get(val_idx).getVal()) - 1)/(Math.log(i+1)/Math.log(2)));
+                        }                        
+                    }
+
+                    System.out.println("L'usuari " +id_unknown+ " contribueix " +DCG_user+ " al DCG.");
+                    System.out.println();
+
+                    DCG += DCG_user;
+                }
+
+                System.out.println("DCG TOTAL: " +DCG);
+                break;
         }
 
         //int user_ID = usuaris.get(0).getId();

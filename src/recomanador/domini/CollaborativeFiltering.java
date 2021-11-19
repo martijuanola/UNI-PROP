@@ -178,7 +178,6 @@ public class CollaborativeFiltering {
         }        
 
         ArrayList<Usuari> usuaris_cluster = new ArrayList<Usuari>();
-        System.out.println("the sussy is " + user_ID);
         int centroid = closest_centroid.get(usuaris.cercaBinaria(user_ID));
         for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
             if (closest_centroid.get(idx_usuari) == centroid) {
