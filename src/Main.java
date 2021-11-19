@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Random;
 
 import src.recomanador.domini.*;
-import src.recomanador.domini.Utils.Search;
 import src.recomanador.excepcions.DataNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;

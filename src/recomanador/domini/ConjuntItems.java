@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import src.recomanador.domini.Utils.Search;
-import src.recomanador.domini.Utils.StringOperations;
-import src.recomanador.domini.Utils.UnionIntersection;
+import src.recomanador.domini.Utils.*;
 import src.recomanador.domini.Item.tipus;
 
 import src.recomanador.excepcions.ItemNotCompatibleException;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
-//prova2
+
 /**
  * This class represents a set of items in the form of an ArrayList extension. 
  * It keeps the items sorted according to the item's ID, 
@@ -186,7 +184,7 @@ public class ConjuntItems extends ArrayList<Item> {
     
     //check
     public void eliminarItem(int id) { //Cerca dicotòmica
-        int pos = Search.binarySearchItem(this, id, 0, size()-1);
+        int pos = binarySearchItem(this, id, 0, size()-1);
         remove(pos);
     }
 
@@ -228,7 +226,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
     //check
     public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
-        int pos = Search.binarySearchItem(this, id, 0, size()-1);
+        int pos = binarySearchItem(this, id, 0, size()-1);
         if (pos < 0) throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
         return get(pos);
     }
@@ -250,7 +248,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
     //check
     public boolean existeixItem(int id) {
-        int res = Search.binarySearchItem(this, id, 0, size()-1);
+        int res = binarySearchItem(this, id, 0, size()-1);
         return res > -1;
     }
 
@@ -441,6 +439,20 @@ public class ConjuntItems extends ArrayList<Item> {
         res = res/pesTotal;
         return res;
     }
+    
+    public static <T extends Comparable<T>> int binarySearchItem(ArrayList<Item> list, int id, int lo, int hi) {
+        if (hi >= lo) {
+            int mid = lo + (hi - lo) / 2;
+            int cmp = list.get(mid).getId();
+            
+            if (cmp == id) return mid;
+            if (cmp > id) return binarySearchItem(list, id, lo, mid-1);
+            return binarySearchItem(list, id, mid+1, hi);
+
+        }
+        return -1;
+    }
+    
     public void printItems() {
         System.out.println("Nom conjunt: " + ConjuntItems.nom);
         for (int i = 0; i < Item.getNumAtributs(); ++i) {

@@ -2,6 +2,7 @@ package src.recomanador.domini.Utils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import src.recomanador.domini.Item;
 
 public class UnionIntersection {
     
@@ -35,4 +36,5 @@ public class UnionIntersection {
 
         return result;
     }
+
 }
