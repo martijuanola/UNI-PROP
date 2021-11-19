@@ -285,6 +285,13 @@ public class ControladorPersistencia {
 		estat = null;
 	}
     
+    /**
+	 * Sets the value of the algorithm's K as the one specified.
+	 * It also stores into estat.csv all the parameters from the array estat. 
+	 * 
+	 * @param	k	Indicates the number K that the algorithm had used. 
+	 * @exception Exception		Throws an exception if you are not in a valid folder. 
+	 */
     public void setKAlgorisme(String k) throws Exception
     {
 		if (carpeta == null) throw new Exception("You cannot save data");
@@ -293,6 +300,13 @@ public class ControladorPersistencia {
 		guardarEstat();
 	}
     
+    /**
+	 * Sets the value of the algorithm's Q as the one specified.
+	 * It also stores into estat.csv all the parameters from the array estat. 
+	 * 
+	 * @param	q	Indicates the number Q that the algorithm had used. 
+	 * @exception Exception		Throws an exception if you are not in a valid folder. 
+	 */
     public void setQAlgorisme(String q) throws Exception
     {
 		if (carpeta == null) throw new Exception("You cannot save data");
@@ -316,6 +330,13 @@ public class ControladorPersistencia {
 		guardarEstat();
 	}
     
+    /**
+	 * Sets the value of the item's set name as the one specified.
+	 * It also stores into estat.csv all the parameters from the array estat. 
+	 * 
+	 * @param	name	Indicates the name nom that the items used. 
+	 * @exception Exception		Throws an exception if you are not in a valid folder. 
+	 */
     public void setNomConjuntItems(String nom) throws Exception
     {
 		if (carpeta == null) throw new Exception("You cannot save data");
@@ -324,6 +345,13 @@ public class ControladorPersistencia {
 		guardarEstat();
 	}
     
+    /**
+	 * Sets the value of the id column position from the item's set as the one specified.
+	 * It also stores into estat.csv all the parameters from the array estat. 
+	 * 
+	 * @param	pos_id	Indicates the column position that is used. 
+	 * @exception Exception		Throws an exception if you are not in a valid folder. 
+	 */
     public void setPosicioID(String pos_id) throws Exception
     {
 		if (carpeta == null) throw new Exception("You cannot save data");
