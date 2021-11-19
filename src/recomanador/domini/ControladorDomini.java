@@ -158,7 +158,7 @@ public class ControladorDomini {
      * @throws     ItemWeightNotCorrectException  Thrown when the weight value is not valid
      */
     public void setPes(int a, float w) throws ItemWeightNotCorrectException {
-        ci.assignarPes(a, w);
+        Item.setPes(a, w);
     }
 
 
@@ -186,9 +186,17 @@ public class ControladorDomini {
 
     public void prova2() {
         ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
-        System.out.println("hey " +ci.size());
-        for (int i = 0; i < ci.size(); ++i) {
+        System.out.println("hey " + ci.size() + " atributs " + Item.getNumAtributs());
+        ci.printItems();
+        for (int i = 1; i < ci.size(); ++i) {
+            if (ci.get(i-1).getId() > ci.get(i).getId()) System.out.println("No funciona!: " +ci.get(i-1).getId() + " " + ci.get(i).getId());
             if (!ci.existeixItem(ci.get(i).getId())) System.out.println("No funciona!");
         }
+        for (int i = 0; i < Item.getNumAtributs(); ++i) {
+            System.out.println("\t tipus " + Item.tipusToString(Item.getTipus(i)) + " nom " + Item.getNomAtribut(i));
+            System.out.println("maxAtr " + i + " " + ci.getMaxAtribut(i));
+            System.out.println("minAtr " + i + " " + ci.getMinAtribut(i));
+        }
+
     }
 }
