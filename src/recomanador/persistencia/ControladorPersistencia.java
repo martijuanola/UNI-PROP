@@ -17,16 +17,38 @@ public class ControladorPersistencia {
     
 /*-----ATRIBUTS-----*/
 	/**
-	 * {@link 1}
+	 * Contains a File that indicates wich project is being used from the
+	 * ./data folder.
 	 */
     private File carpeta;
+    /**
+	 * Contains a File with the path and other information about the folder
+	 * ./data, where projects will be stored.
+	 */
     private File dades; 		//Carpeta de dades
+    /**
+	 * Object from the class ControladorLoad used for reading the .csv data.
+	 */
     ControladorLoad cl;
+    /**
+	 * Object from the class ControladorSave used for storing the data as .csv.
+	 */
     ControladorSave cs;
 	
 	//Atributs que son usats per diverses parts del programa. Es troben en el següent ordre:
 	//			0		    | 1 | 2 | 		3	    | 	4	 | 	 5
 	//algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
+	/**
+	 * Object wich contains some data that is used by the program. <p>
+	 * 
+	 * The attributes are ordered inside the array as stated below: <p>
+	 * &emsp;&emsp; <b>0.</b> algorisme_seleccionat <p>
+	 * &emsp;&emsp; <b>1.</b> Q <p>
+	 * &emsp;&emsp; <b>2.</b> K <p>
+	 * &emsp;&emsp; <b>3.</b> nom_cjt_items <p>
+	 * &emsp;&emsp; <b>4.</b> pos_id <p>
+	 * &emsp;&emsp; <b>5.</b> pos_nom <p>
+	 */
 	private ArrayList<String>  estat;
 	
 /*-----CREADORES-----*/   
@@ -826,11 +848,11 @@ public class ControladorPersistencia {
  * ho fan les classes privades que es criden
  */
 	/**
-	 * Implements a public format for the function guardarDades(...).
+	 * Implements a public format for the function carregarArxiuCarpeta(...).
 	 * Reads the file specified from the folder "carpeta". <p>
 	 * After Testing, this function will be eliminated. <p>
 	 * For a demonstration that this function will work if and only if
-	 * guardarDades(...) works, go to line 812 on the source code. 
+	 * carregarArxiuCarpeta(...) works, go to line 834 on the source code. 
 	 * The demonstration lets us test the private class unsing this one.
      * 
      * @param		s		Specifies the file that will be read.
@@ -850,7 +872,7 @@ public class ControladorPersistencia {
 	 * It saves the data into the file specified. <p>
 	 * After Testing, this function will be eliminated. <p>
 	 * For a demonstration that this function will work if and only if
-	 * guardarDades(...) works, go to line 812 on the source code. 
+	 * guardarDades(...) works, go to line 834 on the source code. 
 	 * The demonstration lets us test the private class unsing this one.
      * 
      * @param		D		It's an ArrayList of ArrayList of Strings. The array
