@@ -49,7 +49,7 @@ public class ControladorPersistencia {
 	 * &emsp;&emsp; <b>4.</b> pos_id <p>
 	 * &emsp;&emsp; <b>5.</b> pos_nom <p>
 	 */
-	private ArrayList<String>  estat;
+	private ArrayList<String> estat;
 	
 /*-----CREADORES-----*/   
     /**
