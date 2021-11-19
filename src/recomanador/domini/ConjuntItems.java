@@ -34,7 +34,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
         
-        Item.assignarNomAtributs(nAtributs);
+        Item.setNomAtributs(nAtributs);
 
         if (!inicialitzar(nAtributs.size())) throw new ItemTypeNotValidException("Items has no column named \"id\"");
 
@@ -62,10 +62,10 @@ public class ConjuntItems extends ArrayList<Item> {
 
         Item.setPesos(pesos);
         Item.setTipus(tipusAtribut);
-        Item.assignarNomAtributs(items.get(0));
-        
-        ConjuntItems.assignarMaxAtributs(maxAtributs);
-        ConjuntItems.assignarMinAtributs(minAtributs);
+        Item.setNomAtributs(items.get(0));
+
+        ConjuntItems.setMaxAtributs(maxAtributs);
+        ConjuntItems.setMinAtributs(minAtributs);
 
         for (int i = 1; i < items.size(); ++i) {
             ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
@@ -73,17 +73,17 @@ public class ConjuntItems extends ArrayList<Item> {
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
             Item it = new Item(str);
-            add(it);
+            addIni(it);
         }
     }
 
     //check
-    private static void assignarMinAtributs(ArrayList<Float> minAtributs2) {
+    public static void setMinAtributs(ArrayList<Float> minAtributs2) {
         ConjuntItems.minAtributs = minAtributs2;
     }
 
     //check
-    private static void assignarMaxAtributs(ArrayList<Float> maxAtributs2) {
+    public static void setMaxAtributs(ArrayList<Float> maxAtributs2) {
         ConjuntItems.maxAtributs = maxAtributs2;
     }
 

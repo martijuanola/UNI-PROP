@@ -131,7 +131,7 @@ public class Item implements Comparable<Item>{
 
     /* AFEGITS */
 
-    public static void assignarNomAtributs(ArrayList<String> n) {
+    public static void setNomAtributs(ArrayList<String> n) {
         Item.nomAtribut = n;
     }
 

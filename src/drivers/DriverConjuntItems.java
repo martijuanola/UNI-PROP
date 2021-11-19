@@ -105,6 +105,14 @@ public class DriverConjuntItems {
 
 			//executar la funcionalitat
 			try {
+				ConjuntItems.nom = null;
+				ConjuntItems.setMaxAtributs(null);
+				ConjuntItems.setMinAtributs(null);
+				Item.setPesos(null);
+				Item.setTipus(null);
+				Item.setNomAtributs(null);
+				Item.setId(-1);
+				Item.setNomA(-1);
 				ci = new ConjuntItems(cp.carregarFitxerExtern(path));
 			} catch (ItemTypeNotValidException e) {
 				System.out.println("ERROR: " + e.getMessage());
@@ -136,7 +144,7 @@ public class DriverConjuntItems {
 			//demanar l'input
 			System.out.println("Choose one of this folders with preprocessed data:");
 			System.out.println(cp.llistatCarpetes());
-			String path = "testing-load-basic";//scanner.next();
+			String path = "test-conjuntItems";//scanner.next();
 
 			//executar la funcionalitat
 			try {
@@ -157,28 +165,23 @@ public class DriverConjuntItems {
 				for (int i = 0; i < pesosS.size(); ++i) {
 					pesos.add(Float.parseFloat(pesosS.get(i)));
 				}
-				System.out.println("HOLA!");
 				ArrayList<String> tipusS = cp.carregarTipusAtributs();
 				ArrayList<tipus> tipus = new ArrayList<>();
 				for (int i = 0; i < tipusS.size(); ++i) {
 					tipus.add(StringOperations.stringToType(tipusS.get(i)));
 				}
-				System.out.println("HOLA!");
 				ArrayList<String> maxIS = cp.carregarMaxAtributsItems();
 				ArrayList<Float> maxI = new ArrayList<>();
 				for (int i = 0; i < maxIS.size(); ++i) {
 					maxI.add(Float.parseFloat(maxIS.get(i)));
 				}
-				System.out.println("HOLA!");
 				ArrayList<String> minIS = cp.carregarMinAtributsItems();
 				ArrayList<Float> minI = new ArrayList<>();
 				for (int i = 0; i < minIS.size(); ++i) {
 					maxI.add(Float.parseFloat(minIS.get(i)));
 				}
-				System.out.println("HOLA!");
 				ci = new ConjuntItems(cp.carregarItemsCarpeta(), pesos, tipus, 
 				5, -1, "test", maxI, minI);
-				System.out.println("funca");
 			}
 			catch (Exception e) {
 				System.out.println("ERROR: " + e.getMessage());
@@ -224,9 +227,9 @@ public class DriverConjuntItems {
 	}
 
     private static void printCurrentState() {
-		System.out.println("HOLA!");
+		if (ConjuntItems.nom != null) System.out.println(ConjuntItems.nom);
+		else System.out.println("This set has no name");
 		System.out.println(ci.size() + " items loaded with " + Item.getNumAtributs() + " atributes each one");
-		System.out.println("HOLA222!");
 		System.out.println("name_colum type weight: ");
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             
