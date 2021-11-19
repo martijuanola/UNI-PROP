@@ -16,6 +16,9 @@ import src.recomanador.excepcions.*;
 public class ControladorPersistencia {
     
 /*-----ATRIBUTS-----*/
+	/**
+	 * {@link 1}
+	 */
     private File carpeta;
     private File dades; 		//Carpeta de dades
     ControladorLoad cl;
@@ -447,17 +450,50 @@ public class ControladorPersistencia {
 		return temp.get(0);
 	}
 	
+	/**
+	 * Returns some information read from memory about the items: the
+	 * type of the attributes (floats, integers, strings, ...).
+	 * 
+     * @return Returns an ArrayList of the types (represented as Strings). 
+     * 
+     * @exception FolderNotValidException Throws an exception if the file is corrupted or is missing.
+     */
 	public ArrayList<String> carregarTipusAtributs() throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("tipus.csv");
 		return temp.get(0);
 	}
 	
+	/**
+	 * Returns some valorations read from memory. These are used for 
+	 * testing the algoritm, and it's data that can be added to the program.
+	 * 
+     * @return Returns an ArrayList of ArrayList of the values. Each ArrayList 
+     * of ArrayList(line) contains an array of strings (columns).
+     * The first line corresponds to the header of the file, where each
+     * column is its identifier. 
+     * The rest of the lines contain the values read.
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
+     */
 	public ArrayList<ArrayList<String>> carregarTestKnown() throws FolderNotValidException
 	{
 		return carregarArxiuCarpeta("ratings.test.known.csv");
 	}
 	
+	/**
+	 * Returns some valorations read from memory. These are used for testing 
+	 * the algoritm, but it's not intended for them to be added to the program's 
+	 * input, as this is used for comparing the results of the algorithm.
+	 * 
+     * @return Returns an ArrayList of ArrayList of the values. Each ArrayList 
+     * of ArrayList(line) contains an array of strings (columns).
+     * The first line corresponds to the header of the file, where each
+     * column is its identifier. 
+     * The rest of the lines contain the values read.
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
+     */
 	public ArrayList<ArrayList<String>> carregarTestUnknown() throws FolderNotValidException
 	{
 		return carregarArxiuCarpeta("ratings.test.unknown.csv");
@@ -466,10 +502,12 @@ public class ControladorPersistencia {
 	/**
 	 * Returns a csv table read from memory
 	 * 
+	 * @param	s	Specifies the absolute path of the file you want to read
+	 * 
      * @return Returns an array of arrays of the values. Each array of arrays(line)
      * contains an array of strings (columns). 
      * The first line corresponds to the header of the file, where each
-     * column its identifier. 
+     * column is its identifier. 
      * The rest of the lines contain the values read. <p>
      * 
      * @exception FolderNotValidException Throws a FileNotValidException if the file is corrupted.
@@ -488,18 +526,42 @@ public class ControladorPersistencia {
 		}
 	}
 
+	/**
+	 * Returns some information read from memory about the items: the
+	 * maximum value of every attribute from the item set.
+	 * 
+     * @return Returns an ArrayList of the values (represented as Strings). 
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
+     */
 	public ArrayList<String> carregarMaxAtributsItems() throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("maxAtributs.items.csv");
 		return temp.get(0);
 	}
 	
+	/**
+	 * Returns some information read from memory about the items: the
+	 * minimum value of every attribute from the item set.
+	 * 
+     * @return Returns an ArrayList of the values (represented as Strings). 
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
+     */
 	public ArrayList<String> carregarMinAtributsItems() throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("minAtributs.items.csv");
 		return temp.get(0);
 	}
 	
+	/**
+	 * Loads the values of the ArrayList estat if the folder specified by the 
+	 * attribute carpeta contains them.
+	 * 
+     * @return Returns an ArrayList of the values (represented as Strings). 
+     * 
+     * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
+     */
 	public void carregarEstat() throws FolderNotValidException
 	{
 		estat = carregarArxiuCarpeta("estat.csv").get(1);
@@ -544,6 +606,21 @@ public class ControladorPersistencia {
 		}
 	}
 	
+	/**
+	 * Save the data into the file specified. <p>
+	 * To avoid data loss, a temporal file is created, and then it's replaced
+	 * by the original one. This prevents the anihilation of the data in case
+	 * that the computer suddenlty stops working.
+     * 
+     * @param		D		It's an ArrayList of ArrayList of Strings. The array
+     * needs to have the same number of columns for each row. Usually, the first
+     * line is interpreted as the header, but it's not mandatory.
+     * @param		s		It's the name that the file will have. It's recommended
+     * that it ends with .csv, as the data will be stored in that format.
+     * 
+     * @exception FolderNotValidException Throws a FileNotValidException if the file is corrupted.
+     * 
+     */
 	private void guardarDades(ArrayList<ArrayList<String>> D, String s) throws FolderNotValidException
 	{
 		if (carpeta == null) throw new FolderNotValidException();
@@ -578,7 +655,8 @@ public class ControladorPersistencia {
 			}			
 		}
 	}
-
+	
+	
 	public void guardarRecomanacions(ArrayList<ArrayList<String>> D) throws FolderNotValidException
 	{
 		this.guardarDades(D, "ratings.db.csv");
@@ -623,15 +701,7 @@ public class ControladorPersistencia {
 		
 		this.guardarDades(D, "pesos.csv");
 	}
-	
-	/*public void guardarPesosAtributs(ArrayList<String> pesos) throws FolderNotValidException
-	{
-		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
-		D.add(pesos);
 		
-		this.guardarDades(D, "pesos.csv");
-	}*/
-	
 	public void guardarTipusAtributs(ArrayList<String> tip) throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
@@ -679,8 +749,9 @@ public class ControladorPersistencia {
  * Serverixen només per a poder testejar-les. En la implementació
  * final s'hauran d'eliminar*/
 
-/* Per aquestes funcions no es faran testos especifics, sinó que s'usaran per
- * a provar les classes privades que es criden.
+/**
+ * Per aquestes funcions no es faran testos especifics, sinó que s'usaran per
+ * a provar les classes privades que es criden. <p>
  * Demostració formal de que la seva correctesa d'una funció depèn de la funció que crida:
  * És facil veure que aquestes classes funcionaran si i només si funcionen les classes
  * que criden (ja que aquestes classes es componen d'una unica crida).
@@ -695,7 +766,6 @@ public class ControladorPersistencia {
  * Per tant, queda demostrat que aquestes classes funcionaran si i només si
  * ho fan les classes privades que es criden
  * */
- 
 	public ArrayList<ArrayList<String>> TESTcarregarArxiuCarpeta(String s) throws FolderNotValidException
 	{
 		return this.carregarArxiuCarpeta(s);
