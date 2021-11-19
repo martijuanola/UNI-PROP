@@ -12,7 +12,7 @@ import src.recomanador.domini.Item.tipus;
 import src.recomanador.excepcions.ItemNotCompatibleException;
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
-
+//prova2
 /**
  * This class represents a set of items in the form of an ArrayList extension. 
  * It keeps the items sorted according to the item's ID, 
