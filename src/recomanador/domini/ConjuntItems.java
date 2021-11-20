@@ -35,7 +35,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException, ItemWeightNotCorrectException {
         //Nom atributs
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
-        Item.assignarNomAtributs(nAtributs);
+        Item.setNomAtributs(nAtributs);
 
         //Pesos default(100.0) + tipus default(String) + id
         if (!inicialitzar(nAtributs.size())) throw new ItemTypeNotValidException("Items has no column named \"id\"");

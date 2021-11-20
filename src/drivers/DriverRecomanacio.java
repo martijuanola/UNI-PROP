@@ -55,7 +55,7 @@ public class DriverRecomanacio {
 			return;
 		}
 		Item.setTipus(at);
-		Item.assignarNomAtributs(as);
+		Item.setNomAtributs(as);
 		Item.setId(0);
 
 		String s = "Options: \n\n" +
