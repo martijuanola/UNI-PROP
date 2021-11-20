@@ -5,6 +5,7 @@ import src.recomanador.domini.ConjuntRecomanacions;
 import src.recomanador.domini.ConjuntUsuaris;
 import src.recomanador.domini.ControladorDomini;
 import src.recomanador.domini.ControladorDominiAlgorisme;
+import src.recomanador.domini.Item;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
 import src.recomanador.excepcions.UserNotFoundException;
@@ -13,6 +14,7 @@ import src.recomanador.excepcions.DataNotValidException;
 import src.recomanador.persistencia.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Collections;
 
 import src.recomanador.domini.ItemValoracioEstimada;
 
@@ -190,38 +192,50 @@ public class DriverAlgorisme {
                 }
 
                 int DCG = 0;
-                int IDCG = 0;
+                Double IDCG = 0d;
+
                 for(int idx_unknown = 0; idx_unknown < usuarisUnknown.size(); ++idx_unknown) {
                     int id_unknown = usuarisUnknown.get(idx_unknown).getId();
-                    ConjuntRecomanacions val_unknown = usuarisUnknown.get(idx_unknown).getValoracions();
+                    ConjuntRecomanacions val_unknown_aux = usuarisUnknown.get(idx_unknown).getValoracions();
+
+                    //Per calcular el NDGC, ens cal ordenar les valoracions de l'usuari a Unknown per valoració.
+                    //Per fer-ho, podem reutilitzar la classe itemValoracioEstimada
+                    ArrayList<ItemValoracioEstimada> val_unknown = new ArrayList<ItemValoracioEstimada>(0);
+                    for (int val_idx = 0; val_idx < val_unknown_aux.size(); ++val_idx) {
+                        val_unknown.add(new ItemValoracioEstimada
+                        (val_unknown_aux.get(val_idx).getVal(), val_unknown_aux.get(val_idx).getItem()));
+                    }
+                    Collections.sort(val_unknown);
 
                     items_recomanats = algorisme.run_algorithm(id_unknown, items, usuaris, recomanacions);
-
                     int DCG_user = 0;
 
                     for (int val_idx = 0; val_idx < val_unknown.size(); ++val_idx) {
-                        int item_unknown = val_unknown.get(val_idx).getItem().getId();
+                        Item item_unknown = val_unknown.get(val_idx).item;
 
-                        //System.out.println(val_unknown.get(val_idx).getVal());
+                        //System.out.println(val_unknown.get(val_idx).valoracioEstimada);
 
                         int i = 0;
-                        while (i < items_recomanats.size() && items_recomanats.get(i).item.getId() != item_unknown) ++i;
+                        while (i < items_recomanats.size() && items_recomanats.get(i).item != item_unknown) ++i;
                         
                         ++i; //the first index is 1. zero gives infinity and we wouldn't want to claim our algorithm is infinitely good.
 
                         if (i < items_recomanats.size()) {
-                            DCG_user += (int) Math.round((Math.pow(2, val_unknown.get(val_idx).getVal()) - 1)/(Math.log(i+1)/Math.log(2)));
-                            //IDCG += (int) Math.round((Math.pow(2, val_unknown.get(val_idx).getVal()) - 1)/(Math.log(i+1)/Math.log(2)));
+                            DCG_user += (int) Math.round((Math.pow(2, val_unknown.get(val_idx).valoracioEstimada) - 1)/(Math.log(i+1)/Math.log(2)));
+                            IDCG += Math.round((Math.pow(2, val_unknown.get(val_idx).valoracioEstimada) - 1)/(Math.log(val_idx+1+1)/Math.log(2)));
                         }                        
                     }
 
                     System.out.println("L'usuari " +id_unknown+ " contribueix " +DCG_user+ " al DCG.");
+                    System.out.println("("+(idx_unknown+1)+"/"+usuarisUnknown.size()+")");
                     System.out.println();
 
                     DCG += DCG_user;
                 }
 
                 System.out.println("DCG TOTAL: " +DCG);
+                System.out.println("IDCG TOTAL: " +IDCG);
+                System.out.println("NORMALIZED DCG : " +DCG/IDCG);
                 break;
         }
 
