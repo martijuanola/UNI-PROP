@@ -41,7 +41,7 @@ public class DriverStringOperations {
 		"7. convert a date to time\n" +
 		"8. split a string\n" +
 		"9. print a string VERY large (to represent an infinit string)\n" +
-		"10. is boolean (string)\n";
+		"10. minimum distance among 2 strings\n";
 		
 		System.out.println("Testing class StringOperations");
 		System.out.println(s);
@@ -91,7 +91,7 @@ public class DriverStringOperations {
 					testInfinitString();
 					break;
 				case 10:
-					//mostra_6();
+					testMinDis();
 					break;
 				default:
 			}
@@ -271,5 +271,28 @@ public class DriverStringOperations {
 		//executar la funcionalitat
 
 		System.out.println("Infinit string: " + c.infinitString());
+	}
+	static private void testMinDis() {
+		System.out.println("Testing function minDist()");
+		//demanar l'input
+		System.out.println("Write 2 strings to know the minimum distance between them");
+			
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("String 1: ");
+		String s1 = scanner.nextLine();
+		System.out.print("String 2: ");
+		String s2 = scanner.nextLine();
+		
+		int n = s1.length();
+		int m = s2.length();
+		int[][] dp = new int[n+1][m+1];
+		for (int i = 0; i < n+1; ++i)
+			for (int j = 0; j < m+1; ++j) dp[i][j] = -1;
+		
+		//executar la funcionalitat
+		int dist = c.minDis(s1, s2, n, m, dp);
+		
+		//mostrar output
+		System.out.println("Distance: " + dist);
 	}
 }
