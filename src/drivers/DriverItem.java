@@ -13,6 +13,8 @@ import src.recomanador.persistencia.ControladorPersistencia;
 import java.io.IOException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
+import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 
 /**
  * Driver tot test the class Item.
@@ -42,27 +44,27 @@ public class DriverItem {
 		"1. Item(int id)\n" +
 		"2. Item(ArrayList<ArrayList<String>> atributs)\n" +
 		"3. int getId()\n" +
-		"4. ArrayList<String> getAtribut(int i)\n" +
-		"5. ArrayList<ArrayList<String>> getAtributs()\n" +
-		"6. int getPosId()\n" +
-		"7. int getPosNomA()\n" +
-		"8. int getNumAtributs()\n" +
-		"9. Float getPes(int i)\n" +
-		"10. tipus getTipus(int i)\n" +
-		"11. String getNomAtribut(int i)\n" +
-		"12. ArrayList<Float> getPesos()\n" +
-		"13. ArrayList<tipus> getTipusArray(\n" +
-		"14. ArrayList<String> getCapçalera()\n" +
-		"15. void setId(int id)\n" +
-		"16. void setNomA(int a)\n" +
-		"17. void setPes(int a, float pes)\n" +
-		"18. void assignarTipus(int atribut, tipus t)\n" +
-		"19. void setPesos(ArrayList<Float> p)\n" +
-		"20. void setTipus(ArrayList<tipus> a)\n" +
-		"21. void canvisTipusAtribut(int atribut, tipus t)\n" +
-		"22. void assignarNomAtributs(ArrayList<String> n)\n" +
-		"23. int compareTo(Item otherItem)\n" +
-		"24. String tipusToString(tipus t)\n";
+			"4. ArrayList<String> getAtribut(int i)\n" +
+		"4. ArrayList<ArrayList<String>> getAtributs()\n" +
+		"5. int getPosId()\n" +
+		"6. int getPosNomA()\n" +
+		"7. int getNumAtributs()\n" +
+			"9. Float getPes(int i)\n" +
+			"10. tipus getTipus(int i)\n" +
+			"11. String getNomAtribut(int i)\n" +
+		"8. ArrayList<Float> getPesos()\n" +
+		"9. ArrayList<tipus> getTipusArray(\n" +
+		"10. ArrayList<String> getCapçalera()\n" +
+		"11. void setId(int id)\n" +
+		"12. void setNomA(int a)\n" +
+			"17. void setPes(int a, float pes)\n" +
+			"18. void assignarTipus(int atribut, tipus t)\n" +
+		"13. void setPesos(ArrayList<Float> p)\n" +
+		"14. void setTipus(ArrayList<tipus> a)\n" +
+		"15. void canvisTipusAtribut(int atribut, tipus t)\n" +
+		"16. void assignarNomAtributs(ArrayList<String> n)\n" +
+		"17. int compareTo(Item otherItem)\n" +
+		"18. String tipusToString(tipus t)\n";
 		
 		System.out.println("Testing class Item");
 		System.out.println(s);
@@ -165,18 +167,23 @@ public class DriverItem {
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
 		
-		//c = new Item(n);
-		class_initalised = true;
+		try {
+			c = new Item(n);
+			class_initalised = true;
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			System.out.println("Use the appropiate functionallities to set these values first.");
+			return;
+		}
 		
 		System.out.println("New Item has been initialised with the given ID. Data can be checked with getter operations.");
 	}
     static private void mostra_2() {
 		System.out.println("Testing function Item(ArrayList<ArrayList<String>> atributs)");
-		//demanar l'input
 		
-		//executar la funcionalitat
-		
-		//mostrar output
+
+
 	}
     static private void mostra_3() {
 		System.out.println("Testing function int getId()");

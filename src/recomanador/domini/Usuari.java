@@ -2,6 +2,7 @@ package src.recomanador.domini;
 
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationNotRatedException;
+import src.recomanador.excepcions.RecommendationRatedException;
 
 /**
  * @author Martí J. i Jaume
@@ -89,20 +90,23 @@ public class Usuari implements Comparable<Usuari> {
     public void setValoracions(ConjuntRecomanacions cv) {
         this.cv = cv;
     }
-
-    //Aquestes 2 funcions no haurien d'existir!
-    //Pensar com poder canviar valors i actualitzar el conjunt
     
     /**
      * Used to move a recommendation from cr to cv when a a recommendations is rated
      *
      * @param      rec   The index of the recommendations in cr
      */
-    public void moureRecomanacio(int rec) throws RecommendationNotRatedException{
-        Recomanacio r = cr.get(rec);
-        if(r.getVal() == Recomanacio.nul) throw new RecommendationNotRatedException();
-        cr.remove(rec);
-        cv.add(r);
+    public void moureRecomanacio(Recomanacio r, boolean b) throws RecommendationNotRatedException, RecommendationRatedException {
+        if(b) {//es valora
+            if(r.getVal() == 0.0) throw new RecommendationNotRatedException();
+            cr.remove(r);
+            cv.add(r);
+        }
+        else {//s'elimina la valoració
+            if(r.getVal() != 0.0) throw new RecommendationRatedException();
+            cv.remove(r);
+            cr.add(r);
+        }
     }
 
     /**

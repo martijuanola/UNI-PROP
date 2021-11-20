@@ -2,6 +2,8 @@ package src.recomanador.domini;
 
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationRatedException;
+import src.recomanador.excepcions.RecommendationNotRatedException;
+
 
 /**
  * This class describes a recommendation of a <u>item</u> to a <u>user</u> with a possible <u>rating</u>.
@@ -63,6 +65,14 @@ public class Recomanacio implements Comparable<Recomanacio> {
      */
     public void setVal(float v) throws RatingNotValidException, RecommendationRatedException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
+
+        try {
+            if(valoracio == 0.0 && v > 0.0) this.usr.moureRecomanacio(this,true);
+            else if(valoracio > 0.0 && v == 0.0) this.usr.moureRecomanacio(this,false);
+        }
+        catch(RecommendationRatedException | RecommendationNotRatedException e) {
+            System.out.println("No hauria de petar mai");
+        }
         valoracio = v;
     }
 
