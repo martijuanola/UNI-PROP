@@ -2,6 +2,7 @@ package src.drivers;
 
 //Utils
 import java.util.Scanner;
+import java.util.ArrayList;
 
 //Classes
 import src.recomanador.domini.Utils.StringOperations;
@@ -36,7 +37,11 @@ public class DriverStringOperations {
 		"3. is float (string)\n" +
 		"4. is date (string)\n" +
 		"5. is boolean (string)\n" +
-		"6. option 6\n";
+		"6. compare 2 attributes\n" +
+		"7. convert a date to time\n" +
+		"8. split a string\n" +
+		"9. print a string VERY large (to represent an infinit string)\n" +
+		"10. is boolean (string)\n";
 		
 		System.out.println("Testing class StringOperations");
 		System.out.println(s);
@@ -77,13 +82,13 @@ public class DriverStringOperations {
 					testCompararAtributs();
 					break;
 				case 7:
-					//mostra_5();
+					testDataToTime();
 					break;
 				case 8:
-					//mostra_5();
+					testDivideString();
 					break;
 				case 9:
-					//mostra_5();
+					testInfinitString();
 					break;
 				case 10:
 					//mostra_6();
@@ -179,7 +184,10 @@ public class DriverStringOperations {
 		//demanar l'input
 		System.out.println("Write 2 strings and its type. They will be" + 
 			"compared as the type that you specify");
-		
+		System.out.println("NOTE: The type MUST correspond to the data given. " +
+			"Otherwise it won't work properly. This requirement is set as a " +
+			"precondition for the function.");
+			
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("String 1: ");
 		String s1 = scanner.nextLine();
@@ -187,7 +195,7 @@ public class DriverStringOperations {
 		String s2 = scanner.nextLine();
 		
 		System.out.println("Choose a number to set a type:");
-		System.out.println("\t1. I -> ID");
+		System.out.println("\t1. I -> ID (also used for integers)");
 		System.out.println("\t2. N -> Name");
 		System.out.println("\t3. B -> Boolean");
 		System.out.println("\t4. F -> Float");
@@ -208,8 +216,9 @@ public class DriverStringOperations {
 		try { res = c.compararAtributs(s1, s2, t); }
 		catch (Exception e) 
 		{
-			System.out.println("Something went wrong");
-			System.out.println("Probably the type was not correct for the 2 of the strings");
+			System.out.println("ERROR!! Something went wrong");
+			System.out.println("Make sure that the type is correct for the 2 of the strings");
+			return;
 		}
 		
 		//mostrar output
@@ -217,5 +226,50 @@ public class DriverStringOperations {
 		else if (res == 0) System.out.println(s1 + "=" + s2);
 		else if (res == 1) System.out.println(s1 + ">" + s2);
 		else System.out.println("ERROR!!");
+	}
+	static private void testDataToTime() {
+		System.out.println("Testing function dataToTime()");
+		//demanar l'input
+		System.out.println("Write a date and it will be converted into time (as days)");
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Date: ");
+		String s1 = scanner.nextLine();
+		
+		if (!c.esData(s1))
+		{
+			System.out.println("That's not a valid date format.");
+			System.out.println("Choose option 4 at main menu to test dates.");
+			return;
+		}
+				
+		//executar la funcionalitat
+		int time = c.dataToTime(s1);
+		
+		//mostrar output
+		System.out.println("Output: " + time);
+	}
+	static private void testDivideString() {
+		System.out.println("Testing function divideString()");
+		//demanar l'input
+		System.out.println("Write a string and a character. The string will be " +
+			"removed from all instances of that character, splitting the string");
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("String: ");
+		String s = scanner.nextLine();
+		System.out.print("Divider char: ");
+		char div = scanner.nextLine().charAt(0);
+		
+		//executar la funcionalitat
+		ArrayList<String> res = c.divideString(s, div);
+		
+		//mostrar output
+		for (int i = 0; i < res.size(); ++i) System.out.println("Substring " + i + ": " + res.get(i));
+	}
+	static private void testInfinitString() {
+		System.out.println("Testing function infinitString()");
+		//executar la funcionalitat
+
+		System.out.println("Infinit string: " + c.infinitString());
 	}
 }
