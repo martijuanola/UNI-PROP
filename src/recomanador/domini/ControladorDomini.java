@@ -1,7 +1,6 @@
 package src.recomanador.domini;
 
 import src.recomanador.persistencia.*;
-import src.recomanador.domini.Utils.StringOperations;
 import src.recomanador.excepcions.*;
 
 import java.util.ArrayList;

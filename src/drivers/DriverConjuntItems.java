@@ -212,7 +212,7 @@ public class DriverConjuntItems {
 				ConjuntItems.setMaxAtributs(null);
 				ConjuntItems.setMinAtributs(null);
 				Item.setPesos(null);
-				Item.setTipus(null);
+				Item.setTipusArray(null);
 				Item.setNomAtributs(null);
 				Item.setId(-1);
 				Item.setNomA(-1);
@@ -251,7 +251,7 @@ public class DriverConjuntItems {
 				ConjuntItems.setMaxAtributs(null);
 				ConjuntItems.setMinAtributs(null);
 				Item.setPesos(null);
-				Item.setTipus(null);
+				Item.setTipusArray(null);
 				Item.setNomAtributs(null);
 				Item.setId(-1);
 				Item.setNomA(-1);
@@ -702,8 +702,8 @@ public class DriverConjuntItems {
 		boolean res = ci.tipusCorrecteColumna(col, t);
 
 		//mostrar output
-		if (res) System.out.println("Column " + col + " \"" + Item.getNomAtribut(col) + "\" could be treated as a " + StringOperations.tipusToString(t));
-		else System.out.println("Column " + col + " \"" + Item.getNomAtribut(col) + "\" is not of type " + StringOperations.tipusToString(t));
+		if (res) System.out.println("Column " + col + " \"" + Item.getCapçalera().get(col) + "\" could be treated as a " + StringOperations.tipusToString(t));
+		else System.out.println("Column " + col + " \"" + Item.getCapçalera().get(col) + "\" is not of type " + StringOperations.tipusToString(t));
 	}
 
 	static private void mostra_20() {
@@ -766,7 +766,7 @@ public class DriverConjuntItems {
 
 		ArrayList<ArrayList<String>> atr = new ArrayList<ArrayList<String>>();
 		for (int i = 0; i < Item.getNumAtributs(); ++i) {
-			System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipus(i)) + ":");
+			System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipusArray().get(i)) + ":");
 			String a = scanner.next();
 
 			ArrayList<String> subatr = new ArrayList<String>();
@@ -824,7 +824,7 @@ public class DriverConjuntItems {
 
 		ArrayList<ArrayList<String>> atr = new ArrayList<ArrayList<String>>();
 		for (int i = 0; i < Item.getNumAtributs(); ++i) {
-			System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipus(i)) + ":");
+			System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipusArray().get(i)) + ":");
 			String a = scanner.next();
 
 			ArrayList<String> subatr = new ArrayList<String>();
@@ -859,7 +859,7 @@ public class DriverConjuntItems {
 
 		ArrayList<ArrayList<String>> atr = new ArrayList<ArrayList<String>>();
 		for (int i = 0; i < Item.getNumAtributs(); ++i) {
-			System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipus(i)) + ":");
+			System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipusArray().get(i)) + ":");
 			String a = scanner.next();
 
 			ArrayList<String> subatr = new ArrayList<String>();
@@ -954,7 +954,7 @@ public class DriverConjuntItems {
 		String s2 = scanner.next();
 		System.out.println("Enter the column they belong to: ");
 		for (int i = 0; i < Item.getNumAtributs(); ++i) {
-			System.out.println(i + ": " + Item.getNomAtribut(i));
+			System.out.println(i + ": " + Item.getCapçalera().get(i));
 		}
 		int col = scanner.nextInt();
 
@@ -1005,7 +1005,7 @@ public class DriverConjuntItems {
 	
 			ArrayList<ArrayList<String>> atr1 = new ArrayList<ArrayList<String>>();
 			for (int i = 0; i < Item.getNumAtributs(); ++i) {
-				System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipus(i)) + ":");
+				System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipusArray().get(i)) + ":");
 				String a = scanner.next();
 	
 				ArrayList<String> subatr = new ArrayList<String>();
@@ -1024,7 +1024,7 @@ public class DriverConjuntItems {
 	
 			ArrayList<ArrayList<String>> atr2 = new ArrayList<ArrayList<String>>();
 			for (int i = 0; i < Item.getNumAtributs(); ++i) {
-				System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipus(i)) + ":");
+				System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipusArray().get(i)) + ":");
 				String a = scanner.next();
 	
 				ArrayList<String> subatr = new ArrayList<String>();
@@ -1078,7 +1078,7 @@ public class DriverConjuntItems {
 		
 				ArrayList<ArrayList<String>> atr1 = new ArrayList<ArrayList<String>>();
 				for (int i = 0; i < Item.getNumAtributs(); ++i) {
-					System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipus(i)) + ":");
+					System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipusArray().get(i)) + ":");
 					String a = scanner.next();
 		
 					ArrayList<String> subatr = new ArrayList<String>();
@@ -1119,9 +1119,9 @@ public class DriverConjuntItems {
 		System.out.println("name_colum type weight maxAttributes minAtributes: ");
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             
-            if (nom) System.out.print(Item.getNomAtribut(i));
+            if (nom) System.out.print(Item.getCapçalera().get(i));
 			if (tip) System.out.print(" " + ConjuntItems.getSTipus(i));
-			if (pes) System.out.print(" " + Item.getPes(i));
+			if (pes) System.out.print(" " + Item.getPesos().get(i));
 			if (max) System.out.print(" " + ci.getMaxAtribut(i));
 			if (min) System.out.print(" " + ci.getMinAtribut(i));
 

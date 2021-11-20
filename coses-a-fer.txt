@@ -1,10 +1,11 @@
 Jaume:
 
-	-Distancia quan es min i max
-	-Driver de ConjuntItem
-	-Driver de Item
 	-Documentar ConjuntItem
+	-Documentar Item
 	
+	-(FET)Driver de ConjuntItem
+	-(FET)Driver de Item	
+	-(FET)Distancia quan es min i max
 	-(FET)min i max dinamicament
 	-(FET)Passar atributs al tipus correcte
 	-(FET)eliminarItem
@@ -16,6 +17,5 @@ Jaume:
 	-(FET)Excepció a assignarPes(a, p) comprovar a vàlid
 	-(FET)getCapceleres
 	-(FET)getAtributs
-	-(FET)Documentar Item
 	-(FET)Detectar automaticament atributs
 	-(FET)Treure el megatest quan funcioni el read
