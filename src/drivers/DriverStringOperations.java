@@ -4,13 +4,8 @@ package src.drivers;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-//Classes
-import src.recomanador.domini.Utils.StringOperations;
-import src.recomanador.domini.ConjuntItems;
+import src.recomanador.Utils.StringOperations;
 import src.recomanador.domini.Item.tipus;
-
-//Excepcions
-import java.io.IOException;
 
 public class DriverStringOperations {
 	//static private Scanner scanner;

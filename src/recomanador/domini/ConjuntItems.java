@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import src.recomanador.domini.Utils.*;
+import src.recomanador.Utils.*;
 import src.recomanador.domini.Item.tipus;
 
 import src.recomanador.excepcions.*;
@@ -129,12 +129,22 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- GETTERS -----*/
 
+    /**
+     * Return the item specified by its id
+     * @param id ID of the item to get
+     * @return Item with attribute "id" equals to id
+     * @throws ItemNotFoundException Item with specified id does not exist
+     */
     public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
         int pos = binarySearchItem(this, id, 0, size()-1);
         if (pos < 0) throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
         return get(pos);
     }
 
+    /**
+     * Get all items in the set
+     * @return Return an array of an array of an array of strings which is the representation for an array of attributes of items
+     */
     public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
         ArrayList<ArrayList<ArrayList<String>>> result = new ArrayList<ArrayList<ArrayList<String>>>();
         ArrayList<ArrayList<String>> aux = new ArrayList<ArrayList<String>>();
@@ -150,28 +160,59 @@ public class ConjuntItems extends ArrayList<Item> {
         return result;
     }
 
+    /**
+     * Returns the attribute for the specified item id and column index
+     * @param id ID of the item
+     * @param i column of the attribute to get
+     * @return ArrayList<String> of the attribute
+     * @throws ItemNotFoundException Item does not exist
+     */
     public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
         return getItem(id).getAtributs().get(i);
     }
 
+    /**
+     * Returns the attribute for the specified item index and column index 
+     * @param posItem index of the item in the set
+     * @param atribut column of the attribute to get
+     * @return ArrayList<String> of the attribute
+     */
     public ArrayList<String> getAtributItem(int posItem, int atribut) { //retornar atribut
         return get(posItem).getAtributs().get(atribut);
     }
-    
+
+    /**
+     * Returns the type of a column as a string
+     * @param i int column
+     * @return type of a column as a string (ID, Nom, Boolean, Float, String, Date)
+     */
     public static String getSTipus(int i) {
     tipus t = Item.getTipusArray().get(i);
     return StringOperations.tipusToString(t);
-
-}
+    }
     
+    /**
+     * Returns the maximum attribute at the column i
+     * @param i int column
+     * @return maximum attribute at the column i as a float
+     */
     public Float getMaxAtribut(int i) {
         return maxAtributs.get(i);
     }
 
+    /**
+     * Returns the minimum attribute at the column i
+     * @param i int column
+     * @return minimum attribute at the column i as a float
+     */
     public Float getMinAtribut(int i) {
         return minAtributs.get(i);
     }
 
+    /**
+     * Returns array of 
+     * @return
+     */
     public ArrayList<Float> getMaxAtributs() {
         return maxAtributs;
     }
