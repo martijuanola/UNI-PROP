@@ -186,7 +186,7 @@ public class ControladorDomini {
     /*----- PROVES I COSES QUE ES TREURAN -----*/
 
     public void prova2() {
-        ConjuntItems.assignarNom("HEY NO SE QUE POSAR");
+        ConjuntItems.setNom("HEY NO SE QUE POSAR");
         System.out.println("hey " + ci.size() + " atributs " + Item.getNumAtributs());
         ci.printItems();
         for (int i = 1; i < ci.size(); ++i) {

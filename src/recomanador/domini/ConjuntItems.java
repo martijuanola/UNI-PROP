@@ -46,7 +46,7 @@ public class ConjuntItems extends ArrayList<Item> {
         }
         detectarTipusAtributs();
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            setMinMaxAtribut(i);
+            computeMinMaxAtribut(i);
         }
     }
 
@@ -129,14 +129,63 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- SETTERS -----*/
 
-    //check
     public static void setMinAtributs(ArrayList<Float> minAtributs2) {
         ConjuntItems.minAtributs = minAtributs2;
     }
 
-    //check
     public static void setMaxAtributs(ArrayList<Float> maxAtributs2) {
         ConjuntItems.maxAtributs = maxAtributs2;
+    }
+    //TODO: setTipusItem hauria de ser private
+    public void setTipusItem(int atribut, tipus t) throws ItemTypeNotValidException {
+        if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + StringOperations.tipusToString(t));
+        Item.assignarTipus(atribut, t);
+    }
+
+    public static void setNom(String n) {
+        ConjuntItems.nom = n;
+    }
+    
+
+
+    public void computeMinMaxAtribut(int col) {
+        tipus t = Item.getTipus(col);
+        String sMin = "", sMax = "";
+
+        if (t == tipus.I) {
+            sMax = ""+Integer.MIN_VALUE;
+            sMin = ""+Integer.MAX_VALUE;
+        }
+        else if (t == tipus.D) {
+            sMax = "0000-00-00";
+            sMin = "9999-12-31";
+        }
+        else if (t == tipus.F) {
+            sMax = ""+Float.MIN_VALUE; 
+            sMin = ""+Float.MAX_VALUE;
+        }
+        else return;
+        for (int i = 0; i < size(); ++i) {
+            if (col < get(i).getAtributs().size()) {
+                ArrayList<String> atr = get(i).getAtribut(col);
+                for (int j = 0; j < atr.size(); ++j) {
+                    if (StringOperations.compararAtributs(atr.get(j), sMax, t) > 0) {
+                        sMax = atr.get(j);
+                    }
+                    else if (StringOperations.compararAtributs(atr.get(j), sMin, t) < 0) { //atribut és menor que j
+                        sMin = atr.get(j);
+                    }
+                }
+            }
+        }
+        if (t == tipus.D) {
+            if (sMax.length()==10) maxAtributs.set(col, (float)StringOperations.dataToTime(sMax));
+            if (sMin.length()==10) minAtributs.set(col, (float)StringOperations.dataToTime(sMin));
+        }
+        else {
+            maxAtributs.set(col, Float.parseFloat(sMax));
+            minAtributs.set(col, Float.parseFloat(sMin));
+        }
     }
 
     //check
@@ -173,13 +222,6 @@ public class ConjuntItems extends ArrayList<Item> {
             ++c;
         }
         return found;
-    }
-
-
-    //check
-    private void assignarTipusItem(int atribut, tipus t) throws ItemTypeNotValidException {
-        if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + StringOperations.tipusToString(t));
-        Item.assignarTipus(atribut, t);
     }
 
     //check
@@ -231,8 +273,6 @@ public class ConjuntItems extends ArrayList<Item> {
         return !empty || t == tipus.S || t == tipus.N;
     }
 
-
-    
     //check
     public void eliminarItem(int id) { //Cerca dicotòmica
         int pos = binarySearchItem(this, id, 0, size()-1);
@@ -245,7 +285,7 @@ public class ConjuntItems extends ArrayList<Item> {
         int pos = Collections.binarySearch(this, i);
         if (pos < 0) pos = ~pos;
         super.add(pos, i);
-        esMaxMin(i);
+        checkMaxMin(i);
         return (get(pos).getId() == i.getId());
     }
 
@@ -256,7 +296,7 @@ public class ConjuntItems extends ArrayList<Item> {
         return (get(pos).getId() == i.getId());
     }
 
-    private void esMaxMin(Item it) {
+    private void checkMaxMin(Item it) {
         for (int i = 0; i < maxAtributs.size(); ++i) {
             if (it.getAtribut(i).size() == 1) {
                 Float nou = (float)0;
@@ -274,7 +314,6 @@ public class ConjuntItems extends ArrayList<Item> {
             }
         }
     }
-
 
     //check
     public boolean existeixItem(int id) {
@@ -303,59 +342,12 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     //check
-    public static void assignarNom(String n) {
-        ConjuntItems.nom = n;
-    }
-    
-
-    //check
     public void printId() {
         for (int i = 0; i < size(); ++i) {
             Item it = get(i);
             String id = "Not An ID";
             id = "" + it.getId();
             System.out.println("ID" + (i + 1) + ": " + id);
-        }
-    }
-
-    //check
-    public void setMinMaxAtribut(int col) {
-        tipus t = Item.getTipus(col);
-        String sMin = "", sMax = "";
-
-        if (t == tipus.I) {
-            sMax = ""+Integer.MIN_VALUE;
-            sMin = ""+Integer.MAX_VALUE;
-        }
-        else if (t == tipus.D) {
-            sMax = "0000-00-00";
-            sMin = "9999-12-31";
-        }
-        else if (t == tipus.F) {
-            sMax = ""+Float.MIN_VALUE; 
-            sMin = ""+Float.MAX_VALUE;
-        }
-        else return;
-        for (int i = 0; i < size(); ++i) {
-            if (col < get(i).getAtributs().size()) {
-                ArrayList<String> atr = get(i).getAtribut(col);
-                for (int j = 0; j < atr.size(); ++j) {
-                    if (StringOperations.compararAtributs(atr.get(j), sMax, t) > 0) {
-                        sMax = atr.get(j);
-                    }
-                    else if (StringOperations.compararAtributs(atr.get(j), sMin, t) < 0) { //atribut és menor que j
-                        sMin = atr.get(j);
-                    }
-                }
-            }
-        }
-        if (t == tipus.D) {
-            if (sMax.length()==10) maxAtributs.set(col, (float)StringOperations.dataToTime(sMax));
-            if (sMin.length()==10) minAtributs.set(col, (float)StringOperations.dataToTime(sMin));
-        }
-        else {
-            maxAtributs.set(col, Float.parseFloat(sMax));
-            minAtributs.set(col, Float.parseFloat(sMin));
         }
     }
 
@@ -376,24 +368,24 @@ public class ConjuntItems extends ArrayList<Item> {
             }
             if (!found){ //Comprova si es bool
                 if (tipusCorrecteColumna(i, tipus.B)) {
-                    assignarTipusItem(i, tipus.B);
+                    setTipusItem(i, tipus.B);
                     found = true;
                 }
             }
             if (!found) { //Comprova si es float/int
                 if (tipusCorrecteColumna(i, tipus.F)) {
-                    assignarTipusItem(i, tipus.F);
+                    setTipusItem(i, tipus.F);
                     found = true;
                 }
             }
             if (!found) { //Comprovar si es una data
                 if (tipusCorrecteColumna(i, tipus.D)) {
-                    assignarTipusItem(i, tipus.D);
+                    setTipusItem(i, tipus.D);
                     found = true;
                 }
             }
             if (!found) { //Es una string
-                assignarTipusItem(i, tipus.S);
+                setTipusItem(i, tipus.S);
                 found = true;
             }
         }

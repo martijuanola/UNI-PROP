@@ -2,7 +2,6 @@ package src.recomanador.domini.Utils;
 
 import java.util.ArrayList;
 
-import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.Item.tipus;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 
@@ -67,7 +66,7 @@ public class StringOperations {
         if (s1 == "" && s2 == "") {}
         else if (s1 == "") s2Bigger = true;
         else if (s2 == "") s1Bigger = true;
-        else if (tipus == tipus.I) { //Identificador
+        else if (tipus == src.recomanador.domini.Item.tipus.I) { //Identificador
             int i1 = Integer.parseInt(s1);
             int i2 = Integer.parseInt(s2);
             s1Bigger = i1 > i2;
@@ -84,8 +83,8 @@ public class StringOperations {
             s2Bigger = i1 < i2;
         }
         else if (tipus == tipus.D) { //Data
-            int s1p1, s1p2, dia1, mes1, any1;
-            int s2p1, s2p2, dia2, mes2, any2;
+            int dia1, mes1, any1;
+            int dia2, mes2, any2;
             if (s1.charAt(4) == '-') {
                 int p1 = 4;
                 int p2 = 7;
