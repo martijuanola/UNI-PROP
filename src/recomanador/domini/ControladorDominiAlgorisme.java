@@ -77,7 +77,7 @@ public class ControladorDominiAlgorisme {
             case 1:
                 System.out.println("Executant Content-Based Filtering");
                 ContentBasedFiltering BasedFilt = new ContentBasedFiltering(items, usuaris, valoracions);
-                recomanacions_alg = BasedFilt.contentBasedFiltering(Q, user_ID);
+                recomanacions_alg = BasedFilt.contentBasedFiltering(Q, user_ID, K);
                 break;
 
             //Hybrid approaches

@@ -1,3 +1,4 @@
+
 package src.recomanador.domini;
 
 import src.recomanador.excepcions.*;

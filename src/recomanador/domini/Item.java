@@ -130,10 +130,12 @@ public class Item implements Comparable<Item>{
 
     /*----- STATICS SETTERS -----*/
 
+    //s'hauràn d'afegir excepcions potser
     public static void setId(int id) {
-        Item.id= id;
+        Item.id = id;
     }
 
+    //s'hauràn d'afegir excepcions potser
     public static void setNomA(int a) {
         Item.nomA = a;
     }
@@ -145,6 +147,7 @@ public class Item implements Comparable<Item>{
         else Item.pesos.set(a, pes);
     }
 
+    //S'HA DE TREURE!!
     //ha de venir comprovat a assignaTipusItem de conjunt d'items
     public static void setTipus(int atribut, tipus t) throws ItemTypeNotValidException {
         Item.tipusAtribut.set(atribut, t);

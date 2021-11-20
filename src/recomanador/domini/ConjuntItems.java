@@ -497,9 +497,6 @@ public class ConjuntItems extends ArrayList<Item> {
      * @throws ItemWeightNotCorrectException if a weight outside the range (0 - 100) is tried to be assigned 
      */
     public boolean inicialitzar(int nAtributs) throws ItemTypeNotValidException, ItemWeightNotCorrectException { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
-        Item.setNomA(-1);
-        Item.setId(-1);
-
         ArrayList<Float> pesos = new ArrayList<Float>(nAtributs);
         ArrayList<tipus> tipusAtribut = new ArrayList<tipus>(nAtributs);
         maxAtributs = new ArrayList<Float>();
