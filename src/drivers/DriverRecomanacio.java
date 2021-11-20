@@ -54,7 +54,7 @@ public class DriverRecomanacio {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
-		Item.setTipus(at);
+		Item.setTipusArray(at);
 		Item.setNomAtributs(as);
 		Item.setId(0);
 

@@ -23,15 +23,36 @@ public class ConjuntItems extends ArrayList<Item> {
      */
     public static String nom; 
     
+    /**
+     * Maximum attributes for each column. Columns with strings, names and booleans will have random data
+     */
     private static ArrayList<Float> maxAtributs;
+    /**
+     * Minimum attributes for each column. Columns with strings, names and booleans will have random data
+     */
     private static ArrayList<Float> minAtributs;
 
     /*----- CONSTRUCTORS -----*/
 
-    //check
+    /**
+     * Empty constructor
+     */
     public ConjuntItems() {}
 
-    //check
+    /**
+     * Constructor with an array of items. This array is subdivided for atributes with ; 
+     * For each item it is assigned an array of strings.
+     * Furthermore:
+     *  -Automatically detects the attributes types
+     *  -Calculates the maximums and minimums of the attributes
+     *  -Defaults all the weights to its maximum value (100)
+     *  -Fills the array with the names of each attribute
+     *  -Sets the position of id to the attribute with name id
+     * 
+     * @param items Array of an array of atributes. The first must be a header with the name of each attribute
+     * @throws ItemTypeNotValidException Is thrown when the header does not contain "id" or when it is not valid
+     * @throws ItemWeightNotCorrectException Is thrown if it tries to assign a weight out of the range (0-100)
+     */
     public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException, ItemWeightNotCorrectException {
         //Nom atributs
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
@@ -62,16 +83,28 @@ public class ConjuntItems extends ArrayList<Item> {
         }
     }
 
+    /**
+     * Constructor with an array of items, weights, attribute types, maximum attributes, minimum attributes, a string for the name, the position of the id attribute and the position of the name attribute.
+     * @param items Array of an array of atributes. The first must be a header with the name of each attribute
+     * @param pesos Array of weights for each attribute
+     * @param tipusAtribut Array of types of each attributes
+     * @param id Position of the attribute "id" in the array of name of attributes
+     * @param nomA Position of the attribute of the name of each item in the array of name of attributes
+     * @param nom Name that represents the set
+     * @param maxAtributs Array of the maximum attributes of each column
+     * @param minAtributs Array of the minimum attributes of each column
+     * @throws ItemWeightNotCorrectException Is thrown if it tries to assign a weight out of the range (0-100)
+     */
     public ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos,
     ArrayList<tipus> tipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, 
-    ArrayList<Float> minAtributs) throws ItemTypeNotValidException, ItemWeightNotCorrectException {
+    ArrayList<Float> minAtributs) throws ItemWeightNotCorrectException {
         ConjuntItems.nom = nom;
         Item.setId(id);
         Item.setNomA(nomA);
 
         Item.setNomAtributs(items.get(0));
         Item.setPesos(pesos);
-        Item.setTipus(tipusAtribut);
+        Item.setTipusArray(tipusAtribut);
 
         ConjuntItems.setMaxAtributs(maxAtributs);
         ConjuntItems.setMinAtributs(minAtributs);
@@ -107,7 +140,7 @@ public class ConjuntItems extends ArrayList<Item> {
         ArrayList<ArrayList<String>> aux = new ArrayList<ArrayList<String>>();
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             ArrayList<String> a2 = new ArrayList<String>();
-            a2.add(Item.getNomAtribut(i));
+            a2.add(Item.getCapçalera().get(i));
             aux.add(a2);
         }
         result.add(aux);
@@ -118,15 +151,15 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
-        return getItem(id).getAtribut(i);
+        return getItem(id).getAtributs().get(i);
     }
 
     public ArrayList<String> getAtributItem(int posItem, int atribut) { //retornar atribut
-        return get(posItem).getAtribut(atribut);
+        return get(posItem).getAtributs().get(atribut);
     }
     
     public static String getSTipus(int i) {
-    tipus t = Item.getTipus(i);
+    tipus t = Item.getTipusArray().get(i);
     return StringOperations.tipusToString(t);
 
 }
@@ -159,7 +192,7 @@ public class ConjuntItems extends ArrayList<Item> {
     //TODO: setTipusItem hauria de ser private
     public void setTipusItem(int atribut, tipus t) throws ItemTypeNotValidException {
         if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + StringOperations.tipusToString(t));
-        Item.assignarTipus(atribut, t);
+        Item.setTipus(atribut, t);
     }
 
     public static void setNom(String n) {
@@ -251,16 +284,16 @@ public class ConjuntItems extends ArrayList<Item> {
     //TODO: checkMaxMin hauria de ser private
     public void checkMaxMin(Item it) {
         for (int i = 0; i < maxAtributs.size(); ++i) {
-            if (it.getAtribut(i).size() == 1) {
+            if (it.getAtributs().get(i).size() == 1) {
                 Float nou = (float)0;
-                if (Item.getTipus(i) == tipus.I) {
-                    nou = (float)Integer.parseInt(it.getAtribut(i).get(0));
+                if (Item.getTipusArray().get(i) == tipus.I) {
+                    nou = (float)Integer.parseInt(it.getAtributs().get(i).get(0));
                 }
-                else if (Item.getTipus(i) == tipus.F) {
-                    nou = Float.parseFloat(it.getAtribut(i).get(0));
+                else if (Item.getTipusArray().get(i) == tipus.F) {
+                    nou = Float.parseFloat(it.getAtributs().get(i).get(0));
                 }
-                else if (Item.getTipus(i) == tipus.D) {
-                    nou = (float) StringOperations.dataToTime(it.getAtribut(i).get(0));
+                else if (Item.getTipusArray().get(i) == tipus.D) {
+                    nou = (float) StringOperations.dataToTime(it.getAtributs().get(i).get(0));
                 }
                 if (nou > maxAtributs.get(i)) maxAtributs.set(i, (float)nou);
                 if (nou < minAtributs.get(i)) minAtributs.set(i, (float)nou);
@@ -295,7 +328,7 @@ public class ConjuntItems extends ArrayList<Item> {
     /*----- COMPUTATIONS -----*/
 
     public void computeMinMaxAtribut(int col) {
-        tipus t = Item.getTipus(col);
+        tipus t = Item.getTipusArray().get(col);
         String sMin = "", sMax = "";
 
         if (t == tipus.I) {
@@ -312,7 +345,7 @@ public class ConjuntItems extends ArrayList<Item> {
         }
         else return;
         for (int i = 0; i < size(); ++i) {
-            ArrayList<String> atr = get(i).getAtribut(col);
+            ArrayList<String> atr = get(i).getAtributs().get(col);
             for (int j = 0; j < atr.size(); ++j) {
                 if (StringOperations.compararAtributs(atr.get(j), sMax, t) > 0) {
                     sMax = atr.get(j);
@@ -353,13 +386,13 @@ public class ConjuntItems extends ArrayList<Item> {
         }
 
         Item.setPesos(pesos);
-        Item.setTipus(tipusAtribut);
+        Item.setTipusArray(tipusAtribut);
 
         int c = 0;
         boolean found = false;
         while (c < nAtributs && !found) {
-            if (Item.getNomAtribut(c).equalsIgnoreCase("id")) {
-                Item.assignarTipus(c, tipus.I);
+            if (Item.getCapçalera().get(c).equalsIgnoreCase("id")) {
+                Item.setTipus(c, tipus.I);
                 found = true;
             }
             ++c;
@@ -371,7 +404,7 @@ public class ConjuntItems extends ArrayList<Item> {
         boolean idAssignat = false;
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             boolean found = false;
-            String nom = Item.getNomAtribut(i);
+            String nom = Item.getCapçalera().get(i);
 
             if (nom.equalsIgnoreCase("id")) { //Comprova si es id
                 if (tipusCorrecteColumna(i, tipus.I)) {
@@ -408,7 +441,7 @@ public class ConjuntItems extends ArrayList<Item> {
     }
     //TODO: distanciaAtribut hauria de ser private
     public static float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
-        tipus t = Item.getTipus(columna);
+        tipus t = Item.getTipusArray().get(columna);
         if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + StringOperations.tipusToString(t));
 
         if (a1.equals(a2)) return (float)1.0;
@@ -447,16 +480,16 @@ public class ConjuntItems extends ArrayList<Item> {
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             float dist = (float)0.0;
             //Els casos on es comparen tags i només hi ha una string, es compara com si fossin conjunts, i es incorrecte
-            if (Item.getTipus(i) == tipus.S && (i1.getAtribut(i).size() > 1 || i2.getAtribut(i).size() > 1)) {
+            if (Item.getTipusArray().get(i) == tipus.S && (i1.getAtributs().get(i).size() > 1 || i2.getAtributs().get(i).size() > 1)) {
                 float temp;
-                temp = UnionIntersection.getIntersection(i1.getAtribut(i), i2.getAtribut(i)).size();
-                dist = temp / UnionIntersection.getUnion(i1.getAtribut(i), i2.getAtribut(i)).size();
+                temp = UnionIntersection.getIntersection(i1.getAtributs().get(i), i2.getAtributs().get(i)).size();
+                dist = temp / UnionIntersection.getUnion(i1.getAtributs().get(i), i2.getAtributs().get(i)).size();
             }
             else {
-                dist = distanciaAtribut(i1.getAtribut(i).get(0), i2.getAtribut(i).get(0), i);
+                dist = distanciaAtribut(i1.getAtributs().get(i).get(0), i2.getAtributs().get(i).get(0), i);
             }
-            res += dist*(Item.getPes(i)/((float)100.0));
-            pesTotal += Item.getPes(i)/((float)100.0);
+            res += dist*(Item.getPesos().get(i)/((float)100.0));
+            pesTotal += Item.getPesos().get(i)/((float)100.0);
         }
         res = ((float)1.0*res)/pesTotal;
         return res;

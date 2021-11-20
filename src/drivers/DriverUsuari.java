@@ -54,7 +54,7 @@ public class DriverUsuari {
 		at.add(tipus.I);
 		as.add("id");
 
-		Item.setTipus(at);
+		Item.setTipusArray(at);
 		Item.setNomAtributs(as);
 		Item.setPesos(af);
 		Item.setId(0);

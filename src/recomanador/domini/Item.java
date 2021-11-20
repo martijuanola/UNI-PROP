@@ -86,17 +86,6 @@ public class Item implements Comparable<Item>{
         return Integer.parseInt(atributs.get(Item.id).get(0));
     }
 
-
-    //S'HA DE TREURE!!
-    /**
-     * Retorna l'atribut de la posició i
-     * @param i index del atribut: entro 0 i el nombre d'atributs
-     * @return llista dels sub atributs
-     */
-    public ArrayList<String> getAtribut(int i) {
-        return atributs.get(i);
-    }
-
     /**
      * Retorna tots els atributs
      * @return atributs en forma de llista de llistes d'atributs
@@ -126,21 +115,6 @@ public class Item implements Comparable<Item>{
         return Item.nomAtribut.size();
     }
 
-    //S'HA DE TREURE!!
-    public static Float getPes(int i) {
-        return Item.pesos.get(i);
-    }
-
-    //S'HA DE TREURE!!
-    public static tipus getTipus(int i) {
-        return Item.tipusAtribut.get(i);
-    }
-
-    //S'HA DE TREURE!!
-    public static String getNomAtribut(int i) {
-        return Item.nomAtribut.get(i);
-    }
-
     public static ArrayList<Float> getPesos() {
         return Item.pesos;
     }
@@ -164,7 +138,6 @@ public class Item implements Comparable<Item>{
         Item.nomA = a;
     }
 
-    //S'HA DE TREURE!!
     public static void setPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
@@ -173,7 +146,7 @@ public class Item implements Comparable<Item>{
     }
 
     //ha de venir comprovat a assignaTipusItem de conjunt d'items
-    public static void assignarTipus(int atribut, tipus t) throws ItemTypeNotValidException {
+    public static void setTipus(int atribut, tipus t) throws ItemTypeNotValidException {
         Item.tipusAtribut.set(atribut, t);
         Item.canvisTipusAtribut(atribut, t);
     }
@@ -184,7 +157,7 @@ public class Item implements Comparable<Item>{
         Item.pesos = p;
     }
 
-    public static void setTipus(ArrayList<tipus> a) {
+    public static void setTipusArray(ArrayList<tipus> a) {
         Item.tipusAtribut = a;
     }
 
