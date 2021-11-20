@@ -27,7 +27,8 @@ import src.recomanador.domini.ItemValoracioEstimada;
 /**
  * This class is meant to test the class Algorisme.
  * To test some of its functions in an atomized manner, I temporarily
- * changed them from private to public.
+ * changed them from private to public. As I have tested these work,
+ * this driver only tests the public functions, and the private ones implicitly.
  * 
  * @author Adrià F.
  */
