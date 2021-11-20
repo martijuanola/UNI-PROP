@@ -1,9 +1,11 @@
 Jaume:
 
+	-Distancia quan es min i max
 	-Driver de ConjuntItem
 	-Driver de Item
 	-Documentar ConjuntItem
 	
+	-(FET)min i max dinamicament
 	-(FET)Passar atributs al tipus correcte
 	-(FET)eliminarItem
 	-(FET)afegirItem

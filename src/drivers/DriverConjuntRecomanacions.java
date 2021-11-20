@@ -22,6 +22,7 @@ import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.UserIdNotValidException;
 import src.recomanador.excepcions.ItemIdNotValidException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.DataNotValidException;
@@ -144,7 +145,7 @@ public class DriverConjuntRecomanacions {
 		try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(s2));
         }
-        catch(FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
+        catch( ItemWeightNotCorrectException | FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
             System.out.print("ERROR: " + e.getMessage());
             return;
         }
@@ -315,7 +316,7 @@ public class DriverConjuntRecomanacions {
 		try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(s2));
         }
-        catch(FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
+        catch(ItemWeightNotCorrectException | FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
             System.out.print("ERROR: " + e.getMessage());
             return;
         }

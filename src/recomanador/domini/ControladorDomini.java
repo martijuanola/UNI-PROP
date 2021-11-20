@@ -73,7 +73,7 @@ public class ControladorDomini {
             cu = new ConjuntUsuaris(valoracions);
             cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
-        catch(ItemTypeNotValidException e) {
+        catch(ItemTypeNotValidException | ItemWeightNotCorrectException e) {
             //també un altre not valid file o algo així, es pot diferenciar de la resta passant un string a cada cas
             //o sigui mateixa excepcion però amb missatges d'error diferents
         }

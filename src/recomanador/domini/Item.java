@@ -146,8 +146,9 @@ public class Item implements Comparable<Item>{
     }
 
     private static void canvisTipusAtribut(int atribut, tipus t) throws ItemTypeNotValidException {
+        if (Item.id != -1 && atribut == Item.id)  throw new ItemTypeNotValidException("Cannot change cloumn id.");
         if (t == tipus.I) {
-            if (id != -1) throw new ItemTypeNotValidException("L'item ja tenia un id assignat, no es poden tenir dos ids.");
+            if (id != -1) throw new ItemTypeNotValidException("Item already had an id, it cannot have two ids.");
             Item.id = atribut;
         }
         else if (t == tipus.N) {
@@ -181,7 +182,9 @@ public class Item implements Comparable<Item>{
         else Item.pesos.set(a, pes);
     }
 
-    public static void setPesos(ArrayList<Float> p) {
+    public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException{
+        if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Weights array does not match items attributes.");
+        for (int i = 0; i < Item.getNumAtributs(); ++i) if (p.get(i) > 100 || p.get(i) < 0) throw new ItemWeightNotCorrectException("Weight smaller than 0 or bigger than 100");
         Item.pesos = p;
     }
 
