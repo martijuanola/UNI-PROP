@@ -164,7 +164,7 @@ public class StringOperations {
         int ini = 0; //Últim ';' trobat
 
         for (int k = 0; k < s.length(); ++k) {
-            if (s.charAt(k) == ';') {
+            if (s.charAt(k) == divider) {
                 String aux = s.substring(ini, k);
                 ini = k + 1;
                 str.add(aux); //S'afegeix la part del atribut
