@@ -312,15 +312,13 @@ public class ConjuntItems extends ArrayList<Item> {
         }
         else return;
         for (int i = 0; i < size(); ++i) {
-            if (col < get(i).getAtributs().size()) {
-                ArrayList<String> atr = get(i).getAtribut(col);
-                for (int j = 0; j < atr.size(); ++j) {
-                    if (StringOperations.compararAtributs(atr.get(j), sMax, t) > 0) {
-                        sMax = atr.get(j);
-                    }
-                    else if (StringOperations.compararAtributs(atr.get(j), sMin, t) < 0) { //atribut és menor que j
-                        sMin = atr.get(j);
-                    }
+            ArrayList<String> atr = get(i).getAtribut(col);
+            for (int j = 0; j < atr.size(); ++j) {
+                if (StringOperations.compararAtributs(atr.get(j), sMax, t) > 0) {
+                    sMax = atr.get(j);
+                }
+                else if (StringOperations.compararAtributs(atr.get(j), sMin, t) < 0) { //atribut és menor que j
+                    sMin = atr.get(j);
                 }
             }
         }
@@ -413,6 +411,8 @@ public class ConjuntItems extends ArrayList<Item> {
         tipus t = Item.getTipus(columna);
         if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + StringOperations.tipusToString(t));
 
+        if (a1.equals(a2)) return (float)1.0;
+
         float sim = (float)0.0;
         if (t == tipus.I) {
             int i1 = Integer.parseInt(a1), i2 = Integer.parseInt(a2);
@@ -446,7 +446,8 @@ public class ConjuntItems extends ArrayList<Item> {
         float res = (float)0.0, pesTotal = (float)0.0;
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             float dist = (float)0.0;
-            if (Item.getTipus(i) == tipus.S) {
+            //Els casos on es comparen tags i només hi ha una string, es compara com si fossin conjunts, i es incorrecte
+            if (Item.getTipus(i) == tipus.S && (i1.getAtribut(i).size() > 1 || i2.getAtribut(i).size() > 1)) {
                 float temp;
                 temp = UnionIntersection.getIntersection(i1.getAtribut(i), i2.getAtribut(i)).size();
                 dist = temp / UnionIntersection.getUnion(i1.getAtribut(i), i2.getAtribut(i)).size();
