@@ -12,6 +12,7 @@ import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationRatedException;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 
 /**
  * Driver tot test the class Recomanacio.
@@ -47,7 +48,12 @@ public class DriverRecomanacio {
 		at.add(tipus.I);
 		as.add("id");
 
-		Item.setPesos(af);
+		try {
+			Item.setPesos(af);
+		} catch (ItemWeightNotCorrectException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		Item.setTipus(at);
 		Item.assignarNomAtributs(as);
 		Item.setId(0);

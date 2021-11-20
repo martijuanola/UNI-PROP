@@ -116,6 +116,10 @@ public class Item implements Comparable<Item>{
         return Item.nomA;
     }
 
+    public static tipus getTipus(int i) {
+        return tipusAtribut.get(i);
+    }
+
     /**
      * Serveix més per comprovar que per funcionalitat
      * @return retorna el nombre d'atributs que té l'item
@@ -170,7 +174,13 @@ public class Item implements Comparable<Item>{
     public static void setNomA(int a) {
         Item.nomA = a;
     }
-
+    
+    //ha de venir comprovat a assignaTipusItem de conjunt d'items
+    public static void assignarTipus(int atribut, tipus t) throws ItemTypeNotValidException {
+        Item.tipusAtribut.set(atribut, t);
+        Item.canvisTipusAtribut(atribut, t);
+    }
+    
     public static void setPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
@@ -186,19 +196,6 @@ public class Item implements Comparable<Item>{
 
     public static void setTipus(ArrayList<tipus> a) {
         Item.tipusAtribut = a;
-    }
-
-    private static void canvisTipusAtribut(int atribut, tipus t) throws ItemTypeNotValidException {
-        if (t == tipus.I) {
-            if (id != -1) throw new ItemTypeNotValidException("L'item ja tenia un id assignat, no es poden tenir dos ids.");
-            Item.id = atribut;
-        }
-        else if (t == tipus.N) {
-            if (nomA != -1) { //Canviem el nom antic per evitar tenir 2 noms
-                Item.tipusAtribut.set(nomA, tipus.S);
-            }
-           Item.nomA = atribut;
-        }
     }
 
     public static void assignarNomAtributs(ArrayList<String> n) {

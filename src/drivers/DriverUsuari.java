@@ -16,6 +16,7 @@ import java.io.IOException;
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationNotRatedException;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 /**
  * Driver tot test the class Usuari.
  * @author     Martí J.
@@ -39,7 +40,7 @@ public class DriverUsuari {
     static private int p;
     static private float f;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ItemWeightNotCorrectException {
    		scanner = new Scanner(System.in);
 		class_initalised = false;
 		
@@ -52,9 +53,9 @@ public class DriverUsuari {
 		at.add(tipus.I);
 		as.add("id");
 
-		Item.setPesos(af);
 		Item.setTipus(at);
 		Item.assignarNomAtributs(as);
+		Item.setPesos(af);
 		Item.setId(0);
 
 		String s = "Options: \n" +

@@ -15,7 +15,9 @@ import src.recomanador.domini.Utils.StringOperations;
 import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
+import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 import src.recomanador.excepcions.ItemNotFoundException;
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.persistencia.ControladorPersistencia;
@@ -773,7 +775,13 @@ public class DriverConjuntItems {
 		}
 
 		//executar la funcionalitat
-		Item it = new Item(atr);
+		Item it;
+		try {
+			it = new Item(atr);
+		} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
 		ci.checkMaxMin(it);
 
@@ -825,7 +833,13 @@ public class DriverConjuntItems {
 		}
 
 		//executar la funcionalitat
-		Item it = new Item(atr);
+		Item it;
+		try {
+			it = new Item(atr);
+		} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		boolean res = ci.add(it);
 		//mostrar output
 		if (res) System.out.println("Item has been correctly added");
@@ -854,7 +868,13 @@ public class DriverConjuntItems {
 		}
 
 		//executar la funcionalitat
-		Item it = new Item(atr);
+		Item it;
+		try {
+			it = new Item(atr);
+		} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		boolean res = ci.addIni(it);
 		//mostrar output
 		if (res) System.out.println("Item has been correctly added");
@@ -992,7 +1012,12 @@ public class DriverConjuntItems {
 				subatr = StringOperations.divideString(a, ';');
 				atr1.add(subatr);
 			}
-			i1 = new Item(atr1);
+			try {
+				i1 = new Item(atr1);
+			} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
 
 			System.out.println("Enter " + Item.getNumAtributs() + " attributes for the second item");
 			System.out.println("If an attribute has several parts, please divide it with \";\"");
@@ -1006,7 +1031,12 @@ public class DriverConjuntItems {
 				subatr = StringOperations.divideString(a, ';');
 				atr2.add(subatr);
 			}
-			i2 = new Item(atr2);
+			try {
+				i2 = new Item(atr2);
+			} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
 		}
 		else {
 			System.out.println("ERROR: You can only choose 1 or 2");
@@ -1055,7 +1085,12 @@ public class DriverConjuntItems {
 					subatr = StringOperations.divideString(a, ';');
 					atr1.add(subatr);
 				}
-				list.add(new Item(atr1));
+				try {
+					list.add(new Item(atr1));
+				} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
+					System.out.println("ERROR: " + e.getMessage());
+					return;
+				}
 			}
 		}
 		else {

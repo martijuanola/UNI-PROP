@@ -7,10 +7,7 @@ import java.util.Collections;
 import src.recomanador.domini.Utils.*;
 import src.recomanador.domini.Item.tipus;
 
-import src.recomanador.excepcions.ItemNotFoundException;
-import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
-import src.recomanador.excepcions.ItemNewAtributesNotValidException;
+import src.recomanador.excepcions.*;
 /**
  * This class represents a set of items in the form of an ArrayList extension. 
  * It keeps the items sorted according to the item's ID, 
@@ -35,7 +32,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public ConjuntItems() {}
 
     //check
-    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
+    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException, ItemWeightNotCorrectException {
         //Nom atributs
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
         Item.assignarNomAtributs(nAtributs);
@@ -475,21 +472,5 @@ public class ConjuntItems extends ArrayList<Item> {
 
         }
         return -1;
-    }
-    
-    public Float getMaxAtribut(int i) {
-        return maxAtributs.get(i);
-    }
-
-    public Float getMinAtribut(int i) {
-        return minAtributs.get(i);
-    }
-
-    public ArrayList<Float> getMaxAtributs() {
-        return maxAtributs;
-    }
-
-    public ArrayList<Float> getMinAtributs() {
-        return minAtributs;
     }
 }
