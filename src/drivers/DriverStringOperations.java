@@ -190,7 +190,7 @@ public class DriverStringOperations {
 		String s2 = scanner.nextLine();
 		
 		System.out.println("Choose a number to set a type:");
-		System.out.println("\t1. I -> ID (also used for integers)");
+		System.out.println("\t1. I -> ID");
 		System.out.println("\t2. N -> Name");
 		System.out.println("\t3. B -> Boolean");
 		System.out.println("\t4. F -> Float");
