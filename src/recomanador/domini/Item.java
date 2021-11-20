@@ -172,8 +172,9 @@ public class Item implements Comparable<Item>{
         else Item.pesos.set(a, pes);
     }
 
+    //S'HA DE TREURE!!
     //ha de venir comprovat a assignaTipusItem de conjunt d'items
-    public static void assignarTipus(int atribut, tipus t) throws ItemTypeNotValidException {
+    public static void setTipus(int atribut, tipus t) throws ItemTypeNotValidException {
         Item.tipusAtribut.set(atribut, t);
         Item.canvisTipusAtribut(atribut, t);
     }
@@ -184,7 +185,7 @@ public class Item implements Comparable<Item>{
         Item.pesos = p;
     }
 
-    public static void setTipus(ArrayList<tipus> a) {
+    public static void setTipusArray(ArrayList<tipus> a) {
         Item.tipusAtribut = a;
     }
 

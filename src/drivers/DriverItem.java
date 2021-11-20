@@ -18,7 +18,7 @@ import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 
 /**
  * Driver tot test the class Item.
- * @author     
+ * @author     Martí J.
  */
 public class DriverItem {
 	static private Scanner scanner;
@@ -37,34 +37,54 @@ public class DriverItem {
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
 		class_initalised = false;
+
+		//inicalitzar statics item
+		/*ArrayList<Float> af = new ArrayList<Float>();
+		ArrayList<tipus> at = new ArrayList<tipus>();
+		ArrayList<String> as = new ArrayList<String>();
+		
+		af.add(100.0f);
+		at.add(tipus.I);
+		as.add("id");
+
+		try {
+			Item.setPesos(af);
+		} catch (ItemWeightNotCorrectException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		Item.setTipus(at);
+		Item.setNomAtributs(as);
+		Item.setId(0);*/
 		
 		String s = "Options: \n" +
 		"-1. exit\n" +
 		"0. show options\n" +
+		" - Constructors - \n" +
 		"1. Item(int id)\n" +
 		"2. Item(ArrayList<ArrayList<String>> atributs)\n" +
+		" - Getters - \n" +
 		"3. int getId()\n" +
-			"4. ArrayList<String> getAtribut(int i)\n" +
 		"4. ArrayList<ArrayList<String>> getAtributs()\n" +
+		" - Static Getters - \n" +
 		"5. int getPosId()\n" +
 		"6. int getPosNomA()\n" +
 		"7. int getNumAtributs()\n" +
-			"9. Float getPes(int i)\n" +
-			"10. tipus getTipus(int i)\n" +
-			"11. String getNomAtribut(int i)\n" +
 		"8. ArrayList<Float> getPesos()\n" +
-		"9. ArrayList<tipus> getTipusArray(\n" +
+		"9. ArrayList<tipus> getTipusArray()\n" +
 		"10. ArrayList<String> getCapçalera()\n" +
+		" - Static Setters - \n" +
 		"11. void setId(int id)\n" +
 		"12. void setNomA(int a)\n" +
-			"17. void setPes(int a, float pes)\n" +
-			"18. void assignarTipus(int atribut, tipus t)\n" +
-		"13. void setPesos(ArrayList<Float> p)\n" +
-		"14. void setTipus(ArrayList<tipus> a)\n" +
-		"15. void canvisTipusAtribut(int atribut, tipus t)\n" +
-		"16. void assignarNomAtributs(ArrayList<String> n)\n" +
-		"17. int compareTo(Item otherItem)\n" +
-		"18. String tipusToString(tipus t)\n";
+		"13. void setPes(int a, float pes)\n" +
+		"14. void setTipus(int atribut, tipus t)\n" +
+		"15. void setPesos(ArrayList<Float> p)\n" +
+		"16. void setTipusArray(ArrayList<tipus> a)\n" +
+		"17. void canvisTipusAtribut(int atribut, tipus t)\n" +
+		"18. void setNomAtributs(ArrayList<String> n)\n" +
+		" - Others - \n" +
+		"19. int compareTo(Item otherItem)\n" +
+		"20. String tipusToString(tipus t)\n";
 		
 		System.out.println("Testing class Item");
 		System.out.println(s);
@@ -134,24 +154,6 @@ public class DriverItem {
 				case 18:
 					mostra_18();
 					break;
-				case 19:
-					mostra_19();
-					break;
-				case 20:
-					mostra_20();
-					break;
-				case 21:
-					mostra_21();
-					break;
-				case 22:
-					mostra_22();
-					break;
-				case 23:
-					mostra_23();
-					break;
-				case 24:
-					mostra_24();
-					break;
 				default:
 			}
 			
@@ -162,7 +164,7 @@ public class DriverItem {
     
     static private void mostra_1() {
 		System.out.println("Testing function Item(int id)");
-			
+
 		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
@@ -196,41 +198,50 @@ public class DriverItem {
 		System.out.println("The ID of the item is " + n);
 	}
     static private void mostra_4() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function ArrayList<ArrayList<String>> getAtributs()");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
 
-
+		ArrayList<ArrayList<String>> aux = c.getAtributs();
+		System.out.println("These are the atributs of the item:");
+		System.out.println(aux);
 	}
     static private void mostra_5() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function int getPosId()");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
 
-
+		n = c.getPosId();
+		System.out.println("All the items store the ID in the position: " + n + ".");
 	}
     static private void mostra_6() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function getPosNomA()");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
 
+		n = c.getPosNomA();
+		if(n == -1) System.out.println("The items don't hava an atribute assigned as the name.");
+		System.out.println("All the items use the atribute "+ n+ " as the name of the item.");
 	}
 	static private void mostra_7() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function getNumAtributs()");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
+
+		n = c.getNumAtributs();
+		System.out.println("All the items have "+n+" atributes.");
 		
 	}
 	static private void mostra_8() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function ArrayList<Float> getPesos()");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -238,7 +249,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_9() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function ArrayList<tipus> getTipusArray()");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -246,7 +257,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_10() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function ArrayList<String> getCapçalera()");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -254,7 +265,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_11() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function void setId(int id)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -262,7 +273,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_12() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function void setNomA(int a)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -270,7 +281,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_13() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function setPes(int a, float pes)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -278,7 +289,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_14() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function void setTipus(int atribut, tipus t)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -286,7 +297,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_15() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function void setPesos(ArrayList<Float> p)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -294,7 +305,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_16() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function void setTipusArray(ArrayList<tipus> a)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -302,7 +313,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_17() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function void canvisTipusAtribut(int atribut, tipus t)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -310,7 +321,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_18() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -318,7 +329,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_19() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function int compareTo(Item otherItem)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -326,39 +337,7 @@ public class DriverItem {
 		
 	}
 	static private void mostra_20() {
-		System.out.println("Testing function <NAME_FUNCTION>");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-		
-	}
-	static private void mostra_21() {
-		System.out.println("Testing function <NAME_FUNCTION>");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-		
-	}
-	static private void mostra_22() {
-		System.out.println("Testing function <NAME_FUNCTION>");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-		
-	}
-	static private void mostra_23() {
-		System.out.println("Testing function <NAME_FUNCTION>");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-		
-	}
-	static private void mostra_24() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+		System.out.println("Testing function String tipusToString(tipus t)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
