@@ -146,7 +146,124 @@ public class ConjuntItems extends ArrayList<Item> {
         ConjuntItems.nom = n;
     }
     
+    /*----- CHECKERS -----*/
 
+    //TODO: tipusCorrecteColumna hauria de ser private
+    public boolean tipusCorrecteColumna(int columna, tipus t) {
+        boolean empty = true;
+        if (t == tipus.I) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esNombre(id.get(0))) return false;
+                }
+            }
+        }
+        else if (t == tipus.B) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esBool(id.get(0))) return false;
+                }
+            }
+        }
+        else if (t == tipus.F) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esFloat(id.get(0))){
+                        return false;
+                    } 
+                }
+            }
+        }
+        else if (t == tipus.D) {
+            for (int i = 0; i < size(); ++i) {
+                ArrayList<String> id = getAtributItem(i, columna);
+                if (id.size() > 1) return false;
+                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
+                    empty = false;
+                    if (!StringOperations.esData(id.get(0))) return false;
+                }
+            }
+        }
+        // Nom i String sempre estaran bé
+        return !empty || t == tipus.S || t == tipus.N;
+    }
+    
+    public boolean existeixItem(int id) {
+        int res = binarySearchItem(this, id, 0, size()-1);
+        return res > -1;
+    }
+    //TODO: tipusCorrecte hauria de ser private
+    public static boolean tipusCorrecte(String s, tipus t) {
+        if (t == tipus.I) {
+            if (StringOperations.esNombre(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.B) {
+            if (StringOperations.esBool(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.F) {
+            if (StringOperations.esFloat(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.D) {
+            if (StringOperations.esData(s) || s.equals("") && !s.equals(" ")) return true;
+        }
+        else if (t == tipus.S) return true;
+        else if (t == tipus.N) return true;
+        // Nom i String sempre estaran bé
+        return false;
+    }
+    //TODO: checkMaxMin hauria de ser private
+    public void checkMaxMin(Item it) {
+        for (int i = 0; i < maxAtributs.size(); ++i) {
+            if (it.getAtribut(i).size() == 1) {
+                Float nou = (float)0;
+                if (Item.getTipus(i) == tipus.I) {
+                    nou = (float)Integer.parseInt(it.getAtribut(i).get(0));
+                }
+                else if (Item.getTipus(i) == tipus.F) {
+                    nou = Float.parseFloat(it.getAtribut(i).get(0));
+                }
+                else if (Item.getTipus(i) == tipus.D) {
+                    nou = (float) StringOperations.dataToTime(it.getAtribut(i).get(0));
+                }
+                if (nou > maxAtributs.get(i)) maxAtributs.set(i, (float)nou);
+                if (nou < minAtributs.get(i)) minAtributs.set(i, (float)nou);
+            }
+        }
+    }
+
+    /*----- ADD/DELETE -----*/
+
+    public void eliminarItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
+        int pos = binarySearchItem(this, id, 0, size()-1);
+        if (pos < 0) throw new ItemNotFoundException("Item with id " + id + " does not exist");
+        remove(pos);
+    }
+    @Override
+    public boolean add(Item i) {
+        int pos = Collections.binarySearch(this, i);
+        if (pos < 0) pos = ~pos;
+        super.add(pos, i);
+        checkMaxMin(i);
+        return (get(pos).getId() == i.getId());
+    }
+    //TODO: addIni hauria de ser private
+    public boolean addIni(Item i) {
+        int pos = Collections.binarySearch(this, i);
+        if (pos < 0) pos = ~pos;
+        super.add(pos, i);
+        return (get(pos).getId() == i.getId());
+    }
+
+    /*----- COMPUTATIONS -----*/
 
     public void computeMinMaxAtribut(int col) {
         tipus t = Item.getTipus(col);
@@ -222,133 +339,6 @@ public class ConjuntItems extends ArrayList<Item> {
             ++c;
         }
         return found;
-    }
-
-    //check
-    private boolean tipusCorrecteColumna(int columna, tipus t) {
-        boolean empty = true;
-        if (t == tipus.I) {
-            for (int i = 0; i < size(); ++i) {
-                ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() > 1) return false;
-                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
-                    empty = false;
-                    if (!StringOperations.esNombre(id.get(0))) return false;
-                }
-            }
-        }
-        else if (t == tipus.B) {
-            for (int i = 0; i < size(); ++i) {
-                ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() > 1) return false;
-                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
-                    empty = false;
-                    if (!StringOperations.esBool(id.get(0))) return false;
-                }
-            }
-        }
-        else if (t == tipus.F) {
-            for (int i = 0; i < size(); ++i) {
-                ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() > 1) return false;
-                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
-                    empty = false;
-                    if (!StringOperations.esFloat(id.get(0))){
-                        return false;
-                    } 
-                }
-            }
-        }
-        else if (t == tipus.D) {
-            for (int i = 0; i < size(); ++i) {
-                ArrayList<String> id = getAtributItem(i, columna);
-                if (id.size() > 1) return false;
-                if (!id.get(0).equals("") && !id.get(0).equals(" ")){
-                    empty = false;
-                    if (!StringOperations.esData(id.get(0))) return false;
-                }
-            }
-        }
-        // Nom i String sempre estaran bé
-        return !empty || t == tipus.S || t == tipus.N;
-    }
-
-    //check
-    public void eliminarItem(int id) { //Cerca dicotòmica
-        int pos = binarySearchItem(this, id, 0, size()-1);
-        remove(pos);
-    }
-
-    //check
-    @Override
-    public boolean add(Item i) {
-        int pos = Collections.binarySearch(this, i);
-        if (pos < 0) pos = ~pos;
-        super.add(pos, i);
-        checkMaxMin(i);
-        return (get(pos).getId() == i.getId());
-    }
-
-    private boolean addIni(Item i) {
-        int pos = Collections.binarySearch(this, i);
-        if (pos < 0) pos = ~pos;
-        super.add(pos, i);
-        return (get(pos).getId() == i.getId());
-    }
-
-    private void checkMaxMin(Item it) {
-        for (int i = 0; i < maxAtributs.size(); ++i) {
-            if (it.getAtribut(i).size() == 1) {
-                Float nou = (float)0;
-                if (Item.getTipus(i) == tipus.I) {
-                    nou = (float)Integer.parseInt(it.getAtribut(i).get(0));
-                }
-                else if (Item.getTipus(i) == tipus.F) {
-                    nou = Float.parseFloat(it.getAtribut(i).get(0));
-                }
-                else if (Item.getTipus(i) == tipus.D) {
-                    nou = (float) StringOperations.dataToTime(it.getAtribut(i).get(0));
-                }
-                if (nou > maxAtributs.get(i)) maxAtributs.set(i, (float)nou);
-                if (nou < minAtributs.get(i)) minAtributs.set(i, (float)nou);
-            }
-        }
-    }
-
-    //check
-    public boolean existeixItem(int id) {
-        int res = binarySearchItem(this, id, 0, size()-1);
-        return res > -1;
-    }
-
-    //check
-    private static boolean tipusCorrecte(String s, tipus t) {
-        if (t == tipus.I) {
-            if (StringOperations.esNombre(s) || s.equals("") && !s.equals(" ")) return true;
-        }
-        else if (t == tipus.B) {
-            if (StringOperations.esBool(s) || s.equals("") && !s.equals(" ")) return true;
-        }
-        else if (t == tipus.F) {
-            if (StringOperations.esFloat(s) || s.equals("") && !s.equals(" ")) return true;
-        }
-        else if (t == tipus.D) {
-            if (StringOperations.esData(s) || s.equals("") && !s.equals(" ")) return true;
-        }
-        else if (t == tipus.S) return true;
-        else if (t == tipus.N) return true;
-        // Nom i String sempre estaran bé
-        return false;
-    }
-
-    //check
-    public void printId() {
-        for (int i = 0; i < size(); ++i) {
-            Item it = get(i);
-            String id = "Not An ID";
-            id = "" + it.getId();
-            System.out.println("ID" + (i + 1) + ": " + id);
-        }
     }
 
     //Check
@@ -457,20 +447,4 @@ public class ConjuntItems extends ArrayList<Item> {
         }
         return -1;
     }
-    
-    public void printItems() {
-        System.out.println("Nom conjunt: " + ConjuntItems.nom);
-        for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            
-            System.out.print(Item.getNomAtribut(i) + " " + ConjuntItems.getSTipus(i) + " " + Item.getPes(i));
-
-            if (i != Item.getNumAtributs() - 1) System.out.print(" | ");
-        }
-        System.out.println("");
-
-        for (int i = 0; i < size(); ++i) {
-            get(i).print();
-        }
-    }
-
 }

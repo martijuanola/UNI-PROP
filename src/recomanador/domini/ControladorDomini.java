@@ -188,7 +188,6 @@ public class ControladorDomini {
     public void prova2() {
         ConjuntItems.setNom("HEY NO SE QUE POSAR");
         System.out.println("hey " + ci.size() + " atributs " + Item.getNumAtributs());
-        ci.printItems();
         for (int i = 1; i < ci.size(); ++i) {
             if (ci.get(i-1).getId() > ci.get(i).getId()) System.out.println("No funciona!: " +ci.get(i-1).getId() + " " + ci.get(i).getId());
             if (!ci.existeixItem(ci.get(i).getId())) System.out.println("No funciona!");
