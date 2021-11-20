@@ -15,6 +15,7 @@ import src.recomanador.domini.ConjuntRecomanacions;
 import java.io.IOException;
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationNotRatedException;
+import src.recomanador.excepcions.RecommendationRatedException;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 /**
  * Driver tot test the class Usuari.
@@ -290,16 +291,15 @@ public class DriverUsuari {
 			return;
 		}
 
-		System.out.print("Index of the recommendation that needs to be moved: ");
+		System.out.print("Index of the recommendation that needs to be moved from (Recomanacions to Valoracions): ");
 		n = scanner.nextInt();
 
 		try {
-			c.moureRecomanacio(n);
+			c.moureRecomanacio(c.getRecomanacions().get(n),true);
 		}
-		catch(RecommendationNotRatedException e) {
+		catch(RecommendationNotRatedException | RecommendationRatedException e) {
 			System.out.println("The opperation couldn't be performed(as expected) because this functionality will only work if the recommendation had a rating.");
 		}
-
 
 	}
 	static private void mostra_9() {
