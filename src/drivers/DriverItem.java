@@ -215,7 +215,7 @@ public class DriverItem {
 			return;
 		}
 
-		n = c.getPosId();
+		n = Item.getPosId();
 		System.out.println("All the items store the ID in the position: " + n + ".");
 	}
     static private void mostra_6() {
@@ -225,7 +225,7 @@ public class DriverItem {
 			return;
 		}
 
-		n = c.getPosNomA();
+		n = Item.getPosNomA();
 		if(n == -1) System.out.println("The items don't hava an atribute assigned as the name.");
 		System.out.println("All the items use the atribute "+ n+ " as the name of the item.");
 	}
@@ -236,7 +236,7 @@ public class DriverItem {
 			return;
 		}
 
-		n = c.getNumAtributs();
+		n = Item.getNumAtributs();
 		System.out.println("All the items have "+n+" atributes.");
 		
 	}
@@ -247,6 +247,9 @@ public class DriverItem {
 			return;
 		}
 		
+		ArrayList<Float> aux = Item.getPesos();
+		System.out.println("The weight of the atributes are:");
+		System.out.println(aux);
 	}
 	static private void mostra_9() {
 		System.out.println("Testing function ArrayList<tipus> getTipusArray()");
@@ -255,6 +258,12 @@ public class DriverItem {
 			return;
 		}
 		
+		ArrayList<tipus> aux = Item.getTipusArray();
+		System.out.println("The types of the atributes are:");
+		for(int i = 0; i < aux.size(); i++){
+			System.out.print(Item.tipusToString(aux.get(i)) + "\t");
+		}
+		System.out.println();
 	}
 	static private void mostra_10() {
 		System.out.println("Testing function ArrayList<String> getCapçalera()");
@@ -262,7 +271,10 @@ public class DriverItem {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
-		
+
+		ArrayList<String> aux = Item.getCapçalera();
+		System.out.println("The name of the atributes are: ");
+		System.out.println(aux);
 	}
 	static private void mostra_11() {
 		System.out.println("Testing function void setId(int id)");
@@ -270,7 +282,12 @@ public class DriverItem {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
+
+		System.out.print("Old value for Id(column index):");
+		n = scanner.nextInt();
 		
+		Item.setId(n);
+		System.out.println("The value id has been correctly initialised.");
 	}
 	static private void mostra_12() {
 		System.out.println("Testing function void setNomA(int a)");
@@ -278,7 +295,13 @@ public class DriverItem {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
+
+		System.out.print("Old value for nomA(column index):");
+		n = scanner.nextInt();
 		
+		Item.setNomA(n);
+		System.out.println("The value nomA has been correctly initialised.");
+
 	}
 	static private void mostra_13() {
 		System.out.println("Testing function setPes(int a, float pes)");
@@ -286,7 +309,26 @@ public class DriverItem {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
+
+		System.out.print("Index of the atribute to change it's weight:");
+		n = scanner.nextInt();
+
+		System.out.print("New weight :");
+		f = scanner.nextFloat();
 		
+		try {
+			Item.setPes(n,f);
+			System.out.println("The weight has been changed.");
+		}
+		catch(ItemWeightNotCorrectException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+
+		ArrayList<Float> aux = c.getPesos();
+		System.out.println("The weight of the now atributes are:");
+		System.out.println(aux);
+
 	}
 	static private void mostra_14() {
 		System.out.println("Testing function void setTipus(int atribut, tipus t)");

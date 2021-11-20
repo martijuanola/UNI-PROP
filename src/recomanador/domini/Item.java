@@ -130,10 +130,12 @@ public class Item implements Comparable<Item>{
 
     /*----- STATICS SETTERS -----*/
 
+    //s'hauràn d'afegir excepcions potser
     public static void setId(int id) {
-        Item.id= id;
+        Item.id = id;
     }
 
+    //s'hauràn d'afegir excepcions potser
     public static void setNomA(int a) {
         Item.nomA = a;
     }
