@@ -8,6 +8,7 @@ import src.recomanador.domini.ControladorDominiAlgorisme;
 import src.recomanador.domini.Item;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.UserNotFoundException;
 import src.recomanador.excepcions.DataNotValidException;
 
@@ -104,7 +105,41 @@ public class DriverAlgorisme {
                 System.out.print(">>>>> ");
             }
         }
-        System.out.println(); 
+        System.out.println();
+        
+        if(int1 == 1) {
+            int atribut_seleccionat = 0;
+
+            ArrayList<String> atributs = Item.getCapçalera();
+            ArrayList<Float> pesos = Item.getPesos();
+
+            while(atribut_seleccionat != -1) {
+                System.out.println("El conjunt d'Ítems té els següents atributs amb els següents pesos:");
+                System.out.println();
+
+                System.out.println("INDEX       PES              ATRIBUT");
+                
+                for (int i = 0; i < atributs.size(); ++i) {
+                    System.out.print(i);
+                    if (i < 10) System.out.print(" ");
+                    System.out.println("          "+pesos.get(i)+"            "+atributs.get(i));
+                }
+                System.out.println();
+
+                System.out.println("Si vol modificar el pes d'un atribut escrigui l'índex. Altrament, escrigui -1.");
+                System.out.print(">>>>> ");
+                atribut_seleccionat = in.nextInt();
+                if (atribut_seleccionat != -1) {
+                    System.out.println("Escrigui el nou pes:");
+                    System.out.print(">>>>> ");
+                    float nouPes = in.nextFloat();
+                    try {Item.setPes(atribut_seleccionat, nouPes);}
+                    catch (ItemWeightNotCorrectException | ArrayIndexOutOfBoundsException e) {System.out.println(e);}
+                }
+            }
+
+            System.out.println();
+        }
 
         System.out.println("Seleccioni un mode:");
         System.out.println("0 - Obtenir recomanacions per a un usuari");
