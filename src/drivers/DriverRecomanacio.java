@@ -1,14 +1,17 @@
 package src.drivers;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import src.recomanador.domini.Recomanacio;
 import src.recomanador.domini.Item;
+import src.recomanador.domini.Item.tipus;
 import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable!!!!!!
 //import src.stubs.Usuari;
 
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationRatedException;
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 
 /**
  * Driver tot test the class Recomanacio.
@@ -34,6 +37,20 @@ public class DriverRecomanacio {
     	scanner = new Scanner(System.in);
     	class_initalised = false;  
     	int x;
+
+    	//inicalitzar statics item
+		ArrayList<Float> af = new ArrayList<Float>();
+		ArrayList<tipus> at = new ArrayList<tipus>();
+		ArrayList<String> as = new ArrayList<String>();
+		
+		af.add(100.0f);
+		at.add(tipus.I);
+		as.add("id");
+
+		Item.setPesos(af);
+		Item.setTipus(at);
+		Item.assignarNomAtributs(as);
+		Item.setId(0);
 
 		String s = "Options: \n\n" +
 		"-1. exit\n" +
@@ -117,7 +134,14 @@ public class DriverRecomanacio {
 		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(n);
+		
+		try {
+			i = new Item(n);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
 		
 		//construir Recomanació
@@ -139,7 +163,14 @@ public class DriverRecomanacio {
 		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(n);
+		
+		try {
+			i = new Item(n);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
 		System.out.print("Rating value: ");
 		f = scanner.nextFloat();
@@ -225,12 +256,12 @@ public class DriverRecomanacio {
 			return;
 		}
 		
+		System.out.print("User ID: ");
+		n = scanner.nextInt();
+
 		System.out.print("Item ID: ");
 		m = scanner.nextInt();
 
-		System.out.print("User ID: ");
-		n = scanner.nextInt();
-		
 		if(c.checkIds(m,n)) System.out.println("The Item and User IDs of the recommendation coincide with the once entered.");
 		else System.out.println("The Item and User IDs of the recommendation do NOT coincide with the once entered.");
 	}
@@ -249,7 +280,14 @@ public class DriverRecomanacio {
 		System.out.print("Data for new Item:\n");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(n);
+		
+		try {
+			i = new Item(n);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
 		if(c.checkKeys(i,u)) System.out.println("The Item and User of the recommendation coincide with the once entered.");
 		else System.out.println("The Item and User of the recommendation do NOT coincide with the once entered.\n" +
@@ -273,9 +311,26 @@ public class DriverRecomanacio {
 		System.out.print("Data for new Item:\n");
 		System.out.print("Item ID: ");
 		n = scanner.nextInt();
-		i = new Item(n);
+		
+		try {
+			i = new Item(n);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
-		Recomanacio rr = new Recomanacio(u,i);
+		System.out.print("Rating: ");
+		f = scanner.nextFloat();
+
+		Recomanacio rr;
+		try {
+			rr = new Recomanacio(u,i,f);
+		}
+		catch(RatingNotValidException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		n = c.compareTo(rr);
 
 		if(n < 0) System.out.println("The new recommendation has a greater index than the current.");

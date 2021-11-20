@@ -382,7 +382,7 @@ public class DriverControladorPersistencia {
 		else
 		{
 			io.writeln("\nYou can check its veracity by going to the folder " + c.getNomProjecte() + 
-				" and checking if both files exist: pesos.csv and tipus.csv");
+				" and checking if all files exist: pesos.csv, tipus.csv, estat.csv, minAtributs.items.csv, maxAtributs.items.csv");
 		}
 	}
 	static private void testDadesEstat() throws Exception { //Inacabat!!!!---------------

@@ -1,0 +1,29 @@
+Objecte de la prova: 
+	- ControladorSave
+
+Altres elements integrats a la prova:
+	- Classes ja provades:
+	- Stubs:
+
+Drivers:
+	-DriverControladorSave
+
+Stubs:
+
+Fitxers de dades necessaris:
+	- Cap. El sistema crearà les carpetes i fitxers necessaris per a fer la prova
+
+Valors estudiats:
+	- S'observarà el comportament de la funció per diversos fitxers que hauria de produir el programa.
+
+Efectes estudiats:
+	- Que el fitxer contingui les dades de prova impreses pel programa.
+	- Si s'escriu sobre un arxiu ja existent, aquest es sobreescriu amb les dades impreses pel programa
+	- Si la destinació és una carpeta ja existent, les dades no s'escriuen
+
+Operativa:
+	- Es selecciona la funció de guardar, triant la opció 1
+	- S'escriu el nom de l'arxiu on es vol guardar les dades. Es crearàn (si no existeixen ja) 
+	  unes carpetes (la de dades i una de prova) per guardar els arxius.
+	- S'observen els resultats
+	- Tornar a provar la funcionalitat o sortir introduint el valor 0

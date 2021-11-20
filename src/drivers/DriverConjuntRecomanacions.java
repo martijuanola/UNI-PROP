@@ -10,22 +10,13 @@ import src.recomanador.domini.ConjuntRecomanacions;
 import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.ConjuntUsuaris;
 import src.recomanador.domini.Item;
+import src.recomanador.domini.Item.tipus;
 import src.recomanador.domini.Usuari;
 import src.recomanador.domini.Recomanacio;
 
 //Excepcions
 import java.io.IOException;
-import src.recomanador.excepcions.RecommendationNotFoundException;
-import src.recomanador.excepcions.ItemNotFoundException;
-import src.recomanador.excepcions.UserNotFoundException;
-import src.recomanador.excepcions.RatingNotValidException;
-import src.recomanador.excepcions.UserIdNotValidException;
-import src.recomanador.excepcions.ItemIdNotValidException;
-import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-import src.recomanador.excepcions.FileNotValidException;
-import src.recomanador.excepcions.FileNotFoundException;
-import src.recomanador.excepcions.DataNotValidException;
+import src.recomanador.excepcions.*;
 
 /**
  * Driver tot test the class ConjuntRecomanacions.
@@ -183,7 +174,14 @@ public class DriverConjuntRecomanacions {
 
 		System.out.print("Item ID: ");
 		m = scanner.nextInt();
-		i = new Item(m);
+		
+		try {
+			i = new Item(m);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		
 		System.out.print("User ID: ");
 		n = scanner.nextInt();
@@ -207,7 +205,14 @@ public class DriverConjuntRecomanacions {
 
 		System.out.print("Item ID: ");
 		m = scanner.nextInt();
-		i = new Item(m);
+		
+		try {
+			i = new Item(m);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		
 		System.out.print("User ID: ");
 		n = scanner.nextInt();
@@ -231,7 +236,14 @@ public class DriverConjuntRecomanacions {
 
 		System.out.print("Item ID: ");
 		m = scanner.nextInt();
-		i = new Item(m);
+		
+		try {
+			i = new Item(m);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		
 		System.out.print("User ID: ");
 		n = scanner.nextInt();
@@ -259,7 +271,14 @@ public class DriverConjuntRecomanacions {
 
 		System.out.print("Item ID: ");
 		m = scanner.nextInt();
-		i = new Item(m);
+		
+		try {
+			i = new Item(m);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		
 		ConjuntUsuaris ru = c.usuarisRecomanats(i);
 		System.out.println("ConjuntUsuaris returned:");
@@ -278,7 +297,14 @@ public class DriverConjuntRecomanacions {
 
 		System.out.print("Item ID: ");
 		m = scanner.nextInt();
-		i = new Item(m);
+		
+		try {
+			i = new Item(m);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+            System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		
 		System.out.print("User ID: ");
 		n = scanner.nextInt();

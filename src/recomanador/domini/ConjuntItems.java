@@ -9,8 +9,8 @@ import src.recomanador.domini.Item.tipus;
 
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
+import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 /**
  * This class represents a set of items in the form of an ArrayList extension. 
  * It keeps the items sorted according to the item's ID, 
@@ -21,6 +21,9 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- ATRIBUTS -----*/
 
+    /**
+     * Nom conjunt d'items
+     */
     public static String nom; 
     
     private static ArrayList<Float> maxAtributs;
@@ -28,13 +31,16 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- CONSTRUCTORS -----*/
 
+    //check
     public ConjuntItems() {}
 
-    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException, ItemWeightNotCorrectException {
+    //check
+    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
+        //Nom atributs
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
-        
-        Item.setNomAtributs(nAtributs);
+        Item.assignarNomAtributs(nAtributs);
 
+        //Pesos default(100.0) + tipus default(String) + id
         if (!inicialitzar(nAtributs.size())) throw new ItemTypeNotValidException("Items has no column named \"id\"");
 
         for (int i = 1; i < items.size(); ++i) {
@@ -42,8 +48,16 @@ public class ConjuntItems extends ArrayList<Item> {
             for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
-            Item it = new Item(str);
-            addIni(it);//Afegeix ordenat
+            try {
+                Item it = new Item(str);
+                addIni(it);//Afegeix ordenat
+            }
+            catch(ItemStaticValuesNotInitializedException e) {
+                System.out.println("No s'han inicialitzat bé les variables estàtiques d'Item!!!\n" + e.getMessage());
+            }
+            catch(ItemNewAtributesNotValidException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
         detectarTipusAtributs();
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
@@ -70,8 +84,16 @@ public class ConjuntItems extends ArrayList<Item> {
             for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
-            Item it = new Item(str);
-            addIni(it);
+            try {
+                Item it = new Item(str);
+                addIni(it);
+            }
+            catch(ItemStaticValuesNotInitializedException e) {
+                System.out.println("No s'han inicialitzat bé les variables estàtiques d'Item!!!\n" + e.getMessage());
+            }
+            catch(ItemNewAtributesNotValidException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
     }
 
@@ -453,5 +475,21 @@ public class ConjuntItems extends ArrayList<Item> {
 
         }
         return -1;
+    }
+    
+    public Float getMaxAtribut(int i) {
+        return maxAtributs.get(i);
+    }
+
+    public Float getMinAtribut(int i) {
+        return minAtributs.get(i);
+    }
+
+    public ArrayList<Float> getMaxAtributs() {
+        return maxAtributs;
+    }
+
+    public ArrayList<Float> getMinAtributs() {
+        return minAtributs;
     }
 }

@@ -1,6 +1,5 @@
 package src.recomanador.persistencia;
 
-//import java.io.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,8 +9,8 @@ import java.util.ArrayList;
 import src.recomanador.excepcions.*;
 
 /**
-* La classe ControladorLoad implementa controlador de lectura
-* de les dades en memòria.
+* The class ControladorLoad implements the function for loading data from memory. 
+* This data is read as .csv file.
 * 
 * @author Pol Sturlese 
 */
@@ -109,13 +108,19 @@ public class ControladorLoad {
 				data.add(new ArrayList<String>());
 				
 				char END_CHAR = ',';
+				char ANTI_END_CHAR = '\n';
 				for (int i = 0; i < cols; ++i)
 				{
-					if (i == cols-1) END_CHAR = '\n';
+					if (i == cols-1) 
+					{
+						END_CHAR = '\n';
+						ANTI_END_CHAR = ',';
+					}
 					String column_value = "";
 			
 					while (c != END_CHAR) 
-					{				
+					{
+						if (n == -1 | c == ANTI_END_CHAR) throw new IOException();				
 						if (c == '"')
 						{
 							do

@@ -12,10 +12,9 @@ public class Main {
         try {
             cd.carregarCarpeta("movies-2250");
         } catch (FolderNotFoundException | FolderNotValidException | DataNotValidException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
             return;
         }
-        System.out.println("x");
-        cd.prova2();
     }
 }

@@ -13,8 +13,8 @@ Drivers:
 Stubs:
 	- Usuari
 
-Fitxers de dades necessaris:
-	-!!!!
+Fitxers de dades per provar:
+	- DriverRecomanacioTest.txt
 
 Valors estudiats:
 	- Dades tipus caixa blanca

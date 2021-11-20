@@ -180,23 +180,4 @@ public class ControladorDomini {
 
     //get new recomendations
 
- 
-
-
-    /*----- PROVES I COSES QUE ES TREURAN -----*/
-
-    public void prova2() {
-        ConjuntItems.setNom("HEY NO SE QUE POSAR");
-        System.out.println("hey " + ci.size() + " atributs " + Item.getNumAtributs());
-        for (int i = 1; i < ci.size(); ++i) {
-            if (ci.get(i-1).getId() > ci.get(i).getId()) System.out.println("No funciona!: " +ci.get(i-1).getId() + " " + ci.get(i).getId());
-            if (!ci.existeixItem(ci.get(i).getId())) System.out.println("No funciona!");
-        }
-        for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            System.out.println("\t tipus " + StringOperations.tipusToString(Item.getTipus(i)) + " nom " + Item.getNomAtribut(i));
-            System.out.println("maxAtr " + i + " " + ci.getMaxAtribut(i));
-            System.out.println("minAtr " + i + " " + ci.getMinAtribut(i));
-        }
-
-    }
 }
