@@ -74,7 +74,7 @@ public class DriverStringOperations {
 					testEsBool();
 					break;
 				case 6:
-					//mostra_6();
+					testCompararAtributs();
 					break;
 				case 7:
 					//mostra_5();
@@ -174,12 +174,48 @@ public class DriverStringOperations {
 		if (c.esBool(s)) System.out.println("YES! It's a boolean");
 		else System.out.println("NO! It's not a boolean");
 	}
-    static private void mostra_6() {
-		System.out.println("Testing function <NAME_FUNCTION>");
+    static private void testCompararAtributs() {
+		System.out.println("Testing function compararAtributs()");
 		//demanar l'input
+		System.out.println("Write 2 strings and its type. They will be" + 
+			"compared as the type that you specify");
+		
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("String 1: ");
+		String s1 = scanner.nextLine();
+		System.out.print("String 2: ");
+		String s2 = scanner.nextLine();
+		
+		System.out.println("Choose a number to set a type:");
+		System.out.println("\t1. I -> ID");
+		System.out.println("\t2. N -> Name");
+		System.out.println("\t3. B -> Boolean");
+		System.out.println("\t4. F -> Float");
+		System.out.println("\t5. S -> String");
+		System.out.println("\t6. D -> Date");
+		int i = scanner.nextInt();
+		tipus t = tipus.S;
+		if (i == 1) t = tipus.I;
+		else if (i == 2) t = tipus.N;
+		else if (i == 3) t = tipus.B;
+		else if (i == 4) t = tipus.F;
+		else if (i == 5) t = tipus.S;
+		else if (i == 6) t = tipus.D;
 		
 		//executar la funcionalitat
+		int res = -2;
+		
+		try { res = c.compararAtributs(s1, s2, t); }
+		catch (Exception e) 
+		{
+			System.out.println("Something went wrong");
+			System.out.println("Probably the type was not correct for the 2 of the strings");
+		}
 		
 		//mostrar output
+		if (res == -1) System.out.println(s1 + "<" + s2);
+		else if (res == 0) System.out.println(s1 + "=" + s2);
+		else if (res == 1) System.out.println(s1 + ">" + s2);
+		else System.out.println("ERROR!!");
 	}
 }
