@@ -9,7 +9,8 @@ import src.recomanador.domini.Item.tipus;
 
 import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
-
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
+import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 /**
  * This class represents a set of items in the form of an ArrayList extension. 
  * It keeps the items sorted according to the item's ID, 
@@ -32,10 +33,11 @@ public class ConjuntItems extends ArrayList<Item> {
 
     //check
     public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException {
+        //Nom atributs
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
-        
         Item.assignarNomAtributs(nAtributs);
 
+        //Pesos default(100.0) + tipus default(String) + id
         if (!inicialitzar(nAtributs.size())) throw new ItemTypeNotValidException("Items has no column named \"id\"");
 
         for (int i = 1; i < items.size(); ++i) {
@@ -43,8 +45,16 @@ public class ConjuntItems extends ArrayList<Item> {
             for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
-            Item it = new Item(str);
-            addIni(it);//Afegeix ordenat
+            try {
+                Item it = new Item(str);
+                addIni(it);//Afegeix ordenat
+            }
+            catch(ItemStaticValuesNotInitializedException e) {
+                System.out.println("No s'han inicialitzat bé les variables estàtiques d'Item!!!\n" + e.getMessage());
+            }
+            catch(ItemNewAtributesNotValidException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
         detectarTipusAtributs();
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
@@ -72,8 +82,16 @@ public class ConjuntItems extends ArrayList<Item> {
             for (int j = 0; j < items.get(i).size(); ++j) { //Recorrem per separar en subvectors
                 str.add(StringOperations.divideString(items.get(i).get(j), ';'));
             }
-            Item it = new Item(str);
-            add(it);
+            try {
+                Item it = new Item(str);
+                add(it);
+            }
+            catch(ItemStaticValuesNotInitializedException e) {
+                System.out.println("No s'han inicialitzat bé les variables estàtiques d'Item!!!\n" + e.getMessage());
+            }
+            catch(ItemNewAtributesNotValidException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
     }
 
@@ -451,21 +469,6 @@ public class ConjuntItems extends ArrayList<Item> {
         return -1;
     }
     
-    public void printItems() {
-        System.out.println("Nom conjunt: " + ConjuntItems.nom);
-        for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            
-            System.out.print(Item.getNomAtribut(i) + " " + ConjuntItems.getSTipus(i) + " " + Item.getPes(i));
-
-            if (i != Item.getNumAtributs() - 1) System.out.print(" | ");
-        }
-        System.out.println("");
-
-        for (int i = 0; i < size(); ++i) {
-            get(i).print();
-        }
-    }
-
     public Float getMaxAtribut(int i) {
         return maxAtributs.get(i);
     }

@@ -143,7 +143,9 @@ public class Recomanacio implements Comparable<Recomanacio> {
     @Override public int compareTo(Recomanacio r2) {
         int a = Integer.compare(this.item.getId(), r2.getItem().getId());
         int b = Integer.compare(this.usr.getId(), r2.getUsuari().getId());
+        int c = Float.compare(this.getVal(), r2.getVal());
         if(a != 0) return a;
-        else return b;
+        else if(b != 0) return b;
+        else return c;
     }
 }
