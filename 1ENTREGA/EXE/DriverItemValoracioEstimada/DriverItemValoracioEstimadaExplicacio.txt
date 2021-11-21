@@ -1,71 +1,25 @@
 Objecte de la prova: 
-	- La classe ControladorDominiAlgorisme, així com les classes ContentBasedFiltering i CollaborativeFiltering
+	- La classe ItemValoracioEstimada
 
 Altres elements integrats a la prova:
 	- Classes ja provades:
-		- ControladorPersistencia
-		- Recomanacio
-		- ConjuntRecomanacions
 		- Item
-		- ConjuntItems
-		- Usuari
-		- ConjuntUsuaris
-		- ItemValoracioEstimada
 
 Drivers:
-	- DriverAlgorisme
+	- DriverItemValoracioEstimada
 
 Stubs:
-	Cap Stub ha sigut emprat donat que volíem comprovar els resultats reals.
+	Cap Stub ha sigut emprat, però a la classe Item s'ha feta servir la generació reduïda usant només un valor numèric com a ID.
 
 Fitxers de dades necessaris:
-	-Data
-	  -movies-250
-	  -movies-750
-	  -movies-2250
-	  -movies-6750
-	
-	El driver demana quin fitxer de dades vols emprar. Cal posar el nom del directori,
-	com per exemple "movies-750". Donat la seva dificultat computacional els fitxers de dades
-	més grans no han sigut testejats exhaustivament, però no esperem cap error respecte els petits.
-	Cada una d'aquestes carpetes conté: items.csv, ratings.csv, known.csv i unknown.csv . Els dos
-	últims són necessaris per al càlcul de DCG.
+	Cap.
 
 Valors estudiats:
-	- Recomanacions per a una ID-Usuari, usant ambdós algoritmes
-	- Valors de DCG i NDCG, usant ambdós algoritmes
+	- L'ordenació d'Items amb valoracions arbitràries
 
 Efectes estudiats:
-	- El fitxer dades es carrega correctament
-	- En el cas de collaborative filtering
-		- Es generen k clusters d'usuaris, de tamanys comparables
-		- L'algorisme de slope-1 genera estimacions de valoracions raonables
-	- En el cas de content-based filtering
-		- Els pesos dels atributs es modifiquen exitosament
-		- Afegint un usuari que valori una única pelicula, genera recomanacions raonables
-	- En el cas del calcul de DCG
-		- S'afegeixen correctament les dades Known al ConjuntUsuaris i ConjuntsRecomanacions.
-		- Es carrega correctament Unknown per a l'avaluació de recomanacions
-		- Es generen correctament els valors de DCG i NDCG
-		- Els valors de DCG i NDCG son estables i raonables.
+	- La classe ItemValoracioEstimada permet emmagatzemar un item i una valoració estimada i la reimplementació de Compare permet la ordenació d'una llista d'ItemValoracioEstimada segons la valoració estimada
 
 Operativa:
-	- Primer el driver demana seleccionar un projecte. Per exemple, "movies-250"
-
-	- Seguidament demana seleccionar un valor de k.
-		- En el cas de collaborative filtering servirà per determinar quants clusters es generen
-		- En el cas de content based filtering servirà per determinar quants items semblants s'agafen
-
-	- Després demana la selecció de l'algorisme
-		- 0 selecciona collaborative filtering
-		- 1 selecciona content based filtering
-			- Si es selecciona content-based filtering s'obre un menú que permet modificar els pesos dels atributs. Entrar -1 surt del menú.
-		- 2 seleccionarà Hybrid Approach un cop sigui implementat
-
-	- Un cop seleccionat l'algorisme, demana escollir el mode
-		- 0 selecciona el mode "obtenir recomanació per a un usuari"
-			- Seguidament demanarà introduir quants items vols recomanats (Q)
-			- També demana quina ID d'usuari vols obtenir-ne recomanacions, i ofereix algunes suggerencies.
-			- Finalment ofereix una llista d'items recomanats amb les seves valoracions estimades.
-		- 1 selecciona el mode "obtenir DCG i NDCG"
-			- Després de carregar automàticament els fitxers known i unknown genera les recomanacions per a tots els usuaris de Known i finalment ofereix els valors DCG i NDCG.
+	- Automaticament genera una sèrie d'items amb valoracions arbitràries, els ordena i els imprimeix.
+	  Aquests valors són sempre els mateixos però hem considerat que és una classe senzilla i això ja ens demostra el seu funcionament correcte.
