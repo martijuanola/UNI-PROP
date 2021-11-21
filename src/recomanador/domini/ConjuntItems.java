@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import src.recomanador.domini.Utils.*;
+import src.recomanador.Utils.*;
 import src.recomanador.domini.Item.tipus;
 
 import src.recomanador.excepcions.*;
@@ -48,6 +48,7 @@ public class ConjuntItems extends ArrayList<Item> {
      *  -Defaults all the weights to its maximum value (100)
      *  -Fills the array with the names of each attribute
      *  -Sets the position of id to the attribute with name id
+     *  -Sorts all items
      * 
      * @param items Array of an array of atributes. The first must be a header with the name of each attribute
      * @throws ItemTypeNotValidException Is thrown when the header does not contain "id" or when it is not valid
@@ -129,12 +130,22 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- GETTERS -----*/
 
+    /**
+     * Return the item specified by its id
+     * @param id ID of the item to get
+     * @return Item with attribute "id" equals to id
+     * @throws ItemNotFoundException Item with specified id does not exist
+     */
     public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
         int pos = binarySearchItem(this, id, 0, size()-1);
         if (pos < 0) throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
         return get(pos);
     }
 
+    /**
+     * Get all items in the set
+     * @return Return an array of an array of an array of strings which is the representation for an array of attributes of items
+     */
     public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
         ArrayList<ArrayList<ArrayList<String>>> result = new ArrayList<ArrayList<ArrayList<String>>>();
         ArrayList<ArrayList<String>> aux = new ArrayList<ArrayList<String>>();
@@ -150,59 +161,126 @@ public class ConjuntItems extends ArrayList<Item> {
         return result;
     }
 
+    /**
+     * Returns the attribute for the specified item id and column index
+     * @param id ID of the item
+     * @param i column of the attribute to get
+     * @return ArrayList<String> of the attribute
+     * @throws ItemNotFoundException Item does not exist
+     */
     public ArrayList<String> getAtributItemId(int id, int i) throws ItemNotFoundException { //Cerca dicotòmica + retornar atribut
         return getItem(id).getAtributs().get(i);
     }
 
+    /**
+     * Returns the attribute for the specified item index and column index 
+     * @param posItem index of the item in the set
+     * @param atribut column of the attribute to get
+     * @return ArrayList<String> of the attribute
+     */
     public ArrayList<String> getAtributItem(int posItem, int atribut) { //retornar atribut
         return get(posItem).getAtributs().get(atribut);
     }
-    
+
+    /**
+     * Returns the type of a column as a string
+     * @param i int column
+     * @return type of a column as a string (ID, Nom, Boolean, Float, String, Date)
+     */
     public static String getSTipus(int i) {
     tipus t = Item.getTipusArray().get(i);
     return StringOperations.tipusToString(t);
-
-}
+    }
     
+    /**
+     * Returns the maximum attribute at the column i
+     * @param i int column
+     * @return maximum attribute at the column i as a float
+     */
     public Float getMaxAtribut(int i) {
         return maxAtributs.get(i);
     }
 
+    /**
+     * Returns the minimum attribute at the column i
+     * @param i int column
+     * @return minimum attribute at the column i as a float
+     */
     public Float getMinAtribut(int i) {
         return minAtributs.get(i);
     }
 
+    /**
+     * Returns array of maximum attributes
+     * @return ArrayList<Float> of maximum attributes
+     */
     public ArrayList<Float> getMaxAtributs() {
         return maxAtributs;
     }
 
+    /**
+     * Returns array of minimum attributes
+     * @return ArrayList<Float> of minimum attributes
+     */
     public ArrayList<Float> getMinAtributs() {
         return minAtributs;
     }
 
     /*----- SETTERS -----*/
 
+    /**
+     * Sets the minimum attributes to the parameter array
+     * @param minAtributs2 Must be an array with the minimum values in the set and with size equals to the number of attributes
+     */
     public static void setMinAtributs(ArrayList<Float> minAtributs2) {
         ConjuntItems.minAtributs = minAtributs2;
     }
-
+   
+    /**
+     * Sets the maximum attributes to the parameter array
+     * @param minAtributs2 Must be an array with the maximum values in the set and with size equals to the number of attributes
+     */
     public static void setMaxAtributs(ArrayList<Float> maxAtributs2) {
         ConjuntItems.maxAtributs = maxAtributs2;
     }
+    
     //TODO: setTipusItem hauria de ser private
+    /**
+     * Sets the column "atribut" to type t
+     * @param atribut must be a column of the item attributes
+     * @param t a type suitable for the column
+     * @throws ItemTypeNotValidException if the column does not admit the type, it will generate an exception
+     */
     public void setTipusItem(int atribut, tipus t) throws ItemTypeNotValidException {
         if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + StringOperations.tipusToString(t));
         Item.setTipus(atribut, t);
     }
 
+    /**
+     * Sets the name of the set to n
+     * @param n new name of the set
+     */
     public static void setNom(String n) {
         ConjuntItems.nom = n;
     }
     
+    /**
+     * Sets the weights to the parameter array
+     * @param p ArrayList<Float> that contains a weight for each attribute
+     * @throws ArrayIndexOutOfBoundsException if the input array is different than the number of attributes
+     * @throws ItemWeightNotCorrectException if the weights are outside the range (0 - 100)
+     */
     public static void setPesos(ArrayList<Float> p) throws ArrayIndexOutOfBoundsException, ItemWeightNotCorrectException {
         Item.setPesos(p);
     }
 
+    /**
+     * Sets the weight of the column col to the paramenter p
+     * @param p new weight that will be assigned
+     * @param col column which weight will be changed
+     * @throws ArrayIndexOutOfBoundsException if col is bigger than the number of attributes or smaller than 0
+     * @throws ItemWeightNotCorrectException if the weight is outside the range (0 - 100)
+     */
     public static void setPes(float p, int col) throws ArrayIndexOutOfBoundsException, ItemWeightNotCorrectException {
         Item.setPes(col, p);
     }
@@ -210,6 +288,12 @@ public class ConjuntItems extends ArrayList<Item> {
     /*----- CHECKERS -----*/
 
     //TODO: tipusCorrecteColumna hauria de ser private
+    /**
+     * Checks if the column "columna" could be treated as a type t
+     * @param columna int column
+     * @param t type which will be checked
+     * @return boolean, if true it can be treated as type t, if false the column cannot be treated as type t
+     */
     public boolean tipusCorrecteColumna(int columna, tipus t) {
         boolean empty = true;
         if (t == tipus.I) {
@@ -258,11 +342,23 @@ public class ConjuntItems extends ArrayList<Item> {
         return !empty || t == tipus.S || t == tipus.N;
     }
     
+    /**
+     * Returns if an item with attribute id exists
+     * @param id ID of the item that is searched
+     * @return true if the item is in the set, false if the item does not exist
+     */
     public boolean existeixItem(int id) {
         int res = binarySearchItem(this, id, 0, size()-1);
         return res > -1;
     }
+    
     //TODO: tipusCorrecte hauria de ser private
+    /**
+     * Checks if a string can be treated as type t
+     * @param s string that is going to be checked
+     * @param t type that is going to be checked
+     * @return true if s can be treated as type t, false if s cannot be treated as type t
+     */
     public static boolean tipusCorrecte(String s, tipus t) {
         if (t == tipus.I) {
             if (StringOperations.esNombre(s) || s.equals("") && !s.equals(" ")) return true;
@@ -281,7 +377,12 @@ public class ConjuntItems extends ArrayList<Item> {
         // Nom i String sempre estaran bé
         return false;
     }
+    
     //TODO: checkMaxMin hauria de ser private
+    /**
+     * Checks if an item has bigger of lower attributes than the current max attributes and min attributes, respectively
+     * @param it Item that is going to be checked
+     */
     public void checkMaxMin(Item it) {
         for (int i = 0; i < maxAtributs.size(); ++i) {
             if (it.getAtributs().get(i).size() == 1) {
@@ -303,12 +404,23 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- ADD/DELETE -----*/
 
+    /**
+     * Removes item specified by its id
+     * @param id ID of the item that is going to be deleted
+     * @throws ItemNotFoundException if it does not exist an item with such id
+     */
     public void eliminarItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
         int pos = binarySearchItem(this, id, 0, size()-1);
         if (pos < 0) throw new ItemNotFoundException("Item with id " + id + " does not exist");
         remove(pos);
         for (int i = 0; i < Item.getNumAtributs(); ++i) computeMinMaxAtribut(i);
     }
+    
+    /**
+     * Adds an item to the sorted set and it checks and changes if necessary the maximum and minimums
+     * @param i Item that is going to be added
+     * @return true if the item has been added, false if there has been an error
+     */
     @Override
     public boolean add(Item i) {
         int pos = Collections.binarySearch(this, i);
@@ -317,7 +429,13 @@ public class ConjuntItems extends ArrayList<Item> {
         checkMaxMin(i);
         return (get(pos).getId() == i.getId());
     }
+
     //TODO: addIni hauria de ser private
+    /**
+     * Adds an item to the ordered set without checking the maximums and minimums
+     * @param i Item that is going to be added
+     * @return true if the item has been added, false if there has been an error
+     */
     public boolean addIni(Item i) {
         int pos = Collections.binarySearch(this, i);
         if (pos < 0) pos = ~pos;
@@ -327,6 +445,10 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- COMPUTATIONS -----*/
 
+    /**
+     * Computes and sets the minimum and maximums attributes for the column col
+     * @param col int column must be between 0 and the number of attributes
+     */
     public void computeMinMaxAtribut(int col) {
         tipus t = Item.getTipusArray().get(col);
         String sMin = "", sMax = "";
@@ -364,7 +486,16 @@ public class ConjuntItems extends ArrayList<Item> {
             minAtributs.set(col, Float.parseFloat(sMin));
         }
     }
+    
     //TODO: inicialitzar hauria de ser private
+    /**
+     * Initializes the set and the basic attributes such as the weight array and the type array,
+     * this allows acces to the arrays knowing that they won't be null
+     * @param nAtributs number of attributes that the items in each set has
+     * @return returns true if it exists an attribute named "id"
+     * @throws ItemTypeNotValidException if it is tried to modify a column type that is not correct
+     * @throws ItemWeightNotCorrectException if a weight outside the range (0 - 100) is tried to be assigned 
+     */
     public boolean inicialitzar(int nAtributs) throws ItemTypeNotValidException, ItemWeightNotCorrectException { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
         ArrayList<Float> pesos = new ArrayList<Float>(nAtributs);
         ArrayList<tipus> tipusAtribut = new ArrayList<tipus>(nAtributs);
@@ -397,6 +528,10 @@ public class ConjuntItems extends ArrayList<Item> {
         return found;
     }
     
+    /**
+     * Detects the type of each column and assigns it to the type array
+     * @throws ItemTypeNotValidException if it doesn't exist an id column
+     */
     public void detectarTipusAtributs() throws ItemTypeNotValidException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
         boolean idAssignat = false;
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
@@ -436,7 +571,16 @@ public class ConjuntItems extends ArrayList<Item> {
         }
         if (!idAssignat) throw new ItemTypeNotValidException("El conjunt de dades no te cap atribut id");
     }
+    
     //TODO: distanciaAtribut hauria de ser private
+    /**
+     * Computes the similarity between to strings that belong to the same column. The similarity for each type is measured differently
+     * @param a1 first string to be compared
+     * @param a2 second string to be compared
+     * @param columna column to which a1 and a2 belong
+     * @return float between 0 and 1 where 0 means completely different and 1 means exaclty the same
+     * @throws ItemTypeNotValidException if a1 and a2 are not of the same type
+     */
     public static float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
         tipus t = Item.getTipusArray().get(columna);
         if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + StringOperations.tipusToString(t));
@@ -471,6 +615,13 @@ public class ConjuntItems extends ArrayList<Item> {
         return sim;
     }
 
+    /**
+     * Computes and returns the similarity between two items comparing their attributes individually
+     * @param i1 first item to be compared
+     * @param i2 second item to be compared
+     * @return float between 0 and 1 where 0 means completely different and 1 means exaclty the same
+     * @throws ItemTypeNotValidException if the two items cannot be compared
+     */
     public static float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException {
 
         float res = (float)0.0, pesTotal = (float)0.0;
@@ -492,7 +643,15 @@ public class ConjuntItems extends ArrayList<Item> {
         return res;
     }
     
-    public static <T extends Comparable<T>> int binarySearchItem(ArrayList<Item> list, int id, int lo, int hi) {
+    /**
+     * Basic binary search adapted to work with Items
+     * @param list ArrayList of Items 
+     * @param id target to search for
+     * @param lo lower bound
+     * @param hi upper bound
+     * @return returns -1 if the target is not in the list, otherwise, the position of the target in the list
+     */
+    public static int binarySearchItem(ArrayList<Item> list, int id, int lo, int hi) {
         if (hi >= lo) {
             int mid = lo + (hi - lo) / 2;
             int cmp = list.get(mid).getId();

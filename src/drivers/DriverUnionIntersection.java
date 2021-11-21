@@ -1,9 +1,10 @@
 package src.drivers;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
-import src.recomanador.domini.Utils.UnionIntersection;
+import src.recomanador.Utils.UnionIntersection;
+
+import java.util.ArrayList;
 
 public class DriverUnionIntersection {
 	static private Scanner scanner;

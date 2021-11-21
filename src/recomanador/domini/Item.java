@@ -12,24 +12,46 @@ public class Item implements Comparable<Item>{
 
     /*----- ATRIBUTS STATICS -----*/
     
+    /**
+     * This enumaration represents the types that an attribute can have
+     * ID
+     * Nom
+     * Boolean
+     * Float
+     * String
+     * Date
+     */
     public static enum tipus {
-        I, //ID
-        N, //Nom
-        B, //Boolean
-        F, //Float
-        S, //String
-        D //Date
+        I, 
+        N, 
+        B, 
+        F, 
+        S,
+        D 
     }
 
-    //default value = null
+    /**
+     * Array with the weights of each attribute. The default value is null
+     */
     private static ArrayList<Float> pesos;
-    private static ArrayList<tipus> tipusAtribut; //I i N haurien de ser únics en els atributs
+
+    /**
+     * Array with the weights of each attribute. I and N should be unique
+     */
+    private static ArrayList<tipus> tipusAtribut;
+
+    /**
+     * Array with the names of of each attribute.
+     */
     private static ArrayList<String> nomAtribut;
 
-    private static int id = -1; //posició del atribut id al tipus atribut
+    /**
+     * Position of the attribute id at the array of types "tipusAtribut"
+     */
+    private static int id = -1; //
     
     /**
-     * Index of the atribute that contains the name of the item
+     * Position of the attribute that represents tha name of an item at the array of types "tipusAtribut"
      * -1 if the index doesn't exist
      */
     private static int nomA = -1;
@@ -37,14 +59,17 @@ public class Item implements Comparable<Item>{
 
     /*----- ATRIBUTS -----*/
 
-    private ArrayList<ArrayList<String>> atributs; //Vector on cada atribut té un vector. Pot ser buit
+    /**
+     * ArrayList where each attribute has its own vector. An attribute can be empty
+     */
+    private ArrayList<ArrayList<String>> atributs;
 
 
     /*----- CONSTRUCTORS -----*/
 
     /**
-     * Constructor amb només l'atribut id. Inicialitza tots els valors estàtics.
-     * @param id Identificador de l'Item
+     * Constructor with only the attribute id. Initialized all static elements
+     * @param id Item identifier
      */
     public Item(int idval) throws ItemStaticValuesNotInitializedException {
         if(pesos == null) throw new ItemStaticValuesNotInitializedException("pesos");
@@ -62,8 +87,8 @@ public class Item implements Comparable<Item>{
     }
 
     /**
-     * Es crea l'item i s'assigna els atributs a l'item
-     * @param atributs llista d'atributs d'items on cada atribut pot tenir diversos atributs
+     * An item is created and the attributes are assigned to it
+     * @param atributs list of attributes where each attribute can have multiple subattributes
      */
     public Item(ArrayList<ArrayList<String>> atributsval) throws ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
         if(pesos == null) throw new ItemStaticValuesNotInitializedException("pesos");
@@ -79,16 +104,16 @@ public class Item implements Comparable<Item>{
     /*----- GETTERS -----*/
 
     /**
-     * Retorna l'atribut de la posició id de ConjuntItems
-     * @return atribut id en forma de int
+     * Returns the id specified by the id value
+     * @return id of the item
      */
     public int getId() {
         return Integer.parseInt(atributs.get(Item.id).get(0));
     }
 
     /**
-     * Retorna tots els atributs
-     * @return atributs en forma de llista de llistes d'atributs
+     * Returns all attributes
+     * @return attributes as an array of array of strings
      */
     public ArrayList<ArrayList<String>> getAtributs() {
         return atributs;
@@ -99,30 +124,50 @@ public class Item implements Comparable<Item>{
 
     /*----- STATICS GETTERS -----*/
 
+    /**
+     * Returns the positition where the attribute id points to
+     * @return value of the "id" attribute
+     */
     public static int getPosId() {
         return Item.id;
     }
 
+    /**
+     * Returns the positition where the attribute nomA points to
+     * @return value of the "nomA" attribute
+     */
     public static int getPosNomA() {
         return Item.nomA;
     }
 
     /**
-     * Serveix més per comprovar que per funcionalitat
-     * @return retorna el nombre d'atributs que té l'item
+     * Returns the number of attributes the item has
+     * @return size of the attributes array
      */
     public static int getNumAtributs() {
         return Item.nomAtribut.size();
     }
 
+    /**
+     * Returns the array of weights
+     * @return ArrayList<Float> with the weights of an item
+     */
     public static ArrayList<Float> getPesos() {
         return Item.pesos;
     }
 
+    /**
+     * Returns the array of types
+     * @return ArrayList<tipus> with the types of an item
+     */
     public static ArrayList<tipus> getTipusArray() {
         return Item.tipusAtribut;
     }
 
+    /**
+     * Returns the array of names of the attributes
+     * @return ArrayList<String> with the names of the attributes of an item
+     */
     public static ArrayList<String> getCapçalera() {
         return Item.nomAtribut;
     }
@@ -131,39 +176,75 @@ public class Item implements Comparable<Item>{
     /*----- STATICS SETTERS -----*/
 
     //s'hauràn d'afegir excepcions potser
+    /**
+     * Sets a column that will act as id
+     * @param id new id that will be set
+     */
     public static void setId(int id) {
         Item.id = id;
     }
 
     //s'hauràn d'afegir excepcions potser
+    /**
+     * Sets a column that will act as name of the items
+     * @param a new name that will be set
+     */
     public static void setNomA(int a) {
         Item.nomA = a;
     }
 
-    public static void setPes(int a, float pes) throws ItemWeightNotCorrectException {
+    /**
+     * Sets the weight of column
+     * @param a column which will be modified
+     * @param pes new weight that will be assigned
+     * @throws ItemWeightNotCorrectException if weights is outside the range (0 - 100)
+     * @throws ArrayIndexOutOfBoundsException if the column is not between 0 and the number of attributes
+     */
+    public static void setPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
         if (a < 0 || a >= Item.pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
         else Item.pesos.set(a, pes);
     }
 
-    //S'HA DE TREURE!!
     //ha de venir comprovat a assignaTipusItem de conjunt d'items
+    /**
+     * Sets the type of column
+     * @param atribut column which will be modified
+     * @param t new type that will be assigned
+     * @throws ItemTypeNotValidException if the column does not accept the new type
+     */
     public static void setTipus(int atribut, tipus t) throws ItemTypeNotValidException {
         Item.tipusAtribut.set(atribut, t);
         Item.canvisTipusAtribut(atribut, t);
     }
 
-    public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException{
+    /**
+     * Sets the weights array to the parameter
+     * @param p array of weights
+     * @throws ItemWeightNotCorrectException if any weights is outside the range (0 - 100)
+     * @throws ArrayIndexOutOfBoundsException if the array is not the size of the attributes
+     */
+    public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException{
         if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Weights array does not match items attributes.");
         for (int i = 0; i < Item.getNumAtributs(); ++i) if (p.get(i) > 100 || p.get(i) < 0) throw new ItemWeightNotCorrectException("Weight smaller than 0 or bigger than 100");
         Item.pesos = p;
     }
 
+    /**
+     * Sets the types array to the parameter
+     * @param a array of types of the same size as the attributes
+     */
     public static void setTipusArray(ArrayList<tipus> a) {
         Item.tipusAtribut = a;
     }
 
+    /**
+     * Checks what happes if an attribute changes to type t
+     * @param atribut column where the change is being made
+     * @param t new type for that column
+     * @throws ItemTypeNotValidException if item has an id and another id is trying to be set
+     */
     private static void canvisTipusAtribut(int atribut, tipus t) throws ItemTypeNotValidException {
         if (t == tipus.I) {
             if (id != -1) throw new ItemTypeNotValidException("L'item ja tenia un id assignat, no es poden tenir dos ids.");
@@ -177,20 +258,23 @@ public class Item implements Comparable<Item>{
         }
     }
 
+    /**
+     * Sets the names of attributes array to the parameter
+     * @param n array of names of attributes of the same size as the attributes
+     */
     public static void setNomAtributs(ArrayList<String> n) {
         Item.nomAtribut = n;
     }
     
-
     /*----- ALTRES -----*/
 
     /**
-     * Funció que fa override al compareTo per defecte, compara 2 items per els seus id's
-     * @param otherItem L'altre item que compara
-     * @return Retorna un nombre depenent de la comparació entre l'item al que es fa la crida de la funció i el paràmetre
-     * 1 si implícit > otherItem, 
-     * 0 si implícit = otherItem, 
-     * -1 si implícit < otherItem
+     * Function that overrides the compareTo by defalut. Compares 2 items by their id's
+     * @param otherItem The other item that compares
+     * @return Returns an integer depending on the comparisson between the implicit item and the item given as a parameter
+     * 1 if implicit > otherItem, 
+     * 0 if implicit = otherItem, 
+     * -1 if implicit < otherItem
      */
     @Override public int compareTo(Item otherItem) {
         int id1 = getId();
@@ -201,6 +285,11 @@ public class Item implements Comparable<Item>{
         else return 1;
     }
 
+    /**
+     * Function that returns a string based on the type
+     * @param t tipus
+     * @return String representative of the type, of string with "No assignat" if the type is not recognissed
+     */
     public static String tipusToString(tipus t) {
         String s = "";
         switch (t) {
