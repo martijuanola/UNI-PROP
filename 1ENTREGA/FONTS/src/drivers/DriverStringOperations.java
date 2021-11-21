@@ -84,7 +84,6 @@ public class DriverStringOperations {
 		} while (x != -1);
 		
 		System.out.println("Test ended.");
-		scanner.close();
     }
     
     static private void testEsNombreString() {
@@ -102,7 +101,6 @@ public class DriverStringOperations {
 		else System.out.println("NO! It's not a number");
 		
 		//mostrar output
-		scanner.close();
 	}
     static private void testEsNombreChar() {
 		System.out.println("Testing function esNombre(char)");
@@ -119,7 +117,6 @@ public class DriverStringOperations {
 		else System.out.println("NO! It's not a number");
 		
 		//mostrar output
-		scanner.close();
 	}
     static private void testEsFloat() {
 		System.out.println("Testing function esFloat()");
@@ -134,7 +131,6 @@ public class DriverStringOperations {
 		//executar la funcionalitat
 		if (StringOperations.esFloat(s)) System.out.println("YES! It's a float");
 		else System.out.println("NO! It's not a float");
-		scanner.close();
 	}
     static private void testEsData() {
 		System.out.println("Testing function esData()");
@@ -152,7 +148,6 @@ public class DriverStringOperations {
 		//executar la funcionalitat
 		if (StringOperations.esData(s)) System.out.println("YES! It's a date");
 		else System.out.println("NO! It's not a date");
-		scanner.close();
 	}
     static private void testEsBool() {
 		System.out.println("Testing function esBool()");
@@ -167,7 +162,6 @@ public class DriverStringOperations {
 		//executar la funcionalitat
 		if (StringOperations.esBool(s)) System.out.println("YES! It's a boolean");
 		else System.out.println("NO! It's not a boolean");
-		scanner.close();
 	}
     static private void testCompararAtributs() {
 		System.out.println("Testing function compararAtributs()");
@@ -208,7 +202,6 @@ public class DriverStringOperations {
 		{
 			System.out.println("ERROR!! Something went wrong");
 			System.out.println("Make sure that the type is correct for the 2 of the strings");
-			scanner.close();
 			return;
 		}
 		
@@ -217,7 +210,6 @@ public class DriverStringOperations {
 		else if (res == 0) System.out.println(s1 + "=" + s2);
 		else if (res == 1) System.out.println(s1 + ">" + s2);
 		else System.out.println("ERROR!!");
-		scanner.close();
 	}
 	static private void testDataToTime() {
 		System.out.println("Testing function dataToTime()");
@@ -232,7 +224,6 @@ public class DriverStringOperations {
 		{
 			System.out.println("That's not a valid date format.");
 			System.out.println("Choose option 4 at main menu to test dates.");
-			scanner.close();
 			return;
 		}
 				
@@ -241,7 +232,6 @@ public class DriverStringOperations {
 		
 		//mostrar output
 		System.out.println("Output: " + time);
-		scanner.close();
 	}
 	static private void testDivideString() {
 		System.out.println("Testing function divideString()");
@@ -259,7 +249,6 @@ public class DriverStringOperations {
 		
 		//mostrar output
 		for (int i = 0; i < res.size(); ++i) System.out.println("Substring " + i + ": " + res.get(i));
-		scanner.close();
 	}
 	static private void testInfinitString() {
 		System.out.println("Testing function infinitString()");
@@ -289,6 +278,5 @@ public class DriverStringOperations {
 		
 		//mostrar output
 		System.out.println("Distance: " + dist);
-		scanner.close();
 	}
 }
