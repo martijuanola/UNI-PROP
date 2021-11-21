@@ -175,16 +175,17 @@ public class Item implements Comparable<Item>{
 
     /*----- STATICS SETTERS -----*/
 
-    //s'hauràn d'afegir excepcions potser
     /**
      * Sets a column that will act as id
-     * @param id new id that will be set
+     * @param c    new id that will be set
+     * @throws     ItemIdNotValidException      Thrown when id can not be changed to the column c
      */
-    public static void setId(int id) {
-        Item.id = id;
+    public static void setId(int c) throws ItemIdNotValidException {
+        if(Item.id != -1 && !Item.nomAtribut.get(c).equalsIgnoreCase("id")) throw new ItemIdNotValidException(id);
+        Item.id = c;
     }
 
-    //s'hauràn d'afegir excepcions potser
+    //s'hauràn d'afegir excepcions
     /**
      * Sets a column that will act as name of the items
      * @param a new name that will be set
@@ -231,6 +232,7 @@ public class Item implements Comparable<Item>{
         Item.pesos = p;
     }
 
+    //s'hauràn d'afegir excepcions
     /**
      * Sets the types array to the parameter
      * @param a array of types of the same size as the attributes

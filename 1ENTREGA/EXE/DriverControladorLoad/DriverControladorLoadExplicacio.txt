@@ -17,6 +17,7 @@ Fitxers de dades necessaris:
 	  Hi ha diferents exemples dins de les carpetes dins de ./data
 
 Valors estudiats:
+	- Caixa blanca
 	- S'observarà el comportament de la funció per diversos fitxers que hauria d'acceptar el programa 
 
 Efectes estudiats:

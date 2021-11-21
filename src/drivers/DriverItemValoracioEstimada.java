@@ -8,6 +8,7 @@ import src.recomanador.domini.ItemValoracioEstimada;
 import src.recomanador.domini.Item.tipus;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
+import src.recomanador.excepcions.ItemIdNotValidException;
 
 /**
  * This class is meant to test the class ItemValoracioEstimada.
@@ -31,7 +32,9 @@ public class DriverItemValoracioEstimada {
 
         Item.setTipusArray(at);
 		Item.setNomAtributs(as);
-		Item.setId(0);
+		try{
+            Item.setId(0);
+        }catch(ItemIdNotValidException e) {System.out.println("ERROR: " + e.getMessage());return;}
 		try {
 			Item.setPesos(af);
 		} catch (ItemWeightNotCorrectException e) {

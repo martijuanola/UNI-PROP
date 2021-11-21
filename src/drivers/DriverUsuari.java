@@ -17,6 +17,7 @@ import src.recomanador.excepcions.RecommendationNotRatedException;
 import src.recomanador.excepcions.RecommendationRatedException;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
+import src.recomanador.excepcions.ItemIdNotValidException;
 /**
  * Driver tot test the class Usuari.
  * @author     Martí J.
@@ -52,7 +53,9 @@ public class DriverUsuari {
 		Item.setTipusArray(at);
 		Item.setNomAtributs(as);
 		Item.setPesos(af);
-		Item.setId(0);
+		try{
+			Item.setId(0);
+		}catch(ItemIdNotValidException e) {System.out.println("ERROR: " + e.getMessage());return;}
 
 		String s = "Options: \n" +
 		"-1. exit\n" +

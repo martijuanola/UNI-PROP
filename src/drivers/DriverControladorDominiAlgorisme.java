@@ -32,7 +32,7 @@ import src.recomanador.domini.ItemValoracioEstimada;
  * 
  * @author Adrià F.
  */
-public class DriverAlgorisme {
+public class DriverControladorDominiAlgorisme {
 
     /*----- ATRIBUTS -----*/
 

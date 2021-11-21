@@ -147,6 +147,8 @@ public class DriverItem {
 					break;
 				case 17:
 					mostra_17();
+				case 18:
+					mostra_18();
 					break;
 				default:
 			}
@@ -170,10 +172,10 @@ public class DriverItem {
 
 		Item.setTipusArray(at);
 		Item.setNomAtributs(as);
-		Item.setId(0);
 		try {
+			Item.setId(0);
 			Item.setPesos(af);
-		} catch (ItemWeightNotCorrectException e) {
+		} catch (ItemWeightNotCorrectException | ItemIdNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
@@ -222,15 +224,13 @@ public class DriverItem {
 			if(raw.get(0).get(i).equalsIgnoreCase("id")) idprov = i;
 		}
 
-		//variables estàtiques
-		System.out.println(idprov);
 		try{
 			Item.setId(idprov);
 			Item.setNomAtributs(nAtributs);
 			Item.setPesos(ap);
 			Item.setTipusArray(at);
 		}
-		catch(ItemWeightNotCorrectException e) {
+		catch(ItemWeightNotCorrectException | ItemIdNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
@@ -347,7 +347,9 @@ public class DriverItem {
 		System.out.print("Old value for Id(column index):");
 		n = scanner.nextInt();
 		
-		Item.setId(n);
+		try{
+			Item.setId(n);
+		}catch(ItemIdNotValidException e) {System.out.println("ERROR: " + e.getMessage());return;}
 		System.out.println("The value id has been correctly initialised.");
 	}
 	static private void mostra_12() {
@@ -441,7 +443,9 @@ public class DriverItem {
 			return;
 		}
 
-		mostra_8();
+		ArrayList<Float> aux = Item.getPesos();
+		System.out.println("The weight of the atributes are:");
+		System.out.println(aux);
 	}
 	static private void mostra_16() {
 		System.out.println("Testing function void setTipusArray(ArrayList<tipus> a)");
@@ -453,7 +457,7 @@ public class DriverItem {
 		ArrayList<tipus> at = new ArrayList<tipus>(0);
 
 		for(int i = 0; i < Item.getNumAtributs(); i++) {
-			System.out.println("Enter the new type. Options:");
+			System.out.println("Enter the new type for Item number "+i+". Options:");
 			System.out.println("I - ID");
 			System.out.println("N - NOM");
 			System.out.println("B - BOOLEAN");
@@ -463,15 +467,21 @@ public class DriverItem {
 			String s = scanner.next();
 			try {
 				tipus t = StringOperations.stringToType(s);
-				Item.setTipus(n,t);
+				at.add(t);
 			}
 			catch(ItemTypeNotValidException e) {
 				System.out.println("ERROR: " + e.getMessage());
 				return;
 			}
-			c.setTipusArray(at);
-
 		}
+		c.setTipusArray(at);
+
+		ArrayList<tipus> aux = Item.getTipusArray();
+		System.out.println("The types of the atributes are:");
+		for(int i = 0; i < aux.size(); i++){
+			System.out.print(StringOperations.tipusToString(aux.get(i)) + "\t");
+		}
+		System.out.println();
 	}
 	static private void mostra_17() {
 		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
@@ -489,7 +499,10 @@ public class DriverItem {
 		}
 
 		Item.setNomAtributs(as);
-		mostra_10();
+		
+		ArrayList<String> aux = Item.getCapçalera();
+		System.out.println("The name of the atributes are: ");
+		System.out.println(aux);
 	}
 	static private void mostra_18() {
 		System.out.println("Testing function int compareTo(Item otherItem)");

@@ -42,11 +42,11 @@ public class Recomanacio implements Comparable<Recomanacio> {
     }
 
     /**
-     * Constructs a new instance.
+     * Constructs a new instance with a user, item and a rating.
      *
-     * @param      u     user
-     * @param      i     item
-     * @param      v     rating
+     * @param      u     User
+     * @param      i     Item
+     * @param      v     Rating
      */
     public Recomanacio(Usuari u, Item i, float v) throws RatingNotValidException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
@@ -59,11 +59,11 @@ public class Recomanacio implements Comparable<Recomanacio> {
     /*----- MODIFICADORES -----*/
 
     /**
-     * Sets the value of rating
+     * Set rating, and update the position of recomendation in the CjtRecomenacions of the user.
      *
-     * @param      v     The new value
+     * @param      v                             New rating.
      */
-    public void setVal(float v) throws RatingNotValidException, RecommendationRatedException {
+    public void setVal(float v) throws RatingNotValidException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
 
         try {

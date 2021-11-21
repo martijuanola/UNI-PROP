@@ -14,6 +14,7 @@ Fitxers de dades necessaris:
 	- Cap. El sistema crearà les carpetes i fitxers necessaris per a fer la prova
 
 Valors estudiats:
+	- Caixa blanca
 	- S'observarà el comportament de la funció per diversos fitxers que hauria de produir el programa.
 
 Efectes estudiats:

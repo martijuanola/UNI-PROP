@@ -13,6 +13,7 @@ import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationRatedException;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
+import src.recomanador.excepcions.ItemIdNotValidException;
 
 /**
  * Driver tot test the class Recomanacio.
@@ -47,7 +48,9 @@ public class DriverRecomanacio {
 
 		Item.setTipusArray(at);
 		Item.setNomAtributs(as);
-		Item.setId(0);
+		try{
+			Item.setId(0);
+		}catch(ItemIdNotValidException e) {System.out.println("ERROR: " + e.getMessage());return;}
 		try {
 			Item.setPesos(af);
 		} catch (ItemWeightNotCorrectException e) {
@@ -202,9 +205,6 @@ public class DriverRecomanacio {
 
 		try {
 			c.setVal(f);
-		}
-		catch(RecommendationRatedException e) {
-			//en un cas real s'hauria d'actualitzar l'usuari que tenia la recomanació
 		}
 		catch(RatingNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());

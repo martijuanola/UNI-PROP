@@ -230,8 +230,8 @@ public class DriverConjuntUsuaris {
 	
 
 	static private void printCU() {
-		System.out.println("Current state of the set(Users IDs)");
-		for(int i = 0; i < c.size(); i++) {
+		System.out.println("Current state of the set(Users IDs)(only 50 firsts)");
+		for(int i = 0; i < c.size() && i < 50; i++) {
 			System.out.println("Position "+ i + ": " + c.get(i).getId());
 		}
 		System.out.println();
