@@ -100,7 +100,9 @@ public class ConjuntItems extends ArrayList<Item> {
     ArrayList<tipus> tipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, 
     ArrayList<Float> minAtributs) throws ItemWeightNotCorrectException {
         ConjuntItems.nom = nom;
-        Item.setId(id);
+        try{
+            Item.setId(id);
+        }catch(ItemIdNotValidException e) {System.out.println("ERROR: " + e.getMessage());return;}
         Item.setNomA(nomA);
 
         Item.setNomAtributs(items.get(0));

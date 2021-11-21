@@ -130,10 +130,10 @@ public class DriverConjuntRecomanacions {
 
 		Item.setTipusArray(at);
 		Item.setNomAtributs(as);
-		Item.setId(0);
 		try {
+			Item.setId(0);
 			Item.setPesos(af);
-		} catch (ItemWeightNotCorrectException e) {
+		} catch (ItemWeightNotCorrectException | ItemIdNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
