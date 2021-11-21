@@ -15,7 +15,6 @@ import src.recomanador.domini.Usuari;
 import src.recomanador.domini.Recomanacio;
 
 //Excepcions
-import java.io.IOException;
 import src.recomanador.excepcions.*;
 
 /**

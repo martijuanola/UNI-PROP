@@ -12,7 +12,7 @@ import src.recomanador.excepcions.*;
  * This class represents a set of items in the form of an ArrayList extension. 
  * It keeps the items sorted according to the item's ID, 
  * to achieve better performance when modifying this list.
- * @author Jaume
+ * @author Jaume C.
  */
 public class ConjuntItems extends ArrayList<Item> {
 

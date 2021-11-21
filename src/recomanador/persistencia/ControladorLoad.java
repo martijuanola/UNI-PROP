@@ -6,8 +6,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
-import src.recomanador.excepcions.*;
-
 /**
 * The class ControladorLoad implements the function for loading data from memory. 
 * This data is read as .csv file.
@@ -49,7 +47,10 @@ public class ControladorLoad {
 		//read will return a -1 if it has encountered the end.
 		//If this occurs at this point, it means that the file is empty
 		c = (char)n;
-		if (n == -1) throw new IOException();
+		if (n == -1) {
+			f.close();
+			throw new IOException();
+		}
 		
 		//-----Eliminació linies en blanc-----
 		while (n != -1 && c == '\n') {
@@ -58,7 +59,10 @@ public class ControladorLoad {
 		}
 		//------------------------------------
 		
-		if (n == -1) throw new IOException();
+		if (n == -1) {
+			f.close();
+			throw new IOException();
+		}
 		
 		//Establir header de la taula: llegir totes les columnes
 		int cols = 0;
@@ -123,7 +127,10 @@ public class ControladorLoad {
 			
 					while (n != -1 && c != END_CHAR) 
 					{
-						if (c == ANTI_END_CHAR) throw new IOException();				
+						if (c == ANTI_END_CHAR) {
+							f.close();
+							throw new IOException();
+						}
 						if (c == '"')
 						{
 							do
@@ -141,8 +148,10 @@ public class ControladorLoad {
 					
 					data.get(data.size() - 1).add(column_value);
 					
-					if (n == -1 && data.get(0).size() != data.get(data.size() - 1).size())
-						throw new IOException();					
+					if (n == -1 && data.get(0).size() != data.get(data.size() - 1).size()) {
+						f.close();
+						throw new IOException();
+					}
 					
 					if (n != -1)
 					{

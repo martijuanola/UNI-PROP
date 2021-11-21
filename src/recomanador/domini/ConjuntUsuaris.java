@@ -5,7 +5,6 @@ import src.recomanador.excepcions.UserIdNotValidException;
 import src.recomanador.excepcions.UserNotFoundException;
 import src.recomanador.excepcions.DataNotValidException;
 
-import java.util.Collections;  
 import java.util.ArrayList;
 
 /**

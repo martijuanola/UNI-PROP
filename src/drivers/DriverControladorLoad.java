@@ -2,7 +2,6 @@ package src.drivers;
 
 import src.recomanador.persistencia.ControladorLoad;
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -68,6 +67,7 @@ public class DriverControladorLoad {
 		if (!f.exists()) 
 		{
 			io.writeln("Wrong path");
+			scanner.close();
 			return;
 		}
 		
@@ -81,6 +81,7 @@ public class DriverControladorLoad {
 		{
 			io.writeln("ERROR!!!");
 			io.writeln("The file is not valid.");
+			scanner.close();
 			return;
 		}
 		
@@ -118,5 +119,6 @@ public class DriverControladorLoad {
 		}
 		
 		if (sol.size() > 11) io.writeln("...");
+		scanner.close();
 	}
 }

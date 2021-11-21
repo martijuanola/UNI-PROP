@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import src.recomanador.excepcions.*;
 
 /**
- * Classe Item
- * @author Jaume
+ * Classe represent un item d'un conjunt items
+ * @author Jaume C.
  */
 public class Item implements Comparable<Item>{
 
