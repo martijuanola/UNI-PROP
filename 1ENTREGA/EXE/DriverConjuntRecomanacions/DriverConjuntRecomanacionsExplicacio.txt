@@ -21,7 +21,7 @@ Fitxers de dades necessaris:
 	- movies-250
 
 Valors estudiats:
-	- Dades tipus caixa blanca
+	- Dades tipus caixa negre(utilitzant items dels fitxer que s'utilitzaràn per l'aplicació final)
 	- Comprovar que els valors de de fitxers reals es carreguen correctament i es podem manipular de la manera esperada
 
 Efectes estudiats:

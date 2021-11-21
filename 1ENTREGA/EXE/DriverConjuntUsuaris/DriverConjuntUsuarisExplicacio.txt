@@ -17,7 +17,7 @@ Fitxers de dades necessaris:
 	- ratings.db.csv
 
 Valors estudiats:
-	- Dades tipus caixa blanca
+	- Dades tipus caixa negre(utilitzant items dels fitxer que s'utilitzaràn per l'aplicació final)
 	- S'obervara el comportament de les funcions add() perque ordenin els Usuaris de la manera esperada
 
 Efectes estudiats:

@@ -12,10 +12,12 @@ Drivers:
 Stubs:
 
 Fitxers de dades necessaris:
-	- item1.csv
+	- Fitxers amb una capçalera i un item
+		- item1.csv
+		- item2.csv
 
 Valors estudiats:
-	- Dades tipus caixa blanca
+	- Dades tipus caixa negre(utilitzant items dels fitxer que s'utilitzaràn per l'aplicació final)
 
 Efectes estudiats:
 	- Constructors funcionen correctament
