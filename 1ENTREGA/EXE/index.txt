@@ -1,6 +1,6 @@
 DIRECTORI EXE:
 
-\DriverAlgorisme: Conte l'executable i els testos sobre el DriverAlgorisme
+\DriverControladorDominiAlgorisme: Conte l'executable i els testos sobre el DriverControladorDominiAlgorisme
 \DriverConjuntItems: Conte l'executable i els testos sobre el DriverConjuntItems
 \DriverConjuntRecomanacions: Conte l'executable i els testos sobre el DriverConjuntRecomanacions
 \DriverConjuntUsuaris: Conte l'executable i els testos sobre el DriverConjuntUsuaris
