@@ -34,11 +34,14 @@ import src.recomanador.domini.ItemValoracioEstimada;
  */
 public class DriverAlgorisme {
 
+    /*----- ATRIBUTS -----*/
+
     static ConjuntItems items;
     static ConjuntRecomanacions recomanacions;
     static ConjuntUsuaris usuaris;
     static ControladorPersistencia cp;
 
+    /*----- MAIN -----*/
     public static void main(String[] args) throws UserNotFoundException{
 
         Scanner in= new Scanner(System.in);
