@@ -4,7 +4,7 @@ package src.drivers;
 import java.util.Scanner;
 import java.util.ArrayList;
 import src.recomanador.domini.Item.tipus;
-import src.recomanador.domini.Utils.*;
+import src.recomanador.Utils.*;
 
 //Classes
 import src.recomanador.domini.Item;

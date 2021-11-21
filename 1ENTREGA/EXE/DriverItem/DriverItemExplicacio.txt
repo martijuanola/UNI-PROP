@@ -12,7 +12,7 @@ Drivers:
 Stubs:
 
 Fitxers de dades necessaris:
-	-!!!!
+	- item1.csv
 
 Valors estudiats:
 	- Dades tipus caixa blanca
