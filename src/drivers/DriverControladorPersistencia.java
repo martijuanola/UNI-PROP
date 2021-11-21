@@ -18,7 +18,13 @@ public class DriverControladorPersistencia {
     
     public static void main(String[] args) {
         try{
-			c = new ControladorPersistencia();
+			try
+			{
+				c = new ControladorPersistencia();
+			} catch (Exception e) {
+				throw new Exception("Failed to create an instance of ControladorPersistencia.");
+			}
+			
 			io = new inout();
 			initializeDummyData();
 			initializeDummyItems();
@@ -161,8 +167,9 @@ public class DriverControladorPersistencia {
 			io.writeln("Test ended");
 			io.writeln("\n==================================================\n");
 			
-		}catch(Exception e){
+		}catch(Exception e2){
 			System.out.println("An error has occurred");
+			System.out.println(e2.getMessage());
 		}
     }
     

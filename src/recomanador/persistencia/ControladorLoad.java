@@ -88,10 +88,13 @@ public class ControladorLoad {
 			++cols;
 			data.get(0).add(column_name);
 			
-			if (c == '\n') finished_header = true;
-
-			n = f.read();
-			c = (char)n;
+			if (c == '\n' | n == -1) finished_header = true;
+			
+			if (n != -1)
+			{
+				n = f.read();
+				c = (char)n;
+			}
 		}
 		
 		while (n != -1)
@@ -118,9 +121,9 @@ public class ControladorLoad {
 					}
 					String column_value = "";
 			
-					while (c != END_CHAR) 
+					while (n != -1 && c != END_CHAR) 
 					{
-						if (n == -1 | c == ANTI_END_CHAR) throw new IOException();				
+						if (c == ANTI_END_CHAR) throw new IOException();				
 						if (c == '"')
 						{
 							do
@@ -138,8 +141,14 @@ public class ControladorLoad {
 					
 					data.get(data.size() - 1).add(column_value);
 					
-					n = f.read();
-					c = (char)n;
+					if (n == -1 && data.get(0).size() != data.get(data.size() - 1).size())
+						throw new IOException();					
+					
+					if (n != -1)
+					{
+						n = f.read();
+						c = (char)n;
+					}
 				}
 			}
 		}
