@@ -84,7 +84,6 @@ public class DriverControladorSave {
 		//mostrar output
 		io.writeln("DONE!");
 		io.writeln("You can check if it has worked at data/testing-only-DriverSave-store/"+p);
-		scanner.close();
 	}
 	
 	static private void initializeDummyData()
