@@ -484,10 +484,11 @@ public class DriverControladorPersistencia {
 				} catch (Exception e) {
 					System.out.println("ERROR!!");
 					System.out.println(e.getMessage());
+					
 					return;
 				}
 				
-				io.writeln("The name used is: " + n);
+				io.writeln("The name used is: " + r);
 				break;
 				
 			case 4:
@@ -1008,7 +1009,7 @@ public class DriverControladorPersistencia {
 		try
 		{
 			ArrayList<Float> af = new ArrayList<Float>();
-			for (int i = 0; i < 25; ++i) af.add(new Float(Integer.toString(i))); 
+			for (int i = 0; i < 25; ++i) af.add(new Float(i)); 
 			c.guardarPesosAtributs(af);
 		}catch(Exception e) {
 			System.out.println("ERROR!!!");
