@@ -203,15 +203,15 @@ public class DriverConjuntItems {
 
 			//executar la funcionalitat
 			try {
+				ci = new ConjuntItems();
 				ConjuntItems.nom = null;
 				ConjuntItems.setMaxAtributs(null);
 				ConjuntItems.setMinAtributs(null);
-				Item.setPesos(null);
+				/*Item.setPesos(null);
 				Item.setTipusArray(null);
 				Item.setNomAtributs(null);
 				Item.setId(-1);
-				Item.setNomA(-1);
-				ci = new ConjuntItems();
+				Item.setNomA(-1);*/
 			} catch (Exception e) {
 				System.out.println("ERROR: " + e.getMessage());
 				return;
@@ -649,7 +649,7 @@ public class DriverConjuntItems {
 		}
 		System.out.println("Enter the column you want to modify:");
 		int col = scanner.nextInt();
-		System.out.println("Enter the new wight for column " + col + ":");
+		System.out.println("Enter the new weight for column " + col + ":");
 		Float pes = scanner.nextFloat();
 		
 		//executar la funcionalitat
@@ -696,7 +696,7 @@ public class DriverConjuntItems {
 	}
 
 	static private void mostra_20() {
-		System.out.println("Testing function existeixItem(int id");
+		System.out.println("Testing function existeixItem(int id)");
 		if (!inicailitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
