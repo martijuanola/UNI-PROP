@@ -1,0 +1,6 @@
+DIRECTORI DriverConjuntRecomanacions:
+
+\movies-250: Conté les dades de prova per l'executalbe DriverConjuntRecomanacions.jar
+
+- DriverConjuntRecomanacions.jar: Executable del driver de la classe ConjuntRecomanacions
+- DriverConjuntRecomanacionsExplicacio.txt: Explicació del driver de la classe ConjuntRecomanacions

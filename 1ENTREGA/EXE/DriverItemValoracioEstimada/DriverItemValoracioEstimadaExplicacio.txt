@@ -15,6 +15,7 @@ Fitxers de dades necessaris:
 	Cap.
 
 Valors estudiats:
+	- Caixa negra
 	- L'ordenació d'Items amb valoracions arbitràries
 
 Efectes estudiats:

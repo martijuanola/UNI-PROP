@@ -4,7 +4,7 @@ DIRECTORI DriverControladorPersistencia
 ./data/dummy-save-example: Conte arxius on es pot escriure
 ./data/movies.sample: Conte arxius que es poden llegir
 ./data/movies-750: Conte arxius que es poden llegir
-./data/movies-2250: Conte arxius que es poden llegir
+./data/Movies-2250: Conte arxius que es poden llegir
 ./data/test-loading-basic: Conte arxius que es poden llegir. Els que hi ha son tots els que en un futur s'hauran de llegir pel correcte funcionament de l'aplicacio.
 
 - DriverControladorPersistencia.jar: Executable del driver

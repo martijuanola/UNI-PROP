@@ -15,6 +15,7 @@ Fitxers de dades necessaris:
 	  atributs senzills de declarar i permeten una major flexibilitati i una gran varietat d'opcions. 
 
 Valors estudiats:
+	- Caixa negra
 	- S'observarà el comportament del programa amb les dades que entri l'usuari que ho prova.
 
 Efectes estudiats:

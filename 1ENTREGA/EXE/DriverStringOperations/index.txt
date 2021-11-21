@@ -1,0 +1,4 @@
+DIRECTORI DriverStringOperations:
+
+- DriverStringOperations.jar:Executable del driver de la classe DriverStringOperations
+- DriverStringOperations.txt: Explicació del driver de la classe DriverStringOperations
