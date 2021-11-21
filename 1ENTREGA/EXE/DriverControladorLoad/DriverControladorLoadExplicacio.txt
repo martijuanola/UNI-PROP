@@ -1,0 +1,32 @@
+Objecte de la prova: 
+	- ControladorLoad
+
+Altres elements integrats a la prova:
+	- Classes ja provades:
+	- Stubs:
+
+Drivers:
+	-DriverControladorLoad
+
+Stubs:
+
+Fitxers de dades necessaris:
+	- Necessari (simplement perquè és un exemple que es menciona):
+		data/movies-2250/ratings.db.csv
+	- Qualsevol fitxer .csv que tingui el mateix nombre de columnes per cada fila i no contingui errors.
+	  Hi ha diferents exemples dins de les carpetes dins de ./data
+
+Valors estudiats:
+	- Caixa blanca
+	- S'observarà el comportament de la funció per diversos fitxers que hauria d'acceptar el programa 
+
+Efectes estudiats:
+	- Que el nombre de files i de col·lumnes llegides siguin les del fitxer
+	- Que les primeres 11 files que es mostren (o menys si no n'hi ha tantes) concordin amb les del fitxer
+		(S'usarà per separar les columnes el següent caràcter: | (posat entre 2 espais)).
+
+Operativa:
+	- Es selecciona la funció de càrrega, triant la opció 1
+	- S'escriu la localització de l'arxiu que es vol llegir. Aquesta pot ser local o absoluta.
+	- S'observen els resultats
+	- Tornar a provar la funcionalitat o sortir introduint el valor 0

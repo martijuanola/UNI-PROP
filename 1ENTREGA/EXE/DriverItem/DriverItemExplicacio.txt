@@ -1,0 +1,32 @@
+Objecte de la prova: 
+	- Item
+
+Altres elements integrats a la prova:
+	- Classes ja provades:
+		- ControladorPersistencia
+	- Stubs:
+
+Drivers:
+	- DriverItem
+
+Stubs:
+
+Fitxers de dades necessaris:
+	- Fitxers amb una capçalera i un item
+		- item1.csv
+		- item2.csv
+
+Valors estudiats:
+	- Dades tipus caixa negre(utilitzant items dels fitxer que s'utilitzaràn per l'aplicació final)
+
+Efectes estudiats:
+	- Constructors funcionen correctament
+	- Es proven que els getters i setters funcionin correctament
+	- Es comprova també que els constructors només funcionin amb les variables estàtiques necessaries.
+
+Operativa:
+	- Es selecciona la funció que es vol provar utilitzant el menú que es mostra introduint el valor indicat
+	- El valor 0 torna a mostrar les opcions
+	- S'introdueixen les dades necessaries que es demanen
+	- Observar els resultats
+	- Tornar a provar una altra funcionalitat o sortir introduint el valor -1
