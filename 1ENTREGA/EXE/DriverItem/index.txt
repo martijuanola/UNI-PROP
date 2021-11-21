@@ -1,0 +1,6 @@
+DIRECTORI DriverItem:
+
+- DriverItem.jar: Executable del driver de la classe Item
+- DriverItemExplicacio.txt: Explicació del driver de la classe Item
+- item1.csv: Exemple 1 d'Item per l'executable del driver de la classe Item
+- item2.csv: Exemple 2 d'Item per l'executable del driver de la classe Item

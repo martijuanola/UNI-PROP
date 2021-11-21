@@ -1,0 +1,7 @@
+DIRECTORI DriverControladorLoad
+
+\data: Conte diverses carpetes per a provar el controlador
+
+- DriverControladorLoad.jar: Executable del driver
+- DriverControladorLoadExplocacio.txt: Explicacio del driver per a provar les classes.
+
