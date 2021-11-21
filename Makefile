@@ -50,14 +50,6 @@ ControladorDominiAlgorisme:
 	make compile
 	java -cp bin:. src.drivers.DriverControladorDominiAlgorisme
 
-ContentBasedFiltering:
-	make compile
-	java -cp bin:. src.drivers.DriverContentBasedFiltering
-
-CollaborativeFiltering:
-	make compile
-	java -cp bin:. src.drivers.DriverCollaborativeFiltering
-
 ControladorPersistencia:
 	make compile
 	java -cp bin:. src.drivers.DriverControladorPersistencia
@@ -70,9 +62,9 @@ ControladorSave:
 	make compile
 	java -cp bin:. src.drivers.DriverControladorSave
 
-ControladorStringOperations:
+StringOperations:
 	make compile
-	java -cp bin:. src.drivers.DriverControladorStringOperations
+	java -cp bin:. src.drivers.DriverStringOperations
 
 UnionIntersection:
 	make compile
