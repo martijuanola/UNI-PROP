@@ -8,6 +8,12 @@ import java.util.Collections;
 import src.recomanador.excepcions.RecommendationNotFoundException;
 import src.recomanador.excepcions.UserNotFoundException;
 
+/**
+ * This class stores three HashMaps in order to be able to store each centroud ratings and to calculate the mean of all values in the centroid.
+ * In c++ terms, this would be a Struct.
+ * 
+ * @author Adrià F.
+ */
 class Centroid {
     public HashMap<Item,Float> valoracio;
     public HashMap<Item,Float> sum;
