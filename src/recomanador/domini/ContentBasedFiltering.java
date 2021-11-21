@@ -8,8 +8,7 @@ import java.util.Collections;
 
 /**
  * This class implements the recomendation algorithm content based filtering.
- * We have thought of some variations of k-NN that we think might make the algorithm better,
- * like subtracting from the estimated rating of an item if it resembles one the user disliked.
+ * 
  * 
  * @author Adrià F.
  */

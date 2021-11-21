@@ -1,0 +1,25 @@
+Pol Sturlese:
+- Controlador Persistència + Driver
+- Controlador Save + Driver
+- Controlador Load + Driver
+- Driver StringOperations
+
+Martí Juanola:
+- Controlador Domini
+- Recomanacions + Driver
+- ConjuntRecomanacions + Driver
+- ConjuntUsuaris + Driver
+- Driver Usuaris
+- Driver Item
+
+Adrià Fernández:
+- ItemValoracioEstimada + Driver
+- ControladorDominiAlgorisme + Driver
+- CollaborativeFiltering
+- ContentBasedFiltering
+
+Jaume Casals:
+- Item
+- ConjuntItems + Driver
+- StringOperations
+- UnionIntersection + Driver
