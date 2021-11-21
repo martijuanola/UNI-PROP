@@ -26,8 +26,9 @@ public class Usuari implements Comparable<Usuari> {
     /*----- CONSTRUCTORS -----*/
 
     /**
-     * L'usuari s'ha creat amb l'id id
-     * @param id id ha de ser únic entre tots els usuaris
+     * Constructs a new instance.
+     *
+     * @param      id    Identifier of Usuari
      */
     public Usuari(int id) {
         this.id = id;
@@ -35,39 +36,31 @@ public class Usuari implements Comparable<Usuari> {
         cv = new ConjuntRecomanacions();
     }
 
-    /**
-     * L'usuari s'ha creat amb l'id, el conjunt de recomanacions i valoracions id, cr i cv
-     * @param id id ha de ser únic entre tots els usuaris
-     * @param cr conjunt de recomanacions que té actualemt l'usuari (si s'han modificat les dades, s'han de recalculat)
-     * @param cv conjunt de valoracions que té l'usuari 
-     */
-    public Usuari(int id, ConjuntRecomanacions cr, ConjuntRecomanacions cv) {
-        this.id = id;
-        this.cr = cr;
-        this.cv = cv;
-    }
     
     /*----- GETTERS -----*/
 
     /**
-     * Retorna el id de l'usuari
-     * @return int
+     * Gets the identifier.
+     *
+     * @return     The identifier.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Retorna les recomanacions del usuari
-     * @return ConjuntRecomanacions 
+     * Gets the unrated recommendations of the user.
+     *
+     * @return     The set of recommendations
      */
     public ConjuntRecomanacions getRecomanacions() {
         return cr;
     }
 
     /**
-     * Retorna el conjunt de valoracions del usuari
-     * @return retorna el conjunt de valoracions de l'usuari
+     * Gets the rated recommendations of the user.
+     *
+     * @return     The set of recommendations.
      */
     public ConjuntRecomanacions getValoracions() {
         return cv;
@@ -76,25 +69,31 @@ public class Usuari implements Comparable<Usuari> {
     /*----- SETTERS -----*/
 
     /**
-     * El punter de les recomanacions ara apunta a cr
-     * @param cr ConjuntRecomanacions
+     * Sets the ConjuntRecomanacions of unrated recommendations of the user.
+     *
+     * @param      cr    The new set.
      */
     public void setRecomanacions(ConjuntRecomanacions cr) {
         this.cr = cr;
     }
 
     /**
-     * El conjunt de valoracions ara apunta a cv
-     * @param cv ConjuntRecomanacions
+     * Sets the ConjuntRecomanacions of rated recommendations of the user.
+     *
+     * @param      cv    The new set.
      */
     public void setValoracions(ConjuntRecomanacions cv) {
         this.cv = cv;
     }
     
     /**
-     * Used to move a recommendation from cr to cv when a a recommendations is rated
+     * Moves a function between the 2 sets of recommendations to keep them updated when changes are performed in the recommendations.
      *
-     * @param      rec   The index of the recommendations in cr
+     * @param      r                                The recommendation that has to be moved.
+     * @param      b                                True if the change is from CR to CV, false otherwise.
+     *
+     * @throws     RecommendationNotRatedException  The change is not possible because r doesn't has a rating
+     * @throws     RecommendationRatedException     The change is not possible because r has a rating
      */
     public void moureRecomanacio(Recomanacio r, boolean b) throws RecommendationNotRatedException, RecommendationRatedException {
         if(b) {//es valora

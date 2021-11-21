@@ -48,15 +48,15 @@ public class DriverRecomanacio {
 		at.add(tipus.I);
 		as.add("id");
 
+		Item.setTipusArray(at);
+		Item.setNomAtributs(as);
+		Item.setId(0);
 		try {
 			Item.setPesos(af);
 		} catch (ItemWeightNotCorrectException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
-		Item.setTipusArray(at);
-		Item.setNomAtributs(as);
-		Item.setId(0);
 
 		String s = "Options: \n\n" +
 		"-1. exit\n" +

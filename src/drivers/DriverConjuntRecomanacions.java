@@ -120,6 +120,25 @@ public class DriverConjuntRecomanacions {
     static private void mostra_1() {
 		System.out.println("Testing function ConjuntRecomanacions()");
 		
+		//inicalitzar statics item
+		ArrayList<Float> af = new ArrayList<Float>();
+		ArrayList<tipus> at = new ArrayList<tipus>();
+		ArrayList<String> as = new ArrayList<String>();
+		
+		af.add(100.0f);
+		at.add(tipus.I);
+		as.add("id");
+
+		Item.setTipusArray(at);
+		Item.setNomAtributs(as);
+		Item.setId(0);
+		try {
+			Item.setPesos(af);
+		} catch (ItemWeightNotCorrectException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+
 		c = new ConjuntRecomanacions();
 		class_initalised = true;
 		System.out.print("New ConjuntRecomanacions has been initialised without any data.\n");
@@ -187,8 +206,14 @@ public class DriverConjuntRecomanacions {
 		n = scanner.nextInt();
 		u = new Usuari(n);
 		
-		b1 = c.existeixRecomanacio(m,n);
-		b2 = c.existeixRecomanacio(i,u);
+		try{
+			b1 = c.existeixRecomanacio(m,n);
+			b2 = c.existeixRecomanacio(i,u);
+		}
+		catch(Exception e){
+			System.out.println("ERROR: Recomendation not found!!");
+			return;
+		}
 
 		if(b1 != b2) System.out.println("ERROR: either 'boolean existeixRecomanacio(int, int)' or 'boolean existeixRecomanacio(Item, Usuari)' is not working correctlly.");
 		else {
@@ -218,8 +243,14 @@ public class DriverConjuntRecomanacions {
 		n = scanner.nextInt();
 		u = new Usuari(n);
 		
+		try{
 		b1 = c.existeixValoracio(m,n);
 		b2 = c.existeixValoracio(i,u);
+		}
+		catch(Exception e){
+			System.out.println("ERROR: Recomendation not found!!");
+			return;
+		}
 
 		if(b1 != b2) System.out.println("ERROR: either 'boolean existeixValoracio(int, int)' or 'boolean existeixValoracio(Item, Usuari)' is not working correctlly.");
 		else {
@@ -256,6 +287,10 @@ public class DriverConjuntRecomanacions {
 		}
 		catch(RecommendationNotFoundException e) {
 			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		catch(Exception e){
+			System.out.println("ERROR: Recomendation not found!!");
 			return;
 		}
 		

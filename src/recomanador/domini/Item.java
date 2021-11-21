@@ -284,38 +284,4 @@ public class Item implements Comparable<Item>{
         else if (id1 < id2) return -1;
         else return 1;
     }
-
-    /**
-     * Function that returns a string based on the type
-     * @param t tipus
-     * @return String representative of the type, of string with "No assignat" if the type is not recognissed
-     */
-    public static String tipusToString(tipus t) {
-        String s = "";
-        switch (t) {
-            case I:
-                s = "Identificador";
-                break;
-            case N:
-                s = "Nom";
-                break;
-            case B:
-                s = "Boolean";
-                break;
-            case F:
-                s = "Float";
-                break;
-            case S:
-                s = "String";
-                break;
-            case D:
-                s = "Data";
-                break;
-            default:
-                s = "No assignat";
-                break;
-            }
-        return s;
-    }    
-  
 }
