@@ -242,15 +242,9 @@ public class DriverConjuntItems {
 
 			//executar la funcionalitat
 			try {
-				ConjuntItems.nom = null;
-				ConjuntItems.setMaxAtributs(null);
-				ConjuntItems.setMinAtributs(null);
-				Item.setPesos(null);
-				Item.setTipusArray(null);
-				Item.setNomAtributs(null);
-				Item.setId(-1);
-				Item.setNomA(-1);
 				ci = new ConjuntItems(cp.carregarFitxerExtern(path));
+				ConjuntItems.nom = null;
+				Item.setNomA(-1);
 			} catch (ItemTypeNotValidException e) {
 				System.out.println("ERROR: " + e.getMessage());
 				return;
