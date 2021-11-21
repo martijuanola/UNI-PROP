@@ -1,9 +1,9 @@
-package src.recomanador.domini.Utils;
+package src.recomanador.Utils;
 
 import java.util.ArrayList;
 
-import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.Item.tipus;
+import src.recomanador.excepcions.ItemTypeNotValidException;
 
 public class StringOperations {
     public static boolean esNombre(String s) { //Només accepta nombres, sense punts ni exponents
@@ -66,7 +66,7 @@ public class StringOperations {
         if (s1 == "" && s2 == "") {}
         else if (s1 == "") s2Bigger = true;
         else if (s2 == "") s1Bigger = true;
-        else if (tipus == tipus.I) { //Identificador
+        else if (tipus == src.recomanador.domini.Item.tipus.I) { //Identificador
             int i1 = Integer.parseInt(s1);
             int i2 = Integer.parseInt(s2);
             s1Bigger = i1 > i2;
@@ -83,8 +83,8 @@ public class StringOperations {
             s2Bigger = i1 < i2;
         }
         else if (tipus == tipus.D) { //Data
-            int s1p1, s1p2, dia1, mes1, any1;
-            int s2p1, s2p2, dia2, mes2, any2;
+            int dia1, mes1, any1;
+            int dia2, mes2, any2;
             if (s1.charAt(4) == '-') {
                 int p1 = 4;
                 int p2 = 7;
@@ -233,4 +233,41 @@ public class StringOperations {
         }
     }
 
+    public static tipus stringToType(String s) throws ItemTypeNotValidException{
+        if (s.equalsIgnoreCase("identificador") || s.equalsIgnoreCase("I")) return tipus.I;
+        else if (s.equalsIgnoreCase("boolean") || s.equalsIgnoreCase("B")) return tipus.B;
+        else if (s.equalsIgnoreCase("nom") || s.equalsIgnoreCase("N")) return tipus.N;
+        else if (s.equalsIgnoreCase("float") || s.equalsIgnoreCase("F")) return tipus.F;
+        else if (s.equalsIgnoreCase("string") || s.equalsIgnoreCase("S")) return tipus.S;
+        else if (s.equalsIgnoreCase("data") || s.equalsIgnoreCase("D")) return tipus.D;
+        throw new ItemTypeNotValidException(s+" no conté un tipus");
+    }
+
+    public static String tipusToString(tipus t) {
+        String s = "";
+        switch (t) {
+            case I:
+                s = "Identificador";
+                break;
+            case N:
+                s = "Nom";
+                break;
+            case B:
+                s = "Boolean";
+                break;
+            case F:
+                s = "Float";
+                break;
+            case S:
+                s = "String";
+                break;
+            case D:
+                s = "Data";
+                break;
+            default:
+                s = "No assignat";
+                break;
+            }
+        return s;
+    }
 }

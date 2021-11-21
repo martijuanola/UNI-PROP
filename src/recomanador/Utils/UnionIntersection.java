@@ -1,8 +1,7 @@
-package src.recomanador.domini.Utils;
+package src.recomanador.Utils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import src.recomanador.domini.Item;
 
 public class UnionIntersection {
     

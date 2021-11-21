@@ -2,10 +2,12 @@ package src.drivers;
 
 //Utils
 import java.util.Scanner;
+import java.util.ArrayList;
 
 //Classes
 import src.recomanador.domini.Usuari;
 import src.recomanador.domini.Item;
+import src.recomanador.domini.Item.tipus;
 import src.recomanador.domini.Recomanacio;
 import src.recomanador.domini.ConjuntRecomanacions;
 
@@ -13,7 +15,9 @@ import src.recomanador.domini.ConjuntRecomanacions;
 import java.io.IOException;
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationNotRatedException;
-
+import src.recomanador.excepcions.RecommendationRatedException;
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 /**
  * Driver tot test the class Usuari.
  * @author     Martí J.
@@ -28,6 +32,7 @@ public class DriverUsuari {
     static private ConjuntRecomanacions cr;
     static private ConjuntRecomanacions cv;
     static private Usuari u;
+    static private Item i;
     static private String s1;
     static private String s2;
     static private boolean b;
@@ -36,10 +41,24 @@ public class DriverUsuari {
     static private int p;
     static private float f;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ItemWeightNotCorrectException {
    		scanner = new Scanner(System.in);
 		class_initalised = false;
 		
+		//inicalitzar statics item
+		ArrayList<Float> af = new ArrayList<Float>();
+		ArrayList<tipus> at = new ArrayList<tipus>();
+		ArrayList<String> as = new ArrayList<String>();
+		
+		af.add(100.0f);
+		at.add(tipus.I);
+		as.add("id");
+
+		Item.setTipusArray(at);
+		Item.setNomAtributs(as);
+		Item.setPesos(af);
+		Item.setId(0);
+
 		String s = "Options: \n" +
 		"-1. exit\n" +
 		"0. show options\n" +
@@ -131,25 +150,37 @@ public class DriverUsuari {
 		System.out.print("Number of recommendations(without rating): ");
 		m = scanner.nextInt();
 
-		for(int i = 0; i < m; i++) {
-			System.out.print("ItemID of Recomanacio " + i + ": ");
+		for(int j = 0; j < m; j++) {
+			System.out.print("ItemID of Recomanacio " + j + ": ");
 			p = scanner.nextInt();
-			cr.add(new Recomanacio(c, new Item(p)));
+			try {
+				i = new Item(p);
+			}
+			catch(ItemStaticValuesNotInitializedException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
+			cr.add(new Recomanacio(c, i));
 		}
 
 		System.out.println("Data for new recommendations:");
 		System.out.print("Number of recommendations with rating): ");
 		m = scanner.nextInt();
 
-		for(int i = 0; i < m; i++) {
-			System.out.print("ItemID of rated Recomanacio " + i + ": ");
+		for(int j = 0; j < m; j++) {
+			System.out.print("ItemID of rated Recomanacio " + j + ": ");
 			p = scanner.nextInt();
-			System.out.print("Valoració of rated Recomanacio " + i + ": ");
+			System.out.print("Valoració of rated Recomanacio " + j + ": ");
 			f = scanner.nextFloat();
 			try {
-				cr.add(new Recomanacio(c, new Item(p),f));
+				i = new Item(p);
+				cr.add(new Recomanacio(c, i, f));
 			}
 			catch(RatingNotValidException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
+			catch(ItemStaticValuesNotInitializedException e) {
 				System.out.println("ERROR: " + e.getMessage());
 				return;
 			}
@@ -202,10 +233,17 @@ public class DriverUsuari {
 		System.out.print("Number of recommendations(without rating): ");
 		m = scanner.nextInt();
 
-		for(int i = 0; i < m; i++) {
-			System.out.print("ItemID of Recomanacio " + i + ": ");
+		for(int j = 0; j < m; j++) {
+			System.out.print("ItemID of Recomanacio " + j + ": ");
 			p = scanner.nextInt();
-			cr.add(new Recomanacio(c, new Item(p)));
+			try {
+				i = new Item(p);
+			}
+			catch(ItemStaticValuesNotInitializedException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
+			cr.add(new Recomanacio(c, i));
 		}
 
 		c.setRecomanacions(cr);
@@ -225,15 +263,20 @@ public class DriverUsuari {
 		System.out.print("Number of recommendations with rating): ");
 		m = scanner.nextInt();
 
-		for(int i = 0; i < m; i++) {
-			System.out.print("ItemID of rated Recomanacio " + i + ": ");
+		for(int j = 0; j < m; j++) {
+			System.out.print("ItemID of rated Recomanacio " + j + ": ");
 			p = scanner.nextInt();
-			System.out.print("Valoració of rated Recomanacio " + i + ": ");
+			System.out.print("Valoració of rated Recomanacio " + j + ": ");
 			f = scanner.nextFloat();
 			try {
-				cr.add(new Recomanacio(c, new Item(p),f));
+				i = new Item(p);
+				cr.add(new Recomanacio(c, i, f));
 			}
 			catch(RatingNotValidException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
+			catch(ItemStaticValuesNotInitializedException e) {
 				System.out.println("ERROR: " + e.getMessage());
 				return;
 			}
@@ -249,16 +292,15 @@ public class DriverUsuari {
 			return;
 		}
 
-		System.out.print("Index of the recommendation that needs to be moved: ");
+		System.out.print("Index of the recommendation that needs to be moved from (Recomanacions to Valoracions): ");
 		n = scanner.nextInt();
 
 		try {
-			c.moureRecomanacio(n);
+			c.moureRecomanacio(c.getRecomanacions().get(n),true);
 		}
-		catch(RecommendationNotRatedException e) {
+		catch(RecommendationNotRatedException | RecommendationRatedException e) {
 			System.out.println("The opperation couldn't be performed(as expected) because this functionality will only work if the recommendation had a rating.");
 		}
-
 
 	}
 	static private void mostra_9() {

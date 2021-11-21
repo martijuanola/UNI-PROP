@@ -1,29 +1,26 @@
 Objecte de la prova: 
-	- Recomanacio
+	- Item
 
 Altres elements integrats a la prova:
 	- Classes ja provades:
-		- Item
+		- ControladorPersistencia
 	- Stubs:
-		- Usuari
 
 Drivers:
-	- DriverRecomanacio
+	- DriverItem
 
 Stubs:
-	- Usuari
 
-Fitxers de dades per provar:
-	- DriverRecomanacioTest.txt
+Fitxers de dades necessaris:
+	- item1.csv
 
 Valors estudiats:
 	- Dades tipus caixa blanca
-	- S'obervara el comportament per diferents valors de valoració.
 
 Efectes estudiats:
 	- Constructors funcionen correctament
-	- Es pot modificar l'atribut valoració
-	- Les diferents funcions consultores funcionen correctament
+	- Es proven que els getters i setters funcionin correctament
+	- Es comprova també que els constructors només funcionin amb les variables estàtiques necessaries.
 
 Operativa:
 	- Es selecciona la funció que es vol provar utilitzant el menú que es mostra introduint el valor indicat

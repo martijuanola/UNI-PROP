@@ -3,11 +3,16 @@ package src.drivers;
 import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.ConjuntRecomanacions;
 import src.recomanador.domini.ConjuntUsuaris;
-import src.recomanador.domini.ControladorDomini;
 import src.recomanador.domini.ControladorDominiAlgorisme;
 import src.recomanador.domini.Item;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
+import src.recomanador.excepcions.ItemIdNotValidException;
+import src.recomanador.excepcions.ItemNotFoundException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
+import src.recomanador.excepcions.RatingNotValidException;
+import src.recomanador.excepcions.UserIdNotValidException;
 import src.recomanador.excepcions.UserNotFoundException;
 import src.recomanador.excepcions.DataNotValidException;
 
@@ -15,24 +20,30 @@ import src.recomanador.persistencia.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
+import java.lang.Math;
 
 import src.recomanador.domini.ItemValoracioEstimada;
 
 /**
  * This class is meant to test the class Algorisme.
  * To test some of its functions in an atomized manner, I temporarily
- * changed them from private to public.
+ * changed them from private to public. As I have tested these work,
+ * this driver only tests the public functions, and the private ones implicitly.
  * 
  * @author Adrià F.
  */
 public class DriverAlgorisme {
-    
+
+    static ConjuntItems items;
+    static ConjuntRecomanacions recomanacions;
+    static ConjuntUsuaris usuaris;
+    static ControladorPersistencia cp;
+
     public static void main(String[] args) throws UserNotFoundException{
 
         Scanner in= new Scanner(System.in);
-        ControladorDomini domini = new ControladorDomini();
-        ControladorPersistencia persistencia = new ControladorPersistencia();
         ControladorDominiAlgorisme algorisme = new ControladorDominiAlgorisme();
+        cp = new ControladorPersistencia();
 
         System.out.println();
         System.out.println("DRIVER ALGORISME");
@@ -51,7 +62,7 @@ public class DriverAlgorisme {
             PROJECTE = in.next();
 
             try {
-                domini.carregarCarpeta(PROJECTE);
+                carregarProjecte(PROJECTE);
                 bool1 = false;
             }
             catch(FolderNotFoundException | FolderNotValidException e) {
@@ -62,11 +73,11 @@ public class DriverAlgorisme {
                 System.out.println("Dades no vàlides. Provi un altre cop.");
                 System.out.print(">>>>> ");
             }
+            catch(Exception e) {
+                System.out.println("Hi ha hagut un error. Provi un altre cop.");
+                System.out.print(">>>>> ");
+            }
         }
-
-        ConjuntItems items = domini.ci;
-        ConjuntRecomanacions recomanacions = domini.cr;
-        ConjuntUsuaris usuaris = domini.cu;
 
         System.out.println("Carregat projecte " + PROJECTE + ".");
         System.out.println();
@@ -104,7 +115,41 @@ public class DriverAlgorisme {
                 System.out.print(">>>>> ");
             }
         }
-        System.out.println(); 
+        System.out.println();
+        
+        if(int1 == 1) {
+            int atribut_seleccionat = 0;
+
+            ArrayList<String> atributs = Item.getCapçalera();
+            ArrayList<Float> pesos = Item.getPesos();
+
+            while(atribut_seleccionat != -1) {
+                System.out.println("El conjunt d'Ítems té els següents atributs amb els següents pesos:");
+                System.out.println();
+
+                System.out.println("INDEX       PES              ATRIBUT");
+                
+                for (int i = 0; i < atributs.size(); ++i) {
+                    System.out.print(i);
+                    if (i < 10) System.out.print(" ");
+                    System.out.println("          "+pesos.get(i)+"            "+atributs.get(i));
+                }
+                System.out.println();
+
+                System.out.println("Si vol modificar el pes d'un atribut escrigui l'índex. Altrament, escrigui -1.");
+                System.out.print(">>>>> ");
+                atribut_seleccionat = in.nextInt();
+                if (atribut_seleccionat != -1) {
+                    System.out.println("Escrigui el nou pes:");
+                    System.out.print(">>>>> ");
+                    float nouPes = in.nextFloat();
+                    try {Item.setPes(atribut_seleccionat, nouPes);}
+                    catch (ItemWeightNotCorrectException | ArrayIndexOutOfBoundsException e) {System.out.println(e);}
+                }
+            }
+
+            System.out.println();
+        }
 
         System.out.println("Seleccioni un mode:");
         System.out.println("0 - Obtenir recomanacions per a un usuari");
@@ -170,18 +215,18 @@ public class DriverAlgorisme {
             break;
 
             case 1:
-                try {algorisme.set_Q(items.size());}
+                try {algorisme.set_Q(items.size()/2);}
                 catch (DataNotValidException e) {System.out.println(e); break;}
 
                 ConjuntUsuaris usuarisUnknown = new ConjuntUsuaris();
                 ConjuntRecomanacions recomanacionsUnknown = new ConjuntRecomanacions();
             
                 try {
-                    ArrayList<ArrayList<String>> raw = persistencia.carregarFitxerExtern("data/" +PROJECTE+ "/ratings.test.known.csv");
+                    ArrayList<ArrayList<String>> raw = cp.carregarFitxerExtern("data/" +PROJECTE+ "/ratings.test.known.csv");
                     usuaris.afegirDades(raw);
                     recomanacions.afegirDades(items,usuaris,raw);
 
-                    raw = persistencia.carregarFitxerExtern("data/" +PROJECTE+ "/ratings.test.unknown.csv");
+                    raw = cp.carregarFitxerExtern("data/" +PROJECTE+ "/ratings.test.unknown.csv");
                     usuarisUnknown.afegirDades(raw);
                     recomanacionsUnknown.afegirDades(items, usuarisUnknown, raw);
                 }
@@ -243,5 +288,27 @@ public class DriverAlgorisme {
         //algorisme.run_algorithm(user_ID, items, usuaris, recomanacions);
 
         in.close();
+    }
+
+    private static void carregarProjecte(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
+
+        //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
+        cp.escollirProjecte(directory);
+       
+        try {
+            ArrayList<ArrayList<String>> items_raw = cp.carregarItemsCarpeta();
+            items = new ConjuntItems(items_raw);
+
+            ArrayList<ArrayList<String>> valoracions_raw = cp.carregarRecomanacionsCarpeta();            
+            usuaris = new ConjuntUsuaris(valoracions_raw);
+            recomanacions = new ConjuntRecomanacions(items,usuaris,valoracions_raw);
+        }
+        catch(ItemTypeNotValidException | ItemWeightNotCorrectException e) {
+            //també un altre not valid file o algo així, es pot diferenciar de la resta passant un string a cada cas
+            //o sigui mateixa excepcion però amb missatges d'error diferents
+        }
+        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+            //throw new invalid file o algo d'aquest estil
+        }
     }
 }
