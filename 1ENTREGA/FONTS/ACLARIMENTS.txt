@@ -1,0 +1,19 @@
+1. El Makefile compila tot i executa el driver de la classe demanada
+cada cop que se l'invoca amb make NOM_CLASSE_A_PROVAR .
+El problema es que hi ha unes classes que usen un Stub d'usuari.
+Existeix una carpeta amb aquest Stub, pero en format txt. Al compilar
+amb la opcio indicada a sobre, aquest stub substitueix la classe Usuari.java
+que es troba src/recomanador/domini, i quan s'acaba de compilar, es
+torna a substituir per src/recomanador/domini/OriginalClassUsuari.txt
+Aquest .txt conte la mateixa informació que l'Usuari.java que hem programat,
+però guardat en un format diferent per poder fer-ne copies.
+Si algun cop es fa alguna errata durant la compilacio i no es canvia el
+fitxer Usuari.java a l'original, la resta de classes tambe usaran l'stub,
+i per tant el resultat pot no ser l'esperat.
+Per tant, si per algun motiu es modifica alguna cosa dins la carpeta src
+i aixo genera un error de compilacio, s'hauria d'assegurar abans que
+s'usa la classe usuari pertinent.
+
+2. L'arxiu StubUsuari.txt, OriginalClassUsuari.txt, Main.java.txt, ControladorDomini.java.txt
+son classes de java, pero per poder guardar-les sense tenir
+errors de compilacio, s'els ha canviat la extensio.

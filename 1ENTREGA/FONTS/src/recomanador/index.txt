@@ -1,0 +1,7 @@
+DIRECTORI recomanador
+
+\domini: Conté els codis fonts de les classes de la capa de domini.
+\excepcions: Conté els codis fonts de les excepcions que hem creat.
+\persistencia: Conté els codis fonts de les classes de la capa de persistencia.
+\Utils: Conté els codis fonts de les classes auxiliars (que simplement fan operacions).
+
