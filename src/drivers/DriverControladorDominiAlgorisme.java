@@ -53,7 +53,13 @@ public class DriverControladorDominiAlgorisme {
         System.out.println();
 
         System.out.println("Siusplau, escull un projecte:");
-        System.out.println("movies-250, movies-750, movies-2250, movies-6750, movies.sample");
+
+        System.out.print("Disponibles: ");
+        ArrayList<String> carpetes = cp.llistatCarpetes();
+        for (int i = 0; i < carpetes.size(); ++i) {
+            System.out.print(carpetes.get(i) + " ");
+        }
+
         System.out.println();
         System.out.print(">>>>> ");
 
