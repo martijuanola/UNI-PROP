@@ -74,4 +74,5 @@ clean:
 	rm -Rf bin/*
 
 javadoc:
-	javadoc -d ./doc/javadoc src -subpackages src.recomanador.domini:src.recomanador.persistencia -private
+	#javadoc -d ./doc/javadoc src -subpackages src.recomanador.Utils:src.recomanador.domini:src.recomanador.persistencia -private
+	javadoc -d ./doc/javadoc -subpackages src.recomanador.Utils:src.recomanador.domini:src.recomanador.persistencia -private
