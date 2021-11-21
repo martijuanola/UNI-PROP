@@ -45,7 +45,7 @@ public class DriverControladorLoad {
 			io.writeln("\n==================================================\n");
 			
 		}catch(Exception e){
-			System.out.println("An error has occurred");
+			System.out.println(e.getMessage());
 		}
     }
     
@@ -81,7 +81,6 @@ public class DriverControladorLoad {
 		{
 			io.writeln("ERROR!!!");
 			io.writeln("The file is not valid.");
-			scanner.close();
 			return;
 		}
 		
@@ -119,6 +118,5 @@ public class DriverControladorLoad {
 		}
 		
 		if (sol.size() > 11) io.writeln("...");
-		scanner.close();
 	}
 }
