@@ -32,6 +32,8 @@ Fitxers de dades necessaris:
 	últims són necessaris per al càlcul de DCG.
 
 Valors estudiats:
+	- Caixa Negre, donat que simplement es crida a la funció "Executar Algorisme" i es comproven els resultats.
+	Les funcions privades que crida "Executar Algorisme" s'han comprovat previament que funcionen correctament.
 	- Recomanacions per a una ID-Usuari, usant ambdós algoritmes
 	- Valors de DCG i NDCG, usant ambdós algoritmes
 
