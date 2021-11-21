@@ -27,6 +27,7 @@ Fitxers de dades necessaris:
 	  per poder canviar de carpeta i que l'efecte sigui visible
 
 Valors estudiats:
+	- Caixa gris (alguns casos es tracten com caixa blanca, altres com caixa negra, ja que els camins alternatius només porten a excepcions)
 	- Canvi, creació i sortir del projecte seleccionat (en el que es guarden les dades)
 	- Mostra dels projectes a escollir.
 	- Càrrega i guardat de totes les dades bàsiques que sen's proporciona: items.csv, ratings.db.csv, ratings.test.known.csv, ratings.test.unknown.csv
