@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"src"},{"l":"src.recomanador.domini"},{"l":"src.recomanador.domini.Utils"},{"l":"src.recomanador.persistencia"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"src"},{"l":"src.recomanador.domini"},{"l":"src.recomanador.persistencia"}]
