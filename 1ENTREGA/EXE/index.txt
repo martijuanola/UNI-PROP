@@ -1,0 +1,15 @@
+DIRECTORI EXE:
+
+\DriverAlgorisme: Conte l'executable i els testos sobre el DriverAlgorisme
+\DriverConjuntItems: Conte l'executable i els testos sobre el DriverConjuntItems
+\DriverConjuntRecomanacions: Conte l'executable i els testos sobre el DriverConjuntRecomanacions
+\DriverConjuntUsuaris: Conte l'executable i els testos sobre el DriverConjuntUsuaris
+\DriverControladorLoad: Conte l'executable i els testos sobre el DriverControladorLoad
+\DriverControladorPersistencia: Conte l'executable i els testos sobre el DriverControladorPersistencia
+\DriverControladorSave: Conte l'executable i els testos sobre el DriverControladorSave
+\DriverItem: Conte l'executable i els testos sobre el DriverItem
+\DriverItemValoracioEstimada: Conte l'executable i els testos sobre el DriverItemValoracioEstimada
+\DriverRecomanacio: Conte l'executable i els testos sobre el DriverRecomanacio
+\DriverStringOperations: Conte l'executable i els testos sobre el DriverStringOperations
+\DriverUnionIntersection: Conte l'executable i els testos sobre el DriverUnionIntersection
+\DriverUsuari: Conte l'executable i els testos sobre el DriverUsuari

@@ -3,7 +3,6 @@ package src.recomanador.domini;
 
 import src.recomanador.excepcions.*;
 
-import java.util.Collections;  
 import java.util.ArrayList;
 
 /**
