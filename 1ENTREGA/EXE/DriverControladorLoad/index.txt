@@ -4,4 +4,5 @@ DIRECTORI DriverControladorLoad
 
 - DriverControladorLoad.jar: Executable del driver
 - DriverControladorLoadExplocacio.txt: Explicacio del driver per a provar les classes.
+- aclariment.txt: informacio adicional
 

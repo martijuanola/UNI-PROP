@@ -4,4 +4,5 @@ DIRECTORI DriverControladorSave
 
 - DriverControladorSave.jar: Executable del driver
 - DriverControladorSaveExplocacio.txt: Explicacio del driver per a provar les classes.
+- aclariment.txt: infirmacio adicional
 

@@ -9,3 +9,19 @@ DIRECTORI DriverControladorPersistencia
 
 - DriverControladorPersistencia.jar: Executable del driver
 - DriverControladorPersistenciaExplocacio.txt: Explicacio del driver per a provar les classes.
+- test-lectura: Test per a provar la lectura basica dels elements.
+		IMPORTANT!!!! El programa agafa informacio de la carpeta ./data, i per tant, depenent del sistema operatiu,
+		la informacio s'obtindra desordenada. Per a un correcte funcionament, executi un cop sense  test, esculli la opcio 2,
+		i escrigui el nombre de la posicio en que apareix (començant en 1) test-load-basic en la segona fila del test. D'aquesta 
+		manera s'executara el test carregant dades dels fitxers adequats.
+		Recordi que si executa el test despres de crear un projecte, haura de seguir els passos anteriors.
+		Si executa el test amb alguna opcio que no sigui la indicada anteriorment, l'unic que pasara es que la lectura d'alguns
+		arxius donara error, ja que no es troben en la carpeta.
+- test-escriptura: Test per a provar la'escriptura basica dels elements.
+		IMPORTANT!!!! El programa agafa informacio de la carpeta ./data, i per tant, depenent del sistema operatiu,
+		la informacio s'obtindra desordenada. Per a un correcte funcionament, executi un cop sense  test, esculli la opcio 2,
+		i escrigui el nombre de la posicio en que apareix (començant en 1) dummy-save-example (o en qualsevol carpeta que començi 
+		amb dummy-) en la segona fila del test. D'aquesta manera s'executara el test carregant dades dels fitxers adequats.
+		Recordi que si executa el test despres de crear un projecte, haura de seguir els passos anteriors.
+		Si executa el test amb alguna opcio que no sigui la indicada anteriorment, l'unic que pasara es que l'escriptura no es fara,
+		ja que per evitar la perdua de dades, el driver nomes pot modificar aquelles carpetes que començin amb dummy.
