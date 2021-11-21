@@ -19,7 +19,8 @@ Valors estudiats:
 
 Efectes estudiats:
 	- Constructors funcionen correctament
-	- !!!!!!!
+	- Es proven que els getters i setters funcionin correctament
+	- Es comprova també que els constructors només funcionin amb les variables estàtiques necessaries.
 
 Operativa:
 	- Es selecciona la funció que es vol provar utilitzant el menú que es mostra introduint el valor indicat

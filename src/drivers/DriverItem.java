@@ -4,6 +4,7 @@ package src.drivers;
 import java.util.Scanner;
 import java.util.ArrayList;
 import src.recomanador.domini.Item.tipus;
+import src.recomanador.domini.Utils.*;
 
 //Classes
 import src.recomanador.domini.Item;
@@ -11,10 +12,7 @@ import src.recomanador.persistencia.ControladorPersistencia;
 
 //Excepcions
 import java.io.IOException;
-import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
-import src.recomanador.excepcions.ItemNewAtributesNotValidException;
+import src.recomanador.excepcions.*;
 
 /**
  * Driver tot test the class Item.
@@ -37,6 +35,7 @@ public class DriverItem {
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
 		class_initalised = false;
+		cp = new ControladorPersistencia();
 
 		//inicalitzar statics item
 		/*ArrayList<Float> af = new ArrayList<Float>();
@@ -80,11 +79,10 @@ public class DriverItem {
 		"14. void setTipus(int atribut, tipus t)\n" +
 		"15. void setPesos(ArrayList<Float> p)\n" +
 		"16. void setTipusArray(ArrayList<tipus> a)\n" +
-		"17. void canvisTipusAtribut(int atribut, tipus t)\n" +
-		"18. void setNomAtributs(ArrayList<String> n)\n" +
+		"17. void setNomAtributs(ArrayList<String> n)\n" +
 		" - Others - \n" +
-		"19. int compareTo(Item otherItem)\n" +
-		"20. String tipusToString(tipus t)\n";
+		"18. int compareTo(Item otherItem)\n" +
+		"19. String tipusToString(tipus t)\n";
 		
 		System.out.println("Testing class Item");
 		System.out.println(s);
@@ -164,6 +162,25 @@ public class DriverItem {
     
     static private void mostra_1() {
 		System.out.println("Testing function Item(int id)");
+		System.out.println("The statics values will be initialised with default values.");
+
+		ArrayList<Float> af = new ArrayList<Float>();
+		ArrayList<tipus> at = new ArrayList<tipus>();
+		ArrayList<String> as = new ArrayList<String>();
+		
+		af.add(100.0f);
+		at.add(tipus.I);
+		as.add("id");
+
+		try {
+			Item.setPesos(af);
+		} catch (ItemWeightNotCorrectException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		Item.setTipusArray(at);
+		Item.setNomAtributs(as);
+		Item.setId(0);
 
 		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
@@ -183,9 +200,58 @@ public class DriverItem {
 	}
     static private void mostra_2() {
 		System.out.println("Testing function Item(ArrayList<ArrayList<String>> atributs)");
+		System.out.println("The statics values will be initialised with values derivated from the input file.");
 		
+		System.out.print("file name .csv with the header and only 1 item: ");
+		String s = scanner.next();
+		ArrayList<ArrayList<String>> raw;
+		try{ 
+			raw = cp.carregarFitxerExtern(s);
+		}
+		catch(FileNotValidException | FileNotFoundException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
+		int size = raw.get(0).size();
 
+		int idprov = -1;
+
+		ArrayList<String> nAtributs = raw.get(0);
+		ArrayList<Float> ap = new ArrayList<Float>(0);
+		ArrayList<tipus> at = new ArrayList<tipus>(0);
+		for(int i = 0; i < size; i++) {
+			ap.add(100.0f);
+			at.add(tipus.S);
+			if(raw.get(0).get(i).equalsIgnoreCase("id")) idprov = i;
+		}
+
+		//variables estàtiques
+		System.out.println(idprov);
+		try{
+			Item.setId(idprov);
+			Item.setNomAtributs(nAtributs);
+			Item.setPesos(ap);
+			Item.setTipusArray(at);
+		}
+		catch(ItemWeightNotCorrectException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		
+		ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
+        for (int j = 0; j < raw.get(1).size(); ++j) { //Recorrem per separar en subvectors
+            str.add(StringOperations.divideString(raw.get(1).get(j), ';'));
+        }
+
+		try {
+			c = new Item(str);
+			class_initalised = true;
+		}
+		catch(Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 	}
     static private void mostra_3() {
 		System.out.println("Testing function int getId()");
@@ -237,8 +303,7 @@ public class DriverItem {
 		}
 
 		n = Item.getNumAtributs();
-		System.out.println("All the items have "+n+" atributes.");
-		
+		System.out.println("All the items have "+n+" atributes.");	
 	}
 	static private void mostra_8() {
 		System.out.println("Testing function ArrayList<Float> getPesos()");
@@ -301,7 +366,6 @@ public class DriverItem {
 		
 		Item.setNomA(n);
 		System.out.println("The value nomA has been correctly initialised.");
-
 	}
 	static private void mostra_13() {
 		System.out.println("Testing function setPes(int a, float pes)");
@@ -328,7 +392,6 @@ public class DriverItem {
 		ArrayList<Float> aux = c.getPesos();
 		System.out.println("The weight of the now atributes are:");
 		System.out.println(aux);
-
 	}
 	static private void mostra_14() {
 		System.out.println("Testing function void setTipus(int atribut, tipus t)");
@@ -336,7 +399,28 @@ public class DriverItem {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
-		
+
+		System.out.print("Index of the atribute to change it's type:");
+		n = scanner.nextInt();
+
+		System.out.println("Enter the new type. Options:");
+		System.out.println("I - ID");
+		System.out.println("N - NOM");
+		System.out.println("B - BOOLEAN");
+		System.out.println("F - FLOAT");
+		System.out.println("S - STRING");
+		System.out.println("D - DATE");
+		String s = scanner.next();
+		try {
+			tipus t = StringOperations.stringToType(s);
+			Item.setTipus(n,t);
+		}
+		catch(ItemTypeNotValidException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+
+		mostra_9();
 	}
 	static private void mostra_15() {
 		System.out.println("Testing function void setPesos(ArrayList<Float> p)");
@@ -344,7 +428,24 @@ public class DriverItem {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
-		
+
+		ArrayList<Float> w = new ArrayList<Float>(0);
+
+		for(int i = 0; i < Item.getNumAtributs(); i++) {
+			System.out.println("Enter weight of atribute number " + i + ":");
+			f = scanner.nextFloat();
+			w.add(f);
+		}
+
+		try{
+			c.setPesos(w);
+		}
+		catch(ItemWeightNotCorrectException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+
+		mostra_8();
 	}
 	static private void mostra_16() {
 		System.out.println("Testing function void setTipusArray(ArrayList<tipus> a)");
@@ -352,56 +453,96 @@ public class DriverItem {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
-		
+
+		ArrayList<tipus> at = new ArrayList<tipus>(0);
+
+		for(int i = 0; i < Item.getNumAtributs(); i++) {
+			System.out.println("Enter the new type. Options:");
+			System.out.println("I - ID");
+			System.out.println("N - NOM");
+			System.out.println("B - BOOLEAN");
+			System.out.println("F - FLOAT");
+			System.out.println("S - STRING");
+			System.out.println("D - DATE");
+			String s = scanner.next();
+			try {
+				tipus t = StringOperations.stringToType(s);
+				Item.setTipus(n,t);
+			}
+			catch(ItemTypeNotValidException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
+			c.setTipusArray(at);
+
+		}
 	}
 	static private void mostra_17() {
-		System.out.println("Testing function void canvisTipusAtribut(int atribut, tipus t)");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-		
-	}
-	static private void mostra_18() {
 		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
-		
+
+		ArrayList<String> as = new ArrayList<String>(0);
+
+		for(int i = 0; i < Item.getNumAtributs(); i++) {
+			System.out.println("Enter new name for atribute "+i+":");
+			String s = scanner.next();
+			as.add(s);
+		}
+
+		Item.setNomAtributs(as);
+		mostra_10();
 	}
-	static private void mostra_19() {
+	static private void mostra_18() {
 		System.out.println("Testing function int compareTo(Item otherItem)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
-		
+
+		System.out.println("Data for new Item:");
+		System.out.print("Item ID: ");
+		n = scanner.nextInt();
+		Item aux;
+		try{
+			aux = new Item(n);
+		}
+		catch(ItemStaticValuesNotInitializedException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		m = c.compareTo(aux);
+
+		if(m < 0) System.out.println("The new item has a greater index than the current.");
+		else if(m > 0) System.out.println("The new item has a lower index than the current.");
+		else System.out.println("Both item would have the same index in the sorting.");
 	}
-	static private void mostra_20() {
+	static private void mostra_19() {
 		System.out.println("Testing function String tipusToString(tipus t)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
 		}
-		
-	}
 
-	//S'ha de treure
-    /**
-     * Imprimeix els atributs
-     */
-   /* public void print() {
-        for (int i = 0; i < atributs.size(); ++i) {
-            int g = atributs.get(i).size();
-            if (g > 1) System.out.print("{");
-            for (int j = 0; j < g; ++j) {
-                System.out.print(atributs.get(i).get(j));
-                if (j != g-1) System.out.print(", ");
-            }
-            if (g > 1) System.out.print("}");
-            if (i != atributs.size()-1) System.out.print(", ");
-        }
-        System.out.println("");
-    }*/
+		System.out.println("Enter the new type. Options:");
+		System.out.println("I - ID");
+		System.out.println("N - NOM");
+		System.out.println("B - BOOLEAN");
+		System.out.println("F - FLOAT");
+		System.out.println("S - STRING");
+		System.out.println("D - DATE");
+		String s = scanner.next();
+		tipus t;
+		try {
+			t = StringOperations.stringToType(s);
+		}
+		catch(ItemTypeNotValidException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+
+		System.out.println("The instance of tipus is hte equivalent of the string " + Item.tipusToString(t) + ".");
+	}
 }

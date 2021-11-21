@@ -140,7 +140,7 @@ public class Item implements Comparable<Item>{
         Item.nomA = a;
     }
 
-    public static void setPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
+    public static void setPes(int a, float pes) throws ItemWeightNotCorrectException {
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
         if (a < 0 || a >= Item.pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
@@ -154,7 +154,7 @@ public class Item implements Comparable<Item>{
         Item.canvisTipusAtribut(atribut, t);
     }
 
-    public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException{
+    public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException{
         if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Weights array does not match items attributes.");
         for (int i = 0; i < Item.getNumAtributs(); ++i) if (p.get(i) > 100 || p.get(i) < 0) throw new ItemWeightNotCorrectException("Weight smaller than 0 or bigger than 100");
         Item.pesos = p;
