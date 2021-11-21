@@ -2,7 +2,6 @@ package src.drivers;
 
 import src.recomanador.persistencia.ControladorSave;
 import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -85,6 +84,7 @@ public class DriverControladorSave {
 		//mostrar output
 		io.writeln("DONE!");
 		io.writeln("You can check if it has worked at data/testing-only-DriverSave-store/"+p);
+		scanner.close();
 	}
 	
 	static private void initializeDummyData()

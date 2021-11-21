@@ -3,16 +3,11 @@ package src.drivers;
 import java.util.ArrayList;
 //Utils
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentSkipListMap;
-
-import javax.sound.sampled.Control;
-
-import src.recomanador.Utils.StringOperations;
 //Classes
+import src.recomanador.Utils.StringOperations;
 import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.Item;
 import src.recomanador.domini.Item.tipus;
-import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.ItemNewAtributesNotValidException;
@@ -291,7 +286,7 @@ public class DriverConjuntItems {
 			//demanar l'input
 			System.out.println("Choose one of this folders with preprocessed data:");
 			System.out.println(cp.llistatCarpetes());
-			String path = "test-conjuntItems";//scanner.next();
+			String path = scanner.next();
 
 			//executar la funcionalitat
 			try {

@@ -11,7 +11,6 @@ import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable
 //import src.stubs.Usuari;
 
 //Excepcions
-import java.io.IOException;
 import src.recomanador.excepcions.UserNotFoundException;
 import src.recomanador.excepcions.UserIdNotValidException;
 import src.recomanador.excepcions.DataNotValidException;
@@ -31,11 +30,8 @@ public class DriverConjuntUsuaris {
     static private Usuari u;
     static private ControladorPersistencia cp;
     static private String s1;
-    static private String s2;
-    static private boolean b;
     static private int n;
     static private int m;
-    static private float f;
     static private ArrayList<ArrayList<String>> raw;
     
     public static void main(String[] args) {

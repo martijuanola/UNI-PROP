@@ -1,8 +1,6 @@
 package src.drivers;
 
 import src.recomanador.persistencia.ControladorPersistencia;
-import java.io.File;
-import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -163,7 +161,6 @@ public class DriverControladorPersistencia {
 				}
 				
 			} while (x != -1);
-			
 			io.writeln("Test ended");
 			io.writeln("\n==================================================\n");
 			
@@ -344,6 +341,7 @@ public class DriverControladorPersistencia {
 		{
 			System.out.println("ERROR!!!");
 			System.out.println(e.getMessage());
+			scanner.close();
 			return;
 		}
 		
@@ -360,6 +358,7 @@ public class DriverControladorPersistencia {
 		}
 		
 		io.writeln("...");
+		scanner.close();
 	}
 	static private void testSortirDelProjecte() throws Exception {
 		io.writeln("Testing function sortirDelProjecte()");
@@ -678,6 +677,7 @@ public class DriverControladorPersistencia {
 				io.writeln("Choose a project before reading the files");
 				io.writeln("You can do it by choosing the option 1 on the main menu");
 			}
+			scanner.close();
 			return;
 		}
 		
@@ -694,6 +694,7 @@ public class DriverControladorPersistencia {
 		}
 		
 		io.writeln("...");
+		scanner.close();
 	}
 	static private void testCarregarPesosAtributs() throws Exception {
 		io.writeln("Testing function carregarPesosAtributs()\n");
@@ -891,6 +892,7 @@ public class DriverControladorPersistencia {
 		}catch(Exception e) {
 			System.out.println("ERROR!!!");
 			System.out.println(e.getMessage());
+			scanner.close();
 			return;
 		}
 		
@@ -898,6 +900,7 @@ public class DriverControladorPersistencia {
 		io.writeln("DONE!");
 		io.writeln("You can check it that it has been created using option 2 from the main menu.");
 		io.writeln("You can check it that you are in the folder using option 3 from the main menu.");
+		scanner.close();
 	}
 	static private void testGuardarDades() throws Exception {
 		io.writeln("Testing function guardarDades()\n");
@@ -925,12 +928,14 @@ public class DriverControladorPersistencia {
 		}catch(Exception e) {
 			System.out.println("ERROR!!!");
 			System.out.println(e.getMessage());
+			scanner.close();
 			return;
 		}
 		
 		//mostrar output
 		io.writeln("DONE!");
 		io.writeln("You can check it by going to /data/<your_folder> and searching for your file.");
+		scanner.close();
 	}
 	static private void testGuardarRecomanacions() throws Exception {
 		io.writeln("Testing function guardarRecomanacions()\n");

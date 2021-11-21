@@ -27,9 +27,6 @@ public class DriverRecomanacio {
     static private boolean class_initalised;
     static private Item i;
     static private Usuari u;
-    static private String s1;
-    static private String s2;
-    static private boolean b;
     static private int n;
     static private int m;
     static private float f;
@@ -48,15 +45,15 @@ public class DriverRecomanacio {
 		at.add(tipus.I);
 		as.add("id");
 
+		Item.setTipusArray(at);
+		Item.setNomAtributs(as);
+		Item.setId(0);
 		try {
 			Item.setPesos(af);
 		} catch (ItemWeightNotCorrectException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
-		Item.setTipusArray(at);
-		Item.setNomAtributs(as);
-		Item.setId(0);
 
 		String s = "Options: \n\n" +
 		"-1. exit\n" +

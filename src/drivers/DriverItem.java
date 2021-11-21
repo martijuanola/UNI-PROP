@@ -81,8 +81,7 @@ public class DriverItem {
 		"16. void setTipusArray(ArrayList<tipus> a)\n" +
 		"17. void setNomAtributs(ArrayList<String> n)\n" +
 		" - Others - \n" +
-		"18. int compareTo(Item otherItem)\n" +
-		"19. String tipusToString(tipus t)\n";
+		"18. int compareTo(Item otherItem)\n";
 		
 		System.out.println("Testing class Item");
 		System.out.println(s);
@@ -149,9 +148,6 @@ public class DriverItem {
 				case 17:
 					mostra_17();
 					break;
-				case 18:
-					mostra_18();
-					break;
 				default:
 			}
 			
@@ -172,15 +168,15 @@ public class DriverItem {
 		at.add(tipus.I);
 		as.add("id");
 
+		Item.setTipusArray(at);
+		Item.setNomAtributs(as);
+		Item.setId(0);
 		try {
 			Item.setPesos(af);
 		} catch (ItemWeightNotCorrectException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
-		Item.setTipusArray(at);
-		Item.setNomAtributs(as);
-		Item.setId(0);
 
 		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
@@ -326,7 +322,7 @@ public class DriverItem {
 		ArrayList<tipus> aux = Item.getTipusArray();
 		System.out.println("The types of the atributes are:");
 		for(int i = 0; i < aux.size(); i++){
-			System.out.print(Item.tipusToString(aux.get(i)) + "\t");
+			System.out.print(StringOperations.tipusToString(aux.get(i)) + "\t");
 		}
 		System.out.println();
 	}
@@ -518,31 +514,5 @@ public class DriverItem {
 		if(m < 0) System.out.println("The new item has a greater index than the current.");
 		else if(m > 0) System.out.println("The new item has a lower index than the current.");
 		else System.out.println("Both item would have the same index in the sorting.");
-	}
-	static private void mostra_19() {
-		System.out.println("Testing function String tipusToString(tipus t)");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-
-		System.out.println("Enter the new type. Options:");
-		System.out.println("I - ID");
-		System.out.println("N - NOM");
-		System.out.println("B - BOOLEAN");
-		System.out.println("F - FLOAT");
-		System.out.println("S - STRING");
-		System.out.println("D - DATE");
-		String s = scanner.next();
-		tipus t;
-		try {
-			t = StringOperations.stringToType(s);
-		}
-		catch(ItemTypeNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-
-		System.out.println("The instance of tipus is hte equivalent of the string " + Item.tipusToString(t) + ".");
 	}
 }

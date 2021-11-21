@@ -7,11 +7,7 @@ driver:
 	make compile
 	@read -p "Enter the name of class: " name; \
 	java -cp bin:. src.drivers.Driver$$name
-	
-i:
-	make compile
-	java -cp bin:. src.drivers.DriverConjuntItems
-	
+
 run:
 	java -cp bin:. src.Main
 
