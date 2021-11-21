@@ -935,7 +935,10 @@ public class DriverConjuntItems {
 
 	static private void mostra_29() {
 		System.out.println("Testing function distanciaAtribut(String a1, String a2, int columna)");
-
+		if (!inicailitzat) {
+			System.out.println("The set is not initialized yet");
+			return;
+		}
 		//demanar l'input
 		System.out.println("Enter the first string: ");
 		String s1 = scanner.next();
@@ -962,7 +965,10 @@ public class DriverConjuntItems {
 
 	static private void mostra_30() {
 		System.out.println("Testing function distanciaItem(Item i1, Item i2)");
-
+		if (!inicailitzat) {
+			System.out.println("The set is not initialized yet");
+			return;
+		}
 		//demanar l'input
 		System.out.println("Option 1: Select two already existing items");
 		System.out.println("Option 2: Create new ones only for this test");
@@ -1047,7 +1053,10 @@ public class DriverConjuntItems {
 
 	static private void mostra_31() {
 		System.out.println("Testing function binarySearchItem(ArrayList<Item> list, int id, int lo, int hi)");
-
+		if (!inicailitzat) {
+			System.out.println("The set is not initialized yet");
+			return;
+		}
 		System.out.println("Option 1: Select current item set");
 		System.out.println("Option 2: (NOT RECOMMENDED) Create new item array only for this test");
 		System.out.println("Enter 1 or 2: ");

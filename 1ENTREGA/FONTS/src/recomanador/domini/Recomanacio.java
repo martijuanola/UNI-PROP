@@ -139,8 +139,7 @@ public class Recomanacio implements Comparable<Recomanacio> {
      * @return     True if both objects are the same
      */
     public boolean checkKeys(Item i, Usuari u) {
-        return usr == u && item == i;
-        //return usr.getId() == u.getId() && item.getId() == i.getId();
+        return usr.getId() == u.getId() && item.getId() == i.getId();
     }
 
     /**
