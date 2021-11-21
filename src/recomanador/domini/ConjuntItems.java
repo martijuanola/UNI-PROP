@@ -588,6 +588,7 @@ public class ConjuntItems extends ArrayList<Item> {
         if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + StringOperations.tipusToString(t));
 
         if (a1.equals(a2)) return (float)1.0;
+        if (a1.length() == 0 || a2.length() == 0) return (float)0.0;
 
         float sim = (float)0.0;
         if (t == tipus.I) {
@@ -600,6 +601,7 @@ public class ConjuntItems extends ArrayList<Item> {
             else sim = (float)0.0;
         }
         else if (t == tipus.D) {
+            if (a1.length() != a2.length()) return (float)0.0;
             float dataMax = maxAtributs.get(columna), dataMin = minAtributs.get(columna); //TODO: canviar que es guarden les dates
             sim = 1 - Math.abs((StringOperations.dataToTime(a1) - StringOperations.dataToTime(a2)) / (dataMax - dataMin));
         }
