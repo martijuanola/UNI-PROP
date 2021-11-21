@@ -14,7 +14,7 @@ Stubs:
 	- Usuari
 
 Fitxers de dades necessaris:
-	-!!!!
+	- ratings.db.csv
 
 Valors estudiats:
 	- Dades tipus caixa blanca

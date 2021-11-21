@@ -244,8 +244,8 @@ public class DriverConjuntRecomanacions {
 		u = new Usuari(n);
 		
 		try{
-		b1 = c.existeixValoracio(m,n);
-		b2 = c.existeixValoracio(i,u);
+			b1 = c.existeixValoracio(m,n);
+			b2 = c.existeixValoracio(i,u);
 		}
 		catch(Exception e){
 			System.out.println("ERROR: Recomendation not found!!");
@@ -319,12 +319,12 @@ public class DriverConjuntRecomanacions {
 		System.out.println("ConjuntUsuaris returned:");
 
 		for(int j = 0; j < ru.size(); j++) {
-			System.out.println("ID Usuari 1: " + ru.get(j).getId());
+			System.out.println("ID Usuari "+j+": " + ru.get(j).getId());
 		}
-
 	}
 	static private void mostra_7() {
 		System.out.println("Testing function boolean add(Recomanacio)");
+		System.out.println("If previous data was loaded, the fact that the Item or Usuari exisist is not checked.");
 		if(!class_initalised) {
 			System.out.println("!! ConjuntRecomanacions not initalised. Use option 1 or 2 to construct a instance first. !!");
 			return;
@@ -420,10 +420,11 @@ public class DriverConjuntRecomanacions {
 	}
 
 	static private void printCR() {
-		System.out.println("Current state of the set(Users IDs)");
-		for(int j = 0; j < c.size(); j++) {
+		System.out.println("Current state of the set(only top 50):");
+		for(int j = 0; j < c.size() && j < 50; j++) {
 			System.out.println("Position "+ j + ": ID Item = " + c.get(j).getItem().getId() + " & ID Usuari = " + c.get(j).getUsuari().getId() + " & Rating = " + c.get(j).getVal());
 		}
+
 		System.out.println();
 	}
 }

@@ -34,8 +34,8 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      *  from a previous execution without filling ordered by ID
      *
      * @param      raw   The raw data from a file of ratings
-     * @exception  UserIdNotValidException Gets thrown if the string for a user id is can not be converted
-     * to int
+     * @exception  UserIdNotValidException Gets thrown if the string for a user id is can not be converted to int
+     * @throws     DataNotValidException    The input data is not valid
      */
     public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws DataNotValidException, UserIdNotValidException {
         this.afegirDades(raw);
@@ -97,6 +97,14 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         return true;
     }
 
+    /**
+     * New users are added from the raw information from a ratings.csv file
+     *
+     * @param      raw                      The raw data
+     *
+     * @throws     DataNotValidException    The input data is not valid
+     * @throws     UserIdNotValidException  User id is not valid
+     */
     public void afegirDades(ArrayList<ArrayList<String>> raw) throws UserIdNotValidException, DataNotValidException {
         int prev = 0;
         for(int i = 1; i < raw.size(); i++) {
@@ -123,8 +131,6 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * Returns de index of the element with id = <i>id</i>, or if it doesn't exist,
      *  the position where it should be added. It uses a binary search.
      *
-     * @param      first  first element of the sequence of users
-     * @param      last   Last element of the sequenece of users
      * @param      id     The identifier of the users we are looking for
      *
      * @return     The index where the user should be

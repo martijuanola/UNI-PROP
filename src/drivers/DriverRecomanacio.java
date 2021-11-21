@@ -206,9 +206,6 @@ public class DriverRecomanacio {
 		try {
 			c.setVal(f);
 		}
-		catch(RecommendationRatedException e) {
-			//en un cas real s'hauria d'actualitzar l'usuari que tenia la recomanació
-		}
 		catch(RatingNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;

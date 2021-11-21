@@ -39,8 +39,14 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @param      ci    Set of items from the Domain Controler
      * @param      cu    Set of users from the Domain Controler
      * @param      raw   The raw data from the ratings file
+     *
+     * @throws     ItemNotFoundException        Thrown if a item was not found.
+     * @throws     UserNotFoundException        Thrown if a user was not found.
+     * @throws     RatingNotValidException      Thrown if a rating was not found.
+     * @throws     UserIdNotValidException      Thrown if a user id was not found.
+     * @throws     ItemIdNotValidException      Thrown if a item id was not found.
      */
-    public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException  {
+    public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException {
     	this.afegirDades(ci,cu,raw);
     }
 
@@ -124,6 +130,16 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	else throw new RecommendationNotFoundException(itemid, userid);
     }
 
+    /**
+     * Gets the recommendation with Item i and Usuari u
+     *
+     * @param      i                                Item
+     * @param      u                                Usuari
+     *
+     * @return     The recommendation.
+     *
+     * @throws     RecommendationNotFoundException  If the recommendation was not found
+     */
     public Recomanacio getRecomanacio(Item i, Usuari u) throws RecommendationNotFoundException {
 		int pos = cercaBinaria(i.getId(),u.getId());
     	if(this.get(pos).checkKeys(i,u)) return this.get(pos);
@@ -150,7 +166,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	return cu;
     }
 
-
     /*----- MODIFICADORES -----*/
 
     /**
@@ -171,6 +186,19 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return true;
     }
 
+    /**
+     * This function adds data to the set, from a set of Items, Usuaris and the raw data of a ratings.csv file.
+     *
+     * @param      ci    Set of items from the Domain Controler
+     * @param      cu    Set of users from the Domain Controler
+     * @param      raw   The raw data from the ratings file
+     *
+     * @throws     ItemNotFoundException        Thrown if a item was not found.
+     * @throws     UserNotFoundException        Thrown if a user was not found.
+     * @throws     RatingNotValidException      Thrown if a rating was not found.
+     * @throws     UserIdNotValidException      Thrown if a user id was not found.
+     * @throws     ItemIdNotValidException      Thrown if a item id was not found.
+     */
     public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException {
         raw.remove(0);//elimina la capçalera
 
@@ -214,8 +242,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             if(v != Recomanacio.nul) u.getValoracions().add(r);
             else u.getRecomanacions().add(r);
         }
-
-        Collections.sort(this);
     }
 
     /*----- ALTRES -----*/

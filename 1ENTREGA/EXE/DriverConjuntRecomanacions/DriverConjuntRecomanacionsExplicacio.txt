@@ -18,11 +18,11 @@ Stubs:
 	- Usuari
 
 Fitxers de dades necessaris:
-	-!!!!
+	- movies-250
 
 Valors estudiats:
 	- Dades tipus caixa blanca
-	- !!
+	- Comprovar que els valors de de fitxers reals es carreguen correctament i es podem manipular de la manera esperada
 
 Efectes estudiats:
 	- Constructors funcionen correctament
