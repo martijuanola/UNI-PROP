@@ -10,7 +10,7 @@ public class Usuari implements Comparable<Usuari> {
     
     /*----- ATRIBUTS -----*/
 
-    private int id = 42;
+    private int id;
 
     /**
      * Set of all the recomendations recieved by the user but with no rating
@@ -33,8 +33,6 @@ public class Usuari implements Comparable<Usuari> {
         this.id = id;
         cr = new ConjuntRecomanacions();
         cv = new ConjuntRecomanacions();
-        //cr = null;
-        //cv = null;
     }
 
     
@@ -75,6 +73,7 @@ public class Usuari implements Comparable<Usuari> {
      * @param      cr    The new set.
      */
     public void setRecomanacions(ConjuntRecomanacions cr) {
+        this.cr = cr;
     }
 
     /**
@@ -83,6 +82,7 @@ public class Usuari implements Comparable<Usuari> {
      * @param      cv    The new set.
      */
     public void setValoracions(ConjuntRecomanacions cv) {
+        this.cv = cv;
     }
     
     /**
@@ -95,6 +95,16 @@ public class Usuari implements Comparable<Usuari> {
      * @throws     RecommendationRatedException     The change is not possible because r has a rating
      */
     public void moureRecomanacio(Recomanacio r, boolean b) throws RecommendationNotRatedException, RecommendationRatedException {
+        if(b) {//es valora
+            if(r.getVal() == 0.0) throw new RecommendationNotRatedException();
+            cr.remove(r);
+            cv.add(r);
+        }
+        else {//s'elimina la valoració
+            if(r.getVal() != 0.0) throw new RecommendationRatedException();
+            cv.remove(r);
+            cr.add(r);
+        }
     }
 
     /**

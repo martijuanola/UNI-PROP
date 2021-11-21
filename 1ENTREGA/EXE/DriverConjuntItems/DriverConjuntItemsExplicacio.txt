@@ -1,0 +1,36 @@
+Objecte de la prova:
+	-ConjuntItems
+
+Altres elements integrats a la prova:
+	- Classes ja provades:
+		- Item
+		- StringOperations
+		- UnionItersection
+		- ControladorPersistencia
+
+Drivers:
+	- DriverConjuntItems
+
+Stubs:
+ 
+Fitxers de dades necessaris:
+	- test-conjuntItems
+
+Valors estudiats:
+	- Dades tipus caixa blanca
+
+Efectes estudiats:
+	- Constructors funcionen correctament tant creats buits com creats a partir de fitxers
+	- Getters retornen els valors esperats
+	- Setters modifiquen els atributs correctament
+	- Checkers comproven les condicions correctaments
+	- Operations calculen correctament
+
+Operativa:
+	- Es selecciona la funció que es vol provar utilitzant el menú que es mostra introduint el valor indicat
+	- El valor 0 torna a mostrar les opcions
+	- S'introdueixen les dades necessaries que es demanen:
+		- Si es un fitxer s'haurà d'especificar el path relatiu de la carpeta d'execució. Per exemple: data/movies-750/items.csv
+		- Si es carreguen dades preprocessades s'haurà d'escollir una carpeta de les mostrades
+	- Observar els resultats
+	- Tornar a provar una altra funcionalitat o sortir introduint el valor -1

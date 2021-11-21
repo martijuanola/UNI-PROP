@@ -11,6 +11,65 @@ driver:
 run:
 	java -cp bin:. src.Main
 
+ConjuntUsuaris:
+	cp ./src/stubs/StubUsuari.txt ./src/recomanador/domini/Usuari.java
+	make compile
+	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	java -cp bin:. src.drivers.DriverConjuntUsuaris
+
+ConjuntRecomanacions:
+	cp ./src/stubs/StubUsuari.txt ./src/recomanador/domini/Usuari.java
+	make compile
+	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	java -cp bin:. src.drivers.DriverConjuntRecomanacions
+
+Recomanacio:
+	cp ./src/stubs/StubUsuari.txt ./src/recomanador/domini/Usuari.java
+	make compile
+	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	java -cp bin:. src.drivers.DriverRecomanacio
+
+Usuari:
+	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	make compile
+	java -cp bin:. src.drivers.DriverUsuari
+
+Item:
+	make compile
+	java -cp bin:. src.drivers.DriverItem
+
+ConjuntItems:
+	make compile
+	java -cp bin:. src.drivers.DriverConjuntItems
+
+ItemValoracioEstimada:
+	make compile
+	java -cp bin:. src.drivers.DriverItemValoracioEstimada
+
+ControladorDominiAlgorisme:
+	make compile
+	java -cp bin:. src.drivers.DriverControladorDominiAlgorisme
+
+ControladorPersistencia:
+	make compile
+	java -cp bin:. src.drivers.DriverControladorPersistencia
+
+ControladorLoad:
+	make compile
+	java -cp bin:. src.drivers.DriverControladorLoad
+	
+ControladorSave:
+	make compile
+	java -cp bin:. src.drivers.DriverControladorSave
+
+StringOperations:
+	make compile
+	java -cp bin:. src.drivers.DriverStringOperations
+
+UnionIntersection:
+	make compile
+	java -cp bin:. src.drivers.DriverUnionIntersection
+
 clean:
 	rm -Rf bin/*
 

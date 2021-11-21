@@ -216,8 +216,8 @@ public class Item implements Comparable<Item>{
      * @throws ItemTypeNotValidException if the column does not accept the new type
      */
     public static void setTipus(int atribut, tipus t) throws ItemTypeNotValidException {
-        Item.tipusAtribut.set(atribut, t);
         Item.canvisTipusAtribut(atribut, t);
+        Item.tipusAtribut.set(atribut, t);
     }
 
     /**
@@ -248,6 +248,7 @@ public class Item implements Comparable<Item>{
      * @throws ItemTypeNotValidException if item has an id and another id is trying to be set
      */
     private static void canvisTipusAtribut(int atribut, tipus t) throws ItemTypeNotValidException {
+        if (Item.id == atribut) throw new ItemTypeNotValidException("Cannot change the Item ID.");
         if (t == tipus.I) {
             if (id != -1) throw new ItemTypeNotValidException("L'item ja tenia un id assignat, no es poden tenir dos ids.");
             Item.id = atribut;
