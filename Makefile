@@ -14,23 +14,23 @@ run:
 ConjuntUsuaris:
 	cp ./src/stubs/StubUsuari.txt ./src/recomanador/domini/Usuari.java
 	make compile
-	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	cp ./src/recomanador/domini/OriginalClass.Usuari ./src/recomanador/domini/Usuari.java 
 	java -cp bin:. src.drivers.DriverConjuntUsuaris
 
 ConjuntRecomanacions:
 	cp ./src/stubs/StubUsuari.txt ./src/recomanador/domini/Usuari.java
 	make compile
-	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	cp ./src/recomanador/domini/OriginalClass.Usuari ./src/recomanador/domini/Usuari.java 
 	java -cp bin:. src.drivers.DriverConjuntRecomanacions
 
 Recomanacio:
 	cp ./src/stubs/StubUsuari.txt ./src/recomanador/domini/Usuari.java
 	make compile
-	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	cp ./src/recomanador/domini/OriginalClass.Usuari ./src/recomanador/domini/Usuari.java 
 	java -cp bin:. src.drivers.DriverRecomanacio
 
 Usuari:
-	cp ./src/recomanador/domini/OriginalClassUsuari.txt ./src/recomanador/domini/Usuari.java 
+	cp ./src/recomanador/domini/OriginalClass.Usuari ./src/recomanador/domini/Usuari.java 
 	make compile
 	java -cp bin:. src.drivers.DriverUsuari
 
