@@ -58,7 +58,7 @@ public class CollaborativeFiltering {
      * @param      user_ID      ID of the user to be recommended
      * @param      K   number of clusters to be generated on k-means
      * 
-     * @return     a sorted set the recommended item IDs
+     * @return     a sorted set the recommended item IDs with their estimated ratings
      */
     public ArrayList<ItemValoracioEstimada> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         
