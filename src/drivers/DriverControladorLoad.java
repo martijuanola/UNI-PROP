@@ -46,6 +46,7 @@ public class DriverControladorLoad {
 			
 		}catch(Exception e){
 			System.out.println("An error has occurred");
+			System.out.println(e.getMessage());
 		}
     }
     

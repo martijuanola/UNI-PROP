@@ -1,0 +1,6 @@
+DIRECTORI DriverConjuntUsuaris:
+
+\movies-250: Conté les dades de prova per l'executalbe DriverConjuntUsuaris.jar
+
+- DriverConjuntUsuaris.jar: Executable del driver de la classe ConjuntUsuaris
+- DriverConjuntUsuarisExplicacio.txt: Explicació del driver de la classe ConjuntUsuaris

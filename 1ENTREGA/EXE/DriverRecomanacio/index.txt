@@ -1,0 +1,5 @@
+DIRECTORI DriverRecomanacio:
+
+- DriverRecomanacio.jar: Executable del driver de la classe Recomanacio
+- DriverRecomanacioExplicacio.txt: Explicació del driver de la classe Recomanacio
+- DriverRecomanacioTest.txt: Test per l'executable del driver de la classe Recomanacio

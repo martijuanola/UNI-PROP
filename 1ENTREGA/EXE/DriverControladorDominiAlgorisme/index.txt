@@ -1,0 +1,7 @@
+DIRECTORI DriverControladorDominiAlgorisme
+
+\data: conté els fitxers csv necessaris per a executar l'algorisme, en diferentes magnituds.
+Si es vol provar amb dades personalitzades cal seguir el mateix format d'arxius
+
+- DriverControladorDominiAlgorisme.jar: Conté l'executable del DriverControladorDominiAlgorisme.
+- DriverControladorDominiAlgorismeExplicació.txt: Conté l'explicació del DriverControladorDominiAlgorisme.
