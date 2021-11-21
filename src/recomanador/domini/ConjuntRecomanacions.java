@@ -79,7 +79,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      */
     public boolean existeixRecomanacio(Item i, Usuari u) {
     	int pos = cercaBinaria(i.getId(),u.getId());
-    	if(this.get(pos).z(i,u)) return true;
+    	if(this.get(pos).checkKeys(i,u)) return true;
     	else return false;
     }
 

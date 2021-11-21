@@ -1,0 +1,7 @@
+DIRECTORI src
+
+\drivers: Conté els codis fonts dels drivers.
+\recomanadors: Conté els codis fonts de les capes de domini i persistencia
+\stubs: Conté el codi font de l'stub
+
+- main.java.txt: conté el codi font del Main. És en format .txt donat que en aquesta entrega no es fa servir
