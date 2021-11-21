@@ -12,7 +12,6 @@ import src.recomanador.domini.Recomanacio;
 import src.recomanador.domini.ConjuntRecomanacions;
 
 //Excepcions
-import java.io.IOException;
 import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationNotRatedException;
 import src.recomanador.excepcions.RecommendationRatedException;
@@ -28,14 +27,10 @@ public class DriverUsuari {
     static private Usuari c;
 
     static private boolean class_initalised;
-    static private Recomanacio r;
     static private ConjuntRecomanacions cr;
     static private ConjuntRecomanacions cv;
     static private Usuari u;
     static private Item i;
-    static private String s1;
-    static private String s2;
-    static private boolean b;
     static private int n;
     static private int m;
     static private int p;

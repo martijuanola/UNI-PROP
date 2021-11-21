@@ -9,7 +9,7 @@ Martí Juanola:
 - Recomanacions + Driver
 - ConjuntRecomanacions + Driver
 - ConjuntUsuaris + Driver
-- Driver Usuaris
+- Usuari + Driver
 - Driver Item
 
 Adrià Fernández:
@@ -20,6 +20,7 @@ Adrià Fernández:
 
 Jaume Casals:
 - Item
+- Usuari
 - ConjuntItems + Driver
 - StringOperations
 - UnionIntersection + Driver

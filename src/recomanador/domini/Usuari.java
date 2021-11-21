@@ -1,6 +1,5 @@
 package src.recomanador.domini;
 
-import src.recomanador.excepcions.RatingNotValidException;
 import src.recomanador.excepcions.RecommendationNotRatedException;
 import src.recomanador.excepcions.RecommendationRatedException;
 

@@ -27,9 +27,6 @@ public class DriverRecomanacio {
     static private boolean class_initalised;
     static private Item i;
     static private Usuari u;
-    static private String s1;
-    static private String s2;
-    static private boolean b;
     static private int n;
     static private int m;
     static private float f;
