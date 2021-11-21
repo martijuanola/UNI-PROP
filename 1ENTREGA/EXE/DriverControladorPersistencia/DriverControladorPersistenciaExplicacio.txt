@@ -23,10 +23,13 @@ Fitxers de dades necessaris:
 		- tipus.csv
 	
 	- Recomanables: totes les carpetes que sen's ha proporcionat amb l'enunciat. Això permetrà caregar dades diverses.
+	- Recomanables: totes els fitxers dins de data/dummy-save-basic (són els mateixos 9 que els citats anteriorment).
+			 Això permetrà provar les funcions de guardar sense provar la creació de carpeta
 	- Com a mínim hi haurà d'haver una carpeta més diferent de la de movies.sample i de les recomanades a dalt, 
 	  per poder canviar de carpeta i que l'efecte sigui visible
 
 Valors estudiats:
+	- Caixa gris (alguns casos es tracten com caixa blanca, altres com caixa negra, ja que els camins alternatius només porten a excepcions)
 	- Canvi, creació i sortir del projecte seleccionat (en el que es guarden les dades)
 	- Mostra dels projectes a escollir.
 	- Càrrega i guardat de totes les dades bàsiques que sen's proporciona: items.csv, ratings.db.csv, ratings.test.known.csv, ratings.test.unknown.csv
