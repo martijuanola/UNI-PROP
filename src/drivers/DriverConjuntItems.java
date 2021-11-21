@@ -291,7 +291,7 @@ public class DriverConjuntItems {
 			//demanar l'input
 			System.out.println("Choose one of this folders with preprocessed data:");
 			System.out.println(cp.llistatCarpetes());
-			String path = "test-conjuntItems";//scanner.next();
+			String path = scanner.next();
 
 			//executar la funcionalitat
 			try {
