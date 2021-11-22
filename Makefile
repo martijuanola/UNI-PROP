@@ -1,7 +1,7 @@
 compile:
-	find . -name "*.java" > classes.txt
-	javac -g -cp :. @classes.txt -d bin
-	rm classes.txt
+	@find . -name "*.java" > classes.txt
+	@javac -g -cp :. @classes.txt -d bin
+	@rm classes.txt
 
 driver:
 	make compile
