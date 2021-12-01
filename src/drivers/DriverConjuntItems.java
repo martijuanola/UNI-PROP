@@ -205,8 +205,8 @@ public class DriverConjuntItems {
 			try {
 				ci = new ConjuntItems();
 				ConjuntItems.nom = null;
-				ConjuntItems.setMaxAtributs(null);
-				ConjuntItems.setMinAtributs(null);
+				ci.setMaxAtributs(null);
+				ci.setMinAtributs(null);
 				/*Item.setPesos(null);
 				Item.setTipusArray(null);
 				Item.setNomAtributs(null);
@@ -530,7 +530,7 @@ public class DriverConjuntItems {
 		}
 
 		//executar la funcionalitat
-		ConjuntItems.setMaxAtributs(l1);
+		ci.setMaxAtributs(l1);
 
 		//mostrar output
 		max = true;
@@ -554,7 +554,7 @@ public class DriverConjuntItems {
 		}
 		
 		//executar la funcionalitat
-		ConjuntItems.setMinAtributs(l1);
+		ci.setMinAtributs(l1);
 
 		//mostrar output
 		min = true;
@@ -953,7 +953,7 @@ public class DriverConjuntItems {
 		//executar la funcionalitat
 		float res;
 		try {
-			res = ConjuntItems.distanciaAtribut(s1, s2, col);
+			res = ci.distanciaAtribut(s1, s2, col);
 		} catch (ItemTypeNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
@@ -1041,7 +1041,7 @@ public class DriverConjuntItems {
 		//executar la funcionalitat
 		float res;
 		try {
-			res = ConjuntItems.distanciaItem(i1, i2);
+			res = ci.distanciaItem(i1, i2);
 		} catch (ItemTypeNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;

@@ -48,7 +48,7 @@ public class Item implements Comparable<Item>{
     /**
      * Position of the attribute id at the array of types "tipusAtribut"
      */
-    private static int id = -1; //
+    private static int id = -1;
     
     /**
      * Position of the attribute that represents tha name of an item at the array of types "tipusAtribut"
@@ -78,7 +78,7 @@ public class Item implements Comparable<Item>{
         if(id == -1) throw new ItemStaticValuesNotInitializedException("id");
 
         this.atributs = new ArrayList<ArrayList<String>>(0);
-        for(int i = 0; i < Item.pesos.size(); i++) {
+        for(int i = 0; i < Item.getNumAtributs(); i++) {
             ArrayList<String> default_val = new ArrayList<String>(0);
             if(i != Item.id) default_val.add("");
             else default_val.add(""+idval);
@@ -96,7 +96,7 @@ public class Item implements Comparable<Item>{
         if(nomAtribut == null) throw new ItemStaticValuesNotInitializedException("nomAtribut");
         if(id == -1) throw new ItemStaticValuesNotInitializedException("id");
 
-        if(atributsval.size() != Item.pesos.size()) throw new ItemNewAtributesNotValidException(Item.pesos.size());
+        if(atributsval.size() != Item.getNumAtributs()) throw new ItemNewAtributesNotValidException(Item.getNumAtributs());
 
         this.atributs = atributsval;
     }   
@@ -104,7 +104,7 @@ public class Item implements Comparable<Item>{
     /*----- GETTERS -----*/
 
     /**
-     * Returns the id specified by the id value
+     * Returns the id specified by the id position
      * @return id of the item
      */
     public int getId() {
@@ -180,18 +180,21 @@ public class Item implements Comparable<Item>{
      * @param c    new id that will be set
      * @throws     ItemIdNotValidException      Thrown when id can not be changed to the column c
      */
-    public static void setId(int c) throws ItemIdNotValidException {
-        if(Item.id != -1 && !Item.nomAtribut.get(c).equalsIgnoreCase("id")) throw new ItemIdNotValidException(id);
+    protected static void setId(int c) throws ItemIdNotValidException { //TODO: S'ha de ordenar el conjunt d'items quan es canvia l'id
+        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");    
+        if (Item.id != -1 || !Item.nomAtribut.get(c).equalsIgnoreCase("id")) throw new ItemIdNotValidException(id);
         Item.id = c;
     }
 
-    //s'hauràn d'afegir excepcions
     /**
      * Sets a column that will act as name of the items
-     * @param a new name that will be set
+     * @param c new name that will be set
+     * @throws ItemStaticValuesAlreadyInitializedException If the column of the name is already defined
      */
-    public static void setNomA(int a) {
-        Item.nomA = a;
+    public static void setNomA(int c) throws ArrayIndexOutOfBoundsException, ItemStaticValuesAlreadyInitializedException {
+        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");
+        if (nomA != -1) throw new ItemStaticValuesAlreadyInitializedException();
+        Item.nomA = c;
     }
 
     /**
@@ -211,13 +214,18 @@ public class Item implements Comparable<Item>{
     //ha de venir comprovat a assignaTipusItem de conjunt d'items
     /**
      * Sets the type of column
-     * @param atribut column which will be modified
+     * @param columna column which will be modified
      * @param t new type that will be assigned
      * @throws ItemTypeNotValidException if the column does not accept the new type
+     * @throws ItemNomANotValidException If the column of the name is already defined
+     * @throws ArrayIndexOutOfBoundsException
      */
-    public static void setTipus(int atribut, tipus t) throws ItemTypeNotValidException {
-        Item.canvisTipusAtribut(atribut, t);
-        Item.tipusAtribut.set(atribut, t);
+    public static void setTipus(int columna, tipus t) throws ItemTypeNotValidException, ItemIdNotValidException, ArrayIndexOutOfBoundsException, ItemStaticValuesAlreadyInitializedException {
+        if (Item.id == columna) throw new ItemTypeNotValidException("Cannot change the Item ID.");
+        if (t == tipus.I) setId(columna);
+        else if (t == tipus.N) setNomA(columna);
+
+        Item.tipusAtribut.set(columna, t);
     }
 
     /**
@@ -227,7 +235,7 @@ public class Item implements Comparable<Item>{
      * @throws ArrayIndexOutOfBoundsException if the array is not the size of the attributes
      */
     public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException{
-        if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Weights array does not match items attributes.");
+        if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Weights array does not match items attributes size.");
         for (int i = 0; i < Item.getNumAtributs(); ++i) if (p.get(i) > 100 || p.get(i) < 0) throw new ItemWeightNotCorrectException("Weight smaller than 0 or bigger than 100");
         Item.pesos = p;
     }
@@ -236,39 +244,41 @@ public class Item implements Comparable<Item>{
     /**
      * Sets the types array to the parameter
      * @param a array of types of the same size as the attributes
+     * @throws ItemStaticValuesAlreadyInitializedException
      */
-    public static void setTipusArray(ArrayList<tipus> a) {
+    public static void setTipusArray(ArrayList<tipus> a) throws ItemStaticValuesAlreadyInitializedException {
+        if (Item.tipusAtribut != null) throw new ItemStaticValuesAlreadyInitializedException();
+        if (a.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Types array does not match items attributes size.");
         Item.tipusAtribut = a;
-    }
-
-    /**
-     * Checks what happes if an attribute changes to type t
-     * @param atribut column where the change is being made
-     * @param t new type for that column
-     * @throws ItemTypeNotValidException if item has an id and another id is trying to be set
-     */
-    private static void canvisTipusAtribut(int atribut, tipus t) throws ItemTypeNotValidException {
-        if (Item.id == atribut) throw new ItemTypeNotValidException("Cannot change the Item ID.");
-        if (t == tipus.I) {
-            if (id != -1) throw new ItemTypeNotValidException("L'item ja tenia un id assignat, no es poden tenir dos ids.");
-            Item.id = atribut;
-        }
-        else if (t == tipus.N) {
-            if (nomA != -1) { //Canviem el nom antic per evitar tenir 2 noms
-                Item.tipusAtribut.set(nomA, tipus.S);
-            }
-           Item.nomA = atribut;
-        }
     }
 
     /**
      * Sets the names of attributes array to the parameter
      * @param n array of names of attributes of the same size as the attributes
+     * @throws ItemStaticValuesAlreadyInitializedException
      */
-    public static void setNomAtributs(ArrayList<String> n) {
+    public static void setNomAtributs(ArrayList<String> n) throws ItemStaticValuesAlreadyInitializedException {
+        if (Item.nomAtribut != null) throw new ItemStaticValuesAlreadyInitializedException();
         Item.nomAtribut = n;
     }
     
+    /**
+     * Resetao
+     */
+    public static void reset() {
+        Item.pesos = null;
+
+        Item.tipusAtribut = null;
+
+        Item.nomAtribut = null;
+
+        Item.id = -1;
+
+        Item.nomA = -1;
+    }
+
+    //TODO: Fer una funció per inicialitzar totes les variables estàtiques alhora
+
     /*----- ALTRES -----*/
 
     /**

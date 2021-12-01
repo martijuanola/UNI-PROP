@@ -26,18 +26,20 @@ public class ConjuntItems extends ArrayList<Item> {
     /**
      * Maximum attributes for each column. Columns with strings, names and booleans will have random data
      */
-    private static ArrayList<Float> maxAtributs;
+    private ArrayList<Float> maxAtributs;
     /**
      * Minimum attributes for each column. Columns with strings, names and booleans will have random data
      */
-    private static ArrayList<Float> minAtributs;
+    private ArrayList<Float> minAtributs;
 
     /*----- CONSTRUCTORS -----*/
 
     /**
      * Empty constructor
      */
-    public ConjuntItems() {}
+    public ConjuntItems() throws ItemStaticValuesNotInitializedException {
+        if (Item.getCapçalera() == null || Item.getPesos() == null || Item.getPosId() == -1 || Item.getTipusArray() == null) throw new ItemStaticValuesNotInitializedException("To create an empty \"ConjuntItems\" you first have to initialize the Item static attributes.");
+    }
 
     /**
      * Constructor with an array of items. This array is subdivided for atributes with ; 
@@ -53,10 +55,12 @@ public class ConjuntItems extends ArrayList<Item> {
      * @param items Array of an array of atributes. The first must be a header with the name of each attribute
      * @throws ItemTypeNotValidException Is thrown when the header does not contain "id" or when it is not valid
      * @throws ItemWeightNotCorrectException Is thrown if it tries to assign a weight out of the range (0-100)
+     * @throws ItemStaticValuesAlreadyInitializedException
      */
-    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException, ItemWeightNotCorrectException {
+    public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException, ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException {
         //Nom atributs
         ArrayList<String> nAtributs = items.get(0); //Nom dels atributs (capçalera)
+
         Item.setNomAtributs(nAtributs);
 
         //Pesos default(100.0) + tipus default(String) + id
@@ -95,22 +99,23 @@ public class ConjuntItems extends ArrayList<Item> {
      * @param maxAtributs Array of the maximum attributes of each column
      * @param minAtributs Array of the minimum attributes of each column
      * @throws ItemWeightNotCorrectException Is thrown if it tries to assign a weight out of the range (0-100)
+     * @throws ItemStaticValuesAlreadyInitializedException
+     * @throws ItemIdNotValidException
      */
     public ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos,
     ArrayList<tipus> tipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, 
-    ArrayList<Float> minAtributs) throws ItemWeightNotCorrectException {
+    ArrayList<Float> minAtributs) throws ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException, ItemIdNotValidException {
         ConjuntItems.nom = nom;
-        try{
-            Item.setId(id);
-        }catch(ItemIdNotValidException e) {System.out.println("ERROR: " + e.getMessage());return;}
+
+        Item.setId(id);
         Item.setNomA(nomA);
 
         Item.setNomAtributs(items.get(0));
         Item.setPesos(pesos);
         Item.setTipusArray(tipusAtribut);
 
-        ConjuntItems.setMaxAtributs(maxAtributs);
-        ConjuntItems.setMinAtributs(minAtributs);
+        this.setMaxAtributs(maxAtributs);
+        this.setMinAtributs(minAtributs);
 
         for (int i = 1; i < items.size(); ++i) {
             ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
@@ -234,16 +239,16 @@ public class ConjuntItems extends ArrayList<Item> {
      * Sets the minimum attributes to the parameter array
      * @param minAtributs2 Must be an array with the minimum values in the set and with size equals to the number of attributes
      */
-    public static void setMinAtributs(ArrayList<Float> minAtributs2) {
-        ConjuntItems.minAtributs = minAtributs2;
+    public void setMinAtributs(ArrayList<Float> minAtributs2) {
+        this.minAtributs = minAtributs2;
     }
    
     /**
      * Sets the maximum attributes to the parameter array
      * @param minAtributs2 Must be an array with the maximum values in the set and with size equals to the number of attributes
      */
-    public static void setMaxAtributs(ArrayList<Float> maxAtributs2) {
-        ConjuntItems.maxAtributs = maxAtributs2;
+    public void setMaxAtributs(ArrayList<Float> maxAtributs2) {
+        this.maxAtributs = maxAtributs2;
     }
     
     //TODO: setTipusItem hauria de ser private
@@ -252,8 +257,11 @@ public class ConjuntItems extends ArrayList<Item> {
      * @param atribut must be a column of the item attributes
      * @param t a type suitable for the column
      * @throws ItemTypeNotValidException if the column does not admit the type, it will generate an exception
+     * @throws ItemStaticValuesAlreadyInitializedException
+     * @throws ItemIdNotValidException
+     * @throws ArrayIndexOutOfBoundsException
      */
-    public void setTipusItem(int atribut, tipus t) throws ItemTypeNotValidException {
+    public void setTipusItem(int atribut, tipus t) throws ItemTypeNotValidException, ArrayIndexOutOfBoundsException, ItemIdNotValidException, ItemStaticValuesAlreadyInitializedException {
         if (!tipusCorrecteColumna(atribut, t)) throw new ItemTypeNotValidException("Column " + atribut + " does not admit type " + StringOperations.tipusToString(t));
         Item.setTipus(atribut, t);
     }
@@ -386,6 +394,24 @@ public class ConjuntItems extends ArrayList<Item> {
      * @param it Item that is going to be checked
      */
     public void checkMaxMin(Item it) {
+        if (maxAtributs == null || minAtributs == null) {
+            for (int i = 0; i < it.getAtributs().size(); ++i) {
+                if (it.getAtributs().get(i).size() == 1) {
+                    Float nou = (float)0;
+                    if (Item.getTipusArray().get(i) == tipus.I) {
+                        nou = (float)Integer.parseInt(it.getAtributs().get(i).get(0));
+                    }
+                    else if (Item.getTipusArray().get(i) == tipus.F) {
+                        nou = Float.parseFloat(it.getAtributs().get(i).get(0));
+                    }
+                    else if (Item.getTipusArray().get(i) == tipus.D) {
+                        nou = (float) StringOperations.dataToTime(it.getAtributs().get(i).get(0));
+                    }
+                    maxAtributs.set(i, (float)nou);
+                    minAtributs.set(i, (float)nou);
+                }
+            }
+        }
         for (int i = 0; i < maxAtributs.size(); ++i) {
             if (it.getAtributs().get(i).size() == 1) {
                 Float nou = (float)0;
@@ -497,8 +523,11 @@ public class ConjuntItems extends ArrayList<Item> {
      * @return returns true if it exists an attribute named "id"
      * @throws ItemTypeNotValidException if it is tried to modify a column type that is not correct
      * @throws ItemWeightNotCorrectException if a weight outside the range (0 - 100) is tried to be assigned 
+     * @throws ItemStaticValuesAlreadyInitializedException
+     * @throws ItemIdNotValidException
+     * @throws ArrayIndexOutOfBoundsException
      */
-    public boolean inicialitzar(int nAtributs) throws ItemTypeNotValidException, ItemWeightNotCorrectException { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
+    public boolean inicialitzar(int nAtributs) throws ItemTypeNotValidException, ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException, ItemIdNotValidException { //Inicialitza amb coses aleatories, no es pot utlitzar fins omplir bé
         ArrayList<Float> pesos = new ArrayList<Float>(nAtributs);
         ArrayList<tipus> tipusAtribut = new ArrayList<tipus>(nAtributs);
         maxAtributs = new ArrayList<Float>();
@@ -583,7 +612,7 @@ public class ConjuntItems extends ArrayList<Item> {
      * @return float between 0 and 1 where 0 means completely different and 1 means exaclty the same
      * @throws ItemTypeNotValidException if a1 and a2 are not of the same type
      */
-    public static float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
+    public float distanciaAtribut(String a1, String a2, int columna) throws ItemTypeNotValidException {
         tipus t = Item.getTipusArray().get(columna);
         if (!tipusCorrecte(a1, t) || !tipusCorrecte(a2, t)) throw new ItemTypeNotValidException("atribut " + a1 + " o atribut " + a2 + " no son del tipus " + StringOperations.tipusToString(t));
 
@@ -626,7 +655,7 @@ public class ConjuntItems extends ArrayList<Item> {
      * @return float between 0 and 1 where 0 means completely different and 1 means exaclty the same
      * @throws ItemTypeNotValidException if the two items cannot be compared
      */
-    public static float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException {
+    public float distanciaItem(Item i1, Item i2) throws ItemTypeNotValidException {
 
         float res = (float)0.0, pesTotal = (float)0.0;
         for (int i = 0; i < Item.getNumAtributs(); ++i) {

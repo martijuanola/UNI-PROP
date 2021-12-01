@@ -65,7 +65,7 @@ public class ContentBasedFiltering {
                 if (valoracions.existeixValoracio(iNV, user)) continue;
                 
                 float similitud = 0;
-                try {similitud = ConjuntItems.distanciaItem(iNV, item_val);}
+                try {similitud = items.distanciaItem(iNV, item_val);}
                 catch (ItemTypeNotValidException e) {System.out.println(e);}
 
                 Kpropers.add(new ItemValoracioEstimada(similitud*val, iNV));
