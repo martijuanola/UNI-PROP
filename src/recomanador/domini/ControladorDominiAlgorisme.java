@@ -139,19 +139,12 @@ public class ControladorDominiAlgorisme {
 
             //Hybrid approaches
             case 2:
+                System.out.println("Executant Hybrid Filtering");
+                HybridFiltering HybFilt = new HybridFiltering(items, usuaris, valoracions);
+                recomanacions_alg = HybFilt.hybridFiltering(Q, user_ID, K);
                 break;
         }
-
-        /*
-        for(int i = 0; i < recomanacions_alg.size(); ++i) {
-            float estimacio = recomanacions_alg.get(i).valoracioEstimada;
-            DCG += (Math.pow(2, estimacio) - 1)/(Math.log(i+1)/Math.log(2));
-            nDCG += (32 - 1)/(Math.log(i+1)/Math.log(2));
-        }
-        */
-
-        //nDCG = DCG/nDCG;
-
+        
         return recomanacions_alg;
     }
 }

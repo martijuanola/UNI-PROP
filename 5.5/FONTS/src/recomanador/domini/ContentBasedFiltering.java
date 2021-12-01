@@ -13,9 +13,11 @@ import java.util.Collections;
  * @author Adrià F.
  */
 public class ContentBasedFiltering {
-
+    /**items from which to base the recommendation*/
     ConjuntItems items;
+    /**users from which to base the recommendation*/
     ConjuntUsuaris usuaris;
+    /**ratings from which to base the recommendation*/
     ConjuntRecomanacions valoracions;
 
     /**

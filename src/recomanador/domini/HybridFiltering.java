@@ -5,14 +5,18 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Collections;
 
-import src.recomanador.excepcions.RecommendationNotFoundException;
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.UserNotFoundException;
+import java.util.Collections;
 
 /**
- * This class implements the recomendation algorithm collaborative filtering.
+ * This class implements the recomendation algorithm using a combination of Content-Based filtering and Collaborative Filtering.
+ * For details about its implementation, please check the "Algorithms and Data-Structures" sections of the documentation 
+ * 
  * @author Adrià F.
  */
-public class CollaborativeFiltering {
+public class HybridFiltering {
     /*----- CONSTANTS -----*/
 
     /*----- ATRIBUTS -----*/
@@ -41,7 +45,7 @@ public class CollaborativeFiltering {
      * @param      usuaris    Set of users
      * @param      valoracions   set of recommendations (which include ratings)
      */
-    public CollaborativeFiltering(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
+    public HybridFiltering(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
         this.items = items;
         this.usuaris = usuaris;
         this.valoracions = valoracions;
@@ -50,7 +54,7 @@ public class CollaborativeFiltering {
     /*----- OPERADORS -----*/
 
     /**
-     *  Returns a set of item IDs, sorted by relevance, using Collaborative Filtering for the given user
+     *  Returns a set of item IDs, sorted by relevance, using Hybrid Filtering
      *
      * @param      Q            how many items to be recommended
      * @param      user_ID      ID of the user to be recommended
@@ -58,19 +62,83 @@ public class CollaborativeFiltering {
      * 
      * @return     a sorted set the recommended item IDs with their estimated ratings
      */
-    public ArrayList<ItemValoracioEstimada> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
+    public ArrayList<ItemValoracioEstimada> hybridFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         
-        System.out.println("Executant k-Means");
+        //we find the cluster of users closest to our user
+        System.out.println("Executant k-means");
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
         System.out.println("L'usuari " + user_ID + " pertany a un cluster que conté " + usuaris_cluster.size() + " dels " + usuaris.size() + " usuaris." );
-        System.out.println("Executant slope-1");
-        System.out.println();
 
-        ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
+        //we find the items the users in the cluster rated well
+        
+        ConjuntItems items_cluster = null;
+        try {items_cluster = new ConjuntItems();}
+        catch (ItemStaticValuesNotInitializedException e) {
+            System.out.println(e);
+        }
+
+        for (int i = 0; i < usuaris_cluster.size(); ++i) {
+            ConjuntRecomanacions vals_users = usuaris_cluster.get(i).getValoracions();
+            for (int j = 0; j < vals_users.size(); ++j) {
+                Recomanacio val = vals_users.get(j);
+                if (val.getVal() >= 3.5) {
+                    if (!items_cluster.existeixItem(val.getItem().getId())) items_cluster.add(val.getItem());
+                }
+            }
+        }
+
+        System.out.println("Els usuaris del cluster els hi agraden " + items_cluster.size() + " dels " + items.size() + " items." );
+
+        //we execute content-based filtering on this set of items
+        System.out.println("Executant k-NN" );
+        System.out.println();
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+
+        Usuari user = usuaris.getUsuari(user_ID);
+        ConjuntRecomanacions valUser = user.getValoracions();
+        
+        //necessari per a que els Q items nomes tinguin un item un cop
+        ArrayList<Item> items_afegits = new ArrayList<Item>();
+
+        for (int val_user_idx = 0; val_user_idx < valUser.size(); ++val_user_idx) {
+            
+            float val = valUser.get(val_user_idx).getVal();
+            if (val < 3.5f) continue; //THRESHHOLD. ARBITRARI
+            //una millor alternativa podria ser, per exemple, selection algorithm per trobar la valoracio en la posicio floor(0.75*size)
+
+            Item item_val = valUser.get(val_user_idx).getItem();
+            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>(0);
+
+            //iterem sobre tots els items no valorats
+            for (int idxNV = 0; idxNV < items.size(); ++idxNV) {
+                Item iNV = items_cluster.get(idxNV);
+                if (valoracions.existeixValoracio(iNV, user)) continue;
+                
+                float similitud = 0;
+                try {similitud = items_cluster.distanciaItem(iNV, item_val);}
+                catch (ItemTypeNotValidException e) {System.out.println(e);}
+
+                Kpropers.add(new ItemValoracioEstimada(similitud*val, iNV));
+            }
+
+            Collections.sort(Kpropers);
+            for (int k_idx = 0; k_idx < K && k_idx < Kpropers.size(); ++k_idx) {
+                items_estimats.add(Kpropers.get(k_idx));
+                items_afegits.add(Kpropers.get(k_idx).item);
+            }
+
+        }        
+
+        Collections.sort(items_estimats);
         ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
 
-        for(int i = 0; i < Q && i < items_sorted.size(); ++i){
-            Q_items.add(items_sorted.get(i));
+        int i = 0;
+        while (Q_items.size() < Q && i < items_estimats.size()) {
+            if(items_afegits.contains(items_estimats.get(i).item)) {
+                Q_items.add(items_estimats.get(i));
+                items_afegits.remove(items_estimats.get(i).item);
+            }
+            ++i;
         }
         return Q_items;
     }
@@ -214,89 +282,4 @@ public class CollaborativeFiltering {
         return (float) Math.sqrt(distance);
     }
 
-    /**
-     * Returns a set of item IDs, sorted by relevance, using Collaborative Filtering for the given user
-     *
-     * @param      u    identifier of a user
-     *
-     * @param      c    index of a centroid
-     *
-     * @return     the distance between the user and the centroid
-     */
-    private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException {
-        Usuari user = usuaris.getUsuari(user_ID);
-        ConjuntRecomanacions valoracionsUser = user.getValoracions();
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
-        
-        //System.out.println("\n\nFOR1: Checking every item");
-        for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
-            //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
-            Item j_item = items.get(j_idx);
-            if (valoracions.existeixValoracio(j_item, user)) {
-                //System.out.println("Item had been rated");
-                continue;
-            } 
-            
-            
-            int card_rj = 0;
-            float sum1 = 0;
-			
-			//System.out.println("\nFOR2: Checking every rating of the user");
-            for (int val_user_idx = 0; val_user_idx < valoracionsUser.size(); ++val_user_idx) {
-                //System.out.println("(FOR2)REC INDEX = " + val_user_idx);
-                
-                Recomanacio valoracio = valoracionsUser.get(val_user_idx);
-                //if (!valoracio.recomanacioValorada()) continue;
-                Item i_item = valoracio.getItem();
-
-                if(i_item == j_item) continue;
-
-                int card_sij = 0;
-                float sum2 = 0;
-
-				//System.out.println("FOR3: Checking every user in the cluster");
-                for(int user_clust_index = 0; user_clust_index < usuaris_cluster.size(); ++user_clust_index){			
-                    //System.out.println("(FOR3)USR INDEX = " + user_clust_index);		
-
-                    if (valoracions.existeixValoracio(j_item, usuaris_cluster.get(user_clust_index)) 
-                    && valoracions.existeixValoracio(i_item, usuaris_cluster.get(user_clust_index))) {
-						
-                        ++card_sij;
-                        
-                        try {
-							Recomanacio rec1 = valoracions.getRecomanacio(j_item, usuaris_cluster.get(user_clust_index));
-							Recomanacio rec2 = valoracions.getRecomanacio(i_item, usuaris_cluster.get(user_clust_index));
-							sum2 += rec1.getVal() - rec2.getVal();
-                        }
-						catch(RecommendationNotFoundException e) {/*mai hauria de passar donat que hem comprovat existeixValoracio*/
-                            System.out.println("WTF");
-                        }
-							
-                    }
-
-                    if (card_sij != 0) {
-                        ++card_rj;
-                        sum1 += sum2/card_sij + valoracio.getVal();
-                    }
-                }
-            }
-
-            if(card_rj != 0){
-                float puntuacio_estimada = sum1/card_rj;
-                //puntuacio_estimada = Math.min(Math.round(puntuacio_estimada*2f)/2f,5.0f);
-                items_estimats.add(new ItemValoracioEstimada(puntuacio_estimada, j_item));
-            }
-        }
-        Collections.sort(items_estimats);
-        return items_estimats;
-    }
-
 }
-    //K-NN
-        //volem que ens doni 0-1
-            //(string, string) = 1-edit_distance/max(size)
-            //(int, int) = 1-(abs((a-b))/(max(atribut)-min(atribut)))
-            //(bool, bool) = (bool == bool)
-            //(Array, Array) = size(interseccio)/size(unio)
-            //(Data, Data) =.....
-            // (0..1p, 0..1*p)/(1*p+1*p) = 0..1*(vo-2.5)

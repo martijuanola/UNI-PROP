@@ -9,18 +9,6 @@ import src.recomanador.excepcions.RecommendationNotFoundException;
 import src.recomanador.excepcions.UserNotFoundException;
 
 /**
- * This class stores three HashMaps in order to be able to store each centroud ratings and to calculate the mean of all values in the centroid.
- * In c++ terms, this would be a Struct.
- * 
- * @author Adrià F.
- */
-class Centroid {
-    public HashMap<Item,Float> valoracio;
-    public HashMap<Item,Float> sum;
-    public HashMap<Item,Integer> quant;
-} 
-
-/**
  * This class implements the recomendation algorithm collaborative filtering.
  * @author Adrià F.
  */
@@ -29,13 +17,17 @@ public class CollaborativeFiltering {
 
     /*----- ATRIBUTS -----*/
 
+    /**items from which to base the recommendation*/
     ConjuntItems items;
+    /**users from which to base the recommendation*/
     ConjuntUsuaris usuaris;
+    /**ratings from which to base the recommendation*/
     ConjuntRecomanacions valoracions;
 
+    /**Stores a set of k centroids with their ratings. Used for k-NN*/
     Centroid[] centroids;
 	
-    //idx user, centroid they belong
+    /**For each user ID, stores the centroid they belong to*/
     HashMap<Integer, Integer> closest_centroid;
 
     Random rand = new Random();
@@ -80,9 +72,6 @@ public class CollaborativeFiltering {
         for(int i = 0; i < Q && i < items_sorted.size(); ++i){
             Q_items.add(items_sorted.get(i));
         }
-
-
-
         return Q_items;
     }
 
