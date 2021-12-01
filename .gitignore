@@ -1,4 +1,5 @@
 .DS_Store
+.vscode
 bin/*
 *.png
 1ENTREGA/FONTS/bin/*
