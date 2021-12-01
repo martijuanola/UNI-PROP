@@ -9,6 +9,8 @@ import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
 import src.recomanador.excepcions.ItemIdNotValidException;
 import src.recomanador.excepcions.ItemNotFoundException;
+import src.recomanador.excepcions.ItemStaticValuesAlreadyInitializedException;
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.RatingNotValidException;
@@ -306,7 +308,9 @@ public class DriverControladorDominiAlgorisme {
        
         try {
             ArrayList<ArrayList<String>> items_raw = cp.carregarItemsCarpeta();
-            items = new ConjuntItems(items_raw);
+            items = null;
+            try {items = new ConjuntItems(items_raw);}
+            catch (ItemStaticValuesAlreadyInitializedException e) {System.out.println(e);}
 
             ArrayList<ArrayList<String>> valoracions_raw = cp.carregarRecomanacionsCarpeta();            
             usuaris = new ConjuntUsuaris(valoracions_raw);

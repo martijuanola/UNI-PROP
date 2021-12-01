@@ -15,8 +15,10 @@ Martí Juanola:
 Adrià Fernández:
 - ItemValoracioEstimada + Driver
 - ControladorDominiAlgorisme + Driver
+- Centroid
 - CollaborativeFiltering
 - ContentBasedFiltering
+- HybridFiltering
 
 Jaume Casals:
 - Item
