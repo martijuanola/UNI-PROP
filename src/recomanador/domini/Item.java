@@ -265,7 +265,7 @@ public class Item implements Comparable<Item>{
     /**
      * Resetao
      */
-    public static void reset() {
+    public static void resetStatics() {
         Item.pesos = null;
 
         Item.tipusAtribut = null;
@@ -277,7 +277,18 @@ public class Item implements Comparable<Item>{
         Item.nomA = -1;
     }
 
-    //TODO: Fer una funció per inicialitzar totes les variables estàtiques alhora
+    public static void inicialitzarStatics(ArrayList<Float> pesos, ArrayList<String> nomAtributs,
+    ArrayList<tipus> tipusAtribut, int id, int nomA) throws ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException, ItemWeightNotCorrectException, ItemIdNotValidException {
+        Item.setNomAtributs(nomAtributs);
+
+        Item.setPesos(pesos);
+
+        Item.setTipusArray(tipusAtribut);
+
+        Item.setId(id);
+
+        Item.setNomA(nomA);
+    }
 
     /*----- ALTRES -----*/
 

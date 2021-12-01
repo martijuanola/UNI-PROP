@@ -316,6 +316,7 @@ public class DriverConjuntItems {
 				for (int i = 0; i < minIS.size(); ++i) {
 					minI.add(Float.parseFloat(minIS.get(i)));
 				}
+				
 				ci = new ConjuntItems(cp.carregarItemsCarpeta(), pesos, tipus, 
 				cp.getPosicioID(), cp.getPosicioNom(), cp.getNomConjuntItems(), maxI, minI);
 			}
