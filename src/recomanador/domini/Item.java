@@ -290,6 +290,32 @@ public class Item implements Comparable<Item>{
         Item.setNomA(nomA);
     }
 
+    public static void inicialitzarStaticsDefault(ArrayList<String> atributs) throws ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException, ItemWeightNotCorrectException, ItemTypeNotValidException, ItemIdNotValidException {
+        int n = atributs.size();
+
+        //VALORS ESTATICS DE ITEM
+        Item.setNomAtributs(atributs);
+        ArrayList<Float> pesos = new ArrayList<Float>(n);
+        ArrayList<tipus> tipusAtribut = new ArrayList<tipus>(n);
+
+        for (int i = 0; i < n; i = i + 1) {
+            pesos.add((float) 100.0);
+            tipusAtribut.add(i, tipus.S);
+        }
+
+        Item.setPesos(pesos);
+        Item.setTipusArray(tipusAtribut);
+
+        boolean found = false;
+        for (int i = 0; i < n && !found; ++i) {
+            if (Item.getCapçalera().get(i).equalsIgnoreCase("id")) {
+                Item.setTipus(i, tipus.I);
+                found = true;
+            }
+        }
+        if (!found) throw new ItemTypeNotValidException("Items has no column named \"id\"");
+    }
+
     /*----- ALTRES -----*/
 
     /**

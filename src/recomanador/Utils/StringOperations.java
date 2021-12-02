@@ -1,6 +1,7 @@
 package src.recomanador.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import src.recomanador.domini.Item.tipus;
 import src.recomanador.excepcions.ItemTypeNotValidException;
@@ -103,7 +104,7 @@ public class StringOperations {
      *  0 if s1 = s2
      *  1 id s1 > s2
      */
-    public static int compararAtributs(String s1, String s2, tipus tipus) { //-1 si s1 < s2, 0 si son iguals, 1 si s1 > s2
+    public static int compararAtributs(String s1, String s2, tipus tipus) {
         boolean s1Bigger = false, s2Bigger = false;
         if (s1 == "" && s2 == "") {}
         else if (s1 == "") s2Bigger = true;
@@ -346,4 +347,69 @@ public class StringOperations {
             }
         return s;
     }
+
+    /**
+     * Checks if a string can be treated as type t
+     * @param s string that is going to be checked
+     * @param t type that is going to be checked
+     * @return true if s can be treated as type t, false if s cannot be treated as type t
+    */
+    public static boolean tipusCorrecte(String s, tipus t) {
+        // Nom i String sempre estaran bé
+        if (t == tipus.S || t == tipus.N || s.equals("") && !s.equals(" ")) return true;
+
+        if (t == tipus.I && StringOperations.esNombre(s)) return true;
+        else if (t == tipus.B && StringOperations.esBool(s)) return true;
+        else if (t == tipus.F && StringOperations.esFloat(s)) return true;
+        else if (t == tipus.D && StringOperations.esData(s)) return true;
+
+        return false;
+    }
+
+    /**
+     * Computes the similarity between to strings that belong to the same column. The similarity for each type is measured differently
+     * @param a1 first string to be compared
+     * @param a2 second string to be compared
+     * @param columna column to which a1 and a2 belong
+     * @return float between 0 and 1 where 0 means completely different and 1 means exaclty the same
+     * @throws ItemTypeNotValidException if a1 and a2 are not of the same type
+     */
+    public static float distanciaAtribut(String a1, String a2, tipus t, float min, float max) throws ItemTypeNotValidException {
+        if (!StringOperations.tipusCorrecte(a1, t) || !StringOperations.tipusCorrecte(a2, t))
+            throw new ItemTypeNotValidException(
+                    "atribut " + a1 + " o atribut " + a2 + " no son del tipus " + StringOperations.tipusToString(t));
+
+        if (a1.equals(a2))
+            return (float) 1.0;
+        if (a1.length() == 0 || a2.length() == 0)
+            return (float) 0.0;
+
+        float sim = (float) 0.0;
+        if (t == tipus.I) {
+            int i1 = Integer.parseInt(a1), i2 = Integer.parseInt(a2);
+            sim = 1 - Math.abs((i1 - i2) / (max - min));
+        } else if (t == tipus.B) {
+            boolean b1 = Boolean.parseBoolean(a1), b2 = Boolean.parseBoolean(a2);
+            if (b1 == b2)
+                sim = (float) 1.0;
+            else
+                sim = (float) 0.0;
+        } else if (t == tipus.D) {
+            if (a1.length() != a2.length())
+                return (float) 0.0;
+            sim = 1 - Math.abs((StringOperations.dataToTime(a1) - StringOperations.dataToTime(a2)) / (max - min));
+        } else if (t == tipus.F) {
+            float i1 = Float.parseFloat(a1), i2 = Float.parseFloat(a2);
+            sim = 1 - Math.abs((i1 - i2) / (max - min));
+        } else if (t == tipus.S || t == tipus.N) {
+            int n = a1.length(), m = a2.length();
+            int[][] dp = new int[n + 1][m + 1];
+            for (int i = 0; i < n + 1; i++)
+                Arrays.fill(dp[i], -1);
+            int a = StringOperations.minDis(a1, a2, n, m, dp);
+            sim = 1 - (float) 1.0 * a / Math.max(n, m);
+        }
+        return sim;
+    }
+
 }
