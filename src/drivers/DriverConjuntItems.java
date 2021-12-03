@@ -8,20 +8,22 @@ import src.recomanador.Utils.StringOperations;
 import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.Item;
 import src.recomanador.domini.Item.tipus;
+import src.recomanador.excepcions.ConjuntItemsAtributeNotInitializedException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
+import src.recomanador.excepcions.ItemIdNotValidException;
 import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 import src.recomanador.excepcions.ItemNotFoundException;
+import src.recomanador.excepcions.ItemStaticValuesAlreadyInitializedException;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.persistencia.ControladorPersistencia;
 
 public class DriverConjuntItems {
 	static private Scanner scanner;
     
     static private ConjuntItems ci;
-	static private boolean inicailitzat;
+	static private boolean inicialitzat;
 	static private ControladorPersistencia cp;
 	static private boolean nom;
 	static private boolean tip;
@@ -31,7 +33,7 @@ public class DriverConjuntItems {
     
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
-		inicailitzat = false;
+		inicialitzat = false;
 		cp = new ControladorPersistencia();
 		
 		String s = "Options: \n" +
@@ -44,36 +46,24 @@ public class DriverConjuntItems {
 		" - Getters - \n" +
 		"4. getItem(int id)\n" +
 		"5. getAllItems()\n" +
-		"6. getAtributItemId(int id, int atribut)\n" +
-		"7. getAtributItem(int index, int atribut)\n" +
-		"8. getSTipus(int column)\n" +
-		"9. getMaxAtribut(int col)\n" +
-		"10. getMinAtribut(int col)\n" +
-		"11. getMaxAtributs()\n" +
-		"12. getMinAtributs()\n" +
+		"6. getMaxAtributs()\n" +
+		"7. getMinAtributs()\n" +
 		" - Setters - \n" +
-		"13. setMaxAtributs(ArrayList<Float> maxAtributs)\n" +
-		"14. setMinAtributs(ArrayList<Float> minAtributs)\n" +
-		"15. setTipusItem(int atribut, tipus t)\n" +
-		"16. setNom(String nom)\n" +
-		"17. setPesos(ArrayList<Float> p)\n" +
-		"18. setPes(float p, int col)\n" +
+		"8. setMaxAtributs(ArrayList<Float> maxAtributs)\n" +
+		"9. setMinAtributs(ArrayList<Float> minAtributs)\n" +
 		" - Checks - \n" +
-		"19. tipusCorrecteColumna(int columna, tipus t)\n" +
-		"20. existeixItem(int id)\n" +
-		"21. tipusCorrecte(String s, tipus t)\n" +
-		"22. checkMaxMin(Item it)\n" +
+		"10. tipusCorrecteColumna(int columna, tipus t)\n" +
+		"11. existeixItem(int id)\n" +
+		"12. checkMaxMin(Item it)\n" +
 		" - Add / Remove - \n" +
-		"23. eliminarItem(int id)\n" +
-		"24. add(Item i)\n" +
-		"25. addIni(Item i)\n" +
+		"13. eliminarItem(int id)\n" +
+		"14. add(Item i)\n" +
 		" - Operations - \n" +
-		"26. computeMinMaxAtribut(int col)\n" +
-		"27. inicialitzar(int nAtributs)\n" +
-		"28. detectarTipusAtributs()\n" +
-		"29. distanciaAtribut(String a1, String a2, int columna)\n" +
-		"30. distanciaItem(Item i1, Item i2)\n" +
-		"31. binarySearchItem(ArrayList<Item> list, int id, int lo, int hi)\n";
+		"15. computeMinMaxAtribut(int col)\n" +
+		"16. inicialitzar(int nAtributs)\n" +
+		"17. detectarTipusAtributs()\n" +
+		"18. distanciaItem(Item i1, Item i2)\n" +
+		"19. binarySearchItem(ArrayList<Item> list, int id, int lo, int hi)\n";
 
 		System.out.println("Testing class <NOM_CLASSE>");
 		System.out.println(s);
@@ -146,42 +136,6 @@ public class DriverConjuntItems {
 				case 19:
 					mostra_19();
 					break;
-				case 20:
-					mostra_20();
-					break;
-				case 21:
-					mostra_21();
-					break;
-				case 22:
-					mostra_22();
-					break;
-				case 23:
-					mostra_23();
-					break;
-				case 24:
-					mostra_24();
-					break;
-				case 25:
-					mostra_25();
-					break;
-				case 26:
-					mostra_26();
-					break;
-				case 27:
-					mostra_27();
-					break;
-				case 28:
-					mostra_28();
-					break;
-				case 29:
-					mostra_29();
-					break;
-				case 30:
-					mostra_30();
-					break;
-				case 31:
-					mostra_31();
-					break;
 				default:
 			}
 			
@@ -192,7 +146,7 @@ public class DriverConjuntItems {
 	static private void mostra_1() {
 		System.out.println("Testing function ConjuntItems()");
 		String res = "y";
-		if (inicailitzat) {
+		if (inicialitzat) {
 			System.out.println("WARNING!: Class ConjuntItems has already been initialized, all the previous data will be errased.");
 			System.out.println("Are you sure you want to continue? yes/no");
 			res = scanner.next();
@@ -207,11 +161,6 @@ public class DriverConjuntItems {
 				ConjuntItems.nom = null;
 				ci.setMaxAtributs(null);
 				ci.setMinAtributs(null);
-				/*Item.setPesos(null);
-				Item.setTipusArray(null);
-				Item.setNomAtributs(null);
-				Item.setId(-1);
-				Item.setNomA(-1);*/
 			} catch (Exception e) {
 				System.out.println("ERROR: " + e.getMessage());
 				return;
@@ -222,14 +171,14 @@ public class DriverConjuntItems {
 			DriverConjuntItems.min = false;
 			DriverConjuntItems.max = false;
 			System.out.println("New ConjuntItems has been initialised and it's empty");
-			inicailitzat = false;
+			inicialitzat = true;
 		}
 	}
 
     static private void mostra_2() {
 		System.out.println("Testing function ConjuntItems(ArrayList<ArrayList<String>> items)");
 		String res = "y";
-		if (inicailitzat) {
+		if (inicialitzat) {
 			System.out.println("WARNING!: Class ConjuntItems has already been initialized, all the previous data will be errased.");
 			System.out.println("Are you sure you want to continue? yes/no");
 			res = scanner.next();
@@ -261,7 +210,7 @@ public class DriverConjuntItems {
 			DriverConjuntItems.min = true;
 			DriverConjuntItems.max = true;
 			System.out.println("New ConjuntItems has been initialised with the data from " + path + "/items.csv");
-			inicailitzat = true;
+			inicialitzat = true;
 			//mostrar output
 			printCurrentState();
 		}
@@ -270,7 +219,7 @@ public class DriverConjuntItems {
 	static private void mostra_3() {
 		System.out.println("Testing function ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos, ArrayList<tipus>t ipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs, ArrayList<Float> minAtributs))");
 		String res = "y";
-		if (inicailitzat) {
+		if (inicialitzat) {
 			System.out.println("WARNING!: Class ConjuntItems has already been initialized, all the previous data will be errased.");
 			System.out.println("Are you sure you want to continue? yes/no");
 			res = scanner.next();
@@ -329,7 +278,7 @@ public class DriverConjuntItems {
 			DriverConjuntItems.min = true;
 			DriverConjuntItems.max = true;
 			System.out.println("New ConjuntItems has been initialised with the data from " + path);
-			inicailitzat = true;
+			inicialitzat = true;
 			//mostrar output
 			printCurrentState();
 		}
@@ -337,7 +286,7 @@ public class DriverConjuntItems {
     
 	static private void mostra_4() {
 		System.out.println("Testing function getItem(int id)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -361,7 +310,7 @@ public class DriverConjuntItems {
     
 	static private void mostra_5() {
 		System.out.println("Testing function getAllItems()");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -371,119 +320,10 @@ public class DriverConjuntItems {
 		//mostrar output
 		System.out.println(items);
 	}
-    
+
 	static private void mostra_6() {
-		System.out.println("Testing function getAtributItemId(int id, int atribut)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("Enter an item id:");
-		int id = scanner.nextInt();
-
-		System.out.println("Enter a column:");
-		int col = scanner.nextInt();
-
-		//executar la funcionalitat
-		ArrayList<String> res;
-		try {
-			res = ci.getAtributItemId(id, col);
-		} catch (ItemNotFoundException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-		
-		//mostrar output
-		System.out.println(res);
-	}
-    
-	static private void mostra_7() {
-		System.out.println("Testing function getAtributItem(int index, int atribut)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("Enter an item position in the array:");
-		int id = scanner.nextInt();
-
-		System.out.println("Enter a column:");
-		int col = scanner.nextInt();
-
-		//executar la funcionalitat
-		ArrayList<String> res = ci.getAtributItem(id, col);
-		
-		//mostrar output
-		System.out.println(res);
-	}
-	
-	static private void mostra_8() {
-		System.out.println("Testing function getSTipus(int column)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		if (!tip) {
-			System.out.println("Attribute types are not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("Enter a column:");
-		int col = scanner.nextInt();
-
-		//executar la funcionalitat
-		String res = ConjuntItems.getSTipus(col);
-
-		//mostrar output
-		System.out.println(res);
-	}
-
-	static private void mostra_9() {
-		System.out.println("Testing function getMaxAtribut(int col)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		if (!max) {
-			System.out.println("Maximum attribute values are not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("Enter a column:");
-		int col = scanner.nextInt();
-
-		//executar la funcionalitat
-		Float res = ci.getMaxAtribut(col);
-
-		//mostrar output
-		System.out.println(res);
-	}
-
-	static private void mostra_10() {
-		System.out.println("Testing function getMinAtribut(int col)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		if (!min) {
-			System.out.println("Minimum attribute values are not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("Enter a column:");
-		int col = scanner.nextInt();
-
-		//executar la funcionalitat
-		Float res = ci.getMinAtribut(col);
-
-		//mostrar output
-		System.out.println(res);
-	}
-
-	static private void mostra_11() {
 		System.out.println("Testing function getMaxAtributs()");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -498,9 +338,9 @@ public class DriverConjuntItems {
 		System.out.println(res);
 	}
 
-	static private void mostra_12() {
+	static private void mostra_7() {
 		System.out.println("Testing function getMinAtributs()");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -515,9 +355,9 @@ public class DriverConjuntItems {
 		System.out.println(res);
 	}
 
-	static private void mostra_13() {
+	static private void mostra_8() {
 		System.out.println("Testing function setMaxAtributs(ArrayList<Float> maxAtributs)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -539,9 +379,9 @@ public class DriverConjuntItems {
 		printCurrentState();
 	}
 
-	static private void mostra_14() {
+	static private void mostra_9() {
 		System.out.println("Testing function setMinAtributs(ArrayList<Float> minAtributs)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -563,112 +403,9 @@ public class DriverConjuntItems {
 		printCurrentState();
 	}
 
-	static private void mostra_15() {
-		System.out.println("Testing function setTipusItem(int atribut, tipus t)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		if (!tip) {
-			System.out.println("Attribute types are not initialized yet");
-			return;
-		}
-		System.out.println("Enter the column you want to modify:");
-		int col = scanner.nextInt();
-		System.out.println("Enter the new type for column " + col + ":");
-		System.out.println("I / N / B / F / D / S");
-		System.out.println("Identificador / Nom / Boolean / Float / Data / String");
-		String tipus = scanner.next();
-		
-		//executar la funcionalitat
-		try {
-			ci.setTipusItem(col, StringOperations.stringToType(tipus));
-		}
-		catch (ItemTypeNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-
-		//mostrar output
-		System.out.println("Column " + col + " changed is now type " + tipus);
-		printCurrentState(); 
-	}
-
-	static private void mostra_16() {
-		System.out.println("Testing function setNom(String nom)");
-
-		//demanar l'input
-		System.out.println("Enter a name for the set:");
-		scanner.nextLine();
-		String nom = scanner.nextLine();
-
-		//executar la funcionalitat
-		ConjuntItems.setNom(nom);
-
-		//mostrar output
-		System.out.println("The set is now named: " + nom);
-	}
-
-
-	static private void mostra_17() {
-		System.out.println("Testing function setPesos(ArrayList<Float> p)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		//demanar l'input
-		int n = Item.getNumAtributs();
-        System.out.println("Enter " + n + " floats in diferent lines:");
-		ArrayList<Float> l1 = new ArrayList<Float>();
-		scanner.nextLine();
-		for (int i = 0; i < n; ++i) {
-            l1.add(scanner.nextFloat());
-		}
-		
-		//executar la funcionalitat
-		try {
-			ConjuntItems.setPesos(l1);
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		} catch (ItemWeightNotCorrectException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-
-		//mostrar output
-		pes = true;
-		System.out.println("Weights updated");
-		printCurrentState();
-	}
-
-	static private void mostra_18() {
-		System.out.println("Testing function setPes(float p, int col)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		System.out.println("Enter the column you want to modify:");
-		int col = scanner.nextInt();
-		System.out.println("Enter the new weight for column " + col + ":");
-		Float pes = scanner.nextFloat();
-		
-		//executar la funcionalitat
-		try {
-			ConjuntItems.setPes(pes, col);
-		} catch (ArrayIndexOutOfBoundsException | ItemWeightNotCorrectException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-
-		//mostrar output
-		System.out.println("Column " + col + " changed has now weight " + pes);
-		printCurrentState(); 
-	}
-
-	static private void mostra_19() {
+	static private void mostra_10() {
 		System.out.println("Testing function tipusCorrecteColumna(int columna, tipus t)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -696,9 +433,9 @@ public class DriverConjuntItems {
 		else System.out.println("Column " + col + " \"" + Item.getCapçalera().get(col) + "\" is not of type " + StringOperations.tipusToString(t));
 	}
 
-	static private void mostra_20() {
+	static private void mostra_11() {
 		System.out.println("Testing function existeixItem(int id)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -714,38 +451,9 @@ public class DriverConjuntItems {
 		else System.out.println("Item with id " + id + " does not exist");
 	}
 
-	static private void mostra_21() {
-		System.out.println("Testing function tipusCorrecte(String s, tipus t)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("Enter a string to check:");
-		String s = scanner.next();
-
-		System.out.println("Enter the type to check with \""+ s + "\":");
-		System.out.println("I / N / B / F / D / S");
-		System.out.println("Identificador / Nom / Boolean / Float / Data / String");
-		String tipus = scanner.next();
-		tipus t;
-		try {
-			t = StringOperations.stringToType(tipus);
-		} catch (ItemTypeNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-		//executar la funcionalitat
-		boolean res = ConjuntItems.tipusCorrecte(s, t);
-
-		//mostrar output
-		if (res) System.out.println("String " + s + " could be treated as a " + StringOperations.tipusToString(t));
-		else System.out.println("String " + s + " is not of type " + StringOperations.tipusToString(t));
-	}
-
-	static private void mostra_22() {
+	static private void mostra_12() {
 		System.out.println("Testing function checkMaxMin(Item it)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -768,20 +476,20 @@ public class DriverConjuntItems {
 		Item it;
 		try {
 			it = new Item(atr);
-		} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
+			ci.checkMaxMin(it);
+		} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException | ConjuntItemsAtributeNotInitializedException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
 
-		ci.checkMaxMin(it);
 
 		//mostrar output
 		printCurrentState();
 	}
 
-	static private void mostra_23() {
+	static private void mostra_13() {
 		System.out.println("Testing function eliminarItem(int id)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -792,7 +500,7 @@ public class DriverConjuntItems {
 		//executar la funcionalitat
 		try {
 			ci.eliminarItem(id);
-		} catch (ItemNotFoundException e) {
+		} catch (ItemNotFoundException | ItemStaticValuesNotInitializedException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
@@ -801,9 +509,9 @@ public class DriverConjuntItems {
 		System.out.println("Item with id " + id + " has been erased");
 	}
 
-	static private void mostra_24() {
+	static private void mostra_14() {
 		System.out.println("Testing function add(Item i)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -836,44 +544,9 @@ public class DriverConjuntItems {
 		else System.out.println("Something went wrong: item has not been added");
 	}
 
-	static private void mostra_25() {
-		System.out.println("Testing function addIni(Item i)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("To add an item  we will first have to create it");
-		System.out.println("Enter " + Item.getNumAtributs() + " attributes for the item");
-		System.out.println("If an attribute has several parts, please divide it with \";\"");
-
-		ArrayList<ArrayList<String>> atr = new ArrayList<ArrayList<String>>();
-		for (int i = 0; i < Item.getNumAtributs(); ++i) {
-			System.out.println("Enter a " + StringOperations.tipusToString(Item.getTipusArray().get(i)) + ":");
-			String a = scanner.next();
-
-			ArrayList<String> subatr = new ArrayList<String>();
-			subatr = StringOperations.divideString(a, ';');
-			atr.add(subatr);
-		}
-
-		//executar la funcionalitat
-		Item it;
-		try {
-			it = new Item(atr);
-		} catch (ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-		boolean res = ci.addIni(it);
-		//mostrar output
-		if (res) System.out.println("Item has been correctly added");
-		else System.out.println("Something went wrong: item has not been added");
-	}
-
-	static private void mostra_26() {
+	static private void mostra_15() {
 		System.out.println("Testing function computeMinMaxAtribut(int col)");
-		if (!inicailitzat || !min || !max) {
+		if (!inicialitzat || !min || !max) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -882,43 +555,35 @@ public class DriverConjuntItems {
 		int col = scanner.nextInt();
 
 		//executar la funcionalitat
-		ci.computeMinMaxAtribut(col);
+		try {
+			ci.computeMinMaxAtribut(col);
+		} catch (ItemStaticValuesNotInitializedException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
 		//mostrar output
 		System.out.println("Minimum and maximums correctly recalculated");
 		printCurrentState();
 	}
 
-	static private void mostra_27() {
+	static private void mostra_16() {
 		System.out.println("Testing function inicialitzar(int nAtributs)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
-		//demanar l'input
-		System.out.println("Enter the name of atributes the set has:");
-		int nAtributs = scanner.nextInt();
 
 		//executar la funcionalitat
-		boolean res;
-		try {
-			res = ci.inicialitzar(nAtributs);
-		} catch (ItemTypeNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		} catch (ItemWeightNotCorrectException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
+		ci.inicialitzarMinMax();
 
 		//mostrar output
-		if (res) System.out.println("The set has been initialized correctly");
-		else System.out.println("ERROR: Items has no column named \"id\"");
+		System.out.println("The set has been initialized correctly");
 	}
 
-	static private void mostra_28() {
+	static private void mostra_17() {
 		System.out.println("Testing function detectarTipusAtributs()");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -926,7 +591,7 @@ public class DriverConjuntItems {
 		//executar la funcionalitat
 		try {
 			ci.detectarTipusAtributs();
-		} catch (ItemTypeNotValidException e) {
+		} catch (ItemTypeNotValidException | ArrayIndexOutOfBoundsException | ItemIdNotValidException | ItemStaticValuesAlreadyInitializedException e) {
 			System.out.println("ERROR: " + e.getMessage());
 		}
 
@@ -934,39 +599,9 @@ public class DriverConjuntItems {
 		printCurrentState();
 	}
 
-	static private void mostra_29() {
-		System.out.println("Testing function distanciaAtribut(String a1, String a2, int columna)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
-		//demanar l'input
-		System.out.println("Enter the first string: ");
-		String s1 = scanner.next();
-		System.out.println("Enter the second string: ");
-		String s2 = scanner.next();
-		System.out.println("Enter the column they belong to: ");
-		for (int i = 0; i < Item.getNumAtributs(); ++i) {
-			System.out.println(i + ": " + Item.getCapçalera().get(i));
-		}
-		int col = scanner.nextInt();
-
-		//executar la funcionalitat
-		float res;
-		try {
-			res = ci.distanciaAtribut(s1, s2, col);
-		} catch (ItemTypeNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-
-		//mostrar output
-		System.out.println("Distance between " + s1 + " and " + s2 + ": " + res);
-	}
-
-	static private void mostra_30() {
+	static private void mostra_18() {
 		System.out.println("Testing function distanciaItem(Item i1, Item i2)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -1052,9 +687,9 @@ public class DriverConjuntItems {
 		System.out.println("Distance correctly calculated: " + res);
 	}
 
-	static private void mostra_31() {
+	static private void mostra_19() {
 		System.out.println("Testing function binarySearchItem(ArrayList<Item> list, int id, int lo, int hi)");
-		if (!inicailitzat) {
+		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;
 		}
@@ -1119,10 +754,10 @@ public class DriverConjuntItems {
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             
             if (nom) System.out.print(Item.getCapçalera().get(i));
-			if (tip) System.out.print(" " + ConjuntItems.getSTipus(i));
+			if (tip) System.out.print(" " + StringOperations.tipusToString(Item.getTipusArray().get(i)));
 			if (pes) System.out.print(" " + Item.getPesos().get(i));
-			if (max) System.out.print(" " + ci.getMaxAtribut(i));
-			if (min) System.out.print(" " + ci.getMinAtribut(i));
+			if (max) System.out.print(" " + ci.getMaxAtributs().get(i));
+			if (min) System.out.print(" " + ci.getMinAtributs().get(i));
 
             if (i != Item.getNumAtributs() - 1) System.out.print(" | ");
         }

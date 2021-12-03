@@ -22,7 +22,7 @@ public class ConjuntItems extends ArrayList<Item> {
     /**
      * Nom conjunt d'items
      */
-    private static String nom = null;
+    public static String nom = null;
 
     /**
      * Maximum attributes for each column. Columns with strings, names and booleans will have random data
@@ -109,7 +109,7 @@ public class ConjuntItems extends ArrayList<Item> {
             ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
 
         // Inicialitzar atributs ConjuntItems
-        ConjuntItems.setNom(nom);
+        ConjuntItems.nom = nom;
 
         this.setMaxAtributs(maxAtributs);
         this.setMinAtributs(minAtributs);
@@ -141,15 +141,7 @@ public class ConjuntItems extends ArrayList<Item> {
             throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
         return get(pos);
     }
-
-    /**
-     * Returns the name of the set
-     * @return returns the string that represents the name of the set
-     */
-    public String getNom() {
-        return ConjuntItems.nom;
-    }
-
+    
     /**
      * Get all items in the set
      * @return Return an array of an array of an array of strings which is the representation for an array of attributes of items
@@ -206,14 +198,6 @@ public class ConjuntItems extends ArrayList<Item> {
      */
     public void setMaxAtributs(ArrayList<Float> maxAtributs2) {
         this.maxAtributs = maxAtributs2;
-    }
-
-    /**
-     * Sets the name of the set to n
-     * @param n new name of the set
-     */
-    public static void setNom(String n) {
-        ConjuntItems.nom = n;
     }
 
     /*----- CHECKERS -----*/
@@ -340,8 +324,8 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     /*----- COMPUTATIONS -----*/
-
-    private void inicialitzarMinMax() {
+    //TODO: inicialitzarMinMax hauria de ser private
+    public void inicialitzarMinMax() {
         maxAtributs = new ArrayList<Float>();
         minAtributs = new ArrayList<Float>();
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
