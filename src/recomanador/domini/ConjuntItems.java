@@ -1,7 +1,6 @@
 package src.recomanador.domini;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import src.recomanador.Utils.*;
@@ -141,7 +140,7 @@ public class ConjuntItems extends ArrayList<Item> {
             throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
         return get(pos);
     }
-    
+
     /**
      * Get all items in the set
      * @return Return an array of an array of an array of strings which is the representation for an array of attributes of items
@@ -318,6 +317,8 @@ public class ConjuntItems extends ArrayList<Item> {
         try {
             checkMaxMin(i);
         } catch (ConjuntItemsAtributeNotInitializedException e) {
+            if (maxAtributs == null) System.out.println("MAX MAL");
+            if (minAtributs == null) System.out.println("MIN MAL");
             System.out.println("ERROR: " + e.getMessage());
         }
         return (get(pos).getId() == i.getId());

@@ -9,6 +9,7 @@ import src.recomanador.domini.ConjuntItems;
 import src.recomanador.domini.Item;
 import src.recomanador.domini.Item.tipus;
 import src.recomanador.excepcions.ConjuntItemsAtributeNotInitializedException;
+import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.ItemIdNotValidException;
@@ -17,11 +18,11 @@ import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemStaticValuesAlreadyInitializedException;
 import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.persistencia.ControladorPersistencia;
 
 public class DriverConjuntItems {
 	static private Scanner scanner;
-    
     static private ConjuntItems ci;
 	static private boolean inicialitzat;
 	static private ControladorPersistencia cp;
@@ -30,7 +31,7 @@ public class DriverConjuntItems {
 	static private boolean pes;
 	static private boolean min;
 	static private boolean max;
-    
+
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
 		inicialitzat = false;
@@ -153,14 +154,30 @@ public class DriverConjuntItems {
 		}
 		if (res.equalsIgnoreCase("y") || res.equalsIgnoreCase("yes")) {
 
-			//demanar l'input
 
+
+			//demanar l'input
+			System.out.println("To initialize ConjuntItems, you first need to initialize Item");
+			System.out.println("Enter the number of atributes an item will have:");
+			int n = scanner.nextInt();
+			ArrayList<String> atributs = new ArrayList<String>(n);
+			System.out.println("Enter " + n + " atribute names:");
+			for (int i = 0; i < n; ++i) {
+				System.out.println("Enter atribute number " + (i+1) + ":");
+				atributs.add(scanner.next());
+			}
+
+			Item.resetStatics();
+
+			try {
+				Item.inicialitzarStaticsDefault(atributs);
+			} catch (ArrayIndexOutOfBoundsException | ItemStaticValuesAlreadyInitializedException | ItemWeightNotCorrectException | ItemTypeNotValidException | ItemIdNotValidException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
 			//executar la funcionalitat
 			try {
 				ci = new ConjuntItems();
-				ConjuntItems.nom = null;
-				ci.setMaxAtributs(null);
-				ci.setMinAtributs(null);
 			} catch (Exception e) {
 				System.out.println("ERROR: " + e.getMessage());
 				return;
@@ -188,6 +205,15 @@ public class DriverConjuntItems {
 			//demanar l'input
 			System.out.println("Enter (relative) path to a \"items.csv\" file: ");
 			String path = scanner.next();
+
+			Item.resetStatics();
+
+			try {
+				Item.inicialitzarStaticsDefault(cp.carregarFitxerExtern(path).get(0));
+			} catch (ArrayIndexOutOfBoundsException | ItemStaticValuesAlreadyInitializedException | ItemWeightNotCorrectException | ItemTypeNotValidException | ItemIdNotValidException | FileNotValidException | FileNotFoundException e) {
+				System.out.println("ERROR: " + e.getMessage());
+				return;
+			}
 
 			//executar la funcionalitat
 			try {
@@ -241,6 +267,15 @@ public class DriverConjuntItems {
 			}
 			if (!cp.existeixenDadesPreprocesades()) {
 				System.out.println("ERROR: No preprocessed data found");
+				return;
+			}
+
+			Item.resetStatics();
+
+			try {
+				Item.inicialitzarStaticsDefault(cp.carregarFitxerExtern(path).get(0));
+			} catch (ArrayIndexOutOfBoundsException | ItemStaticValuesAlreadyInitializedException | ItemWeightNotCorrectException | ItemTypeNotValidException | ItemIdNotValidException | FileNotValidException | FileNotFoundException e) {
+				System.out.println("ERROR: " + e.getMessage());
 				return;
 			}
 
