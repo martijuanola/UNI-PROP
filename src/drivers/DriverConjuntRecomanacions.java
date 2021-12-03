@@ -120,23 +120,11 @@ public class DriverConjuntRecomanacions {
 		System.out.println("Testing function ConjuntRecomanacions()");
 		
 		//inicalitzar statics item
-		ArrayList<Float> af = new ArrayList<Float>();
-		ArrayList<tipus> at = new ArrayList<tipus>();
+		if(class_initalised) Item.resetStatics();
 		ArrayList<String> as = new ArrayList<String>();
-		
-		af.add(100.0f);
-		at.add(tipus.I);
 		as.add("id");
-
-		Item.setTipusArray(at);
-		Item.setNomAtributs(as);
-		try {
-			Item.setId(0);
-			Item.setPesos(af);
-		} catch (ItemWeightNotCorrectException | ItemIdNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
+		try{ Item.inicialitzarStaticsDefault(as); }
+		catch(Exception e) {System.out.println("ERROR: " + e.getMessage());return;}
 
 		c = new ConjuntRecomanacions();
 		class_initalised = true;
@@ -151,10 +139,11 @@ public class DriverConjuntRecomanacions {
 		System.out.print("Enter (relative) path to a items file: ");
 		s2 = scanner.next();
 
+		if(class_initalised) Item.resetStatics();
 		try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(s2));
         }
-        catch( ItemWeightNotCorrectException | FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
+        catch(Exception e) {
             System.out.print("ERROR: " + e.getMessage());
             return;
         }
@@ -376,7 +365,7 @@ public class DriverConjuntRecomanacions {
 		try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(s2));
         }
-        catch(ItemWeightNotCorrectException | FileNotValidException | FileNotFoundException | ItemTypeNotValidException e) {
+        catch(Exception e) {
             System.out.print("ERROR: " + e.getMessage());
             return;
         }
