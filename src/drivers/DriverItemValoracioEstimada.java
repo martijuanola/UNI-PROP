@@ -22,25 +22,10 @@ public class DriverItemValoracioEstimada {
         ArrayList<ItemValoracioEstimada> items = new ArrayList<ItemValoracioEstimada>();
 
         //inicalitzar statics item
-		ArrayList<Float> af = new ArrayList<Float>();
-		ArrayList<tipus> at = new ArrayList<tipus>();
 		ArrayList<String> as = new ArrayList<String>();
-		
-		af.add(100.0f);
-		at.add(tipus.I);
-		as.add("id");
-
-        Item.setTipusArray(at);
-		Item.setNomAtributs(as);
-		try{
-            Item.setId(0);
-        }catch(ItemIdNotValidException e) {System.out.println("ERROR: " + e.getMessage());return;}
-		try {
-			Item.setPesos(af);
-		} catch (ItemWeightNotCorrectException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
+        as.add("id");
+        try{ Item.inicialitzarStaticsDefault(as); }
+        catch(Exception e) {System.out.println("ERROR: " + e.getMessage());return;}
 
         items.add(new ItemValoracioEstimada(2.5f, new Item(1)));
         items.add(new ItemValoracioEstimada(5.5f, new Item(2)));

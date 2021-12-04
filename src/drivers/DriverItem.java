@@ -36,25 +36,6 @@ public class DriverItem {
    		scanner = new Scanner(System.in);
 		class_initalised = false;
 		cp = new ControladorPersistencia();
-
-		//inicalitzar statics item
-		/*ArrayList<Float> af = new ArrayList<Float>();
-		ArrayList<tipus> at = new ArrayList<tipus>();
-		ArrayList<String> as = new ArrayList<String>();
-		
-		af.add(100.0f);
-		at.add(tipus.I);
-		as.add("id");
-
-		try {
-			Item.setPesos(af);
-		} catch (ItemWeightNotCorrectException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-		Item.setTipus(at);
-		Item.setNomAtributs(as);
-		Item.setId(0);*/
 		
 		String s = "Options: \n" +
 		"-1. exit\n" +
@@ -80,8 +61,11 @@ public class DriverItem {
 		"15. void setPesos(ArrayList<Float> p)\n" +
 		"16. void setTipusArray(ArrayList<tipus> a)\n" +
 		"17. void setNomAtributs(ArrayList<String> n)\n" +
+		"18. void resetStatics()\n" +
+		"19. void inicialitzarStatics(ArrayList<Float> pesos, ArrayList<String> nomAtributs, ArrayList<tipus> tipusAtribut, int id, int nomA)\n" +
+		"20. void inicialitzarStaticsDefault(ArrayList<String> atributs)\n" +
 		" - Others - \n" +
-		"18. int compareTo(Item otherItem)\n";
+		"21. int compareTo(Item otherItem)\n";
 		
 		System.out.println("Testing class Item");
 		System.out.println(s);
@@ -147,8 +131,18 @@ public class DriverItem {
 					break;
 				case 17:
 					mostra_17();
+					break;
 				case 18:
 					mostra_18();
+					break;
+				case 19:
+					mostra_19();
+					break;
+				case 20:
+					mostra_20();
+					break;
+				case 21:
+					mostra_21();
 					break;
 				default:
 			}
@@ -161,24 +155,12 @@ public class DriverItem {
     static private void mostra_1() {
 		System.out.println("Testing function Item(int id)");
 		System.out.println("The statics values will be initialised with default values.");
-
-		ArrayList<Float> af = new ArrayList<Float>();
-		ArrayList<tipus> at = new ArrayList<tipus>();
-		ArrayList<String> as = new ArrayList<String>();
 		
-		af.add(100.0f);
-		at.add(tipus.I);
+		ArrayList<String> as = new ArrayList<String>();
 		as.add("id");
+		try{ Item.inicialitzarStaticsDefault(as); }
+		catch(Exception e) {System.out.println("ERROR: " + e.getMessage());return;}
 
-		Item.setTipusArray(at);
-		Item.setNomAtributs(as);
-		try {
-			Item.setId(0);
-			Item.setPesos(af);
-		} catch (ItemWeightNotCorrectException | ItemIdNotValidException e) {
-			System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
 
 		System.out.println("Data for new Item:");
 		System.out.print("Item ID: ");
@@ -230,7 +212,7 @@ public class DriverItem {
 			Item.setPesos(ap);
 			Item.setTipusArray(at);
 		}
-		catch(ItemWeightNotCorrectException | ItemIdNotValidException e) {
+		catch(Exception e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
@@ -362,7 +344,14 @@ public class DriverItem {
 		System.out.print("Old value for nomA(column index):");
 		n = scanner.nextInt();
 		
-		Item.setNomA(n);
+		try {
+			Item.setNomA(n);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+
 		System.out.println("The value nomA has been correctly initialised.");
 	}
 	static private void mostra_13() {
@@ -413,7 +402,7 @@ public class DriverItem {
 			tipus t = StringOperations.stringToType(s);
 			Item.setTipus(n,t);
 		}
-		catch(ItemTypeNotValidException e) {
+		catch(Exception e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
@@ -474,7 +463,13 @@ public class DriverItem {
 				return;
 			}
 		}
-		c.setTipusArray(at);
+		try {
+			c.setTipusArray(at);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 
 		ArrayList<tipus> aux = Item.getTipusArray();
 		System.out.println("The types of the atributes are:");
@@ -498,13 +493,48 @@ public class DriverItem {
 			as.add(s);
 		}
 
-		Item.setNomAtributs(as);
+		try {
+			Item.setNomAtributs(as);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
 		
 		ArrayList<String> aux = Item.getCapçalera();
 		System.out.println("The name of the atributes are: ");
 		System.out.println(aux);
 	}
+
 	static private void mostra_18() {
+		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
+		if(!class_initalised) {
+			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
+			return;
+		}
+
+		
+	}
+	static private void mostra_19() {
+		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
+		if(!class_initalised) {
+			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
+			return;
+		}
+
+		
+	}
+	static private void mostra_20() {
+		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
+		if(!class_initalised) {
+			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
+			return;
+		}
+
+
+	}
+
+	static private void mostra_21() {
 		System.out.println("Testing function int compareTo(Item otherItem)");
 		if(!class_initalised) {
 			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
