@@ -5,7 +5,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import src.recomanador.Utils.StringOperations;
+import src.recomanador.domini.ConjuntItems;
+import src.recomanador.domini.Item;
 import src.recomanador.domini.Item.tipus;
+import src.recomanador.excepcions.ItemTypeNotValidException;
 
 public class DriverStringOperations {
 	//StringOperations es 100% static i no té atributs
@@ -26,7 +29,9 @@ public class DriverStringOperations {
 		"7. convert a date to time\n" +
 		"8. split a string\n" +
 		"9. print a string VERY large (to represent an infinit string)\n" +
-		"10. minimum distance among 2 strings\n";
+		"10. minimum distance among 2 strings\n" +
+		"11. check if a string can be treated as a certain type" +
+		"12. compute similarity between 2 strings of the same type";
 		
 		System.out.println("Testing class StringOperations");
 		System.out.println(s);
@@ -77,6 +82,12 @@ public class DriverStringOperations {
 					break;
 				case 10:
 					testMinDis();
+					break;
+				case 11:
+					testTipusCorr();
+					break;
+				case 12:
+					testDistanciaAtr();
 					break;
 				default:
 			}
@@ -279,14 +290,11 @@ public class DriverStringOperations {
 		//mostrar output
 		System.out.println("Distance: " + dist);
 	}
-	static private void mostra_21() {
+	static private void testTipusCorr() {
 		System.out.println("Testing function tipusCorrecte(String s, tipus t)");
-		if (!inicailitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
 		//demanar l'input
 		System.out.println("Enter a string to check:");
+		Scanner scanner = new Scanner(System.in);
 		String s = scanner.next();
 
 		System.out.println("Enter the type to check with \""+ s + "\":");
@@ -301,34 +309,41 @@ public class DriverStringOperations {
 			return;
 		}
 		//executar la funcionalitat
-		boolean res = ConjuntItems.tipusCorrecte(s, t);
+		boolean res = StringOperations.tipusCorrecte(s, t);
 
 		//mostrar output
 		if (res) System.out.println("String " + s + " could be treated as a " + StringOperations.tipusToString(t));
 		else System.out.println("String " + s + " is not of type " + StringOperations.tipusToString(t));
 	}
 
-	static private void mostra_29() {
-		System.out.println("Testing function distanciaAtribut(String a1, String a2, int columna)");
-		if (!inicialitzat) {
-			System.out.println("The set is not initialized yet");
-			return;
-		}
+	static private void testDistanciaAtr() {
+		System.out.println("Testing function distanciaAtribut(String a1, String a2, tipus t, float min, float max)");
 		//demanar l'input
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter the first string: ");
 		String s1 = scanner.next();
 		System.out.println("Enter the second string: ");
 		String s2 = scanner.next();
-		System.out.println("Enter the column they belong to: ");
-		for (int i = 0; i < Item.getNumAtributs(); ++i) {
-			System.out.println(i + ": " + Item.getCapçalera().get(i));
-		}
-		int col = scanner.nextInt();
 
+		System.out.println("Enter the type they both belong to:");
+		System.out.println("I / N / B / F / D / S");
+		System.out.println("Identificador / Nom / Boolean / Float / Data / String");
+		String tipus = scanner.next();
+		tipus t;
+		try {
+			t = StringOperations.stringToType(tipus);
+		} catch (ItemTypeNotValidException e) {
+			System.out.println("ERROR: " + e.getMessage());
+			return;
+		}
+		System.out.println("Enter the minimum posible value for this type: ");
+		Float min = scanner.nextFloat();
+		System.out.println("Enter the maximum posible value for this type: ");
+		Float max = scanner.nextFloat();
 		//executar la funcionalitat
 		float res;
 		try {
-			res = ci.distanciaAtribut(s1, s2, col);
+			res = StringOperations.distanciaAtribut(s1, s2, t, min, max);
 		} catch (ItemTypeNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
