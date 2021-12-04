@@ -70,8 +70,8 @@ public class ConjuntItems extends ArrayList<Item> {
             ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException,
             ItemIdNotValidException, ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
         //Inicialitzar tots els valors estàtics d'item i els max i min Atributs
-        inicialitzarMinMax();
         Item.inicialitzarStaticsDefault(items.get(0));
+        inicialitzarMinMax();
 
         for (int i = 1; i < items.size(); ++i) {
             ArrayList<ArrayList<String>> str = new ArrayList<ArrayList<String>>(); //Array on es posaran els atributs
@@ -124,6 +124,7 @@ public class ConjuntItems extends ArrayList<Item> {
             Item it = new Item(str);
             super.add(it);
         }
+        Collections.sort(this); //TODO: NO ÉS NECESSARI PERO EL DRIVER TÉ DADES DESORDENADES
     }
 
     /*----- GETTERS -----*/
@@ -287,7 +288,7 @@ public class ConjuntItems extends ArrayList<Item> {
         Item it = get(pos);
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             if (Item.getTipusArray().get(i) == tipus.S || Item.getTipusArray().get(i) == tipus.N
-                    || Item.getTipusArray().get(i) == tipus.N)
+                    || Item.getTipusArray().get(i) == tipus.B)
                 continue;
 
             float aux = 0;

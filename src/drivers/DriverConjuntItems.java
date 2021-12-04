@@ -12,6 +12,7 @@ import src.recomanador.excepcions.ConjuntItemsAtributeNotInitializedException;
 import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
+import src.recomanador.excepcions.FolderNotValidException;
 import src.recomanador.excepcions.ItemIdNotValidException;
 import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 import src.recomanador.excepcions.ItemNotFoundException;
@@ -61,12 +62,12 @@ public class DriverConjuntItems {
 		"14. add(Item i)\n" +
 		" - Operations - \n" +
 		"15. computeMinMaxAtribut(int col)\n" +
-		"16. inicialitzar(int nAtributs)\n" +
+		"16. inicialitzarMinMax()\n" +
 		"17. detectarTipusAtributs()\n" +
 		"18. distanciaItem(Item i1, Item i2)\n" +
 		"19. binarySearchItem(ArrayList<Item> list, int id, int lo, int hi)\n";
 
-		System.out.println("Testing class <NOM_CLASSE>");
+		System.out.println("Testing class ConjuntItems");
 		System.out.println(s);
 		int x;
 		do {
@@ -206,28 +207,38 @@ public class DriverConjuntItems {
 			System.out.println("Enter (relative) path to a \"items.csv\" file: ");
 			String path = scanner.next();
 
-			Item.resetStatics();
-
-			try {
-				Item.inicialitzarStaticsDefault(cp.carregarFitxerExtern(path).get(0));
-			} catch (ArrayIndexOutOfBoundsException | ItemStaticValuesAlreadyInitializedException | ItemWeightNotCorrectException | ItemTypeNotValidException | ItemIdNotValidException | FileNotValidException | FileNotFoundException e) {
-				System.out.println("ERROR: " + e.getMessage());
-				return;
-			}
 
 			//executar la funcionalitat
 			try {
+				Item.resetStatics();
 				ci = new ConjuntItems(cp.carregarFitxerExtern(path));
-				ConjuntItems.nom = null;
-				Item.setNomA(-1);
 			} catch (ItemTypeNotValidException e) {
-				System.out.println("ERROR: " + e.getMessage());
+				System.out.println("ERROR1: " + e.getMessage());
 				return;
 			} catch (FileNotValidException e) {
-				System.out.println("ERROR: " + e.getMessage());
+				System.out.println("ERROR2: " + e.getMessage());
 				return;
-			} catch (Exception e) {
-				System.out.println("ERROR: " + e.getMessage());
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out.println("ERROR3: " + e.getMessage());
+				e.printStackTrace();
+				return;
+			} catch (ItemWeightNotCorrectException e) {
+				System.out.println("ERROR4: " + e.getMessage());
+				return;
+			} catch (ItemStaticValuesAlreadyInitializedException e) {
+				System.out.println("ERROR5: " + e.getMessage());
+				return;
+			} catch (ItemIdNotValidException e) {
+				System.out.println("ERROR6: " + e.getMessage());
+				return;
+			} catch (ItemStaticValuesNotInitializedException e) {
+				System.out.println("ERROR7: " + e.getMessage());
+				return;
+			} catch (ItemNewAtributesNotValidException e) {
+				System.out.println("ERROR8: " + e.getMessage());
+				return;
+			} catch (FileNotFoundException e) {
+				System.out.println("ERROR92: " + e.getMessage());
 				return;
 			}
 			DriverConjuntItems.nom = false;
@@ -271,13 +282,6 @@ public class DriverConjuntItems {
 			}
 
 			Item.resetStatics();
-
-			try {
-				Item.inicialitzarStaticsDefault(cp.carregarFitxerExtern(path).get(0));
-			} catch (ArrayIndexOutOfBoundsException | ItemStaticValuesAlreadyInitializedException | ItemWeightNotCorrectException | ItemTypeNotValidException | ItemIdNotValidException | FileNotValidException | FileNotFoundException e) {
-				System.out.println("ERROR: " + e.getMessage());
-				return;
-			}
 
 			try {
 				ArrayList<String> pesosS = cp.carregarPesosAtributs();
@@ -603,7 +607,7 @@ public class DriverConjuntItems {
 	}
 
 	static private void mostra_16() {
-		System.out.println("Testing function inicialitzar(int nAtributs)");
+		System.out.println("Testing function inicialitzarMinMax()");
 		if (!inicialitzat) {
 			System.out.println("The set is not initialized yet");
 			return;

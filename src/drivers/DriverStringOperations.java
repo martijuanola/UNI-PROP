@@ -28,7 +28,7 @@ public class DriverStringOperations {
 		"6. compare 2 attributes\n" +
 		"7. convert a date to time\n" +
 		"8. split a string\n" +
-		"9. print a string VERY large (to represent an infinit string)\n" +
+		"9. print a string VERY large (to represent an infinite string)\n" +
 		"10. minimum distance among 2 strings\n" +
 		"11. check if a string can be treated as a certain type" +
 		"12. compute similarity between 2 strings of the same type";
