@@ -5,8 +5,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import src.recomanador.Utils.StringOperations;
-import src.recomanador.domini.ConjuntItems;
-import src.recomanador.domini.Item;
 import src.recomanador.domini.Item.tipus;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 
