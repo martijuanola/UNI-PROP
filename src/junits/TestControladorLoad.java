@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.After;
 
 public class TestControladorLoad {
 	private ArrayList<ArrayList<String>> solucio_read()
@@ -55,7 +59,7 @@ public class TestControladorLoad {
 		ArrayList<ArrayList<String>> real = solucio_read();
 		
 		
-		assertEquals("", output, real);
+		assertEquals("Test de carregar dades", output, real);
 	}
 	
 }

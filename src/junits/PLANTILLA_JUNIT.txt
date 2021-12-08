@@ -17,6 +17,10 @@ import src.recomanador.NOM_CAPA.NOM_CLASSE;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.After;
 
 public class TestNOM_CLASSE {
 	

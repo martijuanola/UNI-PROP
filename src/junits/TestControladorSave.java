@@ -9,6 +9,10 @@ import java.util.Scanner;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.After;
 
 public class TestControladorSave {
 	/* NOTA: Per a provar que aquesta classe funciona correctament, s'ha
@@ -63,7 +67,7 @@ public class TestControladorSave {
 		try {data_read = cl.carregarArxiu(arxiu); }
 		catch(Exception e) { System.out.print("ERROR: " + e.getMessage()); }
 				
-		assertEquals("", data_read, generate_data());
+		assertEquals("Test de guardar dades", data_read, generate_data());
 	}
 	
 }
