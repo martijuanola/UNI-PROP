@@ -10,7 +10,7 @@
 	NOM_VARIABLE_SOLUCIO	Nom de la variable que conté el return de la solució
 	NOM_EXCEPCIO	Nom de la excepció esperada
 */
-package src.junit;
+package src.junits;
 
 import src.recomanador.NOM_CAPA.NOM_CLASSE;
 //tots els imports que es necessiti per comunicar-se amb la classe
