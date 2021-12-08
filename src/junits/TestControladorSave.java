@@ -1,5 +1,6 @@
 package src.junits;
 
+import src.recomanador.persistencia.ControladorSave;
 import src.recomanador.persistencia.ControladorLoad;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,8 +10,14 @@ import java.util.Scanner;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class TestControladorLoad {
-	private ArrayList<ArrayList<String>> solucio_read()
+public class TestControladorSave {
+	/* NOTA: Per a provar que aquesta classe funciona correctament, s'ha
+	 * s'ha de fer una lectura del que s'ha escrit en el fitxer, i
+	 * s'usarà el ControladorLoad per a provar-ho. Per tant, abans d'aquest
+	 * test s'ha d'haver comprovat la classe ControladorLoad.
+	 */
+	
+	private ArrayList<ArrayList<String>> generate_data()
 	{
 		ArrayList<ArrayList<String>> real = new ArrayList<ArrayList<String>>();
 		real.add(new ArrayList<String>());
@@ -37,25 +44,26 @@ public class TestControladorLoad {
 	}
 	
 	@Test
-	public void CarregarArxiuTest() {
-		ControladorLoad cl = new ControladorLoad();
+	public void GuardarArxiuTest() {
+		ControladorSave cs = new ControladorSave();
 		File arxiu = new File("data");
-		arxiu = new File(arxiu, "JUNIT-TEST-ControladorLoad");
+		arxiu = new File(arxiu, "JUNIT-TEST-ControladorSave");
 		arxiu = new File(arxiu, "items.csv");
-		//arxiu = new File(arxiu, "ratings.db.csv");
 		
-		ArrayList<ArrayList<String>> output = null;
 		try
 		{
-			output = cl.carregarArxiu(arxiu);
+			cs.guardarArxiu(arxiu, generate_data());
 		} catch(Exception e) {
 			System.out.print("ERROR: " + e.getMessage());
 		}
 		
-		ArrayList<ArrayList<String>> real = solucio_read();
-		
-		
-		assertEquals("", output, real);
+		//Inici load per a provar la correctesa
+		ControladorLoad cl = new ControladorLoad();
+		ArrayList<ArrayList<String>> data_read = null;
+		try {data_read = cl.carregarArxiu(arxiu); }
+		catch(Exception e) { System.out.print("ERROR: " + e.getMessage()); }
+				
+		assertEquals("", data_read, generate_data());
 	}
 	
 }

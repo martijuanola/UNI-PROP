@@ -13,9 +13,9 @@ junit:
 	@read -p "Enter the name of class: " name; \
 	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.Test$$name
 
-junitcl:
+junitcs:
 	make compile
-	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestControladorLoad
+	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestControladorSave
 
 
 run:
