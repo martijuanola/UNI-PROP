@@ -8,6 +8,12 @@ driver:
 	@read -p "Enter the name of class: " name; \
 	java -cp bin:. src.drivers.Driver$$name
 
+junit:
+	make compile
+	@read -p "Enter the name of class: " name; \
+	#java -cp .:/usr/share/java/junit.jar org.junit.runner.JUnitCore bin:. src.junits.Test$$name
+	java -cp bin:.:/usr/share/java/junit.jar org.junit.runner.JUnitCore src.junits.Test$$name
+
 run:
 	java -cp bin:. src.Main
 
