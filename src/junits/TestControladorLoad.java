@@ -6,16 +6,12 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.Scanner;
 
+import org.junit.*;
 import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.After;
 
 public class TestControladorLoad {
-	private ArrayList<ArrayList<String>> solucio_read()
-	{
+
+	private ArrayList<ArrayList<String>> solucio_read() {
 		ArrayList<ArrayList<String>> real = new ArrayList<ArrayList<String>>();
 		real.add(new ArrayList<String>());
 		real.get(0).add("id");

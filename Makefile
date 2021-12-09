@@ -1,6 +1,6 @@
 compile:
 	@find ./src/ -name "*.java" > classes.txt
-	@javac -g -cp :.:/usr/share/java/junit4.jar @classes.txt -d bin
+	@javac -g -cp .:./src/junits/junit.jar @classes.txt -d bin
 	@rm classes.txt
 
 driver:
@@ -11,12 +11,11 @@ driver:
 junit:
 	make compile
 	@read -p "Enter the name of class: " name; \
-	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.Test$$name
+	java -cp bin:.:/src/junits/junit.jar src.junits.Test$$name # org.junit.runner.JUnitCore 
 
-junitcp:
+junitCL:
 	make compile
-	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestControladorPersistencia
-
+	java -cp bin:.:/src/junits/junit.jar org.junit.runner.JUnitCore src.junits.TestControladorLoad 
 
 run:
 	java -cp bin:. src.Main
