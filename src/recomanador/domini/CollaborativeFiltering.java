@@ -133,7 +133,7 @@ public class CollaborativeFiltering {
                 for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                     int centroid = closest_centroid.get(idx_usuari);
                     
-                    ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
+                    ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
                     //~ System.out.println("loaded " + valoracionsUser.size() + " ratings");
 
                     for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
@@ -198,7 +198,7 @@ public class CollaborativeFiltering {
         
         float distance = 0;
 
-        ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
+        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
 
         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
             Recomanacio rec = valoracionsUser.get(idx_rec);
@@ -225,14 +225,14 @@ public class CollaborativeFiltering {
      */
     private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException {
         Usuari user = usuaris.getUsuari(user_ID);
-        ConjuntRecomanacions valoracionsUser = user.getValoracions();
+        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(user.getId());
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
         
         //System.out.println("\n\nFOR1: Checking every item");
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
             //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
             Item j_item = items.get(j_idx);
-            if (valoracions.existeixValoracio(j_item, user)) {
+            if (valoracions.existeixValoracio(j_item.getId(), user.getId())) {
                 //System.out.println("Item had been rated");
                 continue;
             } 
@@ -258,14 +258,14 @@ public class CollaborativeFiltering {
                 for(int user_clust_index = 0; user_clust_index < usuaris_cluster.size(); ++user_clust_index){			
                     //System.out.println("(FOR3)USR INDEX = " + user_clust_index);		
 
-                    if (valoracions.existeixValoracio(j_item, usuaris_cluster.get(user_clust_index)) 
-                    && valoracions.existeixValoracio(i_item, usuaris_cluster.get(user_clust_index))) {
+                    if (valoracions.existeixValoracio(j_item.getId(), usuaris_cluster.get(user_clust_index).getId()) 
+                    && valoracions.existeixValoracio(i_item.getId(), usuaris_cluster.get(user_clust_index).getId())) {
 						
                         ++card_sij;
                         
                         try {
-							Recomanacio rec1 = valoracions.getRecomanacio(j_item, usuaris_cluster.get(user_clust_index));
-							Recomanacio rec2 = valoracions.getRecomanacio(i_item, usuaris_cluster.get(user_clust_index));
+							Recomanacio rec1 = valoracions.getRecomanacio(j_item.getId(), usuaris_cluster.get(user_clust_index).getId());
+							Recomanacio rec2 = valoracions.getRecomanacio(i_item.getId(), usuaris_cluster.get(user_clust_index).getId());
 							sum2 += rec1.getVal() - rec2.getVal();
                         }
 						catch(RecommendationNotFoundException e) {/*mai hauria de passar donat que hem comprovat existeixValoracio*/

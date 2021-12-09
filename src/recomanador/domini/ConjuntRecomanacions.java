@@ -53,6 +53,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     /*----- CONSULTORES -----*/
     //quan s'acabi d'implementar l'algorisme es borren les que no es fan servir
 
+//es podria treure també
     /**
      * Returns if a recommendation between of an item <i>itemid</i> to a user <i>userid</i> exisist in 
      * the set of recommendations.
@@ -64,22 +65,8 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      */
     public boolean existeixRecomanacio(int itemid, int userid) {
     	int pos = cercaBinaria(itemid,userid);
-    	if(this.get(pos).checkIds(itemid, userid)) return true;
-    	else return false;
-    }
-
-    /**
-     * Returns if a recommendation between of an item <i>i</i> to a user <i>u</i> exisist in 
-     * the set of recommendations.
-     *
-     * @param      i     The item
-     * @param      u     The user
-     *
-     * @return     True if the recommendation has been found
-     */
-    public boolean existeixRecomanacio(Item i, Usuari u) {
-    	int pos = cercaBinaria(i.getId(),u.getId());
-    	if(this.get(pos).checkKeys(i,u)) return true;
+        if(pos < 0 || pos >= this.size()) return false;
+    	else if(this.get(pos).checkIds(itemid, userid)) return true;
     	else return false;
     }
 
@@ -94,22 +81,8 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      */
     public boolean existeixValoracio(int itemid, int userid) {
     	int pos = cercaBinaria(itemid,userid);
-    	if(this.get(pos).checkIds(itemid, userid) && this.get(pos).getVal() != Recomanacio.nul) return true;
-    	else return false;
-    }
-
-    /**
-     * Returns if a recommendation with a rating of an item <i>i</i> to a user <i>u</i> 
-     * exisist in the set of recommendations.
-     *
-     * @param      i     The item
-     * @param      u     The user
-     *
-     * @return     True if the rated recommendation has been found
-     */
-    public boolean existeixValoracio(Item i, Usuari u) {
-    	int pos = cercaBinaria(i.getId(),u.getId());
-    	if(pos < this.size() && this.get(pos).checkKeys(i,u) && this.get(pos).getVal() != Recomanacio.nul) return true;
+        if(pos < 0 || pos >= this.size()) return false;
+    	else if(this.get(pos).checkIds(itemid, userid) && this.get(pos).getVal() != Recomanacio.nul) return true;
     	else return false;
     }
 
@@ -129,40 +102,34 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	else throw new RecommendationNotFoundException(itemid, userid);
     }
 
-    /**
-     * Gets the recommendation with Item i and Usuari u
-     *
-     * @param      i                                Item
-     * @param      u                                Usuari
-     *
-     * @return     The recommendation.
-     *
-     * @throws     RecommendationNotFoundException  If the recommendation was not found
-     */
-    public Recomanacio getRecomanacio(Item i, Usuari u) throws RecommendationNotFoundException {
-		int pos = cercaBinaria(i.getId(),u.getId());
-    	if(this.get(pos).checkKeys(i,u)) return this.get(pos);
-    	else throw new RecommendationNotFoundException(i.getId(), u.getId());
+    public ConjuntRecomanacions getRecomanacions(int userid) {
+        ConjuntRecomanacions cr = new ConjuntRecomanacions();
+
+        for(int i = 0; i < this.size(); i++) {
+            if(this.get(i).getUsuari().getId() == userid) cr.add(this.get(i));
+        }
+
+        return cr;
     }
 
-    /**
-     * Used to get the users that had recomended the item <i>item</i>.
-     *
-     * @param      item  The item
-     *
-     * @return     Returns a set of users.
-     */
-    public ConjuntUsuaris usuarisRecomanats(Item item) {
-    	ConjuntUsuaris cu = new ConjuntUsuaris();
-    	
-    	int pos = cercaBinaria(item.getId(),0);
+    public ConjuntRecomanacions getRecomanacionsNoValorades(int userid) {
+        ConjuntRecomanacions cr = new ConjuntRecomanacions();
 
-    	while(pos < this.size() && this.get(pos).getItem().getId() == item.getId()) {
-    		cu.add(this.get(pos).getUsuari());
-    		pos += 1;
-    	}
+        for(int i = 0; i < this.size(); i++) {
+            if(this.get(i).getUsuari().getId() == userid && !this.get(i).recomanacioValorada()) cr.add(this.get(i));
+        }
 
-    	return cu;
+        return cr;
+    }
+
+    public ConjuntRecomanacions getValoracions(int userid) {
+        ConjuntRecomanacions cv = new ConjuntRecomanacions();
+
+        for(int i = 0; i < this.size(); i++) {
+            if(this.get(i).getUsuari().getId() == userid && this.get(i).recomanacioValorada()) cv.add(this.get(i));
+        }
+
+        return cv;
     }
 
     /*----- MODIFICADORES -----*/
@@ -206,10 +173,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             Item i;
             Usuari u;
 
-            //potser cal inicialitzar-ho pels catchs
-
-
-            //es podrien inicialitzar els trys i catchs si s'ajunten les excepcions en DataNotValidException o algo així
             try {
                 v = Float.parseFloat(fila.get(2));
             }
@@ -236,10 +199,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
             Recomanacio r = new Recomanacio(u, i, v);
             this.add(r);
-
-            //afegeix les coses a les arrays dels usuaris
-            if(v != Recomanacio.nul) u.getValoracions().add(r);
-            else u.getRecomanacions().add(r);
         }
     }
 
@@ -247,7 +206,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
     //hauria de ser private
 
-    /**
+   /**
      * Returns de index of the element with item id = <i>item_id</i> and user 
      * id = <i>user_id</i>, or if it doesn't exist, the position where it should be added. 
      * It uses a binary search.
@@ -266,13 +225,14 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
             int mid = (first+last)/2;
             int mid_item_id = this.get(mid).getItem().getId();
             int mid_usuari_id = this.get(mid).getUsuari().getId();
-            
-            if(mid_item_id > item_id) last = mid - 1;
-            else if(mid_item_id < item_id) first = mid + 1;
-            else if(mid_usuari_id > usuari_id) last = mid - 1;
+        
+            if(mid_usuari_id > usuari_id) last = mid - 1;
             else if(mid_usuari_id < usuari_id) first = mid + 1;
+            else if(mid_item_id > item_id) last = mid - 1;
+            else if(mid_item_id < item_id) first = mid + 1;
             else return mid;
         }
         return first;
     }
+
 }

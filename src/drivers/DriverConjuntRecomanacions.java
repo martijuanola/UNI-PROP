@@ -55,17 +55,16 @@ public class DriverConjuntRecomanacions {
 		"2. ConjuntRecomanacions(ConjuntItems, ConjuntUsuaris, ArrayList<ArrayList<String>>)\n" +
 		" - Getters - \n" +
 		"3. boolean existeixRecomanacio(int, int)\n" +
-		"3. boolean existeixRecomanacio(Item, Usuari)\n" +
 		"4. boolean existeixValoracio(int, int)\n" +
-		"4. boolean existeixValoracio(Item, Usuari)\n" +
 		"5. Recomanacio getRecomanacio(int,int)\n" +
-		"5. Recomanacio getRecomanacio(Item, Usuari)\n" +
-		"6. ConjuntUsuaris usuarisRecomanats(Item)\n" +
+		"6. ConjuntRecomanacions getRecomanacions(int userid)\n" +
+		"7. ConjuntRecomanacions getRecomanacionsNoValorades(int userid)\n" +
+		"8. ConjuntRecomanacions getValoracions(int userid)\n" +
 		" - Setters - \n" +
-		"7. boolean add(Recomanacio)\n" +
-		"8. void afegirDades(ConjuntItems, ConjuntUsuaris, ArrayList<ArrayList<String>>)\n" +
+		"9. boolean add(Recomanacio)\n" +
+		"10. void afegirDades(ConjuntItems, ConjuntUsuaris, ArrayList<ArrayList<String>>)\n" +
 		" - Altres - \n" +
-		"9. int cercaBinaria(int,int)";
+		"11. int cercaBinaria(int,int)";
 		
 		System.out.println("Testing class ConjuntRecomanacions");
 		System.out.println(s);
@@ -107,6 +106,12 @@ public class DriverConjuntRecomanacions {
 					break;
 				case 9:
 					mostra_9();
+					break;
+				case 10:
+					mostra_10();
+					break;
+				case 11:
+					mostra_11();
 					break;
 				default:
 			}
@@ -194,20 +199,10 @@ public class DriverConjuntRecomanacions {
 		n = scanner.nextInt();
 		u = new Usuari(n);
 		
-		try{
-			b1 = c.existeixRecomanacio(m,n);
-			b2 = c.existeixRecomanacio(i,u);
-		}
-		catch(Exception e){
-			System.out.println("ERROR: Recomendation not found!!");
-			return;
-		}
-
-		if(b1 != b2) System.out.println("ERROR: either 'boolean existeixRecomanacio(int, int)' or 'boolean existeixRecomanacio(Item, Usuari)' is not working correctlly.");
-		else {
-			if(b1) System.out.println("The Recomanacio with ITEM id " + m + " and USER ID " + n + " IS in the set.");
-			else System.out.println("The Recomanacio with ITEM id " + m + " and USER ID " + n + " IS NOT in the set.");
-		}
+		b1 = c.existeixRecomanacio(m,n);
+		
+		if(b1) System.out.println("The Recomanacio with ITEM id " + m + " and USER ID " + n + " IS in the set.");
+		else System.out.println("The Recomanacio with ITEM id " + m + " and USER ID " + n + " IS NOT in the set.");
 	}
     static private void mostra_4() {
 		System.out.println("Testing function boolean existeixRecomanacio(int, int) & boolean existeixRecomanacio(Item, Usuari)");
@@ -231,20 +226,10 @@ public class DriverConjuntRecomanacions {
 		n = scanner.nextInt();
 		u = new Usuari(n);
 		
-		try{
-			b1 = c.existeixValoracio(m,n);
-			b2 = c.existeixValoracio(i,u);
-		}
-		catch(Exception e){
-			System.out.println("ERROR: Recomendation not found!!");
-			return;
-		}
+		b1 = c.existeixValoracio(m,n);
 
-		if(b1 != b2) System.out.println("ERROR: either 'boolean existeixValoracio(int, int)' or 'boolean existeixValoracio(Item, Usuari)' is not working correctlly.");
-		else {
-			if(b1) System.out.println("The rating of a the recommendation with ITEM id " + m + " and USER ID " + n + " IS in the set.");
-			else System.out.println("The rating of a the recommendation with ITEM id " + m + " and USER ID " + n + " IS NOT in the set.");
-		}
+		if(b1) System.out.println("The rating of a the recommendation with ITEM id " + m + " and USER ID " + n + " IS in the set.");
+		else System.out.println("The rating of a the recommendation with ITEM id " + m + " and USER ID " + n + " IS NOT in the set.");
 	}
     static private void mostra_5() {
 		System.out.println("Testing function Recomanacio getRecomanacio(int,int) & Recomanacio getRecomanacio(Item, Usuari)");
@@ -268,49 +253,30 @@ public class DriverConjuntRecomanacions {
 		n = scanner.nextInt();
 		u = new Usuari(n);
 
-		Recomanacio r1, r2;
+		Recomanacio r1;
 		try {
 			r1 = c.getRecomanacio(m,n);
-			r2 = c.getRecomanacio(i,u);
 		}
-		catch(RecommendationNotFoundException e) {
+		catch(Exception e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
-		catch(Exception e){
-			System.out.println("ERROR: Recomendation not found!!");
-			return;
-		}
 		
-		if(r1 != r2) System.out.println("ERROR: either 'Recomanacio getRecomanacio(int,int)' & 'Recomanacio getRecomanacio(Item, Usuari)' is not working correctlly.");
-		else System.out.println("The recommendation with ITEM id " + m + " and USER ID " + n + " has been obtained from the set. It's rating is " + r1.getVal() + ".");
+		System.out.println("The recommendation with ITEM id " + m + " and USER ID " + n + " has been obtained from the set. It's rating is " + r1.getVal() + ".");
 	}
-    static private void mostra_6() {
-		System.out.println("Testing function ConjuntUsuaris usuarisRecomanats(Item)");
-		if(!class_initalised) {
-			System.out.println("!! ConjuntRecomanacions not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
 
-		System.out.print("Item ID: ");
-		m = scanner.nextInt();
-		
-		try {
-			i = new Item(m);
-		}
-		catch(ItemStaticValuesNotInitializedException e) {
-            System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-		
-		ConjuntUsuaris ru = c.usuarisRecomanats(i);
-		System.out.println("ConjuntUsuaris returned:");
+	static private void mostra_6() {
 
-		for(int j = 0; j < ru.size(); j++) {
-			System.out.println("ID Usuari "+j+": " + ru.get(j).getId());
-		}
 	}
 	static private void mostra_7() {
+		
+	}
+	static private void mostra_8() {
+		
+	}
+
+//falten aquestes
+	static private void mostra_9() {
 		System.out.println("Testing function boolean add(Recomanacio)");
 		System.out.println("If previous data was loaded, the fact that the Item or Usuari exisist is not checked.");
 		if(!class_initalised) {
@@ -349,7 +315,7 @@ public class DriverConjuntRecomanacions {
 		System.out.print("New Recomanacio has been added to the already existing ones.\n");
 		printCR();
 	}
-	static private void mostra_8() {
+	static private void mostra_10() {
 		System.out.println("Testing function ConjuntUsuaris void afegirDades(ConjuntItems, ConjuntUsuaris, ArrayList<ArrayList<String>>)");
 		if(!class_initalised) {
 			System.out.println("!! ConjuntRecomanacions not initalised. Use option 1 or 2 to construct a instance first. !!");
@@ -390,7 +356,7 @@ public class DriverConjuntRecomanacions {
 		System.out.print("New data has been added to the ConjuntRecomanacions fromt the 2 files.\n");
 		printCR();
 	}
-	static private void mostra_9() {
+	static private void mostra_11() {
 		System.out.println("int cercaBinaria(int,int)");
 		if(!class_initalised) {
 			System.out.println("!! ConjuntRecomanacions not initalised. Use option 1 or 2 to construct a instance first. !!");

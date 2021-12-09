@@ -253,7 +253,7 @@ public class DriverControladorDominiAlgorisme {
 
                 for(int idx_unknown = 0; idx_unknown < usuarisUnknown.size(); ++idx_unknown) {
                     int id_unknown = usuarisUnknown.get(idx_unknown).getId();
-                    ConjuntRecomanacions val_unknown_aux = usuarisUnknown.get(idx_unknown).getValoracions();
+                    ConjuntRecomanacions val_unknown_aux = recomanacionsUnknown.getValoracions(usuarisUnknown.get(idx_unknown).getId());
 
                     //Per calcular el NDGC, ens cal ordenar les valoracions de l'usuari a Unknown per valoració.
                     //Per fer-ho, podem reutilitzar la classe itemValoracioEstimada

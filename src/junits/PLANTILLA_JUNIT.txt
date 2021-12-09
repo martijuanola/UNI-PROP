@@ -1,5 +1,5 @@
 /* Noms a canviar:
-	NOM_CAPA			Capa a la que pertany la classe que es prova
+	NOM_CAPA		Capa a la que pertany la classe que es prova
 	NOM_CLASSE		Nom de la classe que es prova
 	NOM_OBJECTE		Nom que tindrà l'objecte de la classe NOM_CLASSE
 	

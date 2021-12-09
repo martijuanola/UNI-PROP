@@ -65,14 +65,6 @@ public class Recomanacio implements Comparable<Recomanacio> {
      */
     public void setVal(float v) throws RatingNotValidException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
-
-        try {
-            if(valoracio == 0.0 && v > 0.0) this.usr.moureRecomanacio(this,true);
-            else if(valoracio > 0.0 && v == 0.0) this.usr.moureRecomanacio(this,false);
-        }
-        catch(RecommendationRatedException | RecommendationNotRatedException e) {
-            System.out.println("No hauria de petar mai");
-        }
         valoracio = v;
     }
 
@@ -125,21 +117,8 @@ public class Recomanacio implements Comparable<Recomanacio> {
      * @return     true if the ids are the same as the instance's
      */
     public boolean checkIds(int id_item, int id_usuari) {
-        if(id_item != this.item.getId()) return false;
-        else if(id_usuari != this.usr.getId()) return false;
+        if(id_item != this.item.getId() || id_usuari != this.usr.getId()) return false;
         else return true;
-    }
-
-    /**
-     * Checks if the item and user of the recomendation are <i>i</i> and <i>u</i>.
-     *
-     * @param      i     Item
-     * @param      u     User
-     *
-     * @return     True if both objects are the same
-     */
-    public boolean checkKeys(Item i, Usuari u) {
-        return usr.getId() == u.getId() && item.getId() == i.getId();
     }
 
     /**
