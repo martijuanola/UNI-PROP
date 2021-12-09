@@ -1,5 +1,0 @@
-DIRECTORI DriverUsuari:
-
-- DriverUsuari.jar: Executable del driver de la classe Usuari
-- DriverUsuariExplicacio.txt: Explicació del driver de la classe Usuari
-- DriverUsuariTest.txt: Test per l'executable del driver de la classe Usuari

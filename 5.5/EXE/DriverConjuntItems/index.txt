@@ -1,7 +1,0 @@
-DIRECTORI DriverConjuntItems:
-
-\data Conté les dades necessàries per l'execució del DriverConjuntItems
-
-- DriverConjuntItems.jar:Executable del driver de la classe DriverConjuntItems
-- DriverConjuntItemsExplicacio.txt: Explicació del driver de la classe DriverConjuntItems
-- DriverConjuntItemsTest.csv Test per l'executable del driver de la classe DriverConjuntItems

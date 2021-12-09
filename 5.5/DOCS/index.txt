@@ -1,9 +1,0 @@
-DIRECTORI DOCS
-
-\javadoc: Conté la documentació de les classes feta amb javadoc.
-
-- Algorismes_i_Estructures_de_Dades.pdf: Conté les descripcions de les estructures de dades i algorismes que empra cada classe.
-- Casos_d_Us_Diagrama_de_Classes.pdf: Conté el diagrama dels casos d'Ús amb la seva explicació, i el diagrama de classes.
-- Diagrama_classes.drawio.html: Conté el diagrama de classes en major qualitat.
-- javadoc_index: Enllaç símbolic a la pàgina principal del javadoc.
-- Reparticio_Classes.html: Conté la repartició de les classes de cada persona.

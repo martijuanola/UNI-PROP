@@ -1,4 +1,0 @@
-DIRECTORI DriverItemValoracioEstimada
-
-- DriverItemValoracioEstimada.jar: Conté l'executable del DriverItemValoracioEstimada.
-- DriverItemValoracioEstimadaExplicació.txt: Conté l'explicació del DriverItemValoracioEstimada.

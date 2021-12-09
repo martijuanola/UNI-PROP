@@ -1,8 +1,0 @@
-DIRECTORI DriverControladorSave
-
-./data/*: S'afegirà una carpeta en quan s'executi el driver
-
-- DriverControladorSave.jar: Executable del driver
-- DriverControladorSaveExplocacio.txt: Explicacio del driver per a provar les classes.
-- aclariment.txt: infirmacio adicional
-

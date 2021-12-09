@@ -1,5 +1,0 @@
-DIRECTORI DriverConjuntUsuaris:
-
-- DriverConjuntUsuaris.jar: Executable del driver de la classe ConjuntUsuaris
-- DriverConjuntUsuarisExplicacio.txt: Explicació del driver de la classe ConjuntUsuaris
-- ratings.db.csv: Fitxer de ratings per carregar amb el DriverConjuntUsuaris

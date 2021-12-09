@@ -1,8 +1,0 @@
-DIRECTORI FONTS
-
-\src: Conte els codis fonts de les classes.
-
-- Makefile: serveix per a poder compilar i testejar cada un dels drivers. 
-		Per a fer-ho, s'escriu make NOM_CLASSE_A_TESTEJAR , i això ho
-		compila i ho executa.
-- ACLARIMENTS.txt: Informacio adicional

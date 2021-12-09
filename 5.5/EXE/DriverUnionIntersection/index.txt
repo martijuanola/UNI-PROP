@@ -1,5 +1,0 @@
-DIRECTORI DriverUnioInterseccio:
-
-- DriverUnioInterseccio.jar:Executable del driver de la classe DriverUnioInterseccio
-- DriverUnioInterseccioExplicacio.txt: Explicació del driver de la classe DriverUnioInterseccio
-- DriverUnioInterseccioTest.txt Test per l'executable del driver de la classe DriverUnioInterseccio
