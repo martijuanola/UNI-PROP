@@ -57,8 +57,7 @@ public class DriverRecomanacio {
 		"6. float getVal()\n" +
 		"7. boolean recomanacioValorada()\n" +
 		"8. boolean checkIds(int, int)\n" +
-		"9. boolean checkKeys(Item, Usuari)\n" +
-		"10. int compareTo(Recomanacio)\n";
+		"9. int compareTo(Recomanacio)\n";
 
 		
 		System.out.println("Testing class Recomanacio");
@@ -101,9 +100,6 @@ public class DriverRecomanacio {
 					break;
 				case 9:
 					mostra_9();
-					break;
-				case 10:
-					mostra_10();
 					break;
 				default:
 			}
@@ -254,34 +250,6 @@ public class DriverRecomanacio {
 		else System.out.println("The Item and User IDs of the recommendation do NOT coincide with the once entered.");
 	}
 	static private void mostra_9() {
-		System.out.println("Testing function boolean checkKeys(Item, Usuari)");
-		if(!class_initalised) {
-			System.out.println("!! Recomendation not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-		//demanar dades usuari i item
-		System.out.print("Data for new User:\n");
-		System.out.print("User ID: ");
-		n = scanner.nextInt();
-		u = new Usuari(n);
-		
-		System.out.print("Data for new Item:\n");
-		System.out.print("Item ID: ");
-		n = scanner.nextInt();
-		
-		try {
-			i = new Item(n);
-		}
-		catch(ItemStaticValuesNotInitializedException e) {
-            System.out.println("ERROR: " + e.getMessage());
-			return;
-		}
-
-		if(c.checkKeys(i,u)) System.out.println("The Item and User of the recommendation coincide with the once entered.");
-		else System.out.println("The Item and User of the recommendation do NOT coincide with the once entered.\n" +
-		 "This result is expected in this test regardless of the input because the two users or items will be different objects.");
-	}
-	static private void mostra_10() {
 		System.out.println("Testing function int compareTo(Recomanacio)");
 		System.out.println("Sorting in ascendent value of Item ID(primary) and User ID.");
 		if(!class_initalised) {

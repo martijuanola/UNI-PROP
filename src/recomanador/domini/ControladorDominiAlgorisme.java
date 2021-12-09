@@ -71,7 +71,7 @@ public class ControladorDominiAlgorisme {
      *                  2 represents hybrid approaches
      */
     public void seleccionar_algorisme(int a) throws DataNotValidException {
-        if(a < 0 || a >= 2) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 1");
+        if(a < 0 || a > 2) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 2");
         this.ALGORISME_SELECCIONAT = a;
     }
 	

@@ -505,33 +505,86 @@ public class DriverItem {
 		System.out.println("The name of the atributes are: ");
 		System.out.println(aux);
 	}
-
 	static private void mostra_18() {
-		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
-			return;
-		}
-
+		System.out.println("Testing function void resetStatics()");
 		
+		Item.resetStatics();
+		System.out.println("Item's static atributes have been reset:");
+		if(Item.getPosId() == -1) System.out.println("IDPos = -1");
+		else System.out.println("ERROR in ID");
+		if(Item.getPosNomA() == -1) System.out.println("nomA = -1");
+		else System.out.println("ERROR in nomA");
+		if(Item.getPesos() == null) System.out.println("pesos = null");
+		else System.out.println("ERROR in pesos");
+		if(Item.getTipusArray() == null) System.out.println("tipusAtribut = null");
+		else System.out.println("ERROR in tipusAtribut");
+		if(Item.getCapçalera() == null) System.out.println("nomAtributs = null");
+		else System.out.println("ERROR in nomAtribut");
 	}
+
+	
 	static private void mostra_19() {
-		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
+		System.out.println("Testing function void inicialitzarStatics(ArrayList<Float> pesos, ArrayList<String> nomAtributs, ArrayList<tipus> tipusAtribut, int id, int nomA)");
+
+		System.out.println("Enter (relative) path to a \"items.csv\" file: ");
+		String path = scanner.next();
+
+		try {
+			cp.escollirProjecte(path);
+			cp.carregarEstat();
+
+			ArrayList<Float> pesos = new ArrayList<>();
+			ArrayList<tipus> tipusAtribut = new ArrayList<>();
+			int id = cp.getPosicioID();
+			int nomA = cp.getPosicioNom();
+			ArrayList<String> nomAtributs = cp.carregarItemsCarpeta().get(0);
+
+			ArrayList<String> pesosS = cp.carregarPesosAtributs();
+			for (int i = 0; i < pesosS.size(); ++i) {
+				pesos.add(Float.parseFloat(pesosS.get(i)));
+			}
+			ArrayList<String> tipusS = cp.carregarTipusAtributs();
+			for (int i = 0; i < tipusS.size(); ++i) {
+				tipusAtribut.add(StringOperations.stringToType(tipusS.get(i)));
+			}
+			
+			Item.inicialitzarStatics(pesos,nomAtributs, tipusAtribut, id, nomA);
+			
+		}
+		catch(Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
 
-		
 	}
 	static private void mostra_20() {
-		System.out.println("Testing function void setNomAtributs(ArrayList<String> n)");
-		if(!class_initalised) {
-			System.out.println("!! Item not initalised. Use option 1 or 2 to construct a instance first. !!");
+		System.out.println("Testing function void inicialitzarStaticsDefault(ArrayList<String> atributs)");
+
+		System.out.print("Number of atribures: ");
+		n = scanner.nextInt();
+
+		ArrayList<String> as = new ArrayList<String>(0);
+
+		for(int i = 0; i < n; i++) {
+			System.out.println("Enter new name for atribute "+i+":");
+			String s = scanner.next();
+			as.add(s);
+		}
+
+		try {
+			Item.inicialitzarStaticsDefault(as);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
 
-
+		System.out.println("Item's static atributes have been initizlized:");
+		System.out.println("IDPos = " + Item.getPosId());
+		System.out.println("nomA = " + Item.getPosNomA());
+		System.out.println("pesos = " + Item.getPesos());
+		System.out.println("tipusAtribut = " + Item.getTipusArray());
+		System.out.println("nomAtributs = " + Item.getCapçalera());
 	}
 
 	static private void mostra_21() {

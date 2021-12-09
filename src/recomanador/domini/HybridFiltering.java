@@ -78,7 +78,7 @@ public class HybridFiltering {
         }
 
         for (int i = 0; i < usuaris_cluster.size(); ++i) {
-            ConjuntRecomanacions vals_users = usuaris_cluster.get(i).getValoracions();
+            ConjuntRecomanacions vals_users = valoracions.getValoracions(usuaris_cluster.get(i).getId());
             for (int j = 0; j < vals_users.size(); ++j) {
                 Recomanacio val = vals_users.get(j);
                 if (val.getVal() >= 3.5) {
@@ -95,7 +95,7 @@ public class HybridFiltering {
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
 
         Usuari user = usuaris.getUsuari(user_ID);
-        ConjuntRecomanacions valUser = user.getValoracions();
+        ConjuntRecomanacions valUser = valoracions.getValoracions(user.getId());
         
         //necessari per a que els Q items nomes tinguin un item un cop
         ArrayList<Item> items_afegits = new ArrayList<Item>();
@@ -112,7 +112,7 @@ public class HybridFiltering {
             //iterem sobre tots els items no valorats
             for (int idxNV = 0; idxNV < items.size(); ++idxNV) {
                 Item iNV = items_cluster.get(idxNV);
-                if (valoracions.existeixValoracio(iNV, user)) continue;
+                if (valoracions.existeixValoracio(iNV.getId(), user.getId())) continue;
                 
                 float similitud = 0;
                 try {similitud = items_cluster.distanciaItem(iNV, item_val);}
@@ -201,7 +201,7 @@ public class HybridFiltering {
                 for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                     int centroid = closest_centroid.get(idx_usuari);
                     
-                    ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
+                    ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
                     //~ System.out.println("loaded " + valoracionsUser.size() + " ratings");
 
                     for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
@@ -266,7 +266,7 @@ public class HybridFiltering {
         
         float distance = 0;
 
-        ConjuntRecomanacions valoracionsUser = usuaris.get(idx_usuari).getValoracions();
+        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
 
         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
             Recomanacio rec = valoracionsUser.get(idx_rec);

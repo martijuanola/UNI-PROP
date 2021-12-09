@@ -47,7 +47,7 @@ public class ContentBasedFiltering {
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
 
         Usuari user = usuaris.getUsuari(user_ID);
-        ConjuntRecomanacions valUser = user.getValoracions();
+        ConjuntRecomanacions valUser = valoracions.getValoracions(user.getId());
         
         //necessari per a que els Q items nomes tinguin un item un cop
         ArrayList<Item> items_afegits = new ArrayList<Item>();
@@ -64,7 +64,7 @@ public class ContentBasedFiltering {
             //iterem sobre tots els items no valorats
             for (int idxNV = 0; idxNV < items.size(); ++idxNV) {
                 Item iNV = items.get(idxNV);
-                if (valoracions.existeixValoracio(iNV, user)) continue;
+                if (valoracions.existeixValoracio(iNV.getId(), user.getId())) continue;
                 
                 float similitud = 0;
                 try {similitud = items.distanciaItem(iNV, item_val);}
