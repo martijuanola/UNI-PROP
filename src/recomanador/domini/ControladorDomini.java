@@ -11,7 +11,6 @@ public class ControladorDomini {
 	/*----- CONSTANTS -----*/
 	public static final int NULL_ID = -1;
 	
-
 	/*----- ATRIBUTS -----*/
 	
     ControladorPersistencia cp;
@@ -36,6 +35,7 @@ public class ControladorDomini {
 
     /*----- CONSTRUCTORS -----*/
 
+//mirar de fer allò que nomñes pugui existir una instància!!!! singleton
     public ControladorDomini() {
         cp = new ControladorPersistencia();
 
@@ -43,22 +43,17 @@ public class ControladorDomini {
 
         cu = new ConjuntUsuaris();
         cr = new ConjuntRecomanacions();
-        ci = new ConjuntItems();
+        //ci = new ConjuntItems();
 
         id = NULL_ID;
         admin = false;
     }
+
+//apuntar primer totes les funcions que es necessiteran segons casos d'ús
     
 
-     /**
-     * Calls the persistence controler to get all the data from a previous stored session
-     * and initilizes all the necessari arrays of data(ConjuntItems, ConjuntUsuaris, ConjuntRecomanacions and others)   
-     *
-     * @param      directory  the directory where the files have been stored
-     */
-
     /*----- DATA & FILES -----*/
-
+/*
     public void carregarCarpeta(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
 
         //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
@@ -81,7 +76,6 @@ public class ControladorDomini {
         }
     }
     
-    
     public void carregarRatings(String fitxer) throws FileNotValidException, FileNotFoundException {
         try {
             cu = new ConjuntUsuaris(cp.carregarFitxerExtern(fitxer));
@@ -100,7 +94,7 @@ public class ControladorDomini {
             //s'han de mirar les que pugen
         }
     }
-
+*/
 
 
     //Funcions per obtenir i guardar info del sistema:
@@ -124,11 +118,11 @@ public class ControladorDomini {
     /**
      * Logs out: id of active user is set to null and privileges to regular.
      */
-    public void logout() {
+/*    public void logout() {
         id = NULL_ID;
         admin = false;
     }
-
+*/
 
     /*----- Funcions d'ADMIN -----*/
 
@@ -140,14 +134,14 @@ public class ControladorDomini {
      * @throws     DataNotValidException  Thrown when the input is not a possible value
      * @throws     PrivilegesException    Thrown if the active user is not loged in as an admin
      */
-    public void setAlgorithm(int a) throws PrivilegesException, DataNotValidException {
+ /*   public void setAlgorithm(int a) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException();
         cda.seleccionar_algorisme(a);
     }
 
     public void setK(int kk) throws DataNotValidException {
         cda.set_k(kk);
-    }
+    }*/
 
     /**
      * Sets the weight of an atribute on the set of items.
@@ -157,11 +151,11 @@ public class ControladorDomini {
      *
      * @throws     ItemWeightNotCorrectException  Thrown when the weight value is not valid
      */
-    public void setPes(int a, float w) throws ItemWeightNotCorrectException {
+ /*   public void setPes(int a, float w) throws ItemWeightNotCorrectException {
         Item.setPes(a, w);
     }
 
-
+*/
 
 
     /*----- Funcions d'USER -----*/
@@ -172,10 +166,10 @@ public class ControladorDomini {
      *
      * @param      identificador  Id of the active user
      */
-    public void establirIdActiva(int identificador) {
+  /*  public void establirIdActiva(int identificador) {
 		id = identificador;
         admin = false;
-	}
+	}*/
 
     //get new recomendations
 
