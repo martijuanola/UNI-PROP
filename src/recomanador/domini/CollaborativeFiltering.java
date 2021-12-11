@@ -23,6 +23,10 @@ public class CollaborativeFiltering {
     ConjuntUsuaris usuaris;
     /**ratings from which to base the recommendation*/
     ConjuntRecomanacions valoracions;
+    /** stores if the centroids have been calculated, so they dont get recalculated for multiple iterations of the algorithm
+     * (mainly, when calculating the DCG and NDCG)
+     */
+    Boolean centroidesCalculats = false;
 
     /**Stores a set of k centroids with their ratings. Used for k-NN*/
     Centroid[] centroids;
@@ -33,6 +37,11 @@ public class CollaborativeFiltering {
     Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
+    /**
+     *  Constructs a new empty instance
+     */
+    public CollaborativeFiltering() {
+    }
 
     /**
      *  Constructs a new instance with the given items, users and recommendations
@@ -50,6 +59,19 @@ public class CollaborativeFiltering {
     /*----- OPERADORS -----*/
 
     /**
+     *  Sets the instance with the given items, users and recommendations
+     *
+     * @param      items    Set of items
+     * @param      usuaris    Set of users
+     * @param      valoracions   set of recommendations (which include ratings)
+     */
+    public void setData(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
+        this.items = items;
+        this.usuaris = usuaris;
+        this.valoracions = valoracions;
+    }
+
+    /**
      *  Returns a set of item IDs, sorted by relevance, using Collaborative Filtering for the given user
      *
      * @param      Q            how many items to be recommended
@@ -59,8 +81,6 @@ public class CollaborativeFiltering {
      * @return     a sorted set the recommended item IDs with their estimated ratings
      */
     public ArrayList<ItemValoracioEstimada> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
-        
-        System.out.println("Executant k-Means");
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
         System.out.println("L'usuari " + user_ID + " pertany a un cluster que conté " + usuaris_cluster.size() + " dels " + usuaris.size() + " usuaris." );
         System.out.println("Executant slope-1");
@@ -83,93 +103,97 @@ public class CollaborativeFiltering {
      * @return     users of the cluster
      */
     private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) {
-
-        centroids = new Centroid[K];
-        closest_centroid = new HashMap<Integer, Integer>(usuaris.size());
-
-        for (int centroid = 0; centroid < K; ++centroid) {
-			centroids[centroid] = new Centroid();
-			centroids[centroid].valoracio = new HashMap<Item,Float>();
-			centroids[centroid].sum = new HashMap<Item,Float>();
-			centroids[centroid].quant = new HashMap<Item,Integer>();
-		
-            for(int item = 0; item < items.size(); ++item) {
-                float valoracio = rand.nextFloat()*5;
-                centroids[centroid].valoracio.put(items.get(item), valoracio);
-                centroids[centroid].sum.put(items.get(item), 0f);
-                centroids[centroid].quant.put(items.get(item), 0);
-            }
-
-        }
         
-        boolean has_changed = true;
-        
-        while (has_changed){
-            has_changed = false;
+        if(!centroidesCalculats) {
+            System.out.println("Executant k-Means");
+            centroidesCalculats = true;
+            centroids = new Centroid[K];
+            closest_centroid = new HashMap<Integer, Integer>(usuaris.size());
 
-            for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {                
-
-                int min_centroid = 0;
-                float min_distance = distance(idx_usuari, 0);
-               
-                float dist_aux;
-                for(int centroid = 1; centroid < K; ++centroid) {
-                    
-                    dist_aux = distance(idx_usuari,centroid);
-                    
-                    if (dist_aux < min_distance) {
-                        min_distance = dist_aux;
-                        min_centroid = centroid;
-                    }
+            for (int centroid = 0; centroid < K; ++centroid) {
+                centroids[centroid] = new Centroid();
+                centroids[centroid].valoracio = new HashMap<Item,Float>();
+                centroids[centroid].sum = new HashMap<Item,Float>();
+                centroids[centroid].quant = new HashMap<Item,Integer>();
+            
+                for(int item = 0; item < items.size(); ++item) {
+                    float valoracio = rand.nextFloat()*5;
+                    centroids[centroid].valoracio.put(items.get(item), valoracio);
+                    centroids[centroid].sum.put(items.get(item), 0f);
+                    centroids[centroid].quant.put(items.get(item), 0);
                 }
 
-                if (!closest_centroid.containsKey(idx_usuari) || closest_centroid.get(idx_usuari) != min_centroid) {
-                    has_changed = true;
-                    closest_centroid.put(idx_usuari, min_centroid);
-                }
             }
+            
+            boolean has_changed = true;
+            
+            while (has_changed){
+                has_changed = false;
 
-            if(has_changed) {
-                for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
-                    int centroid = closest_centroid.get(idx_usuari);
-                    
-                    ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
-                    //~ System.out.println("loaded " + valoracionsUser.size() + " ratings");
+                for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {                
 
-                    for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
-                        Recomanacio rec = valoracionsUser.get(idx_rec);
-                        Item item = rec.getItem();
-                        if (rec.recomanacioValorada()) {
-                            float new_sum = centroids[centroid].sum.get(item) + rec.getVal();
-                            int new_quant = centroids[centroid].quant.get(item) + 1;
-
-                            centroids[centroid].sum.replace(item, new_sum);
-                            centroids[centroid].quant.replace(item, new_quant);
+                    int min_centroid = 0;
+                    float min_distance = distance(idx_usuari, 0);
+                
+                    float dist_aux;
+                    for(int centroid = 1; centroid < K; ++centroid) {
+                        
+                        dist_aux = distance(idx_usuari,centroid);
+                        
+                        if (dist_aux < min_distance) {
+                            min_distance = dist_aux;
+                            min_centroid = centroid;
                         }
                     }
 
-                }
-
-                for (int centroid = 0; centroid < K; ++centroid) {
-                    for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
-
-                        //~ System.out.println("Loading item " + idx_item);
-                        Item item = items.get(idx_item);
-
-                        float valoracio;
-                        if(centroids[centroid].quant.get(item) == 0) valoracio = rand.nextFloat()*5;
-                        else valoracio = centroids[centroid].sum.get(item) / centroids[centroid].quant.get(item);
-
-                        //~ System.out.println("New centroid rating is " + valoracio);
-                        
-                        centroids[centroid].valoracio.replace(item, valoracio);
-                        centroids[centroid].sum.replace(item, 0f);
-                        centroids[centroid].quant.replace(item, 0);
+                    if (!closest_centroid.containsKey(idx_usuari) || closest_centroid.get(idx_usuari) != min_centroid) {
+                        has_changed = true;
+                        closest_centroid.put(idx_usuari, min_centroid);
                     }
                 }
+
+                if(has_changed) {
+                    for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
+                        int centroid = closest_centroid.get(idx_usuari);
+                        
+                        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
+                        //~ System.out.println("loaded " + valoracionsUser.size() + " ratings");
+
+                        for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
+                            Recomanacio rec = valoracionsUser.get(idx_rec);
+                            Item item = rec.getItem();
+                            if (rec.recomanacioValorada()) {
+                                float new_sum = centroids[centroid].sum.get(item) + rec.getVal();
+                                int new_quant = centroids[centroid].quant.get(item) + 1;
+
+                                centroids[centroid].sum.replace(item, new_sum);
+                                centroids[centroid].quant.replace(item, new_quant);
+                            }
+                        }
+
+                    }
+
+                    for (int centroid = 0; centroid < K; ++centroid) {
+                        for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
+
+                            //~ System.out.println("Loading item " + idx_item);
+                            Item item = items.get(idx_item);
+
+                            float valoracio;
+                            if(centroids[centroid].quant.get(item) == 0) valoracio = rand.nextFloat()*5;
+                            else valoracio = centroids[centroid].sum.get(item) / centroids[centroid].quant.get(item);
+
+                            //~ System.out.println("New centroid rating is " + valoracio);
+                            
+                            centroids[centroid].valoracio.replace(item, valoracio);
+                            centroids[centroid].sum.replace(item, 0f);
+                            centroids[centroid].quant.replace(item, 0);
+                        }
+                    }
+                }
+
+
             }
-
-
         }        
 
         ArrayList<Usuari> usuaris_cluster = new ArrayList<Usuari>();

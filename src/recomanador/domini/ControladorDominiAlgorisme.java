@@ -12,6 +12,12 @@ import src.recomanador.excepcions.DataNotValidException;
 public class ControladorDominiAlgorisme {
 
     /*----- ATRIBUTS -----*/
+    /**instance of the Collaborative Filtering Algorithm*/
+    CollaborativeFiltering colFilt;
+    /**instance of the Hybrid Filtering Algorithm*/
+    HybridFiltering HybFilt;
+    /**instance of the Content Based Filtering Algorithm*/
+    ContentBasedFiltering BasedFilt;
 
     /**
      * Indicates which algorithm to use. Options are:
@@ -38,7 +44,11 @@ public class ControladorDominiAlgorisme {
      *
      * @return      a new instance of ControladorDominiAlgorisme, which will be empty
      */
-    public ControladorDominiAlgorisme() {}
+    public ControladorDominiAlgorisme() {
+        colFilt = new CollaborativeFiltering();
+        BasedFilt = new ContentBasedFiltering();
+        HybFilt = new HybridFiltering();
+    }
 
     /*----- SETTERS -----*/
 
@@ -126,21 +136,20 @@ public class ControladorDominiAlgorisme {
             //collaborative filtering
             case 0:
                 System.out.println("Executant Collaborative Filtering");
-                CollaborativeFiltering colFilt = new CollaborativeFiltering(items, usuaris, valoracions);
+                colFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = colFilt.collaborativeFiltering(Q, user_ID, K);
                 break;
                 
             //content based filtering
             case 1:
                 System.out.println("Executant Content-Based Filtering");
-                ContentBasedFiltering BasedFilt = new ContentBasedFiltering(items, usuaris, valoracions);
+                BasedFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = BasedFilt.contentBasedFiltering(Q, user_ID, K);
                 break;
-
             //Hybrid approaches
             case 2:
                 System.out.println("Executant Hybrid Filtering");
-                HybridFiltering HybFilt = new HybridFiltering(items, usuaris, valoracions);
+                HybFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = HybFilt.hybridFiltering(Q, user_ID, K);
                 break;
         }

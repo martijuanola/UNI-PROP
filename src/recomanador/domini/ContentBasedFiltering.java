@@ -34,6 +34,11 @@ public class ContentBasedFiltering {
     }
 
     /**
+     *  Constructs a new empty instance
+     */
+    public ContentBasedFiltering() {}
+
+    /**
      *  Returns a set of item IDs, sorted by relevance, using Collaborative Filtering for the given user
      *
      * @param      Q            how many items to be recommended
@@ -94,6 +99,19 @@ public class ContentBasedFiltering {
         }
 
         return Q_items;
+    }
+
+    /**
+     *  Sets the instance with the given items, users and recommendations
+     *
+     * @param      items    Set of items
+     * @param      usuaris    Set of users
+     * @param      valoracions   set of recommendations (which include ratings)
+     */
+    public void setData(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
+        this.items = items;
+        this.usuaris = usuaris;
+        this.valoracions = valoracions;
     }
     
 }
