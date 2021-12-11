@@ -43,7 +43,12 @@ public class ControladorDomini {
 
         cu = new ConjuntUsuaris();
         cr = new ConjuntRecomanacions();
-        ci = new ConjuntItems();
+        try {
+            ci = new ConjuntItems();
+        } catch (ItemStaticValuesNotInitializedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         id = NULL_ID;
         admin = false;
@@ -66,7 +71,21 @@ public class ControladorDomini {
        
         try {
             ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
-            ci = new ConjuntItems(items);
+            try {
+                ci = new ConjuntItems(items);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ItemStaticValuesAlreadyInitializedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ItemStaticValuesNotInitializedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ItemNewAtributesNotValidException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();            
             cu = new ConjuntUsuaris(valoracions);
