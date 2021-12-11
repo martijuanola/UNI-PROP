@@ -11,7 +11,6 @@ import src.recomanador.domini.Item;
 import src.recomanador.persistencia.ControladorPersistencia;
 
 //Excepcions
-import java.io.IOException;
 import src.recomanador.excepcions.*;
 
 /**
@@ -25,9 +24,6 @@ public class DriverItem {
 
     static private boolean class_initalised;
     static private ControladorPersistencia cp;
-    static private String s1;
-    static private String s2;
-    static private boolean b;
     static private int n;
     static private int m;
     static private float f;
@@ -376,7 +372,7 @@ public class DriverItem {
 			return;
 		}
 
-		ArrayList<Float> aux = c.getPesos();
+		ArrayList<Float> aux = Item.getPesos();
 		System.out.println("The weight of the now atributes are:");
 		System.out.println(aux);
 	}
@@ -425,7 +421,7 @@ public class DriverItem {
 		}
 
 		try{
-			c.setPesos(w);
+			Item.setPesos(w);
 		}
 		catch(ItemWeightNotCorrectException e) {
 			System.out.println("ERROR: " + e.getMessage());
@@ -464,7 +460,7 @@ public class DriverItem {
 			}
 		}
 		try {
-			c.setTipusArray(at);
+			Item.setTipusArray(at);
 		}
 		catch(Exception e) {
 			System.out.println("ERROR: " + e.getMessage());

@@ -12,7 +12,6 @@ import src.recomanador.excepcions.ConjuntItemsAtributeNotInitializedException;
 import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
-import src.recomanador.excepcions.FolderNotValidException;
 import src.recomanador.excepcions.ItemIdNotValidException;
 import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 import src.recomanador.excepcions.ItemNotFoundException;
