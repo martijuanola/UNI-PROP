@@ -6,10 +6,18 @@ import src.recomanador.excepcions.*;
 import java.util.ArrayList;
 
 public class ControladorDomini {
-	
-    
-	/*----- CONSTANTS -----*/
-	public static final int NULL_ID = -1;
+
+    /*----- STATICS -----*/
+    private static ControladorDomini inst;
+
+    public static ControladorDomini getInstance() {
+        if(ControladorDomini.inst == null) inst = new ControladorDomini();
+
+        return inst;
+    }    
+
+    /*----- CONSTANTS -----*/
+    public static final int NULL_ID = -1;
 	
 	/*----- ATRIBUTS -----*/
 	
@@ -31,12 +39,9 @@ public class ControladorDomini {
      * True if active user/actor has admin privileges
      */
     boolean admin;
-    
 
-    /*----- CONSTRUCTORS -----*/
-
-//mirar de fer allò que nomñes pugui existir una instància!!!! singleton
-    public ControladorDomini() {
+//CONSTRUCTORS
+    private ControladorDomini() {
         cp = new ControladorPersistencia();
 
         cda = new ControladorDominiAlgorisme();
@@ -54,7 +59,42 @@ public class ControladorDomini {
         admin = false;
     }
 
-//apuntar primer totes les funcions que es necessiteran segons casos d'ús
+//COSES USUARI/ADMIN
+    //LOGIN
+    //LOGOUT
+    //DEFINIR ADMIN
+    //TREURE ADMIN
+    //COMPROVAR SI ÉS ADMIN O SI TÉ PERMISOS O ALGO
+
+//COSES DADES
+    //CARREGAR CARPETA
+    //CARREGAR FITXER
+    //OBTENIR DADES
+        //RATINGS
+        //ITEMS
+        //USERS
+        //KNOWN
+        //UNKNOWN
+
+//USUARIS
+    //GET USER
+    //ADD USER
+    //REMOVE USER???
+
+//ITEMS
+    //GET ITEM
+    //ADD ITEM
+    //REMOVE ITEM???
+    //
+
+    //GET PES
+    //GET PESOS
+    //EDITAR PESOS
+    //
+
+//RECOMANACIONS
+
+
     
 
     /*----- DATA & FILES -----*/

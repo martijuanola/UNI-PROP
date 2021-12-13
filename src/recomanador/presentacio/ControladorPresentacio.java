@@ -40,7 +40,7 @@ public class ControladorPresentacio extends JFrame {
     JPanel PRatings;
 
     private ControladorPresentacio() {
-        domini = new ControladorDomini();
+        domini = ControladorDomini.getInstance();
         setMinimumSize(new Dimension(200, 150));
 
         panel = new JPanel();
