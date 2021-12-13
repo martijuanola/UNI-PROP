@@ -8,91 +8,57 @@ import java.util.ArrayList;
 public class ControladorDomini {
 
     /*----- STATICS -----*/
+    
     private static ControladorDomini inst;
 
     public static ControladorDomini getInstance() {
         if(ControladorDomini.inst == null) inst = new ControladorDomini();
-
         return inst;
     }    
 
+
     /*----- CONSTANTS -----*/
+    
+    /* Value that represents null in the atribute id. */
     public static final int NULL_ID = -1;
 	
+
 	/*----- ATRIBUTS -----*/
 	
+    /* Persistance Controller */
     ControladorPersistencia cp;
 
     ControladorDominiAlgorisme cda;
 
-    //Potser faltarà afegir-ne d'altres per utiltizar amb els testos
     public ConjuntUsuaris cu;
     public ConjuntRecomanacions cr;
     public ConjuntItems ci;
 
-    /**
-     * Id of the user/actor of the application
-     */
+    /* Id of the user/actor of the application */
     int id;
 
-    /**
-     * True if active user/actor has admin privileges
-     */
+    /* True if active user/actor has admin privileges */
     boolean admin;
 
-//CONSTRUCTORS
-    private ControladorDomini() {
-        cp = new ControladorPersistencia();
 
-        cda = new ControladorDominiAlgorisme();
+    /*----- CONSTRUCTORS -----*/
+
+    private ControladorDomini() {
+        cp = new ControladorPersistencia(); //S'haurà de canviar per getInst()
+        cda = new ControladorDominiAlgorisme(); //S'haurà de canviar per getInst()
 
         cu = new ConjuntUsuaris();
         cr = new ConjuntRecomanacions();
-        try {
-            ci = new ConjuntItems();
-        } catch (ItemStaticValuesNotInitializedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        //conjunt items no es pot inicialitzar(com a molt amb valors tontos però no cal)
 
         id = NULL_ID;
         admin = false;
     }
 
-//COSES USUARI/ADMIN
-    //LOGIN
-    //LOGOUT
-    //DEFINIR ADMIN
-    //TREURE ADMIN
-    //COMPROVAR SI ÉS ADMIN O SI TÉ PERMISOS O ALGO
 
-//COSES DADES
-    //CARREGAR CARPETA
-    //CARREGAR FITXER
-    //OBTENIR DADES
-        //RATINGS
-        //ITEMS
-        //USERS
-        //KNOWN
-        //UNKNOWN
+    /*----- SESSIONS/PRIVILEGIS -----*/
+    
 
-//USUARIS
-    //GET USER
-    //ADD USER
-    //REMOVE USER???
-
-//ITEMS
-    //GET ITEM
-    //ADD ITEM
-    //REMOVE ITEM???
-    //
-
-    //GET PES
-    //GET PESOS
-    //EDITAR PESOS
-    //
-
-//RECOMANACIONS
 
 
     
@@ -233,3 +199,57 @@ public class ControladorDomini {
     //get new recomendations
 
 }
+
+
+
+
+
+
+
+//COSES USUARI/ADMIN
+    //LOGIN
+    //LOGOUT
+    //DEFINIR ADMIN
+    //TREURE ADMIN
+    //COMPROVAR SI ÉS ADMIN O SI TÉ PERMISOS O ALGO
+
+//COSES DADES(implica carregar les dades als conjunts)(n'hi ha molts, estan als casos d'ús)
+    //CARREGAR CARPETA
+    //CARREGAR FITXER
+    //OBTENIR DADES
+        //RATINGS
+        //ITEMS
+        //USERS
+        //KNOWN
+        //UNKNOWN
+    //GUARDAR FITXERS
+
+//USUARIS
+    //GET USER
+    //ADD USER
+    //REMOVE USER???
+
+//ITEMS
+    //GET ITEM
+    //ADD ITEM
+    //REMOVE ITEM???
+    //
+
+    //GET PES
+    //GET PESOS
+    //EDITAR PESOS
+    //
+
+//RECOMANACIONS
+    //GET RECOMANACIONS?
+    //GET VALORACIONS
+    //MODIFY VALORACIO
+    //REMOVE RATING
+    //GENERAR RECOMANACIONS
+    //VALORAR RECOMANACIO
+
+
+//CANVIAR CONSTANTS
+    //K
+    //Q
+    //ALGORISME

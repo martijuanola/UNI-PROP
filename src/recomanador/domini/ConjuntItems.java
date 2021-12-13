@@ -40,7 +40,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public ConjuntItems() throws ItemStaticValuesNotInitializedException {
         if (Item.getCapçalera() == null || Item.getPesos() == null || Item.getPosId() == -1
                 || Item.getTipusArray() == null)
-            throw new ItemStaticValuesNotInitializedException(
+            throw new ItemStaticValuesNotInitializedException (
                     "To create an empty \"ConjuntItems\" you first have to initialize the Item static attributes.");
 
         inicialitzarMinMax();
