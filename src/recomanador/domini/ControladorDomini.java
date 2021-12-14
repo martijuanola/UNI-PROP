@@ -407,10 +407,30 @@ public class ControladorDomini {
 
     /*----- RECOMANACIONS -----*/
     
+    public ArrayList<ArrayList<String>> getRecomanacionsUsuariActiu() {
+        return cr.getRecomanacionsNoValorades(id).getAllRecomanacions();
+    }
+
+    public ArrayList<ArrayList<String>> getValoracionsUsuariActiu() {
+        return cr.getValoracions(id).getAllRecomanacions();
+    }
+
+    public void setValoracio(String itemId, String rating) throws RecommendationNotFoundException, RatingNotValidException {
+        cr.getRecomanacio(Integer.parseInt(itemId),id).setVal(Float.parseFloat(rating));
+    }
+
+    public void removeValoracio(String itemId) throws RecommendationNotFoundException, RatingNotValidException {
+        cr.getRecomanacio(Integer.parseInt(itemId),id).setVal(Recomanacio.nul);
+    }
 
 
-
-
+//RECOMANACIONS
+        //GET RECOMANACIONS DE USUARI ACTIU 
+        //GET VALORACIONS DE USUAR IACTIU
+        //MODIFY VALORACIO
+    //REMOVE VALORACIO
+    //GENERAR RECOMANACIONS
+    //VALORAR RECOMANACIO
 
     /*----- CANVI CONSTANTS -----*/
     /*----- USUARIS -----*/
