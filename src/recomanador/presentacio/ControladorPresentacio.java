@@ -20,9 +20,17 @@ public class ControladorPresentacio {
         return instancia;
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-        UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+    public static void obreVistaPrincipal() {
+        //new VistaPrincipal();
+    }
+
+    public static void obreVistaInicial() {
+        new VistaInicial();
+    }
+
+    public static void main(String[] args) {
+        //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         instancia = new ControladorPresentacio();
-        VistaInicial vi = new VistaInicial();
+        obreVistaInicial();
     }
 }

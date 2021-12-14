@@ -18,7 +18,7 @@ junitCL:
 	java -cp bin:.:/src/junits/junit.jar org.junit.runner.JUnitCore src.junits.TestControladorLoad 
 
 run:
-	java -cp bin:. src.Main
+	java -cp bin:. src.recomanador.presentacio.ControladorPresentacio
 
 ConjuntUsuaris:
 	cp ./src/stubs/StubUsuari.txt ./src/recomanador/domini/Usuari.java

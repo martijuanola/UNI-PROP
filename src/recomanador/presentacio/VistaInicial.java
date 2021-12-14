@@ -68,7 +68,6 @@ public class VistaInicial extends JFrame {
         a.setMinimumSize(new Dimension(290, 0));
         textId.add(a);
         textId.add(id);
-        System.out.println(a.getMinimumSize());
 
         //LAYER 4
         SessioNova = new JButton("Sessió nova");
@@ -87,7 +86,7 @@ public class VistaInicial extends JFrame {
         inicis.add(new JLabel());
         inicis.add(new JLabel());
         items = new JButton("Obrir");
-        items.setPreferredSize(new Dimension(65, 40));
+        items.setPreferredSize(new Dimension(85, 40));
         JPanel peinel = new JPanel(new FlowLayout());
         fitxerit = new JLabel("Fitxer items");
         peinel.add(fitxerit);
@@ -104,7 +103,7 @@ public class VistaInicial extends JFrame {
         inicis.add(new JLabel());
         inicis.add(new JLabel());
         ratings = new JButton("Obrir");
-        ratings.setPreferredSize(new Dimension(65, 40));
+        ratings.setPreferredSize(new Dimension(85, 40));
         JPanel panelrat = new JPanel(new FlowLayout());
         fitxerra = new JLabel("Fitxer valoracions");
         panelrat.add(fitxerra);
