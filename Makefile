@@ -18,6 +18,7 @@ junitCL:
 	java -cp bin:.:/src/junits/junit.jar org.junit.runner.JUnitCore src.junits.TestControladorLoad 
 
 run:
+	make compile
 	java -cp bin:. src.recomanador.presentacio.ControladorPresentacio
 
 ConjuntUsuaris:

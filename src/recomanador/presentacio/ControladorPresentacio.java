@@ -19,9 +19,24 @@ public class ControladorPresentacio {
         }
         return instancia;
     }
-
+	
+	public static String getId() {
+		//return domini.getId()
+		return "32";
+	}
+	
+	public static String getNomProjecte() {
+		//return domini.getId()
+		return "Un gran projecte";
+	}
+	
+	public static boolean isAdmin() {
+		//return domini.isAdmin()
+		return true;
+	}
+	
     public static void obreVistaPrincipal() {
-        //new VistaPrincipal();
+        new VistaPrincipal();
     }
 
     public static void obreVistaInicial() {
@@ -31,6 +46,20 @@ public class ControladorPresentacio {
     public static void main(String[] args) {
         //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         instancia = new ControladorPresentacio();
-        obreVistaInicial();
+        //obreVistaInicial();
+        obreVistaPrincipal();
     }
+    
+    public static void canviarFontUI (javax.swing.plaf.FontUIResource f){
+		//Informació extreta de:
+		//https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
+		
+		java.util.Enumeration keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get (key);
+			if (value instanceof javax.swing.plaf.FontUIResource)
+			UIManager.put(key, f);
+		}
+    } 
 }
