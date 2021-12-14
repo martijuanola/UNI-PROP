@@ -6,6 +6,7 @@ import src.recomanador.domini.Item.tipus;
 import src.recomanador.Utils.StringOperations;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ControladorDomini {
 
@@ -112,7 +113,7 @@ public class ControladorDomini {
 
     /*----- DATA & FILES -----*/
 
-    public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException{
+    public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException{
         cp.escollirProjecte(directory);
        
         try {
@@ -134,7 +135,15 @@ public class ControladorDomini {
             throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
         }
 
-//falten totes les constants
+        ArrayList<String> estat = cp.carregarEstat();
+
+        cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
+
+
+        //          0           | 1 | 2 |       3       |   4    |   5
+        //algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
+    
+
     }
 
     public void loadNewSession(String projName, String itemsFile, String usersFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException{
@@ -205,11 +214,114 @@ public class ControladorDomini {
         cp.guardarEstat(vals);
     }
 
-    //COSES DADES(implica carregar les dades als conjunts)(n'hi ha molts, estan als casos d'ús)
-        //CARREGAR CARPETA
-        //CARREGAR FITXER
-        //GUARDAR SESSIO
-    
+    /*----- TESTS -----*/
+
+    //K I ALGORISME SON ELS QUE JA S'HAN DEFINIT
+    ArrayList<Integer> runTest() throws FolderNotValidException, DataNotValidException {
+        int auxQ = cda.get_Q(); //per no perdre el valor
+        ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
+
+        try {
+            cda.set_Q(ci.size()/2);
+        }
+        catch (DataNotValidException e) {
+            throw new DataNotValidException(ci.size()/2,"Q needs to be greater than 0(There are no items)");
+        }
+
+        ConjuntUsuaris usuarisUnknown = new ConjuntUsuaris();
+        ConjuntRecomanacions recomanacionsUnknown = new ConjuntRecomanacions();
+        ConjuntUsuaris usuaris = new ConjuntUsuaris();
+        ConjuntRecomanacions recomanacions = new ConjuntRecomanacions();
+        
+        //UNKNOWN
+        ArrayList<ArrayList<String>> raw = cp.carregarTestUnknown();
+        usuarisUnknown.afegirDades(raw);
+        try {
+            recomanacionsUnknown.afegirDades(ci,usuarisUnknown,raw);
+        }
+        catch(DataNotValidException e) {
+            throw new FolderNotValidException("There is invalid data in ratings file", true);
+        }
+        catch(ItemNotFoundException | UserNotFoundException e) {
+            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
+        }
+
+        //KNOWN
+        raw = cp.carregarTestKnown();
+        usuaris.afegirDades(cr.getAllRecomanacions());
+        usuaris.afegirDades(raw);
+
+        try {
+            recomanacions.afegirDades(ci,cu,cr.getAllRecomanacions());
+            recomanacions.afegirDades(ci,usuaris,raw);
+        }
+        catch(DataNotValidException e) {
+            throw new FolderNotValidException("There is invalid data in ratings file", true);
+        }
+        catch(ItemNotFoundException | UserNotFoundException e) {
+            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
+        }
+
+        int DCG = 0;
+        int IDCG = 0;
+
+        for(int idx_unknown = 0; idx_unknown < usuarisUnknown.size(); ++idx_unknown) {
+            int id_unknown = usuarisUnknown.get(idx_unknown).getId();
+            ConjuntRecomanacions val_unknown_aux = recomanacionsUnknown.getValoracions(usuarisUnknown.get(idx_unknown).getId());
+
+            //Per calcular el NDGC, ens cal ordenar les valoracions de l'usuari a Unknown per valoraciÃ³.
+            //Per fer-ho, podem reutilitzar la classe itemValoracioEstimada
+            ArrayList<ItemValoracioEstimada> val_unknown = new ArrayList<ItemValoracioEstimada>(0);
+            for (int val_idx = 0; val_idx < val_unknown_aux.size(); ++val_idx) {
+                val_unknown.add(new ItemValoracioEstimada
+                (val_unknown_aux.get(val_idx).getVal(), val_unknown_aux.get(val_idx).getItem()));
+            }
+            Collections.sort(val_unknown);
+
+            try {
+                items_recomanats = cda.run_algorithm(id_unknown, ci, usuaris, recomanacions);
+            }
+            catch(UserNotFoundException e) {
+                System.out.print("ERROR!! Algo va malament als testos" + e.getMessage());
+                return null;
+            }
+
+            int DCG_user = 0;
+
+            for (int val_idx = 0; val_idx < val_unknown.size(); ++val_idx) {
+                Item item_unknown = val_unknown.get(val_idx).item;
+
+                //System.out.println(val_unknown.get(val_idx).valoracioEstimada);
+
+                int i = 0;
+                while (i < items_recomanats.size() && items_recomanats.get(i).item != item_unknown) ++i;
+                
+                ++i; //the first index is 1. zero gives infinity and we wouldn't want to claim our algorithm is infinitely good.
+
+                if (i < items_recomanats.size()) {
+                    DCG_user += (int) Math.round((Math.pow(2, val_unknown.get(val_idx).valoracioEstimada) - 1)/(Math.log(i+1)/Math.log(2)));
+                    IDCG += Math.round((Math.pow(2, val_unknown.get(val_idx).valoracioEstimada) - 1)/(Math.log(val_idx+1+1)/Math.log(2)));
+                }                        
+            }
+
+            System.out.println("L'usuari " +id_unknown+ " contribueix " +DCG_user+ " al DCG.");
+            System.out.println("("+(idx_unknown+1)+"/"+usuarisUnknown.size()+")");
+            System.out.println();
+            DCG += DCG_user;
+        }
+
+        System.out.println("DCG TOTAL: " + DCG);
+        System.out.println("IDCG TOTAL: " + IDCG);
+        System.out.println("NORMALIZED DCG : " + DCG/IDCG);
+
+        cda.set_Q(auxQ); //reset de la Q anterior
+
+        ArrayList<Integer> result = new ArrayList<Integer>(0);
+        result.add(DCG);
+        result.add((100*DCG)/IDCG);
+        return result;
+    }
+
 }
 
 
