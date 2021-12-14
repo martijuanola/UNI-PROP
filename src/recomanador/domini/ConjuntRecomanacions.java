@@ -137,10 +137,10 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         ArrayList<String> header = new ArrayList<String>(0); header.add("userId"); header.add("itemId"); header.add("rating");
         D.add(header);
         for(int i = 0; i < this.size();i++){
-            ArrayList<String> aux = new ArrayList<String>(3);
-            aux.set(0,String.valueOf(this.get(i).getUsuari().getId()));
-            aux.set(1,String.valueOf(this.get(i).getItem().getId()));
-            aux.set(2,String.valueOf(this.get(i).getVal()));
+            ArrayList<String> aux = new ArrayList<String>(0);
+            aux.add(String.valueOf(this.get(i).getUsuari().getId()));
+            aux.add(String.valueOf(this.get(i).getItem().getId()));
+            aux.add(String.valueOf(this.get(i).getVal()));
             D.add(aux);
         }
         return D;
