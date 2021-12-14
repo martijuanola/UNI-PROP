@@ -131,6 +131,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public static String getNomCjItems() {
         return nom;
     }
+
     /**
      * Return the item specified by its id
      * @param id ID of the item to get
@@ -183,6 +184,10 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     /*----- SETTERS -----*/
+
+    public static void setNomCjItems(String s) {
+        nom = s;
+    }
 
     //TODO: setMinAtributs hauria de ser private
     /**

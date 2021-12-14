@@ -113,7 +113,7 @@ public class ControladorDomini {
 
     /*----- DATA & FILES -----*/
 
-    public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException{
+    public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
         cp.escollirProjecte(directory);
        
         try {
@@ -138,12 +138,22 @@ public class ControladorDomini {
         ArrayList<String> estat = cp.carregarEstat();
 
         cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
+        cda.set_Q(Integer.parseInt(estat.get(1)));
+        cda.set_k(Integer.parseInt(estat.get(2)));
 
+        ci.setNomCjItems(estat.get(3));
 
-        //          0           | 1 | 2 |       3       |   4    |   5
-        //algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
-    
-
+        try{
+            Item.setId(Integer.parseInt(estat.get(4)));
+            Item.setNomA(Integer.parseInt(estat.get(5)));
+        }
+        catch(ItemIdNotValidException e) {
+            throw new DataNotValidException(estat.get(4),"El valor guardat de POS ITEM ID no és correcte!");
+        }
+        catch(ItemStaticValuesAlreadyInitializedException e) {
+            System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
+            return;
+        }
     }
 
     public void loadNewSession(String projName, String itemsFile, String usersFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException{
@@ -173,7 +183,24 @@ public class ControladorDomini {
         saveSession();
     }
 
-//crear nova buida
+    public void createSession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws FolderNotValidException, ItemTypeNotValidException {
+        cp.crearProjecte(projName);
+
+        ArrayList<tipus> tipusAtributs = new ArrayList<tipus>(0);
+        for(int i = 0; i < tipusAtriubtsS.size(); i++) tipusAtributs.add(StringOperations.stringToType(tipusAtriubtsS.get(i)));
+
+        try {
+            Item.setNomAtributs(nomsAtriubts);
+            Item.setTipusArray(tipusAtributs);
+        }
+        catch(ItemStaticValuesAlreadyInitializedException e) {
+            System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
+            return;
+        }
+
+        //Primer Save
+        saveSession();
+    }
 
     public void saveSession() throws FolderNotValidException {
         //CONVERSIONS de coses d'items
@@ -282,7 +309,7 @@ public class ControladorDomini {
                 items_recomanats = cda.run_algorithm(id_unknown, ci, usuaris, recomanacions);
             }
             catch(UserNotFoundException e) {
-                System.out.print("ERROR!! Algo va malament als testos" + e.getMessage());
+                System.out.print("ERROR INTERN!! Algo va malament als testos" + e.getMessage());
                 return null;
             }
 
@@ -378,5 +405,6 @@ public class ControladorDomini {
     //ALGORISME
     //GET CAPÇALERA
 
-
+//ALTRES
+    //PASSAR TIPUS STRINGS CAP A PRESENTACIÓ
 
