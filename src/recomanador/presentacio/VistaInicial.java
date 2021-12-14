@@ -1,20 +1,15 @@
 package src.recomanador.presentacio;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import src.recomanador.domini.ControladorDomini;
-
-public class test extends JFrame {
-    private static ControladorDomini domini;
-    private static test instancia = null;
-
-    int count = 0;
-
+public class VistaInicial extends JFrame {
     JPanel panel;
 
     JRadioButton admin;
@@ -32,82 +27,97 @@ public class test extends JFrame {
     JButton CarregaDades;
     JPanel inicis;
 
+    JLabel fitxerit;
     JButton items;
     JComboBox<String> preprocessat;
     JPanel selectors;
 
+    JLabel fitxerra;
     JButton ratings;
     JPanel PRatings;
 
-    private test() {
-        domini = ControladorDomini.getInstance();
+    Path itemsFile;
+    Path ratingsFile;
+    
+    public VistaInicial() {
         //domini = new ControladorDomini();
-        setMinimumSize(new Dimension(200, 150));
+        setMinimumSize(new Dimension(550, 250));
         setSize(new Dimension(1000, 900));
 
         panel = new JPanel();
 
         //LAYER 1
-        user = new JRadioButton("User", false);
+        user = new JRadioButton("User", true);
         admin = new JRadioButton("Administrador", false);
         mode = new ButtonGroup();
         mode.add(user);
         mode.add(admin);
-        mode.clearSelection();
         escollirUA = new JPanel();
-        escollirUA.setLayout(new BoxLayout(escollirUA, BoxLayout.LINE_AXIS));
+        escollirUA.setLayout(new FlowLayout());
         escollirUA.add(admin);
         escollirUA.add(Box.createRigidArea(new Dimension(100, 0)));
         escollirUA.add(user);
 
         //LAYER 2
         id = new JTextField("ID usuari");
+        id.setColumns(10);
         textId = new JPanel();
-        textId.setLayout(new BoxLayout(textId, BoxLayout.LINE_AXIS));
+        textId.setLayout(new FlowLayout());
+        JLabel a = new JLabel("");
+        a.setPreferredSize(new Dimension(290, 30));
+        a.setMinimumSize(new Dimension(290, 0));
+        textId.add(a);
         textId.add(id);
-
-        //LAYER 3
-        space = new JPanel();
-        space.setLayout(new GridLayout());
+        System.out.println(a.getMinimumSize());
 
         //LAYER 4
         SessioNova = new JButton("Sessió nova");
+        SessioNova.setMaximumSize(new Dimension(1000, 50));
+        SessioNova.setEnabled(false);
         CarregaFitxers = new JButton("Carregar fitxers");
         CarregaDades = new JButton("Carregar dades");
         inicis = new JPanel();
-        inicis.setLayout(new BoxLayout(inicis, BoxLayout.LINE_AXIS));
+        inicis.setLayout(new GridLayout(3, 5));
+        inicis.add(new JLabel());
         inicis.add(SessioNova);
         inicis.add(CarregaFitxers);
         inicis.add(CarregaDades);
+        inicis.add(new JLabel());
 
-        //LAYER 5
-        items = new JButton("Fitxer d'items");
+        inicis.add(new JLabel());
+        inicis.add(new JLabel());
+        items = new JButton("Obrir");
+        items.setPreferredSize(new Dimension(65, 40));
+        JPanel peinel = new JPanel(new FlowLayout());
+        fitxerit = new JLabel("Fitxer items");
+        peinel.add(fitxerit);
+        peinel.add(items);
 		preprocessat = new JComboBox<String>();
         preprocessat.addItem("carpeta 1");
         preprocessat.addItem("carpeta 2");
         preprocessat.addItem("carpeta 3");
         preprocessat.addItem("carpeta de porno furro");
-        selectors = new JPanel();
-        selectors.setLayout(new BoxLayout(selectors, BoxLayout.LINE_AXIS));
-        selectors.add(items);
-        selectors.add(preprocessat);
+        inicis.add(peinel);
+        inicis.add(preprocessat);
+        inicis.add(new JLabel());
 
-        //LAYER 6
-        ratings = new JButton("Fitxer de valoracions");
-        PRatings = new JPanel();
-        PRatings.setLayout(new BoxLayout(PRatings, BoxLayout.LINE_AXIS));
-        PRatings.add(ratings);
+        inicis.add(new JLabel());
+        inicis.add(new JLabel());
+        ratings = new JButton("Obrir");
+        ratings.setPreferredSize(new Dimension(65, 40));
+        JPanel panelrat = new JPanel(new FlowLayout());
+        fitxerra = new JLabel("Fitxer valoracions");
+        panelrat.add(fitxerra);
+        panelrat.add(ratings);
+        inicis.add(panelrat);
+        inicis.add(new JLabel());
+        inicis.add(new JLabel());
 
-
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
-        panel.setLayout(new GridLayout(6, 1)); //Canviar a boxlayout (probablement) per donar més espai al 5 i menys al 3
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
+        panel.setLayout(new GridLayout(3, 1));
         panel.add(escollirUA);
         panel.add(textId);
-        panel.add(space);
         panel.add(inicis);
-        panel.add(selectors);
-        panel.add(PRatings);
-
 
         add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -136,47 +146,58 @@ public class test extends JFrame {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 fc.setDialogTitle("Escull l'arxiu amb els items");
+                fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
                 FileNameExtensionFilter filter = new FileNameExtensionFilter(" .csv", "csv");
                 fc.setFileFilter(filter);
 
                 int returnVal = fc.showOpenDialog(fc);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile();
-                    System.out.println("Opening: " + file.getName() + ".");
+                    itemsFile = Paths.get(file.getAbsolutePath());
+                    Path base = Paths.get(System.getProperty("user.dir"));
+                    Path relative = base.relativize(Paths.get(file.getAbsolutePath()));
+                    System.out.println("Opening: " + relative + ".");
+                    fitxerit.setText(file.getName());
                 }
-                else System.out.println("Open command cancelled by user.");
+                else System.out.println("Open items file cancelled by user.");
             } 
         });
 
         ratings.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) { 
-
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 fc.setDialogTitle("Escull l'arxiu amb les valoracions");
+                fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
                 FileNameExtensionFilter filter = new FileNameExtensionFilter(" .csv", "csv");
                 fc.setFileFilter(filter);
 
                 int returnVal = fc.showOpenDialog(fc);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile();
-                    System.out.println("Opening: " + file.getName() + ".");
+                    ratingsFile = Paths.get(file.getAbsolutePath());
+                    Path base = Paths.get(System.getProperty("user.dir"));
+                    Path relative = base.relativize(Paths.get(file.getAbsolutePath()));
+                    System.out.println("Opening: " + relative + ".");
+                    fitxerra.setText(file.getName());
                 }
-                else System.out.println("Open command cancelled by user.");
+                else System.out.println("Open ratings file cancelled by user.");
             } 
+        });
+
+        user.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                SessioNova.setEnabled(false);
+                id.setEnabled(true);
+            }
+        });
+
+        admin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                SessioNova.setEnabled(true);
+                id.setEnabled(false);
+            }
         });
     }
 
-
-    public static test getInstance() {
-        if (instancia == null) {
-            instancia = new test();
-        }
-        return instancia;
-    }
-
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-        UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-        instancia = new test();
-    }
 }
