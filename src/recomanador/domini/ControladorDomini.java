@@ -34,6 +34,7 @@ public class ControladorDomini {
         return inst;
     }
 
+
     /*----- CONSTANTS -----*/
     
     /* Value that represents null in the atribute id */
@@ -241,6 +242,7 @@ public class ControladorDomini {
         cp.guardarEstat(vals);
     }
 
+
     /*----- TESTS -----*/
 
     //K I ALGORISME SON ELS QUE JA S'HAN DEFINIT
@@ -349,6 +351,24 @@ public class ControladorDomini {
         return result;
     }
 
+
+    
+
+
+
+
+
+
+
+
+
+
+    /*----- ITEMS -----*/
+    /*----- RECOMANACIONS -----*/
+    /*----- CANVI CONSTANTS -----*/
+    /*----- ALTRES -----*/
+    /*----- USUARIS -----*/
+
 }
 
 
@@ -373,37 +393,44 @@ public class ControladorDomini {
 //TESTS
     //Obtenir constant aquella amb unknow i known
 
-//USUARIS
-    //GET USER
-    //ADD USER
-    //REMOVE USER???
-
 //ITEMS
-    //GET ITEM
-    //ADD ITEM
-    //REMOVE ITEM???
-    //GET INFO ITEM
+    //GET ALL ITEM
+    //GET ITEM??
+    //GET POS ID
+    //GET NOM ITEM
+    //EDITAR NOM ITEM(en cas de construïr)
+    //GET CAPÇALERA
 
-    //GET PES
+    //ADD ITEM
+    //MODIFICAR ITEM
+    //REMOVE ITEM
+
     //GET PESOS
     //EDITAR PESOS
-    //
+
 
 //RECOMANACIONS
-    //GET RECOMANACIONS?
     //GET RECOMANACIONS DE USUARI ACTIU 
-    //GET VALORACIONS
+    //GET VALORACIONS DE USUAR IACTIU
     //MODIFY VALORACIO
-    //REMOVE RATING
+    //REMOVE VALORACIO
     //GENERAR RECOMANACIONS
     //VALORAR RECOMANACIO
 
+//USUARIS
+    //GET ALL USERS
+    //GET USER??
+    
+    //ADD USER
+    //REMOVE USER
+    //MODIFY USER
+    
 
-//CANVIAR CONSTANTS(gets i sets)
+//ALGORISME CONSTANT(gets i sets)
     //K
     //Q
     //ALGORISME
-    //GET CAPÇALERA
+
 
 //ALTRES
     //PASSAR TIPUS STRINGS CAP A PRESENTACIÓ

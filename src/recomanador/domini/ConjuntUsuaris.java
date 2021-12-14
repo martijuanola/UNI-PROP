@@ -106,6 +106,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      */
     public void afegirDades(ArrayList<ArrayList<String>> raw) throws DataNotValidException {
         int prev = 0;
+        //es salta el header
         for(int i = 1; i < raw.size(); i++) {
             try {
                 int newID = Integer.parseInt(raw.get(i).get(0));
