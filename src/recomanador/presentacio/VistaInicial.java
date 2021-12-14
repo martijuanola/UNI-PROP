@@ -107,10 +107,14 @@ public class VistaInicial extends JFrame {
         peinel.add(fitxerit);
         peinel.add(items);
 		preprocessat = new JComboBox<String>();
+        for (int i = 0; i < projectesDisponibles.size(); ++i) {
+            preprocessat.addItem(projectesDisponibles.get(i));
+        }
+        //TODO:/*****NOMES PER TESTING!!!!!!!!!!!!!!!!!!!!!! */
         preprocessat.addItem("testing-load-basic");
+        //TODO:/*****NOMES PER TESTING!!!!!!!!!!!!!!!!!!!!!! */
         preprocessat.addItem("test-conjuntItems");
-        preprocessat.addItem("carpeta 1");
-        preprocessat.addItem("carpeta 2");
+
         inicis.add(peinel);
         inicis.add(preprocessat);
         inicis.add(new JLabel());
@@ -237,16 +241,8 @@ public class VistaInicial extends JFrame {
                 try {
                     ControladorPresentacio.carregarProjecte(preprocessat.getSelectedItem().toString());
                 }
-                catch (FolderNotFoundException e2) {
-                    new VistaError("No s'ha trobat el projecte.");
-                    return;
-                }
-                catch (FolderNotValidException e2) {
-                    new VistaError("El projecte no es vàlid.");
-                    return;
-                }
-                catch (DataNotValidException e2) {
-                    new VistaError("Les dades que conté el projecte no estan en el format correcte.");
+                catch (Exception e2) {
+                    new VistaError(e2.getMessage());
                     return;
                 }
 
@@ -254,12 +250,8 @@ public class VistaInicial extends JFrame {
                     try {
                         ControladorPresentacio.logInUser(Integer.parseInt(id.getText()));
                     }
-                    catch (NumberFormatException e1) {
-                        new VistaError("Identificador d'usuari en format incorrecte.");
-                        return;
-                    }
-                    catch (AlreadyLogedInException e1) {
-                        new VistaError("Ja hi havia una sessió iniciada.");
+                    catch (Exception e2) {
+                        new VistaError(e2.getMessage());
                         return;
                     }
                 }
@@ -267,8 +259,8 @@ public class VistaInicial extends JFrame {
                     try {
                         ControladorPresentacio.logInAdmin();
                     }
-                    catch (AlreadyLogedInException e1) {
-                        new VistaError("Ja hi havia una sessió iniciada.");
+                    catch (Exception e2) {
+                        new VistaError(e2.getMessage());
                         return;
                     }
                 }
@@ -301,16 +293,8 @@ public class VistaInicial extends JFrame {
                 try {
                     ControladorPresentacio.carregarProjecteNou(nomProjecte.getText(), itemsFile, ratingsFile);
                 }
-                catch (FolderNotValidException e2) {
-                    new VistaError("El nom del projecte no és vàlid.");
-                    return;
-                }
-                catch (FileNotValidException e2) {
-                    new VistaError("Hi ha un fitxer que no té el format correcte.");
-                    return;
-                }
-                catch (FileNotFoundException e2) {
-                    new VistaError("No s'ha trobat un fitxer.");
+                catch (Exception e2) {
+                    new VistaError(e2.getMessage());
                     return;
                 }
 
@@ -318,12 +302,8 @@ public class VistaInicial extends JFrame {
                     try {
                         ControladorPresentacio.logInUser(Integer.parseInt(id.getText()));
                     }
-                    catch (NumberFormatException e1) {
-                        new VistaError("Identificador d'usuari en format incorrecte.");
-                        return;
-                    }
-                    catch (AlreadyLogedInException e1) {
-                        new VistaError("Ja hi havia una sessió iniciada.");
+                    catch (Exception e1) {
+                        new VistaError(e1.getMessage());
                         return;
                     }
                 }
@@ -331,15 +311,33 @@ public class VistaInicial extends JFrame {
                     try {
                         ControladorPresentacio.logInAdmin();
                     }
-                    catch (AlreadyLogedInException e1) {
-                        new VistaError("Ja hi havia una sessió iniciada.");
+                    catch (Exception e1) {
+                        new VistaError(e1.getMessage());
                         return;
                     }
                 }
                 
-                ControladorPresentacio.obreVistaPrincipal();
+                ControladorPresentacio.obreVistaEscollirAtributs();
                 dispose();
             }
+        });
+    
+        SessioNova.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (user.isSelected()) {
+                    new VistaError("Només un administrador pot crear una sessió nova");
+                    return;
+                }
+
+                if (nomProjecte.getText().equals("") || nomProjecte.getText().equals("Nom nou projecte")) {
+                    new VistaError("Nom del Projecte buit.");
+                    return;
+                }          
+
+                ControladorPresentacio.obreVistaSessioNova(nomProjecte.getText());
+                dispose();
+            }
+
         });
     }
 }

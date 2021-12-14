@@ -26,6 +26,7 @@ public class ControladorPresentacio {
     }
 
     public static void obreVistaPrincipal() {
+        //TODO:OMPLIR
         new VistaError("OBERTA VISTA PRINCIPAL!");
     }
 
@@ -50,7 +51,18 @@ public class ControladorPresentacio {
     }
 
     public static ArrayList<String> getProjectesDisponibles() {
+        //TODO:OMPLIR
         return new ArrayList<String>();
+    }
+
+    public static void obreVistaSessioNova(String text) {
+        //TODO:OMPLIR
+        new VistaError("OBRE SESSIO NOVA");
+    }
+
+    public static void obreVistaEscollirAtributs() {
+        //TODO:OMPLIR
+        new VistaError("OBRE SESSIO NOVA");
     }
 
     public static void main(String[] args) {
@@ -58,4 +70,5 @@ public class ControladorPresentacio {
         instancia = new ControladorPresentacio();
         obreVistaInicial();
     }
+
 }
