@@ -45,7 +45,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @throws     UserIdNotValidException      Thrown if a user id was not found.
      * @throws     ItemIdNotValidException      Thrown if a item id was not found.
      */
-    public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException {
+    public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
     	this.afegirDades(ci,cu,raw);
     }
 
@@ -132,6 +132,18 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return cv;
     }
 
+    public ArrayList<ArrayList<String>> getAllRecomanacions() {
+        ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>(0);
+        for(int i = 0; i < this.size();i++){
+            ArrayList<String> aux = new ArrayList<String>(3);
+            aux.set(0,String.valueOf(this.get(i).getUsuari().getId()));
+            aux.set(1,String.valueOf(this.get(i).getItem().getId()));
+            aux.set(2,String.valueOf(this.get(i).getVal()));
+            D.add(aux);
+        }
+        return D;
+    }
+
     /*----- MODIFICADORES -----*/
 
     /**
@@ -165,7 +177,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @throws     UserIdNotValidException      Thrown if a user id was not found.
      * @throws     ItemIdNotValidException      Thrown if a item id was not found.
      */
-    public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, RatingNotValidException, UserIdNotValidException, ItemIdNotValidException {
+    public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
         raw.remove(0);//elimina la capçalera
 
         for(ArrayList<String> fila : raw) {
@@ -177,24 +189,24 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
                 v = Float.parseFloat(fila.get(2));
             }
             catch(NumberFormatException e) {
-                throw new RatingNotValidException(fila.get(2));
+                throw new DataNotValidException(fila.get(2),"Rating value not valid. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
             }
 
-            if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
+            if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new DataNotValidException(fila.get(2),"Rating value not valid. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
 
             try {
                 i = ci.getItem(Integer.parseInt(fila.get(1)));
             }
             catch(NumberFormatException e) {
-                throw new ItemIdNotValidException(fila.get(1));
+                throw new DataNotValidException(fila.get(1),"Item ID not valid. Needs to be an integer.");
             }
 
             try {
-                //no es fa existei perquè ja hauria d'existir(previament inicialitzat) sino dona l'excepció que toca
+                //no es fa existeix perquè ja hauria d'existir(previament inicialitzat) sino dona l'excepció que toca
                 u = cu.getUsuari(Integer.parseInt(fila.get(0)));
             }
             catch(NumberFormatException e) {
-                throw new ItemIdNotValidException(fila.get(0));
+                throw new DataNotValidException(fila.get(0),"User ID not valid. Needs to be an integer.");
             }
 
             Recomanacio r = new Recomanacio(u, i, v);

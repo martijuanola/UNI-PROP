@@ -35,7 +35,7 @@ public class DriverConjuntItems {
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
 		inicialitzat = false;
-		cp = new ControladorPersistencia();
+		cp = ControladorPersistencia.getInstance();
 		
 		String s = "Options: \n" +
 		"-1. exit\n" +
@@ -303,9 +303,13 @@ public class DriverConjuntItems {
 				for (int i = 0; i < minIS.size(); ++i) {
 					minI.add(Float.parseFloat(minIS.get(i)));
 				}
+
+				int posID = Integer.parseInt(cp.carregarEstat().get(4));
+				int posNOM = Integer.parseInt(cp.carregarEstat().get(5));
+				String cjtNOM = cp.carregarEstat().get(3);
 				
 				ci = new ConjuntItems(cp.carregarItemsCarpeta(), pesos, tipus, 
-				cp.getPosicioID(), cp.getPosicioNom(), cp.getNomConjuntItems(), maxI, minI);
+				posID, posNOM, cjtNOM, maxI, minI);
 			}
 			catch (Exception e) {
 				System.out.println("ERROR: " + e.getMessage());
@@ -785,7 +789,7 @@ public class DriverConjuntItems {
 	}
 
     private static void printCurrentState() {
-		if (ConjuntItems.nom != null) System.out.println(ConjuntItems.nom);
+		if (ConjuntItems.getNomCjItems() != null) System.out.println(ConjuntItems.getNomCjItems());
 		else System.out.println("This set has no name");
 		System.out.println(ci.size() + " items loaded with " + Item.getNumAtributs() + " attributes each one");
 		System.out.println("name_colum type weight maxAttributes minAtributes: ");

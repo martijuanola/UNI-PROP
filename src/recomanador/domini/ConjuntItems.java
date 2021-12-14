@@ -21,7 +21,7 @@ public class ConjuntItems extends ArrayList<Item> {
     /**
      * Nom conjunt d'items
      */
-    public static String nom = null;
+    private static String nom = null;
 
     /**
      * Maximum attributes for each column. Columns with strings, names and booleans will have random data
@@ -62,7 +62,6 @@ public class ConjuntItems extends ArrayList<Item> {
      * @throws ItemWeightNotCorrectException Is thrown if it tries to assign a weight out of the range (0-100)
      * @throws ItemStaticValuesAlreadyInitializedException
      * @throws ItemIdNotValidException
-     * @throws ArrayIndexOutOfBoundsException
      * @throws ItemNewAtributesNotValidException
      * @throws ItemStaticValuesNotInitializedException
      */
@@ -129,6 +128,9 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- GETTERS -----*/
 
+    public static String getNomCjItems() {
+        return nom;
+    }
     /**
      * Return the item specified by its id
      * @param id ID of the item to get

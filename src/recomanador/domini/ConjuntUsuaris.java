@@ -36,7 +36,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @exception  UserIdNotValidException Gets thrown if the string for a user id is can not be converted to int
      * @throws     DataNotValidException    The input data is not valid
      */
-    public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws DataNotValidException, UserIdNotValidException {
+    public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws DataNotValidException {
         this.afegirDades(raw);
     }
 
@@ -104,7 +104,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @throws     DataNotValidException    The input data is not valid
      * @throws     UserIdNotValidException  User id is not valid
      */
-    public void afegirDades(ArrayList<ArrayList<String>> raw) throws UserIdNotValidException, DataNotValidException {
+    public void afegirDades(ArrayList<ArrayList<String>> raw) throws DataNotValidException {
         int prev = 0;
         for(int i = 1; i < raw.size(); i++) {
             try {
@@ -114,7 +114,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
                 prev = newID;
             }
             catch(NumberFormatException e) {
-                throw new UserIdNotValidException(raw.get(i).get(0));
+                throw new DataNotValidException(raw.get(i).get(0),"User ID not valid. Needs to be an integer.");
             }
             catch(IndexOutOfBoundsException e) {
                 throw new DataNotValidException(i,"Error amb l'input raw de ConjuntsUsuaris a l'iteració: ");

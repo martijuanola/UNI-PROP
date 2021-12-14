@@ -6,8 +6,11 @@ public class DataNotValidException extends Exception {
 		super(message + " Data("+d+")");
 	}
 
-	public DataNotValidException(String d, String message) {
+	public DataNotValidException(float d, String message) {
 		super(message + " Data("+d+")");
 	}
 
+	public DataNotValidException(String d, String message) {
+		super(message + " Data("+d+")");
+	}
 }

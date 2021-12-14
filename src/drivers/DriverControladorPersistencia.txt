@@ -1005,9 +1005,9 @@ public class DriverControladorPersistencia {
 		//executar la funcionalitat
 		try
 		{
-			ArrayList<Float> af = new ArrayList<Float>();
-			for (int i = 0; i < 25; ++i) af.add(new Float(i)); 
-			c.guardarPesosAtributs(af);
+			ArrayList<String> as = new ArrayList<String>();
+			for (int i = 0; i < 25; ++i) as.add(String.valueOf(i)); 
+			c.guardarPesosAtributs(as);
 		}catch(Exception e) {
 			System.out.println("ERROR!!!");
 			System.out.println(e.getMessage());

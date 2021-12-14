@@ -5,19 +5,7 @@ import src.recomanador.domini.ConjuntRecomanacions;
 import src.recomanador.domini.ConjuntUsuaris;
 import src.recomanador.domini.ControladorDominiAlgorisme;
 import src.recomanador.domini.Item;
-import src.recomanador.excepcions.FolderNotFoundException;
-import src.recomanador.excepcions.FolderNotValidException;
-import src.recomanador.excepcions.ItemIdNotValidException;
-import src.recomanador.excepcions.ItemNewAtributesNotValidException;
-import src.recomanador.excepcions.ItemNotFoundException;
-import src.recomanador.excepcions.ItemStaticValuesAlreadyInitializedException;
-import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
-import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-import src.recomanador.excepcions.RatingNotValidException;
-import src.recomanador.excepcions.UserIdNotValidException;
-import src.recomanador.excepcions.UserNotFoundException;
-import src.recomanador.excepcions.DataNotValidException;
+import src.recomanador.excepcions.*;
 
 import src.recomanador.persistencia.*;
 import java.util.ArrayList;
@@ -49,7 +37,7 @@ public class DriverControladorDominiAlgorisme {
 
         Scanner in= new Scanner(System.in);
         ControladorDominiAlgorisme algorisme = new ControladorDominiAlgorisme();
-        cp = new ControladorPersistencia();
+        cp = ControladorPersistencia.getInstance();
 
         System.out.println();
         System.out.println("DRIVER ALGORISME");
@@ -310,25 +298,15 @@ public class DriverControladorDominiAlgorisme {
         try {
             ArrayList<ArrayList<String>> items_raw = cp.carregarItemsCarpeta();
             items = null;
-            try {try {
-                items = new ConjuntItems(items_raw);
-            } catch (ArrayIndexOutOfBoundsException | ItemStaticValuesNotInitializedException
-                    | ItemNewAtributesNotValidException e) {
-                System.out.println("ERROR: " + e.getMessage());
-                return;
-            }}
-            catch (ItemStaticValuesAlreadyInitializedException e) {System.out.println(e);}
+            items = new ConjuntItems(items_raw);
 
             ArrayList<ArrayList<String>> valoracions_raw = cp.carregarRecomanacionsCarpeta();            
             usuaris = new ConjuntUsuaris(valoracions_raw);
             recomanacions = new ConjuntRecomanacions(items,usuaris,valoracions_raw);
         }
-        catch(ItemTypeNotValidException | ItemWeightNotCorrectException e) {
-            //també un altre not valid file o algo així, es pot diferenciar de la resta passant un string a cada cas
-            //o sigui mateixa excepcion però amb missatges d'error diferents
-        }
-        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
-            //throw new invalid file o algo d'aquest estil
+        catch (Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
+            return;
         }
     }
 }

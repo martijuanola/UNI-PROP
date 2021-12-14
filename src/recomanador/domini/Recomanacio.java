@@ -1,8 +1,6 @@
 package src.recomanador.domini;
 
-import src.recomanador.excepcions.RatingNotValidException;
-import src.recomanador.excepcions.RecommendationRatedException;
-import src.recomanador.excepcions.RecommendationNotRatedException;
+import src.recomanador.excepcions.*;
 
 
 /**
@@ -48,8 +46,8 @@ public class Recomanacio implements Comparable<Recomanacio> {
      * @param      i     Item
      * @param      v     Rating
      */
-    public Recomanacio(Usuari u, Item i, float v) throws RatingNotValidException {
-        if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
+    public Recomanacio(Usuari u, Item i, float v) throws DataNotValidException {
+        if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new DataNotValidException(v,"Rating value not valid. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
         usr = u;
         item = i;
         valoracio = v;

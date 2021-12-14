@@ -44,7 +44,7 @@ public class DriverConjuntRecomanacions {
     
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
-   		cp = new ControladorPersistencia();
+   		cp = ControladorPersistencia.getInstance();
 		class_initalised = false;
 		
 		String s = "Options: \n" +
@@ -157,7 +157,7 @@ public class DriverConjuntRecomanacions {
         	raw = cp.carregarFitxerExtern(s1);
             cu = new ConjuntUsuaris(raw);
         }
-        catch(FileNotValidException | FileNotFoundException | DataNotValidException | UserIdNotValidException e) {
+        catch(FileNotValidException | FileNotFoundException | DataNotValidException e) {
             System.out.print("ERROR: " + e.getMessage());
             return;
         }
@@ -167,7 +167,7 @@ public class DriverConjuntRecomanacions {
         try {
        		c = new ConjuntRecomanacions(ci,cu,raw);
        	}
-       	catch(ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+       	catch(ItemNotFoundException | UserNotFoundException | DataNotValidException e) {
        		System.out.print("ERROR: " + e.getMessage());
             return;
        	}
@@ -305,7 +305,7 @@ public class DriverConjuntRecomanacions {
 		try{
 			r = new Recomanacio(u,i,f);
 		}
-		catch(RatingNotValidException e) {
+		catch(DataNotValidException e) {
 			System.out.println("ERROR: "+ e.getMessage());
 			return;
 		}
@@ -340,15 +340,15 @@ public class DriverConjuntRecomanacions {
         	raw = cp.carregarFitxerExtern(s1);
             cu = new ConjuntUsuaris(raw);
         }
-        catch(FileNotValidException | FileNotFoundException | DataNotValidException | UserIdNotValidException e) {
-            System.out.print("ERROR: " + e.getMessage());
+        catch(Exception e) {
+       		System.out.print("ERROR: " + e.getMessage());
             return;
-        }
+       	}
 
         try {
        		c.afegirDades(ci,cu,raw);
        	}
-       	catch(ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
+       	catch(Exception e) {
        		System.out.print("ERROR: " + e.getMessage());
             return;
        	}

@@ -2,6 +2,8 @@ package src.recomanador.domini;
 
 import src.recomanador.persistencia.*;
 import src.recomanador.excepcions.*;
+import src.recomanador.domini.Item.tipus;
+import src.recomanador.Utils.StringOperations;
 
 import java.util.ArrayList;
 
@@ -15,10 +17,10 @@ public class ControladorDomini {
     private static ControladorPersistencia cp;
 
     /* Data of the execution */
+    private static ConjuntItems ci;
     private static ConjuntUsuaris cu;
     private static ConjuntRecomanacions cr;
-    private static ConjuntItems ci;
-
+    
     /* Atributes */
     /* Id of the user/actor of the application */
     private static int id;
@@ -40,12 +42,8 @@ public class ControladorDomini {
     /*----- CONSTRUCTORS -----*/
 
     private ControladorDomini() {
-        cp = new ControladorPersistencia(); //S'haurà de canviar per getInst()
+        cp = ControladorPersistencia.getInstance();
         cda = new ControladorDominiAlgorisme(); //S'haurà de canviar per getInst()
-
-        cu = new ConjuntUsuaris();
-        cr = new ConjuntRecomanacions();
-        //conjunt items no es pot inicialitzar(com a molt amb valors tontos però no cal)
 
         id = NULL_ID;
         admin = false;
@@ -114,76 +112,104 @@ public class ControladorDomini {
 
     /*----- DATA & FILES -----*/
 
-
-
-
-    //COSES DADES(implica carregar les dades als conjunts)(n'hi ha molts, estan als casos d'ús)
-    //CARREGAR CARPETA
-    //CARREGAR FITXER
-    //OBTENIR DADES
-        //RATINGS
-        //ITEMS
-        //USERS
-    //GUARDAR FITXERS
-    
-
-    /*----- DATA & FILES -----*/
-
-    public void carregarCarpeta(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
-
-        //Funció per enviar el nom de la carpeta al controlador de persistència i mirar que és valida
+    public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException{
         cp.escollirProjecte(directory);
        
         try {
-            ArrayList<ArrayList<String>> items = cp.carregarItemsCarpeta();
-            try {
-                ci = new ConjuntItems(items);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (ItemStaticValuesAlreadyInitializedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (ItemStaticValuesNotInitializedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (ItemNewAtributesNotValidException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            ci = new ConjuntItems(cp.carregarItemsCarpeta());
+        }
+        catch(Exception e) {
+            throw new FolderNotValidException(e.getMessage());
+        }
 
-            ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();            
+        ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();            
+        try {
             cu = new ConjuntUsuaris(valoracions);
             cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
-        catch(ItemTypeNotValidException | ItemWeightNotCorrectException e) {
-            //també un altre not valid file o algo així, es pot diferenciar de la resta passant un string a cada cas
-            //o sigui mateixa excepcion però amb missatges d'error diferents
+        catch(DataNotValidException e) {
+            throw new FolderNotValidException("There is invalid data in ratings file", true);
         }
-        catch( ItemNotFoundException | UserNotFoundException | RatingNotValidException | UserIdNotValidException | ItemIdNotValidException e) {
-            //throw new invalid file o algo d'aquest estil
+        catch(ItemNotFoundException | UserNotFoundException e) {
+            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
         }
+
+//falten totes les constants
     }
+
+    public void loadNewSession(String projName, String itemsFile, String usersFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException{
+        cp.crearProjecte(projName);
+
+        //Llegir fitxers
+        try {
+            ci = new ConjuntItems(cp.carregarFitxerExtern(itemsFile));
+        }
+        catch(Exception e) {
+            throw new FolderNotValidException(e.getMessage());
+        }
+
+        ArrayList<ArrayList<String>> valoracions = cp.carregarFitxerExtern(usersFile);            
+        try {
+            cu = new ConjuntUsuaris(valoracions);
+            cr = new ConjuntRecomanacions(ci,cu,valoracions);
+        }
+        catch(DataNotValidException e) {
+            throw new FolderNotValidException("There is invalid data in ratings file", true);
+        }
+        catch(ItemNotFoundException | UserNotFoundException e) {
+            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
+        }
+
+        //Primer Save
+        saveSession();
+    }
+
+//crear nova buida
+
+    public void saveSession() throws FolderNotValidException {
+        //CONVERSIONS de coses d'items
+        //pesos + tipus + max + min
+        ArrayList<String> pesoss = new ArrayList<String>(0);
+        ArrayList<String> ts = new ArrayList<String>(0);
+        ArrayList<String> maxs = new ArrayList<String>(0);
+        ArrayList<String> mins = new ArrayList<String>(0);
+
+        ArrayList<Float> pesos = Item.getPesos();
+        ArrayList<tipus> t = Item.getTipusArray();
+        ArrayList<Float> max = ci.getMaxAtributs();
+        ArrayList<Float> min = ci.getMinAtributs();
+
+        for(int i = 0; i < pesos.size(); i++) {
+            pesoss.add(String.valueOf(pesos.get(i)));
+            ts.add(StringOperations.tipusToString(t.get(i)));
+            maxs.add(String.valueOf(max.get(i)));
+            mins.add(String.valueOf(min.get(i)));
+        }
+
+        //Valors
+        ArrayList<String> vals = new ArrayList<String>(0);
+        vals.add(String.valueOf(cda.get_algorisme()));
+        vals.add(String.valueOf(cda.get_Q()));
+        vals.add(String.valueOf(cda.get_k()));
+        vals.add(String.valueOf(ConjuntItems.getNomCjItems()));
+        vals.add(String.valueOf(String.valueOf(Item.getPosId())));
+        vals.add(String.valueOf(String.valueOf(Item.getPosNomA())));
+        
+        //totes les funcions de guardar(s'han de mirar excepcions)
+        cp.guardarRecomanacions(cr.getAllRecomanacions());
+        cp.guardarItems(Item.getCapçalera(), ci.getAllItems());
+        cp.guardarPesosAtributs(pesoss);
+        cp.guardarTipusAtributs(ts);
+        cp.guardarMaxAtributsItems(maxs);
+        cp.guardarMinAtributsItems(mins);
+        cp.guardarEstat(vals);
+    }
+
+    //COSES DADES(implica carregar les dades als conjunts)(n'hi ha molts, estan als casos d'ús)
+        //CARREGAR CARPETA
+        //CARREGAR FITXER
+        //GUARDAR SESSIO
     
-    public void carregarRatings(String fitxer) throws FileNotValidException, FileNotFoundException {
-        try {
-            cu = new ConjuntUsuaris(cp.carregarFitxerExtern(fitxer));
-            cr = new ConjuntRecomanacions(ci,cu,cp.carregarFitxerExtern(fitxer));
-        }
-        catch(Exception e) {
-            //s'han de mirar les que pugen
-        }
-    }
-
-    public void carregarItems(String fitxer) throws FileNotValidException, FileNotFoundException {
-        try {
-            ci = new ConjuntItems(cp.carregarFitxerExtern(fitxer));
-        }
-        catch(Exception e) {
-            //s'han de mirar les que pugen
-        }
-    }
-
 }
 
 
@@ -204,6 +230,9 @@ public class ControladorDomini {
         //KNOWN
         //UNKNOWN
     //GUARDAR FITXERS
+
+//TESTS
+    //Obtenir constant aquella amb unknow i known
 
 //USUARIS
     //GET USER
@@ -237,6 +266,5 @@ public class ControladorDomini {
     //ALGORISME
     //GET CAPÇALERA
 
-//TESTS
-    //Obtenir constant aquella amb unknow i known
+
 

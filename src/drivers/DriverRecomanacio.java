@@ -9,11 +9,7 @@ import src.recomanador.domini.Item.tipus;
 import src.recomanador.domini.Usuari; //S'haurà de canviar per fer l'executable!!!!!!
 //import src.stubs.Usuari;
 
-import src.recomanador.excepcions.RatingNotValidException;
-import src.recomanador.excepcions.RecommendationRatedException;
-import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-import src.recomanador.excepcions.ItemIdNotValidException;
+import src.recomanador.excepcions.*;
 
 /**
  * Driver tot test the class Recomanacio.
@@ -166,7 +162,7 @@ public class DriverRecomanacio {
 		try {
 			c = new Recomanacio(u,i,f);
 		}
-		catch(RatingNotValidException e) {
+		catch(DataNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}
@@ -283,7 +279,7 @@ public class DriverRecomanacio {
 		try {
 			rr = new Recomanacio(u,i,f);
 		}
-		catch(RatingNotValidException e) {
+		catch(DataNotValidException e) {
 			System.out.println("ERROR: " + e.getMessage());
 			return;
 		}

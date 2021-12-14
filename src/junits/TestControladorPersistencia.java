@@ -67,7 +67,7 @@ public class TestControladorPersistencia {
 		 * a provar la segona es necessita la primera, però per a provar
 		 * la primera es necessita la segona
 		 */
-		ControladorPersistencia cp = new ControladorPersistencia();
+		ControladorPersistencia cp = ControladorPersistencia.getInstance();
 		
 		try {
 			cp.escollirProjecte("JUNIT-TEST-ControladorPersistencia");

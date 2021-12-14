@@ -14,43 +14,38 @@ import src.recomanador.excepcions.*;
 * @author Pol Sturlese 
 */
 public class ControladorPersistencia {
+/*----- INFO SOBRE VALORS -----*/
+	//Atributs que son usats per diverses parts del programa. Es troben en el següent ordre:
+	//			0		    | 1 | 2 | 		3	    | 	4	 | 	 5
+	//algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
     
-/*-----ATRIBUTS-----*/
+/*----- STATICS -----*/
 	/**
 	 * Contains a File that indicates wich project is being used from the
 	 * ./data folder.
 	 */
-    private File carpeta;
+    private static File carpeta;
     /**
 	 * Contains a File with the path and other information about the folder
 	 * ./data, where projects will be stored.
 	 */
-    private File dades; 		//Carpeta de dades
+    private static File dades; 		//Carpeta de dades
+    
+    private static ControladorPersistencia inst;
     /**
 	 * Object from the class ControladorLoad used for reading the .csv data.
 	 */
-    ControladorLoad cl;
+    private static ControladorLoad cl;
     /**
 	 * Object from the class ControladorSave used for storing the data as .csv.
 	 */
-    ControladorSave cs;
-	
-	//Atributs que son usats per diverses parts del programa. Es troben en el següent ordre:
-	//			0		    | 1 | 2 | 		3	    | 	4	 | 	 5
-	//algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
-	/**
-	 * Object wich contains some data that is used by the program. <p>
-	 * 
-	 * The attributes are ordered inside the array as stated below: <p>
-	 * &emsp;&emsp; <b>0.</b> algorisme_seleccionat <p>
-	 * &emsp;&emsp; <b>1.</b> Q <p>
-	 * &emsp;&emsp; <b>2.</b> K <p>
-	 * &emsp;&emsp; <b>3.</b> nom_cjt_items <p>
-	 * &emsp;&emsp; <b>4.</b> pos_id <p>
-	 * &emsp;&emsp; <b>5.</b> pos_nom <p>
-	 */
-	private ArrayList<String> estat;
-	
+    private static ControladorSave cs;
+
+    public static ControladorPersistencia getInstance() {
+        if(ControladorPersistencia.inst == null) inst = new ControladorPersistencia();
+        return inst;
+    }
+
 /*-----CREADORES-----*/   
     /**
 	 * Creates a new instance of the class ControladorPersistencia. It also finds the
@@ -58,16 +53,14 @@ public class ControladorPersistencia {
 	 * 
 	 * @return			 Returns a new instance of ControladorPersistencia.
 	 */
-    public ControladorPersistencia()
+    private ControladorPersistencia()
     {
 		carpeta = null;
 		cl = new ControladorLoad();		
 		cs = new ControladorSave();
-		estat = null;
 		
 		dades = new File("data");
 		if (!dades.exists() || !dades.isDirectory()) dades.mkdir();	//It will create the folder if it doesn't exist
-		
 	}
 
 
@@ -162,112 +155,6 @@ public class ControladorPersistencia {
 		
 		return known && unknown;
 	}
-
-	/** 
-	 * Returns the attribute K for the algorithm.
-	 * 
-	 * @return		It returns the atribute K as an int.
-	 * @exception	It throws an exception if the conversion fails or if the data is not found
-	 * 
-	 */
-	public int getKAlgorisme() throws Exception
-	{
-		if (estat == null) throw new Exception("There's no data for this attribute");
-		try
-		{
-			return Integer.parseInt(estat.get(2));
-		}catch (Exception e)
-		{
-			throw new Exception("The data is invalid.");
-		}
-	}
-	
-	/** 
-	 * Returns the attribute Q for the algorithm.
-	 * 
-	 * @return		It returns the atribute Q as an int.
-	 * @exception	It throws an exception if the conversion fails or if the data is not found
-	 * 
-	 */
-	public int getQAlgorisme() throws Exception
-	{
-		if (estat == null) throw new Exception("There's no data for this attribute");
-		try
-		{
-			return Integer.parseInt(estat.get(1));
-		}catch (Exception e)
-		{
-			throw new Exception("The data is invalid.");
-		}
-	}
-	
-	/** 
-	 * Returns the algorithm that was being used.
-	 * 
-	 * @return		It returns the algorithm as an int. 
-	 * @exception	It throws an exception if the conversion fails or if the data is not found
-	 * 
-	 */
-	public int getAlgorismeSeleccionat() throws Exception
-	{
-		if (estat == null) throw new Exception("There's no data for this attribute");
-		try
-		{
-			return Integer.parseInt(estat.get(0));
-		}catch (Exception e)
-		{
-			throw new Exception("The data is invalid.");
-		}
-	}
-	
-	/** 
-	 * Returns the static attribute nom for ConjuntItems class.
-	 * 
-	 * @return		It returns the name of the item set.
-	 * @exception	It throws an exception if the conversion fails or if the data is not found
-	 * 
-	 */
-	public String getNomConjuntItems() throws Exception
-	{
-		if (estat == null) throw new Exception("There's no data for this attribute");
-		return estat.get(3);
-	}
-	
-	/** 
-	 * Returns the attribute for the item's id column position.
-	 * 
-	 * @return		It returns the position of the columns with the id
-	 * @exception	It throws an exception if the conversion fails or if the data is not found
-	 */
-	public int getPosicioID() throws Exception
-	{
-		if (estat == null) throw new Exception("There's no data for this attribute");
-		try
-		{
-			return Integer.parseInt(estat.get(4));
-		}catch (Exception e)
-		{
-			throw new Exception("The data is invalid.");
-		}
-	}
-	
-	/** 
-	 * Returns the attribute for the item's name column position.
-	 * 
-	 * @return		It returns the position of the columns with the name
-	 * @exception	It throws an exception if the conversion fails or if the data is not found
-	 */
-	public int getPosicioNom() throws Exception
-	{
-		if (estat == null) throw new Exception("There's no data for this attribute");
-		try
-		{
-			return Integer.parseInt(estat.get(5));
-		}catch (Exception e)
-		{
-			throw new Exception("The data is invalid.");
-		}
-	}
 	
 	
 /*-----MODIFICADORES-----*/   
@@ -283,20 +170,6 @@ public class ControladorPersistencia {
     {
 		carpeta = new File(dades, s);
 		if (!carpeta.exists()) throw new FolderNotFoundException(s);
-		
-		
-		if (existeixenDadesPreprocesades())
-		{
-			 try { carregarEstat(); }
-			 catch (Exception e) {}
-		}
-		else
-		{
-			estat = new ArrayList<String>();
-			for (int i = 0; i < 6; ++i) estat.add("-1");
-			estat.set(3, "ERROR_NameNotValid");
-		}
-		
 	}
 	
 	/**
@@ -306,99 +179,7 @@ public class ControladorPersistencia {
 	public void sortirDelProjecte()
     {
 		carpeta = null;
-		estat = null;
 	}
-    
-    /**
-	 * Sets the value of the algorithm's K as the one specified.
-	 * It also stores into estat.csv all the parameters from the array estat. 
-	 * 
-	 * @param	k	Indicates the number K that the algorithm had used. 
-	 * @exception Exception		Throws an exception if you are not in a valid folder. 
-	 */
-    public void setKAlgorisme(String k) throws Exception
-    {
-		if (carpeta == null) throw new Exception("You cannot save data");
-		else estat.set(2, k);
-		
-		guardarEstat();
-	}
-    
-    /**
-	 * Sets the value of the algorithm's Q as the one specified.
-	 * It also stores into estat.csv all the parameters from the array estat. 
-	 * 
-	 * @param	q	Indicates the number Q that the algorithm had used. 
-	 * @exception Exception		Throws an exception if you are not in a valid folder. 
-	 */
-    public void setQAlgorisme(String q) throws Exception
-    {
-		if (carpeta == null) throw new Exception("You cannot save data");
-		else estat.set(1, q);
-		
-		guardarEstat();
-	}
-	
-	/**
-	 * Sets the value of the algorithm selected as the one specified.
-	 * It also stores into estat.csv all the parameters from the array estat. 
-	 * 
-	 * @param	a	Indicates the number of the selected algorithm 
-	 * @exception Exception		Throws an exception if you are not in a valid folder. 
-	 */
-    public void setAlgorismeSeleccionat(String a) throws Exception
-    {
-		if (carpeta == null) throw new Exception("You cannot save data");
-		else estat.set(0, a);
-		
-		guardarEstat();
-	}
-    
-    /**
-	 * Sets the value of the item's set name as the one specified.
-	 * It also stores into estat.csv all the parameters from the array estat. 
-	 * 
-	 * @param	nom		Indicates the name that the items used. 
-	 * @exception Exception		Throws an exception if you are not in a valid folder. 
-	 */
-    public void setNomConjuntItems(String nom) throws Exception
-    {
-		if (carpeta == null) throw new Exception("You cannot save data");
-		else estat.set(3, nom);
-		
-		guardarEstat();
-	}
-    
-    /**
-	 * Sets the value of the id column position from the item's set as the one specified.
-	 * It also stores into estat.csv all the parameters from the array estat. 
-	 * 
-	 * @param	pos_id	Indicates the column position that is used. 
-	 * @exception Exception		Throws an exception if you are not in a valid folder. 
-	 */
-    public void setPosicioID(String pos_id) throws Exception
-    {
-		if (carpeta == null) throw new Exception("You cannot save data");
-		else estat.set(4, pos_id);
-		
-		guardarEstat();
-	}
-    
-    /**
-	 * Sets the value of the name column position from the item's set as the one specified.
-	 * It also stores into estat.csv all the parameters from the array estat. 
-	 * 
-	 * @param	pos_nom		Indicates the column position that is used. 
-	 * @exception Exception		Throws an exception if you are not in a valid folder. 
-	 */
-    public void setPosicioNom(String pos_nom) throws Exception
-    {
-		if (carpeta == null) throw new Exception("You cannot save data");
-		else estat.set(5, pos_nom);
-		
-		guardarEstat();
-	}
-    
     
 /*-----LECTURA-----*/	
 	/**
@@ -577,19 +358,28 @@ public class ControladorPersistencia {
 		ArrayList<ArrayList<String>> temp = carregarArxiuCarpeta("minAtributs.items.csv");
 		return temp.get(0);
 	}
-	
+
 	/**
-	 * Loads the values of the ArrayList estat if the folder specified by the 
-	 * attribute carpeta contains them.
+	 * Loads the following values if the folder specified by the 
+	 * attribute carpeta contains them:
+	 *
+	 * The attributes are ordered inside the array as stated below: <p>
+	 * &emsp;&emsp; <b>0.</b> algorisme_seleccionat <p>
+	 * &emsp;&emsp; <b>1.</b> Q <p>
+	 * &emsp;&emsp; <b>2.</b> K <p>
+	 * &emsp;&emsp; <b>3.</b> nom_cjt_items <p>
+	 * &emsp;&emsp; <b>4.</b> pos_id <p>
+	 * &emsp;&emsp; <b>5.</b> pos_nom <p>
 	 * 
      * @return Returns an ArrayList of the values (represented as Strings). 
      * 
      * @exception FolderNotValidException Throws a FolderNotValidException if the file is corrupted or is missing.
      */
-	public void carregarEstat() throws FolderNotValidException
+	public ArrayList<String> carregarEstat() throws FolderNotValidException
 	{
-		estat = carregarArxiuCarpeta("estat.csv").get(1);
+		ArrayList<String> estat = carregarArxiuCarpeta("estat.csv").get(1);
 		if (estat.size() != 6) throw new FolderNotValidException(carpeta.getName(), "estat.csv");
+		return estat;
 	}
 	
 /*-----ESCRIPTURA-----*/
@@ -745,13 +535,11 @@ public class ControladorPersistencia {
      * 
      * @exception FolderNotValidException Throws an exception if the file is corrupted. 
      */
-	public void guardarPesosAtributs(ArrayList<Float> pesos) throws FolderNotValidException
+	public void guardarPesosAtributs(ArrayList<String> pesos) throws FolderNotValidException
 	{
 		ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
-		D.add(new ArrayList<String>());
-		
-		for (int i = 0; i < pesos.size(); ++i)D.get(0).add(pesos.get(i).toString());
-		
+		D.add(pesos);
+
 		this.guardarDades(D, "pesos.csv");
 	}
 	
@@ -808,10 +596,11 @@ public class ControladorPersistencia {
      * 
      * @exception FolderNotValidException Throws an exception if the file is corrupted. 
      */	
-	public void guardarEstat() throws FolderNotValidException
+	public void guardarEstat(ArrayList<String> estat) throws FolderNotValidException
 	{
-		ArrayList<ArrayList<String>> a = new ArrayList<ArrayList<String>>();
+		if (estat.size() != 6) throw new FolderNotValidException("Too much/few values. (a,1,k,nomCjtI,posID,posNOM)");
 		
+		ArrayList<ArrayList<String>> a = new ArrayList<ArrayList<String>>();
 		a.add(new ArrayList<String>());
 		a.get(0).add("algorisme_seleccionat");
 		a.get(0).add("q");

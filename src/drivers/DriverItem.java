@@ -31,7 +31,7 @@ public class DriverItem {
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
 		class_initalised = false;
-		cp = new ControladorPersistencia();
+		cp = ControladorPersistencia.getInstance();
 		
 		String s = "Options: \n" +
 		"-1. exit\n" +
@@ -531,8 +531,8 @@ public class DriverItem {
 
 			ArrayList<Float> pesos = new ArrayList<>();
 			ArrayList<tipus> tipusAtribut = new ArrayList<>();
-			int id = cp.getPosicioID();
-			int nomA = cp.getPosicioNom();
+			int id = Integer.parseInt(cp.carregarEstat().get(4));
+			int nomA = Integer.parseInt(cp.carregarEstat().get(5));
 			ArrayList<String> nomAtributs = cp.carregarItemsCarpeta().get(0);
 
 			ArrayList<String> pesosS = cp.carregarPesosAtributs();

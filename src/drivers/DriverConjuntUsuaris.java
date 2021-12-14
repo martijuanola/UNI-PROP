@@ -36,7 +36,7 @@ public class DriverConjuntUsuaris {
     
     public static void main(String[] args) {
    		scanner = new Scanner(System.in);
-   		cp = new ControladorPersistencia();
+   		cp = ControladorPersistencia.getInstance();
 		class_initalised = false;
 		
 		String s = "Options: \n" +
@@ -123,7 +123,7 @@ public class DriverConjuntUsuaris {
 		try{
 			c = new ConjuntUsuaris(raw);
 		}
-		catch(UserIdNotValidException | DataNotValidException e) {
+		catch(DataNotValidException e) {
 			System.out.println("ERROR: File not valid. Contains incorrect data types or wrong format.");
 			return;
 		}
@@ -204,7 +204,7 @@ public class DriverConjuntUsuaris {
 		try{
 			c.afegirDades(raw);
 		}
-		catch(UserIdNotValidException | DataNotValidException e) {
+		catch(DataNotValidException e) {
 			System.out.println("ERROR: File not valid. Contains incorrect data types or wrong format.");
 			return;
 		}

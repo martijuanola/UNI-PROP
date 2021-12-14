@@ -6,7 +6,7 @@ package src.recomanador.excepcions;
 public class UserIdNotValidException extends Exception {
 
 	public UserIdNotValidException(String s) {
-		super("The value " + s + " is not valid as a user id. Needs to be a integer.");
+		super("The value " + s + " is not valid as a user id. Needs to be an integer.");
 	}
 
 }
