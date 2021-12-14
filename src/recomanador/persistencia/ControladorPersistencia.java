@@ -56,8 +56,8 @@ public class ControladorPersistencia {
     private ControladorPersistencia()
     {
 		carpeta = null;
-		cl = new ControladorLoad();		
-		cs = new ControladorSave();
+		cl = ControladorLoad.getInstance();		
+		cs = ControladorSave.getInstance();
 		
 		dades = new File("data");
 		if (!dades.exists() || !dades.isDirectory()) dades.mkdir();	//It will create the folder if it doesn't exist
@@ -72,10 +72,10 @@ public class ControladorPersistencia {
 	 * @return		The name of the folder is returned, or <b>null</b> in case there's no folder assigned to.
 	 * @exception 	FolderNotFoundException Throws a an exception if the folder is missing.
 	 */
-    public String getNomProjecte() throws FolderNotFoundException
+    public String getNomProjecte() throws FolderNotValidException
     {
-		if (carpeta == null) return null;
-		else return carpeta.getName();
+		if (carpeta == null) throw new FolderNotValidException("Project not initalized!!",true);
+		return carpeta.getName();
 	}
 	
 	/**

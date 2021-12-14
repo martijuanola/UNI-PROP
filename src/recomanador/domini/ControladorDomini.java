@@ -45,7 +45,7 @@ public class ControladorDomini {
 
     private ControladorDomini() {
         cp = ControladorPersistencia.getInstance();
-        cda = new ControladorDominiAlgorisme(); //S'haurà de canviar per getInst()
+        cda = ControladorDominiAlgorisme.getInstance(); //S'haurà de canviar per getInst()
 
         id = NULL_ID;
         admin = false;
@@ -245,7 +245,6 @@ public class ControladorDomini {
 
     /*----- TESTS -----*/
 
-    //K I ALGORISME SON ELS QUE JA S'HAN DEFINIT
     ArrayList<Integer> runTest() throws FolderNotValidException, DataNotValidException {
         int auxQ = cda.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
@@ -352,22 +351,74 @@ public class ControladorDomini {
     }
 
 
+    /*----- ITEMS -----*/
+
+    public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
+        ArrayList<ArrayList<ArrayList<String>>> aux = ci.getAllItems();
+        aux.remove(0);
+        return aux;
+    }
+
+    public ArrayList<ArrayList<String>> getItem(int id) throws ItemNotFoundException {
+        return ci.getItem(id).getAtributs();
+    }
+
+    public String getPosIdItem() {
+        return String.valueOf(Item.getPosId());
+    }
+
+    public String getPosNomItem() {
+        return String.valueOf(Item.getPosId());
+    }
+
+    public ArrayList<String> getHeader() {
+        return Item.getCapçalera();
+    }
+
+    public void setPosNomItem(String pos) throws ItemStaticValuesAlreadyInitializedException {
+        Item.setNomA(Integer.parseInt(pos));
+    }
+
+
+    public void addItem(ArrayList<ArrayList<String>> atributs) throws ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
+        ci.add(new Item(atributs));
+    }
+
+    public void removeItem(String id) throws ItemNotFoundException, ItemStaticValuesNotInitializedException{
+        ci.eliminarItem(Integer.parseInt(id));
+    }
+
+//MODIFICAR ITEM
+
+
+    public ArrayList<String> getPesos() {
+        ArrayList<Float> pesos = Item.getPesos();
+        ArrayList<String> aux = new ArrayList<String>(0);
+        for(int i = 0; i < pesos.size(); i++) aux.add(String.valueOf(pesos.get(i)));
+        return aux;
+    }
+
+    public void setPesos(ArrayList<String> pesosS) throws ItemWeightNotCorrectException {
+        ArrayList<Float> pesos = new ArrayList<Float>(0);
+        for(int i = 0; i < pesosS.size(); i++) pesos.add(Float.parseFloat(pesosS.get(i)));
+        Item.setPesos(pesos);
+    }
+
+
+    /*----- RECOMANACIONS -----*/
     
 
 
 
 
 
-
-
-
-
-
-    /*----- ITEMS -----*/
-    /*----- RECOMANACIONS -----*/
     /*----- CANVI CONSTANTS -----*/
-    /*----- ALTRES -----*/
     /*----- USUARIS -----*/
+    /*----- ALTRES -----*/
+    
+    public String getNomProjecte() throws FolderNotValidException{
+        return cp.getNomProjecte();
+    }
 
 }
 
@@ -434,4 +485,5 @@ public class ControladorDomini {
 
 //ALTRES
     //PASSAR TIPUS STRINGS CAP A PRESENTACIÓ
+        //NOM PROJECTE
 

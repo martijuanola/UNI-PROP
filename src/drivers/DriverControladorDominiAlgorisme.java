@@ -36,7 +36,7 @@ public class DriverControladorDominiAlgorisme {
     public static void main(String[] args) throws UserNotFoundException{
 
         Scanner in= new Scanner(System.in);
-        ControladorDominiAlgorisme algorisme = new ControladorDominiAlgorisme();
+        ControladorDominiAlgorisme algorisme = ControladorDominiAlgorisme.getInstance();
         cp = ControladorPersistencia.getInstance();
 
         System.out.println();

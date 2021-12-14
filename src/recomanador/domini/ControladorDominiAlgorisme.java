@@ -11,7 +11,17 @@ import src.recomanador.excepcions.DataNotValidException;
  */
 public class ControladorDominiAlgorisme {
 
+    /*----- STATICS -----*/
+
+    private static ControladorDominiAlgorisme inst;
+
+    public static ControladorDominiAlgorisme getInstance() {
+        if(ControladorDominiAlgorisme.inst == null) inst = new ControladorDominiAlgorisme();
+        return inst;
+    }
+
     /*----- ATRIBUTS -----*/
+    
     /**instance of the Collaborative Filtering Algorithm*/
     CollaborativeFiltering colFilt;
     /**instance of the Hybrid Filtering Algorithm*/
@@ -44,7 +54,7 @@ public class ControladorDominiAlgorisme {
      *
      * @return      a new instance of ControladorDominiAlgorisme, which will be empty
      */
-    public ControladorDominiAlgorisme() {
+    private ControladorDominiAlgorisme() {
         colFilt = new CollaborativeFiltering();
         BasedFilt = new ContentBasedFiltering();
         HybFilt = new HybridFiltering();

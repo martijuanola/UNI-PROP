@@ -15,12 +15,27 @@ import java.util.ArrayList;
 
 public class ControladorSave {
     
+    /*----- STATICS -----*/
+
+    private static ControladorSave inst;
+
+    public static ControladorSave getInstance() {
+        if(ControladorSave.inst == null) inst = new ControladorSave();
+        return inst;
+    }
+
+
+    /*----- CONSTRUCTORS -----*/
+
     /**
      * Creates an instance of ControladorSave
      * 
      * @return Returns a new instance of ControladorSave
      */    
-    public ControladorSave() {}
+    private ControladorSave() {}
+
+
+    /*----- FUNCIONS -----*/
     
     /**
      * Stores the content of data at the file specified. It's stored as a csv table,
