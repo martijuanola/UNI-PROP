@@ -13,7 +13,7 @@ public class DriverControladorLoad {
     
     public static void main(String[] args) {
         try{
-			c = new ControladorLoad();
+			c = ControladorLoad.getInstance();
 			io = new inout();
 			
 			String s = "Options: \n" +

@@ -34,6 +34,7 @@ public class ControladorDomini {
         return inst;
     }
 
+
     /*----- CONSTANTS -----*/
     
     /* Value that represents null in the atribute id */
@@ -44,7 +45,7 @@ public class ControladorDomini {
 
     private ControladorDomini() {
         cp = ControladorPersistencia.getInstance();
-        cda = new ControladorDominiAlgorisme(); //S'haurà de canviar per getInst()
+        cda = ControladorDominiAlgorisme.getInstance(); //S'haurà de canviar per getInst()
 
         id = NULL_ID;
         admin = false;
@@ -113,7 +114,7 @@ public class ControladorDomini {
 
     /*----- DATA & FILES -----*/
 
-    public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException{
+    public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
         cp.escollirProjecte(directory);
        
         try {
@@ -138,12 +139,22 @@ public class ControladorDomini {
         ArrayList<String> estat = cp.carregarEstat();
 
         cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
+        cda.set_Q(Integer.parseInt(estat.get(1)));
+        cda.set_k(Integer.parseInt(estat.get(2)));
 
+        ci.setNomCjItems(estat.get(3));
 
-        //          0           | 1 | 2 |       3       |   4    |   5
-        //algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
-    
-
+        try{
+            Item.setId(Integer.parseInt(estat.get(4)));
+            Item.setNomA(Integer.parseInt(estat.get(5)));
+        }
+        catch(ItemIdNotValidException e) {
+            throw new DataNotValidException(estat.get(4),"El valor guardat de POS ITEM ID no és correcte!");
+        }
+        catch(ItemStaticValuesAlreadyInitializedException e) {
+            System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
+            return;
+        }
     }
 
     public void loadNewSession(String projName, String itemsFile, String usersFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException{
@@ -173,7 +184,24 @@ public class ControladorDomini {
         saveSession();
     }
 
-//crear nova buida
+    public void createSession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws FolderNotValidException, ItemTypeNotValidException {
+        cp.crearProjecte(projName);
+
+        ArrayList<tipus> tipusAtributs = new ArrayList<tipus>(0);
+        for(int i = 0; i < tipusAtriubtsS.size(); i++) tipusAtributs.add(StringOperations.stringToType(tipusAtriubtsS.get(i)));
+
+        try {
+            Item.setNomAtributs(nomsAtriubts);
+            Item.setTipusArray(tipusAtributs);
+        }
+        catch(ItemStaticValuesAlreadyInitializedException e) {
+            System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
+            return;
+        }
+
+        //Primer Save
+        saveSession();
+    }
 
     public void saveSession() throws FolderNotValidException {
         //CONVERSIONS de coses d'items
@@ -214,9 +242,9 @@ public class ControladorDomini {
         cp.guardarEstat(vals);
     }
 
+
     /*----- TESTS -----*/
 
-    //K I ALGORISME SON ELS QUE JA S'HAN DEFINIT
     ArrayList<Integer> runTest() throws FolderNotValidException, DataNotValidException {
         int auxQ = cda.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
@@ -282,7 +310,7 @@ public class ControladorDomini {
                 items_recomanats = cda.run_algorithm(id_unknown, ci, usuaris, recomanacions);
             }
             catch(UserNotFoundException e) {
-                System.out.print("ERROR!! Algo va malament als testos" + e.getMessage());
+                System.out.print("ERROR INTERN!! Algo va malament als testos" + e.getMessage());
                 return null;
             }
 
@@ -322,6 +350,76 @@ public class ControladorDomini {
         return result;
     }
 
+
+    /*----- ITEMS -----*/
+
+    public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
+        ArrayList<ArrayList<ArrayList<String>>> aux = ci.getAllItems();
+        aux.remove(0);
+        return aux;
+    }
+
+    public ArrayList<ArrayList<String>> getItem(int id) throws ItemNotFoundException {
+        return ci.getItem(id).getAtributs();
+    }
+
+    public String getPosIdItem() {
+        return String.valueOf(Item.getPosId());
+    }
+
+    public String getPosNomItem() {
+        return String.valueOf(Item.getPosId());
+    }
+
+    public ArrayList<String> getHeader() {
+        return Item.getCapçalera();
+    }
+
+    public void setPosNomItem(String pos) throws ItemStaticValuesAlreadyInitializedException {
+        Item.setNomA(Integer.parseInt(pos));
+    }
+
+
+    public void addItem(ArrayList<ArrayList<String>> atributs) throws ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
+        ci.add(new Item(atributs));
+    }
+
+    public void removeItem(String id) throws ItemNotFoundException, ItemStaticValuesNotInitializedException{
+        ci.eliminarItem(Integer.parseInt(id));
+    }
+
+//MODIFICAR ITEM
+
+
+    public ArrayList<String> getPesos() {
+        ArrayList<Float> pesos = Item.getPesos();
+        ArrayList<String> aux = new ArrayList<String>(0);
+        for(int i = 0; i < pesos.size(); i++) aux.add(String.valueOf(pesos.get(i)));
+        return aux;
+    }
+
+    public void setPesos(ArrayList<String> pesosS) throws ItemWeightNotCorrectException {
+        ArrayList<Float> pesos = new ArrayList<Float>(0);
+        for(int i = 0; i < pesosS.size(); i++) pesos.add(Float.parseFloat(pesosS.get(i)));
+        Item.setPesos(pesos);
+    }
+
+
+    /*----- RECOMANACIONS -----*/
+    
+
+
+
+
+
+    /*----- CANVI CONSTANTS -----*/
+    /*----- USUARIS -----*/
+    /*----- ALTRES -----*/
+    
+    public String getNomProjecte() throws FolderNotValidException{
+        return cp.getNomProjecte();
+    }
+
 }
 
 
@@ -346,37 +444,46 @@ public class ControladorDomini {
 //TESTS
     //Obtenir constant aquella amb unknow i known
 
-//USUARIS
-    //GET USER
-    //ADD USER
-    //REMOVE USER???
-
 //ITEMS
-    //GET ITEM
-    //ADD ITEM
-    //REMOVE ITEM???
-    //GET INFO ITEM
+    //GET ALL ITEM
+    //GET ITEM??
+    //GET POS ID
+    //GET NOM ITEM
+    //EDITAR NOM ITEM(en cas de construïr)
+    //GET CAPÇALERA
 
-    //GET PES
+    //ADD ITEM
+    //MODIFICAR ITEM
+    //REMOVE ITEM
+
     //GET PESOS
     //EDITAR PESOS
-    //
+
 
 //RECOMANACIONS
-    //GET RECOMANACIONS?
     //GET RECOMANACIONS DE USUARI ACTIU 
-    //GET VALORACIONS
+    //GET VALORACIONS DE USUAR IACTIU
     //MODIFY VALORACIO
-    //REMOVE RATING
+    //REMOVE VALORACIO
     //GENERAR RECOMANACIONS
     //VALORAR RECOMANACIO
 
+//USUARIS
+    //GET ALL USERS
+    //GET USER??
+    
+    //ADD USER
+    //REMOVE USER
+    //MODIFY USER
+    
 
-//CANVIAR CONSTANTS(gets i sets)
+//ALGORISME CONSTANT(gets i sets)
     //K
     //Q
     //ALGORISME
-    //GET CAPÇALERA
 
 
+//ALTRES
+    //PASSAR TIPUS STRINGS CAP A PRESENTACIÓ
+        //NOM PROJECTE
 

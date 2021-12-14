@@ -38,7 +38,7 @@ public class TestControladorLoad {
 	
 	@Test
 	public void CarregarArxiuTest() {
-		ControladorLoad cl = new ControladorLoad();
+		ControladorLoad cl = ControladorLoad.getInstance();
 		File arxiu = new File("data");
 		arxiu = new File(arxiu, "JUNIT-TEST-ControladorLoad");
 		arxiu = new File(arxiu, "items.csv");

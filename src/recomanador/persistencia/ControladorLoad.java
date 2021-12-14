@@ -12,15 +12,29 @@ import java.util.ArrayList;
 * 
 * @author Pol Sturlese 
 */
-
 public class ControladorLoad {
+
+	/*----- STATICS -----*/
+
+	private static ControladorLoad inst;
+
+	public static ControladorLoad getInstance() {
+        if(ControladorLoad.inst == null) inst = new ControladorLoad();
+        return inst;
+    }
+
+    /*----- CONSTRUCTORS -----*/
+
     /**
      * Creates an instance of ControladorLoad
      * 
      * @return Returns a new instance of ControladorLoad
      */     
-    public ControladorLoad() {}
+    private ControladorLoad() {}
     
+
+    /*----- FUNCIONS -----*/
+
     /**
      * Returns the content of the file specified read as a table separated
      * with commas and enters.
