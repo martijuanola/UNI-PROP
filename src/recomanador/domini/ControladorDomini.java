@@ -205,7 +205,7 @@ public class ControladorDomini {
             cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
         catch(DataNotValidException e) {
-            throw new FolderNotValidException("There is invalid data in ratings file", true);
+            throw new FolderNotValidException("There is invalid data in ratings file" + e.getMessage(), true);
         }
         catch(ItemNotFoundException | UserNotFoundException e) {
             throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
