@@ -166,6 +166,18 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return true;
     }
 
+    public void removeRecomanacionsItem(int id) {
+        for(Recomanacio r: this) {
+            if(r.getItem().getId() == id) this.remove(r);
+        }
+    }
+
+    public void removeRecomanacionsUsuari(int id) {
+        for(Recomanacio r: this) {
+            if(r.getUsuari().getId() == id) this.remove(r);
+        }
+    }
+
     /**
      * This function adds data to the set, from a set of Items, Usuaris and the raw data of a ratings.csv file.
      *

@@ -385,6 +385,7 @@ public class ControladorDomini {
     }
 
     public void removeItem(String id) throws ItemNotFoundException, ItemStaticValuesNotInitializedException{
+        cr.removeRecomanacionsItem(Integer.parseInt(id));
         ci.eliminarItem(Integer.parseInt(id));
     }
 
@@ -423,87 +424,78 @@ public class ControladorDomini {
         cr.getRecomanacio(Integer.parseInt(itemId),id).setVal(Recomanacio.nul);
     }
 
+    public void createRecomanacions() {
+        try{
+            ArrayList<ItemValoracioEstimada> newRecomanacions = cda.run_algorithm(id, ci, cu, cr);
+            for(int i = 0; i < newRecomanacions.size(); i++) cr.add(new Recomanacio(cu.getUsuari(id),newRecomanacions.get(i).item));
+        }
+        catch(UserNotFoundException e) {
+            System.out.print("ERROR INTERN!! Problema amb l'usuari actiu. No es troba en algun conjunt." + e.getMessage());
+            return;
+        }
+    }
 
-//RECOMANACIONS
-        //GET RECOMANACIONS DE USUARI ACTIU 
-        //GET VALORACIONS DE USUAR IACTIU
-        //MODIFY VALORACIO
-    //REMOVE VALORACIO
-    //GENERAR RECOMANACIONS
-    //VALORAR RECOMANACIO
 
-    /*----- CANVI CONSTANTS -----*/
+    /*----- CANVI CONSTANTS ALGORISME -----*/
+
+    public String getK() {
+        return String.valueOf(cda.get_k());
+    }
+
+    public String getQ() {
+        return String.valueOf(cda.get_Q());
+    }
+
+    public String getAlgorisme() {
+        return String.valueOf(cda.get_algorisme());
+    }
+
+    public void setK(String k) throws DataNotValidException {
+        cda.set_k(Integer.parseInt(k));
+    }
+
+    public void setQ(String q) throws DataNotValidException {
+        cda.set_Q(Integer.parseInt(q));
+    }
+
+    public void setAlgorisme(String a) throws DataNotValidException {
+        cda.seleccionar_algorisme(Integer.parseInt(a));
+    }
+
     /*----- USUARIS -----*/
+
+    public ArrayList<String> getUsuaris() {
+        ArrayList<String> r = new ArrayList<String>(0);
+        for(int i = 0; i < cu.size(); i++) r.add(String.valueOf(cu.get(i).getId()));
+        return r;
+    }
+
+    public void addUsuari(String id) throws UserIdNotValidException {
+        if(!cu.add(new Usuari(Integer.parseInt(id)))) throw new UserIdNotValidException(Integer.parseInt(id));
+    }
+
+    public void removeUsuari(String id) throws UserNotFoundException {
+        cr.removeRecomanacionsUsuari(Integer.parseInt(id));
+        cu.removeUsuari(Integer.parseInt(id));
+    }
+
     /*----- ALTRES -----*/
     
+    public ArrayList<String> getTipus() {
+        ArrayList<String> r = new ArrayList<String>(0);
+        for(tipus t: tipus.values()) r.add(StringOperations.tipusToString(t));
+        return r;
+    }
+
     public String getNomProjecte() throws FolderNotValidException{
         return cp.getNomProjecte();
     }
 
 }
 
-
-//COSES USUARI/ADMIN
-    //LOGIN
-    //LOGOUT
-    //DEFINIR ADMIN
-    //TREURE ADMIN
-    //COMPROVAR SI ÉS ADMIN O SI TÉ PERMISOS O ALGO
-
-//COSES DADES(implica carregar les dades als conjunts)(n'hi ha molts, estan als casos d'ús)
-    //CARREGAR CARPETA
-    //CARREGAR FITXER
-    //OBTENIR DADES
-        //RATINGS
-        //ITEMS
-        //USERS
-        //KNOWN
-        //UNKNOWN
-    //GUARDAR FITXERS
-
-//TESTS
-    //Obtenir constant aquella amb unknow i known
+//AFEGIR EXCEPCIONS PER ADMIN EN LES FUNCIONS QUE NOMÉS POT FER L'ADMIN
 
 //ITEMS
-    //GET ALL ITEM
-    //GET ITEM??
-    //GET POS ID
-    //GET NOM ITEM
-    //EDITAR NOM ITEM(en cas de construïr)
-    //GET CAPÇALERA
+    //MODIFICAR ITEM(canviar els valors sense explotar)
 
-    //ADD ITEM
-    //MODIFICAR ITEM
-    //REMOVE ITEM
-
-    //GET PESOS
-    //EDITAR PESOS
-
-
-//RECOMANACIONS
-    //GET RECOMANACIONS DE USUARI ACTIU 
-    //GET VALORACIONS DE USUAR IACTIU
-    //MODIFY VALORACIO
-    //REMOVE VALORACIO
-    //GENERAR RECOMANACIONS
-    //VALORAR RECOMANACIO
-
-//USUARIS
-    //GET ALL USERS
-    //GET USER??
-    
-    //ADD USER
-    //REMOVE USER
-    //MODIFY USER
-    
-
-//ALGORISME CONSTANT(gets i sets)
-    //K
-    //Q
-    //ALGORISME
-
-
-//ALTRES
-    //PASSAR TIPUS STRINGS CAP A PRESENTACIÓ
-        //NOM PROJECTE
 
