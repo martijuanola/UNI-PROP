@@ -5,16 +5,9 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import src.recomanador.Utils.StringOperations;
-import src.recomanador.excepcions.AlreadyLogedInException;
-import src.recomanador.excepcions.DataNotValidException;
-import src.recomanador.excepcions.FileNotFoundException;
-import src.recomanador.excepcions.FileNotValidException;
-import src.recomanador.excepcions.FolderNotFoundException;
-import src.recomanador.excepcions.FolderNotValidException;
 
 import java.awt.event.*;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class VistaInicial extends JFrame {
@@ -110,10 +103,6 @@ public class VistaInicial extends JFrame {
         for (int i = 0; i < projectesDisponibles.size(); ++i) {
             preprocessat.addItem(projectesDisponibles.get(i));
         }
-        //TODO:/*****NOMES PER TESTING!!!!!!!!!!!!!!!!!!!!!! */
-        preprocessat.addItem("testing-load-basic");
-        //TODO:/*****NOMES PER TESTING!!!!!!!!!!!!!!!!!!!!!! */
-        preprocessat.addItem("test-conjuntItems");
 
         inicis.add(peinel);
         inicis.add(preprocessat);
@@ -294,6 +283,7 @@ public class VistaInicial extends JFrame {
                     ControladorPresentacio.carregarProjecteNou(nomProjecte.getText(), itemsFile, ratingsFile);
                 }
                 catch (Exception e2) {
+                    System.out.println("ERORRR");
                     new VistaError(e2.getMessage());
                     return;
                 }

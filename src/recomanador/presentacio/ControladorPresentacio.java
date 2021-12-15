@@ -51,8 +51,7 @@ public class ControladorPresentacio {
     }
 
     public static ArrayList<String> getProjectesDisponibles() {
-        //TODO:OMPLIR
-        return new ArrayList<String>();
+        return domini.getAllProjectes();
     }
 
     public static void obreVistaSessioNova(String text) {
@@ -61,8 +60,20 @@ public class ControladorPresentacio {
     }
 
     public static void obreVistaEscollirAtributs() {
-        //TODO:OMPLIR
-        new VistaError("OBRE SESSIO NOVA");
+        new VistaEscollirAtributs();
+    }
+
+    public static ArrayList<String> getTipus() {
+        return domini.getTipus();
+    }
+
+    public static ArrayList<String> getHeaderItems() {
+        return domini.getHeader();
+    }
+
+    public static ArrayList<String> getTipusItems() {
+        //TODO: OMPLIR
+        return null;
     }
 
     public static void main(String[] args) {
