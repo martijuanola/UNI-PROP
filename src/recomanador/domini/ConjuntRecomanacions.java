@@ -147,14 +147,32 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return true;
     }
 
+    public void removeRecomanacions(int itemId, int usuariId) throws RecommendationNotFoundException {
+        int pos = cercaBinaria(itemId, usuariId);
+        if(this.size() == 0 || pos == this.size() || this.get(pos).getItem().getId() != itemId || this.get(pos).getUsuari().getId() != usuariId) {
+            throw new RecommendationNotFoundException(itemId, usuariId);
+        }
+        this.remove(pos);
+    }
+
+    /**
+     * Removes all the recommendation of the item specified
+     *
+     * @param      id    The identifier
+     */
     public void removeRecomanacionsItem(int id) {
-        for(Recomanacio r: this) {
+        for(Recomanacio r : this) {
             if(r.getItem().getId() == id) this.remove(r);
         }
     }
 
+    /**
+     * Removes all the recommenations of the user specified.
+     *
+     * @param      id    The identifier
+     */
     public void removeRecomanacionsUsuari(int id) {
-        for(Recomanacio r: this) {
+        for(Recomanacio r : this) {
             if(r.getUsuari().getId() == id) this.remove(r);
         }
     }
@@ -168,9 +186,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     RatingNotValidException      Thrown if a rating was not found.
-     * @throws     UserIdNotValidException      Thrown if a user id was not found.
-     * @throws     ItemIdNotValidException      Thrown if a item id was not found.
+     * @throws     DataNotValid                 Errors with tipes of data for ratings or ids.
      */
     public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
         raw.remove(0);//elimina la capçalera

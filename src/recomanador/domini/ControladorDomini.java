@@ -61,11 +61,14 @@ public class ControladorDomini {
 
         id = NULL_ID;
         admin = false;
+        resetData();
     }
 
 
     /*----- SESSIONS/PRIVILEGIS -----*/
     
+    //no pots passar de usuari a admin
+
     /**
      * User logs in a with an ID. If the id is not in the data already gathered, a new object Usuari is created.
      *
@@ -99,6 +102,7 @@ public class ControladorDomini {
     public void logout() {
         id = NULL_ID;
         admin = false;
+        resetData();
     }
 
     /**
@@ -128,6 +132,7 @@ public class ControladorDomini {
 
     /**
      * Loads a session/project. The Recomanacions, Usuaris and Items set are initialized, as well as all the other extra informations stored.
+     * Fist, all the previous data is erased.
      *
      * @param      directory                The directory where the files are stored
      *
@@ -136,6 +141,7 @@ public class ControladorDomini {
      * @throws     FolderNotValidException  Thrown when the folder contains faulty files or has some missing.
      */
     public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
+        resetData();
         cp.escollirProjecte(directory);
        
         try {
@@ -159,9 +165,9 @@ public class ControladorDomini {
 
         ArrayList<String> estat = cp.carregarEstat();
 
-        cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
-        cda.set_Q(Integer.parseInt(estat.get(1)));
-        cda.set_k(Integer.parseInt(estat.get(2)));
+        ControladorDominiAlgorisme.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
+        ControladorDominiAlgorisme.set_Q(Integer.parseInt(estat.get(1)));
+        ControladorDominiAlgorisme.set_k(Integer.parseInt(estat.get(2)));
 
         ci.setNomCjItems(estat.get(3));
 
@@ -181,6 +187,7 @@ public class ControladorDomini {
     /**
      * Creates a new session/project from a items file and a ratings file. All the other constants are either calculated from the input data
      * or set with default values.
+     * Fist, all the previous data is erased.
      *
      * @param      projName                 The project name
      * @param      itemsFile                The items file
@@ -191,6 +198,8 @@ public class ControladorDomini {
      * @throws     FolderNotValidException  Thrown if the current folder has missing files.
      */
     public void createSession(String projName, String itemsFile, String usersFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException{
+        resetData();
+
         //Llegir fitxers
         try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(itemsFile));
@@ -220,6 +229,7 @@ public class ControladorDomini {
 
     /**
      * Creates a new session without any initial data input.
+     * Fist, all the previous data is erased.
      *
      * @param      projName                   The project name
      * @param      nomsAtriubts               The item atribute names
@@ -229,6 +239,8 @@ public class ControladorDomini {
      * @throws     ItemTypeNotValidException  Thrown if there are problems with the atirubute type assignation.
      */
     public void createEmptySession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws FolderNotValidException, ItemTypeNotValidException {
+        resetData();
+
         cp.crearProjecte(projName);
 
         ArrayList<tipus> tipusAtributs = new ArrayList<tipus>();
@@ -274,9 +286,9 @@ public class ControladorDomini {
 
         //Valors
         ArrayList<String> vals = new ArrayList<String>();
-        vals.add(String.valueOf(cda.get_algorisme()));
-        vals.add(String.valueOf(cda.get_Q()));
-        vals.add(String.valueOf(cda.get_k()));
+        vals.add(String.valueOf(ControladorDominiAlgorisme.get_algorisme()));
+        vals.add(String.valueOf(ControladorDominiAlgorisme.get_Q()));
+        vals.add(String.valueOf(ControladorDominiAlgorisme.get_k()));
         vals.add(String.valueOf(ConjuntItems.getNomCjItems()));
         vals.add(String.valueOf(String.valueOf(Item.getPosId())));
         vals.add(String.valueOf(String.valueOf(Item.getPosNomA())));
@@ -305,11 +317,11 @@ public class ControladorDomini {
      * @throws     FolderNotValidException  Thrown if there are problems when getting the information from the Unknown and Known files.
      */
     ArrayList<Integer> runTest() throws FolderNotValidException, DataNotValidException {
-        int auxQ = cda.get_Q(); //per no perdre el valor
+        int auxQ = ControladorDominiAlgorisme.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
 
         try {
-            cda.set_Q(ci.size()/2);
+            ControladorDominiAlgorisme.set_Q(ci.size()/2);
         }
         catch (DataNotValidException e) {
             throw new DataNotValidException(ci.size()/2,"Q needs to be greater than 0(There are no items)");
@@ -401,7 +413,7 @@ public class ControladorDomini {
         System.out.println("IDCG TOTAL: " + IDCG);
         System.out.println("NORMALIZED DCG : " + DCG/IDCG);
 
-        cda.set_Q(auxQ); //reset de la Q anterior
+        ControladorDominiAlgorisme.set_Q(auxQ); //reset de la Q anterior
 
         ArrayList<Integer> result = new ArrayList<Integer>();
         result.add(DCG);
@@ -649,6 +661,10 @@ public class ControladorDomini {
         cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Recomanacio.nul);
     }
 
+    public void removeRecmonacio(String itemId, String usrId) throws RecommendationNotFoundException {
+        cr.removeRecomanacions(Integer.parseInt(itemId), Integer.parseInt(usrId));
+    }
+
     /**
      * Main functionality of this project. It generates recommendations for the current user from all the other information.
      * This calculations are performed in the algorithm controller.
@@ -679,7 +695,7 @@ public class ControladorDomini {
      */
     public String getK() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        return String.valueOf(cda.get_k());
+        return String.valueOf(ControladorDominiAlgorisme.get_k());
     }
 
     /**
@@ -691,7 +707,7 @@ public class ControladorDomini {
      */
     public String getQ() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        return String.valueOf(cda.get_Q());
+        return String.valueOf(ControladorDominiAlgorisme.get_Q());
     }
 
     /**
@@ -706,7 +722,7 @@ public class ControladorDomini {
      */
     public String getAlgorisme() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        return String.valueOf(cda.get_algorisme());
+        return String.valueOf(ControladorDominiAlgorisme.get_algorisme());
     }
 
      /**
@@ -718,7 +734,7 @@ public class ControladorDomini {
      */
     public void setK(String k) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        cda.set_k(Integer.parseInt(k));
+        ControladorDominiAlgorisme.set_k(Integer.parseInt(k));
     }
 
     /**
@@ -731,7 +747,7 @@ public class ControladorDomini {
      */
     public void setQ(String q) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        cda.set_Q(Integer.parseInt(q));
+        ControladorDominiAlgorisme.set_Q(Integer.parseInt(q));
     }
 
     /**
@@ -747,7 +763,7 @@ public class ControladorDomini {
      */
     public void setAlgorisme(String a) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        cda.seleccionar_algorisme(Integer.parseInt(a));
+        ControladorDominiAlgorisme.seleccionar_algorisme(Integer.parseInt(a));
     }
 
     /*----- USUARIS -----*/
@@ -825,6 +841,17 @@ public class ControladorDomini {
      */
     public ArrayList<String> getAllProjectes() {
         return cp.llistatCarpetes();
+    }
+
+    /**
+     * Resets all the data stored in a temporary state.
+     */
+    private void resetData() {
+        Item.resetStatics();
+        ControladorDominiAlgorisme.resetStatics();
+        ci = null;
+        cr = null;
+        cu = null;
     }
 
 }
