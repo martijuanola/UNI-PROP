@@ -158,8 +158,6 @@ public class ControladorDomini {
     }
 
     public void loadNewSession(String projName, String itemsFile, String usersFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException{
-        cp.crearProjecte(projName);
-
         //Llegir fitxers
         try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(itemsFile));
@@ -179,6 +177,9 @@ public class ControladorDomini {
         catch(ItemNotFoundException | UserNotFoundException e) {
             throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
         }
+
+        //Crear Projecte
+        cp.crearProjecte(projName);
 
         //Primer Save
         saveSession();
