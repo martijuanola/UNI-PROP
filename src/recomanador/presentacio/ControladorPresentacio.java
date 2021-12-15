@@ -4,6 +4,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import src.recomanador.domini.ControladorDomini;
+import java.util.ArrayList;
+
 
 public class ControladorPresentacio {
     private static ControladorDomini domini;
@@ -28,6 +30,24 @@ public class ControladorPresentacio {
 	public static String getNomProjecte() {
 		//return domini.getId()
 		return "Un gran projecte";
+	}
+	
+	public static ArrayList<String> getIdRecomanacions() {
+		ArrayList<String> n = new ArrayList<String>();
+		n.add("1234");
+		n.add("1232354");
+		n.add("42");
+		n.add("3141592");
+		return n;
+	}
+	
+	public static ArrayList<String> getNomRecomanacions() {
+		ArrayList<String> n = new ArrayList<String>();
+		n.add("abc");
+		n.add("abcbced");
+		n.add("clau de l'univers");
+		n.add("pi");
+		return n;
 	}
 	
 	public static boolean isAdmin() {
