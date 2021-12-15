@@ -4,4 +4,5 @@ DIRECTORI DOCS
 
 - !!!!!!!.pdf: Documentació del projecte amb el disseny de l'arquitectura del projecte, els diagrames UML definitius i la descripcio de les estructures de dades i algorismes utilitzats.
 - !!!!!!!: Enllaç símbolic a la pàgina principal del javadoc.
+- Diagrama_classes-DiagramaComplet.drawio.html: Diagrama de classes complert en format html.
 

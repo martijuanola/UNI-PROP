@@ -5,6 +5,6 @@ Versió: 2.0
 Data de Lliurament: 15/12/2021
 Integrants del Grup:
 	- Jaume Casals Vilaplana - jaume.casals.vilaplana@estudiantat.upc.edu
-    - Adrià Fernandez Clemente- adria.fernandez.clemente@estudiantat.upc.edu
-    - Martí Juanola Ametller - marti.juanola@estudiantat.upc.edu
-    - Pol Sturlese Ruiz - pol.sturlese@estudiantat.upc.edu
+    	- Adrià Fernandez Clemente- adria.fernandez.clemente@estudiantat.upc.edu
+    	- Martí Juanola Ametller - marti.juanola@estudiantat.upc.edu
+    	- Pol Sturlese Ruiz - pol.sturlese@estudiantat.upc.edu
