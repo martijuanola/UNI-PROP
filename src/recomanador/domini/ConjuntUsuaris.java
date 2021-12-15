@@ -88,7 +88,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      */
     @Override public boolean add(Usuari u) {
         int pos = cercaBinaria(u.getId());
-        if(pos > 0 && pos < this.size() && this.get(pos).getId() == u.getId()) return false;
+        if(this.size() != 0 && pos < this.size() && this.get(pos).getId() == u.getId()) return false;
         
         try {
             this.add(pos,u);

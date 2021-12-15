@@ -108,12 +108,17 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return cv;
     }
 
+    /**
+     * Gets all the recommendations(rated and not rated) in orther to export them and save them in a file.
+     *
+     * @return     All recommendations + the header!!
+     */
     public ArrayList<ArrayList<String>> getAllRecomanacions() {
-        ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>(0);
-        ArrayList<String> header = new ArrayList<String>(0); header.add("userId"); header.add("itemId"); header.add("rating");
+        ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+        ArrayList<String> header = new ArrayList<String>(); header.add("userId"); header.add("itemId"); header.add("rating");
         D.add(header);
         for(int i = 0; i < this.size();i++){
-            ArrayList<String> aux = new ArrayList<String>(0);
+            ArrayList<String> aux = new ArrayList<String>();
             aux.add(String.valueOf(this.get(i).getUsuari().getId()));
             aux.add(String.valueOf(this.get(i).getItem().getId()));
             aux.add(String.valueOf(this.get(i).getVal()));

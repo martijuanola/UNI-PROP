@@ -65,7 +65,7 @@ public class ContentBasedFiltering {
      */
     public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID, int k) throws UserNotFoundException {
        
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valUser = valoracions.getValoracions(user.getId());
@@ -80,7 +80,7 @@ public class ContentBasedFiltering {
             //una millor alternativa podria ser, per exemple, selection algorithm per trobar la valoracio en la posicio floor(0.75*size)
 
             Item item_val = valUser.get(val_user_idx).getItem();
-            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>(0);
+            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>();
 
             //iterem sobre tots els items no valorats
             for (int idxNV = 0; idxNV < items.size(); ++idxNV) {
@@ -103,7 +103,7 @@ public class ContentBasedFiltering {
         }        
 
         Collections.sort(items_estimats);
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         int i = 0;
         while (Q_items.size() < Q && i < items_estimats.size()) {
@@ -124,7 +124,7 @@ public class ContentBasedFiltering {
 /* IMPLEMENTACIO DIFERENT ANTIGA. POTSER UTIL PER HÍBRID?
 public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
        
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valUser = user.getValoracions();
@@ -151,7 +151,7 @@ public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID
         }
         Collections.sort(items_estimats);
         
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         for(int i = 0; i < Q; ++i){
             Q_items.add(items_estimats.get(i));

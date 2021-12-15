@@ -91,7 +91,7 @@ public class CollaborativeFiltering {
         System.out.println();
 
         ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         for(int i = 0; i < Q && i < items_sorted.size(); ++i){
             Q_items.add(items_sorted.get(i));
@@ -226,7 +226,7 @@ public class CollaborativeFiltering {
     private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException {
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(user.getId());
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
         
         //System.out.println("\n\nFOR1: Checking every item");
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {

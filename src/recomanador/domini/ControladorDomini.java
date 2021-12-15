@@ -231,7 +231,7 @@ public class ControladorDomini {
     public void createEmptySession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws FolderNotValidException, ItemTypeNotValidException {
         cp.crearProjecte(projName);
 
-        ArrayList<tipus> tipusAtributs = new ArrayList<tipus>(0);
+        ArrayList<tipus> tipusAtributs = new ArrayList<tipus>();
         for(int i = 0; i < tipusAtriubtsS.size(); i++) tipusAtributs.add(StringOperations.stringToType(tipusAtriubtsS.get(i)));
 
         try {
@@ -255,10 +255,10 @@ public class ControladorDomini {
     public void saveSession() throws FolderNotValidException {
         //CONVERSIONS de coses d'items
         //pesos + tipus + max + min
-        ArrayList<String> pesoss = new ArrayList<String>(0);
-        ArrayList<String> ts = new ArrayList<String>(0);
-        ArrayList<String> maxs = new ArrayList<String>(0);
-        ArrayList<String> mins = new ArrayList<String>(0);
+        ArrayList<String> pesoss = new ArrayList<String>();
+        ArrayList<String> ts = new ArrayList<String>();
+        ArrayList<String> maxs = new ArrayList<String>();
+        ArrayList<String> mins = new ArrayList<String>();
 
         ArrayList<Float> pesos = Item.getPesos();
         ArrayList<tipus> t = Item.getTipusArray();
@@ -273,7 +273,7 @@ public class ControladorDomini {
         }
 
         //Valors
-        ArrayList<String> vals = new ArrayList<String>(0);
+        ArrayList<String> vals = new ArrayList<String>();
         vals.add(String.valueOf(cda.get_algorisme()));
         vals.add(String.valueOf(cda.get_Q()));
         vals.add(String.valueOf(cda.get_k()));
@@ -358,7 +358,7 @@ public class ControladorDomini {
 
             //Per calcular el NDGC, ens cal ordenar les valoracions de l'usuari a Unknown per valoraciÃ³.
             //Per fer-ho, podem reutilitzar la classe itemValoracioEstimada
-            ArrayList<ItemValoracioEstimada> val_unknown = new ArrayList<ItemValoracioEstimada>(0);
+            ArrayList<ItemValoracioEstimada> val_unknown = new ArrayList<ItemValoracioEstimada>();
             for (int val_idx = 0; val_idx < val_unknown_aux.size(); ++val_idx) {
                 val_unknown.add(new ItemValoracioEstimada
                 (val_unknown_aux.get(val_idx).getVal(), val_unknown_aux.get(val_idx).getItem()));
@@ -403,7 +403,7 @@ public class ControladorDomini {
 
         cda.set_Q(auxQ); //reset de la Q anterior
 
-        ArrayList<Integer> result = new ArrayList<Integer>(0);
+        ArrayList<Integer> result = new ArrayList<Integer>();
         result.add(DCG);
         result.add((100*DCG)/IDCG);
         return result;
@@ -531,7 +531,7 @@ public class ControladorDomini {
     public ArrayList<String> getPesos() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
         ArrayList<Float> pesos = Item.getPesos();
-        ArrayList<String> aux = new ArrayList<String>(0);
+        ArrayList<String> aux = new ArrayList<String>();
         for(int i = 0; i < pesos.size(); i++) aux.add(String.valueOf(pesos.get(i)));
         return aux;
     }
@@ -546,7 +546,7 @@ public class ControladorDomini {
      */
     public void setPesos(ArrayList<String> pesosS) throws PrivilegesException, ItemWeightNotCorrectException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ArrayList<Float> pesos = new ArrayList<Float>(0);
+        ArrayList<Float> pesos = new ArrayList<Float>();
         for(int i = 0; i < pesosS.size(); i++) pesos.add(Float.parseFloat(pesosS.get(i)));
         Item.setPesos(pesos);
     }
@@ -560,7 +560,7 @@ public class ControladorDomini {
      */
     public ArrayList<String> getTipus() throws PrivilegesException {
         ArrayList<tipus> tipus = Item.getTipusArray();
-        ArrayList<String> aux = new ArrayList<String>(0);
+        ArrayList<String> aux = new ArrayList<String>();
         for(int i = 0; i < tipus.size(); i++) aux.add(StringOperations.tipusToString(tipus.get(i)));
         return aux;
     }
@@ -576,7 +576,7 @@ public class ControladorDomini {
      */
     public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemStaticValuesAlreadyInitializedException, ItemTypeNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ArrayList<tipus> tipus = new ArrayList<tipus>(0);
+        ArrayList<tipus> tipus = new ArrayList<tipus>();
         for(int i = 0; i < tipusS.size(); i++) tipus.add(StringOperations.stringToType(tipusS.get(i)));
         Item.setTipusArray(tipus);
     }
@@ -761,7 +761,7 @@ public class ControladorDomini {
      */
     public ArrayList<String> getAllUsuaris() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ArrayList<String> r = new ArrayList<String>(0);
+        ArrayList<String> r = new ArrayList<String>();
         for(int i = 0; i < cu.size(); i++) r.add(String.valueOf(cu.get(i).getId()));
         return r;
     }
@@ -802,7 +802,7 @@ public class ControladorDomini {
      * @return     The array with the different types as strings.
      */
     public ArrayList<String> getTipusAsStrings() {
-        ArrayList<String> r = new ArrayList<String>(0);
+        ArrayList<String> r = new ArrayList<String>();
         for(tipus t: tipus.values()) r.add(StringOperations.tipusToString(t));
         return r;
     }

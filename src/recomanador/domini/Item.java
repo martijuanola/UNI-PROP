@@ -77,9 +77,9 @@ public class Item implements Comparable<Item>{
         if(nomAtribut == null) throw new ItemStaticValuesNotInitializedException("nomAtribut");
         if(id == -1) throw new ItemStaticValuesNotInitializedException("id");
 
-        this.atributs = new ArrayList<ArrayList<String>>(0);
+        this.atributs = new ArrayList<ArrayList<String>>();
         for(int i = 0; i < Item.getNumAtributs(); i++) {
-            ArrayList<String> default_val = new ArrayList<String>(0);
+            ArrayList<String> default_val = new ArrayList<String>();
             if(i != Item.id) default_val.add("");
             else default_val.add(""+idval);
             this.atributs.add(default_val);
