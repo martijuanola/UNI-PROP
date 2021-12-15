@@ -30,7 +30,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @param      ci    Set of items from the Domain Controler
      * @param      cu    Set of users from the Domain Controler
      * @param      raw   The raw data from the ratings file
-     *
+     * 
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
      * @throws     DataNotValid                 If some value is not correct(ratings,...)
@@ -147,7 +147,15 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return true;
     }
 
-    public void removeRecomanacions(int itemId, int usuariId) throws RecommendationNotFoundException {
+    /**
+     * Removes a recommendation specified with the 2 ids.
+     *
+     * @param      itemId                           The item identifier
+     * @param      usuariId                         The usuari identifier
+     *
+     * @throws     RecommendationNotFoundException  If the recommendation doesn't exist.
+     */
+    public void removeRecomanacio(int itemId, int usuariId) throws RecommendationNotFoundException {
         int pos = cercaBinaria(itemId, usuariId);
         if(this.size() == 0 || pos == this.size() || this.get(pos).getItem().getId() != itemId || this.get(pos).getUsuari().getId() != usuariId) {
             throw new RecommendationNotFoundException(itemId, usuariId);

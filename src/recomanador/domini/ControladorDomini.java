@@ -112,10 +112,10 @@ public class ControladorDomini {
      *
      * @throws     NotLogedInException  Thrown if no user session is opened.
      */
-    public int getActiveUserId() throws PrivilegesException {
+    public String getActiveUserId() throws PrivilegesException {
         if(this.id == NULL_ID) throw new PrivilegesException("Needs to be loged in as a USER.");
 
-        return this.id;
+        return String.valueOf(this.id);
     }
 
     /**
@@ -235,10 +235,13 @@ public class ControladorDomini {
      * @param      nomsAtriubts               The item atribute names
      * @param      tipusAtriubtsS             The item atribute types
      *
-     * @throws     FolderNotValidException    Thrown if the current folder has missing files.
-     * @throws     ItemTypeNotValidException  Thrown if there are problems with the atirubute type assignation.
+     * @throws     DataNotValidException        Problems with the initialization of the static values of Item
+     * @throws     FolderNotValidException      Thrown if the current folder has missing files.
+     * @throws     ItemTypeNotValidException    Thrown if there are problems with the atirubute type assignation.
+     * @throws     PrivilegesException          You need to be an admin to perform this functionallity.
      */
-    public void createEmptySession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws FolderNotValidException, ItemTypeNotValidException {
+    public void createEmptySession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws PrivilegesException, FolderNotValidException, ItemTypeNotValidException, DataNotValidException {
+        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");       
         resetData();
 
         cp.crearProjecte(projName);
@@ -316,7 +319,7 @@ public class ControladorDomini {
      * @throws     DataNotValidException    Thrown in a very specific case where the Q value can't be assignet due to a lack of user.
      * @throws     FolderNotValidException  Thrown if there are problems when getting the information from the Unknown and Known files.
      */
-    ArrayList<Integer> runTest() throws FolderNotValidException, DataNotValidException {
+    ArrayList<String> runTest() throws FolderNotValidException, DataNotValidException {
         int auxQ = ControladorDominiAlgorisme.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
 
@@ -415,9 +418,9 @@ public class ControladorDomini {
 
         ControladorDominiAlgorisme.set_Q(auxQ); //reset de la Q anterior
 
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        result.add(DCG);
-        result.add((100*DCG)/IDCG);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add(String.valueOf(DCG));
+        result.add(String.valueOf((100*DCG)/IDCG));
         return result;
     }
 
@@ -570,7 +573,7 @@ public class ControladorDomini {
      *
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
-    public ArrayList<String> getTipus() throws PrivilegesException {
+    public ArrayList<String> getTipus() {
         ArrayList<tipus> tipus = Item.getTipusArray();
         ArrayList<String> aux = new ArrayList<String>();
         for(int i = 0; i < tipus.size(); i++) aux.add(StringOperations.tipusToString(tipus.get(i)));
@@ -582,11 +585,11 @@ public class ControladorDomini {
      *
      * @param      tipusS                                       The new types of data for the atributes
      *
+     * @throws     DataNotValidException                        Problems with the initialization of the static values of Item
      * @throws     ItemTypeNotValidException                    Some type assignation is not possible.
      * @throws     PrivilegesException                          You need to be an admin to perform this functionallity.
-     * @throws     ItemStaticValuesAlreadyInitializedException  
      */
-    public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemStaticValuesAlreadyInitializedException, ItemTypeNotValidException {
+    public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemTypeNotValidException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
         ArrayList<tipus> tipus = new ArrayList<tipus>();
         for(int i = 0; i < tipusS.size(); i++) tipus.add(StringOperations.stringToType(tipusS.get(i)));
@@ -662,7 +665,7 @@ public class ControladorDomini {
     }
 
     public void removeRecmonacio(String itemId, String usrId) throws RecommendationNotFoundException {
-        cr.removeRecomanacions(Integer.parseInt(itemId), Integer.parseInt(usrId));
+        cr.removeRecomanacio(Integer.parseInt(itemId), Integer.parseInt(usrId));
     }
 
     /**
@@ -725,7 +728,7 @@ public class ControladorDomini {
         return String.valueOf(ControladorDominiAlgorisme.get_algorisme());
     }
 
-     /**
+    /**
      * Sets the value K used in the algorithm to perform user clustering.
      *
      * @param     k                       The new value as a string
@@ -847,6 +850,7 @@ public class ControladorDomini {
      * Resets all the data stored in a temporary state.
      */
     private void resetData() {
+        cp.sortirDelProjecte();
         Item.resetStatics();
         ControladorDominiAlgorisme.resetStatics();
         ci = null;
