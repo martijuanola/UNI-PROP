@@ -1,6 +1,0 @@
-DIRECTORI ARREL
-
-\DOCS: Conté la documentació del projecte en format pdf i la documentació amb javadoc de les classes i funcions.
-
-- G5-5.txt: Document de text amb la informació de l'entrega i els membres del grup.
-

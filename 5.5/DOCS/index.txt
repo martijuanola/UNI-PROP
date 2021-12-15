@@ -1,8 +1,0 @@
-DIRECTORI DOCS
-
-\javadoc: Conté la documentació de les classes feta amb javadoc.
-
-
-- Diagrama_classes-DiagramaComplet.drawio.html: Diagrama de classes complert en format html.
-- Documentacio.pdf: Documentació del projecte amb el disseny de l'arquitectura del projecte, els diagrames UML definitius i la descripcio de les estructures de dades i algorismes utilitzats.
-- index.lnk: Accès directe(per windows) a l'index de la documentació en javadoc
