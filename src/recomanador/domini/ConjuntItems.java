@@ -35,7 +35,7 @@ public class ConjuntItems extends ArrayList<Item> {
     /*----- CONSTRUCTORS -----*/
 
     /**
-     * Empty constructor
+     * Empty constructor. It only can be performed if the different Item static atributes are initialized.
      */
     public ConjuntItems() throws ItemStaticValuesNotInitializedException {
         if (Item.getCapçalera() == null || Item.getPesos() == null || Item.getPosId() == -1
