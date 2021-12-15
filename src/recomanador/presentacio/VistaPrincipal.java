@@ -8,6 +8,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class VistaPrincipal extends JFrame {
     JPanel panel;
@@ -49,12 +50,18 @@ public class VistaPrincipal extends JFrame {
 	//Part de recomanacions en directe
 		JPanel dreta;
 		JButton recomana;
-		JPanel recs;			//Amb scrollbar
-			JLabel[] header;	//Per id, nom, valoracio
-			JLabel[] id_item;
-			JLabel[] nom_item;
-			JComboBox[] rate;	//Tindra no valorat i [0.5, 5] de 1/2 en 1/2
+		JScrollPane recs;			//Amb scrollbar
+			ArrayList<JLabel> header;	//Per id, nom, valoracio
+			ArrayList<JLabel> id_item;
+			ArrayList<JLabel> nom_item;
+			ArrayList<JComboBox> rate;	//Tindra no valorat i [0.5, 5] de 1/2 en 1/2
     
+    /*----- DADES -----*/
+    ArrayList<String> id_recomanacions;
+    ArrayList<String> nom_recomanacions;
+    
+    
+    /*----- FUNCIONS -----*/
     public VistaPrincipal() {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
         
@@ -129,8 +136,39 @@ public class VistaPrincipal extends JFrame {
 			//recomana.setForeground(Color.BLACK);
 			dreta.add(recomana);
 			
-			recs = new JPanel();
-			recs.setLayout(new GridLayout(1, 3));	//1, 3
+			//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
+			
+			//id_recomanacions = cp.getIdRecomanacions();
+			//nom_recomanacions = cp.getNomRecomanacions();
+			
+			int nb = id_recomanacions.size();
+			recs.setLayout(new GridLayout(3, nb));
+			
+			header = new ArrayList<JLabel>();
+			header.add(new JLabel("id"));
+			header.add(new JLabel("nom"));
+			header.add(new JLabel("valoració"));
+			
+			id_item = new ArrayList<JLabel>();
+			nom_item = new ArrayList<JLabel>();
+			rate = new ArrayList<JComboBox>();
+			
+			String[] options = {"Sense valoració", "0.5", "1.0", 
+								"1.5", "2.0", "2.5", "3.0",
+								"3.5", "4.0", "4.5", "5.0"};
+						
+			for (int i = 0; i < nb; ++i)
+			{
+				id_item.add(new JLabel(id_recomanacions.get(i)));
+				nom_item.add(new JLabel(nom_recomanacions.get(i)));
+				rate.add(new JComboBox(options));
+				
+				recs.add(id_item.get(-1));
+				recs.add(nom_item.get(-1));
+				recs.add(rate.get(-1));
+			}
+			
+			
 		
 		//LAYER GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
