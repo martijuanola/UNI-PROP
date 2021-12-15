@@ -8,4 +8,8 @@ public class PrivilegesException extends Exception {
 		super("The active user doesn't have the privileges to execute this functionality of the application.");
 	}
 
+	public PrivilegesException(String s) {
+		super("The active user doesn't have the privileges to execute this functionality of the application." + s);
+	}
+
 }
