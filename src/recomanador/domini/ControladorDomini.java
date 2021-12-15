@@ -558,7 +558,7 @@ public class ControladorDomini {
      *
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
-    public ArrayList<String> getTipus() throws PrivilegesException {
+    public ArrayList<String> getTipus() {
         ArrayList<tipus> tipus = Item.getTipusArray();
         ArrayList<String> aux = new ArrayList<String>(0);
         for(int i = 0; i < tipus.size(); i++) aux.add(StringOperations.tipusToString(tipus.get(i)));

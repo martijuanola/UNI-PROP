@@ -73,8 +73,7 @@ public class ControladorPresentacio {
     }
 
     public static ArrayList<String> getTipusItems() {
-        //TODO: OMPLIR
-        return null;
+        return domini.getTipus();
     }
 
     public static void main(String[] args) {
