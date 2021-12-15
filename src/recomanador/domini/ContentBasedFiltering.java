@@ -9,10 +9,24 @@ import java.util.Collections;
 /**
  * This class implements the recomendation algorithm content based filtering.
  * 
- * 
  * @author Adrià F.
  */
 public class ContentBasedFiltering {
+
+    /*----- STATICS -----*/
+
+    private static ContentBasedFiltering inst;
+
+    /**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
+    public static ContentBasedFiltering getInstance() {
+        if(ContentBasedFiltering.inst == null) inst = new ContentBasedFiltering();
+        return inst;
+    }
+
     /**items from which to base the recommendation*/
     ConjuntItems items;
     /**users from which to base the recommendation*/
@@ -21,22 +35,22 @@ public class ContentBasedFiltering {
     ConjuntRecomanacions valoracions;
 
     /**
-     *  Constructs a new instance with the given items, users and recommendations
+     *  Constructs a new empty instance
+     */
+    private ContentBasedFiltering() {}
+
+    /**
+     *  Sets the instance with the given items, users and recommendations
      *
      * @param      items    Set of items
      * @param      usuaris    Set of users
      * @param      valoracions   set of recommendations (which include ratings)
      */
-    public ContentBasedFiltering(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
+    public void setData(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
         this.items = items;
         this.usuaris = usuaris;
         this.valoracions = valoracions;
     }
-
-    /**
-     *  Constructs a new empty instance
-     */
-    public ContentBasedFiltering() {}
 
     /**
      *  Returns a set of item IDs, sorted by relevance, using Collaborative Filtering for the given user
@@ -46,10 +60,12 @@ public class ContentBasedFiltering {
      * @param      K   number of clusters to be generated on k-means
      * 
      * @return     a sorted set the recommended item IDs
+     * 
+     * @throws     UserNotFoundException if the id specified is not valid
      */
     public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID, int k) throws UserNotFoundException {
        
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valUser = valoracions.getValoracions(user.getId());
@@ -64,7 +80,7 @@ public class ContentBasedFiltering {
             //una millor alternativa podria ser, per exemple, selection algorithm per trobar la valoracio en la posicio floor(0.75*size)
 
             Item item_val = valUser.get(val_user_idx).getItem();
-            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>(0);
+            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>();
 
             //iterem sobre tots els items no valorats
             for (int idxNV = 0; idxNV < items.size(); ++idxNV) {
@@ -87,7 +103,7 @@ public class ContentBasedFiltering {
         }        
 
         Collections.sort(items_estimats);
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         int i = 0;
         while (Q_items.size() < Q && i < items_estimats.size()) {
@@ -101,25 +117,14 @@ public class ContentBasedFiltering {
         return Q_items;
     }
 
-    /**
-     *  Sets the instance with the given items, users and recommendations
-     *
-     * @param      items    Set of items
-     * @param      usuaris    Set of users
-     * @param      valoracions   set of recommendations (which include ratings)
-     */
-    public void setData(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
-        this.items = items;
-        this.usuaris = usuaris;
-        this.valoracions = valoracions;
-    }
+    
     
 }
 
 /* IMPLEMENTACIO DIFERENT ANTIGA. POTSER UTIL PER HÍBRID?
 public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
        
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valUser = user.getValoracions();
@@ -146,7 +151,7 @@ public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID
         }
         Collections.sort(items_estimats);
         
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         for(int i = 0; i < Q; ++i){
             Q_items.add(items_estimats.get(i));

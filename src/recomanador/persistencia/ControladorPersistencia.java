@@ -14,13 +14,30 @@ import src.recomanador.excepcions.*;
 * @author Pol Sturlese 
 */
 public class ControladorPersistencia {
+
 /*----- INFO SOBRE VALORS -----*/
 	//Atributs que son usats per diverses parts del programa. Es troben en el següent ordre:
 	//			0		    | 1 | 2 | 		3	    | 	4	 | 	 5
 	//algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
     
 /*----- STATICS -----*/
+
+	private static ControladorPersistencia inst;
+
+	private static ControladorLoad cl; /* Object from the class ControladorLoad used for reading the .csv data. */
+	private static ControladorSave cs; /* Object from the class ControladorSave used for storing the data as .csv. */
+	
 	/**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
+    public static ControladorPersistencia getInstance() {
+        if(ControladorPersistencia.inst == null) inst = new ControladorPersistencia();
+        return inst;
+    }
+
+    /**
 	 * Contains a File that indicates wich project is being used from the
 	 * ./data folder.
 	 */
@@ -29,29 +46,14 @@ public class ControladorPersistencia {
 	 * Contains a File with the path and other information about the folder
 	 * ./data, where projects will be stored.
 	 */
-    private static File dades; 		//Carpeta de dades
-    
-    private static ControladorPersistencia inst;
-    /**
-	 * Object from the class ControladorLoad used for reading the .csv data.
-	 */
-    private static ControladorLoad cl;
-    /**
-	 * Object from the class ControladorSave used for storing the data as .csv.
-	 */
-    private static ControladorSave cs;
+    private static File dades;
 
-    public static ControladorPersistencia getInstance() {
-        if(ControladorPersistencia.inst == null) inst = new ControladorPersistencia();
-        return inst;
-    }
 
 /*-----CREADORES-----*/   
+    
     /**
 	 * Creates a new instance of the class ControladorPersistencia. It also finds the
 	 * data folder, and if it doen't exist, it creates it.
-	 * 
-	 * @return			 Returns a new instance of ControladorPersistencia.
 	 */
     private ControladorPersistencia()
     {
@@ -383,6 +385,7 @@ public class ControladorPersistencia {
 	}
 	
 /*-----ESCRIPTURA-----*/
+
 	/**
 	 * Creates an empty folder to store all the files. It also sets the
 	 * variable carpeta as the file pointing the new one.

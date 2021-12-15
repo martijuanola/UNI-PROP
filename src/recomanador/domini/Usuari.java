@@ -1,12 +1,14 @@
 package src.recomanador.domini;
 
 /**
+ * This class represents a user. It only has the atribute id.
  * @author Martí J.
  */
 public class Usuari implements Comparable<Usuari> {
     
     /*----- ATRIBUTS -----*/
 
+    /* ID of the user*/
     private int id;
 
     /*----- CONSTRUCTORS -----*/
