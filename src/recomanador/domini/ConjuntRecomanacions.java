@@ -8,13 +8,10 @@ import java.util.ArrayList;
 /**
  * This class describes a set of recommendations as an extenssion of ArrayList of recommendations.
  * It always has the array sorted by item id and user id to improve efficency on certain calls.
+ * 
  * @author Martí J.
  */
 public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
-	
-	/*----- CONSTANTS -----*/
-    /*----- ATRIBUTS -----*/
-
 
     /*----- CONSTRUCTORS -----*/
 
@@ -25,11 +22,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	super();
     }
 
-
-    //en principi les de user no haurien de petar perquè ja haurien petat abans però les poso igualment
-
-    //es podria generalitzar perquè poguessis seleccionar quines columnes son que però de moment es supsoa
-    //que sempre sera ordre idUsuari + idItem + rating
     /**
      * Constructs a new instance with the recommendations and ratings from the raw data
      *  obtained from the ratings file. It also sets the correct elements in the sets of 
@@ -41,9 +33,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     RatingNotValidException      Thrown if a rating was not found.
-     * @throws     UserIdNotValidException      Thrown if a user id was not found.
-     * @throws     ItemIdNotValidException      Thrown if a item id was not found.
+     * @throws     DataNotValid                 If some value is not correct(ratings,...)
      */
     public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
     	this.afegirDades(ci,cu,raw);
@@ -51,24 +41,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
 
     /*----- CONSULTORES -----*/
-    //quan s'acabi d'implementar l'algorisme es borren les que no es fan servir
-
-//es podria treure també
-    /**
-     * Returns if a recommendation between of an item <i>itemid</i> to a user <i>userid</i> exisist in 
-     * the set of recommendations.
-     *
-     * @param      itemid  The id of the item
-     * @param      userid  The id of the user
-     *
-     * @return     True if the recommendation has been found
-     */
-    public boolean existeixRecomanacio(int itemid, int userid) {
-    	int pos = cercaBinaria(itemid,userid);
-        if(pos < 0 || pos >= this.size()) return false;
-    	else if(this.get(pos).checkIds(itemid, userid)) return true;
-    	else return false;
-    }
 
     /**
      * Returns if a recommendation with a rating of an item <i>itemid</i> to a user <i>userid</i> 
@@ -102,16 +74,13 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	else throw new RecommendationNotFoundException(itemid, userid);
     }
 
-    public ConjuntRecomanacions getRecomanacions(int userid) {
-        ConjuntRecomanacions cr = new ConjuntRecomanacions();
-
-        for(int i = 0; i < this.size(); i++) {
-            if(this.get(i).getUsuari().getId() == userid) cr.add(this.get(i));
-        }
-
-        return cr;
-    }
-
+    /**
+     * Gets the unrated recommendations of a user
+     *
+     * @param      userid  The userid
+     *
+     * @return     A ConjuntRecomanacions with the unrated recommendations.
+     */
     public ConjuntRecomanacions getRecomanacionsNoValorades(int userid) {
         ConjuntRecomanacions cr = new ConjuntRecomanacions();
 
@@ -122,6 +91,13 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return cr;
     }
 
+    /**
+     * Gets the rated recommendations of a user
+     *
+     * @param      userid  The userid
+     *
+     * @return     A ConjuntRecomanacions with the rated recommendations.
+     */
     public ConjuntRecomanacions getValoracions(int userid) {
         ConjuntRecomanacions cv = new ConjuntRecomanacions();
 

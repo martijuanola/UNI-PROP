@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * This class describes a set of users as a extension of a users ArrayList.
  * It keeps the elements ordered by the id of users, to achieve a better performance when asking
  * for a user with a certain ID.
+ * 
  * @author Martí J.
  */
 public class ConjuntUsuaris extends ArrayList<Usuari> {
@@ -33,7 +34,6 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      *  from a previous execution without filling ordered by ID
      *
      * @param      raw   The raw data from a file of ratings
-     * @exception  UserIdNotValidException Gets thrown if the string for a user id is can not be converted to int
      * @throws     DataNotValidException    The input data is not valid
      */
     public ConjuntUsuaris(ArrayList<ArrayList<String>> raw) throws DataNotValidException {
@@ -80,6 +80,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
 
     /**
      * Adds the specified user <i>u</i> keeping the list ordered by id.
+     * Doesn't accept duplicates.
      *
      * @param      u     User to get added 
      *
@@ -87,7 +88,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      */
     @Override public boolean add(Usuari u) {
         int pos = cercaBinaria(u.getId());
-        if(this.get(pos).getId() == u.getId()) return false;
+        if(pos > 0 && pos < this.size() && this.get(pos).getId() == u.getId()) return false;
         
         try {
             this.add(pos,u);
@@ -98,6 +99,13 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
         return true;
     }
 
+    /**
+     * Removes an user with a certain id.
+     *
+     * @param      id                     The identifier
+     *
+     * @throws     UserNotFoundException  Thrown if the id doesn't belong to any user.
+     */
     public void removeUsuari(int id) throws UserNotFoundException{
         int pos = cercaBinaria(id);
         if(this.get(pos).getId() != id) throw new UserNotFoundException(id);
@@ -110,7 +118,6 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      * @param      raw                      The raw data
      *
      * @throws     DataNotValidException    The input data is not valid
-     * @throws     UserIdNotValidException  User id is not valid
      */
     public void afegirDades(ArrayList<ArrayList<String>> raw) throws DataNotValidException {
         int prev = 0;

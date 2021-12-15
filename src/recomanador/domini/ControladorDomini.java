@@ -559,14 +559,12 @@ public class ControladorDomini {
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
     public ArrayList<String> getTipus() throws PrivilegesException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
         ArrayList<tipus> tipus = Item.getTipusArray();
         ArrayList<String> aux = new ArrayList<String>(0);
         for(int i = 0; i < tipus.size(); i++) aux.add(StringOperations.tipusToString(tipus.get(i)));
         return aux;
     }
 
-//* @throws     ItemStaticValuesAlreadyInitializedException  
     /**
      * Sets all the atribute types of the items.
      *
@@ -574,6 +572,7 @@ public class ControladorDomini {
      *
      * @throws     ItemTypeNotValidException                    Some type assignation is not possible.
      * @throws     PrivilegesException                          You need to be an admin to perform this functionallity.
+     * @throws     ItemStaticValuesAlreadyInitializedException  
      */
     public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemStaticValuesAlreadyInitializedException, ItemTypeNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
