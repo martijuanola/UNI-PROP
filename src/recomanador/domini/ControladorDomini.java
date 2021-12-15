@@ -244,7 +244,7 @@ public class ControladorDomini {
 
 
     /*----- TESTS -----*/
-//ADMIN??
+
     ArrayList<Integer> runTest() throws FolderNotValidException, DataNotValidException {
         int auxQ = cda.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
@@ -427,13 +427,15 @@ public class ControladorDomini {
         if(!admin && idR != this.id) throw new PrivilegesException("A USER can only work with its Recommendations.");
         return cr.getValoracions(idR).getAllRecomanacions();
     }
-//PRIVILAGES??
-    public void setValoracio(String itemId, String rating) throws RecommendationNotFoundException, RatingNotValidException {
-        cr.getRecomanacio(Integer.parseInt(itemId),id).setVal(Float.parseFloat(rating));
+
+    public void setValoracio(String itemId, String usuariId, String rating) throws PrivilegesException, RecommendationNotFoundException, RatingNotValidException {
+        if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("A USER can only work with its Recommendations.");
+        cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Float.parseFloat(rating));
     }
-//PRIVILAGES??
-    public void removeValoracio(String itemId) throws RecommendationNotFoundException, RatingNotValidException {
-        cr.getRecomanacio(Integer.parseInt(itemId),id).setVal(Recomanacio.nul);
+
+    public void removeValoracio(String itemId, String usuariId) throws PrivilegesException, RecommendationNotFoundException, RatingNotValidException {
+        if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("A USER can only work with its Recommendations.");
+        cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Recomanacio.nul);
     }
 
     public void createRecomanacions() throws PrivilegesException {
