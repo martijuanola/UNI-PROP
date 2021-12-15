@@ -9,6 +9,7 @@ import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
+import src.recomanador.excepcions.PrivilegesException;
 
 public class ControladorPresentacio {
     private static ControladorDomini domini;
@@ -64,7 +65,7 @@ public class ControladorPresentacio {
     }
 
     public static ArrayList<String> getTipus() {
-        return domini.getTipus();
+        return domini.getTipusAsStrings();
     }
 
     public static ArrayList<String> getHeaderItems() {
