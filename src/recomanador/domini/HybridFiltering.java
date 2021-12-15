@@ -17,7 +17,20 @@ import java.util.Collections;
  * @author Adrià F.
  */
 public class HybridFiltering {
-    /*----- CONSTANTS -----*/
+
+    /*----- STATICS -----*/
+
+    private static HybridFiltering inst;
+
+    /**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
+    public static HybridFiltering getInstance() {
+        if(HybridFiltering.inst == null) inst = new HybridFiltering();
+        return inst;
+    }
 
     /*----- ATRIBUTS -----*/
 
@@ -30,7 +43,6 @@ public class HybridFiltering {
      /** stores if the centroids have been calculated, so they dont get recalculated for multiple iterations of the algorithm
      * (mainly, when calculating the DCG and NDCG)
      */
-    Boolean centroidesCalculats = false;
 
     /**Stores a set of k centroids with their ratings. Used for k-NN*/
     Centroid[] centroids;
@@ -38,28 +50,16 @@ public class HybridFiltering {
     /**For each user ID, stores the centroid they belong to*/
     HashMap<Integer, Integer> closest_centroid;
 
+    Boolean centroidesCalculats = false;
+
     Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
 
     /**
-     *  Constructs a new instance with the given items, users and recommendations
-     *
-     * @param      items    Set of items
-     * @param      usuaris    Set of users
-     * @param      valoracions   set of recommendations (which include ratings)
-     */
-    public HybridFiltering(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
-        this.items = items;
-        this.usuaris = usuaris;
-        this.valoracions = valoracions;
-    }
-
-    /**
      *  Constructs a new empty instance
      */
-    public HybridFiltering() {
-    }
+    private HybridFiltering() {}
 
     /*----- OPERADORS -----*/
 
@@ -84,6 +84,8 @@ public class HybridFiltering {
      * @param      K   number of clusters to be generated on k-means
      * 
      * @return     a sorted set the recommended item IDs with their estimated ratings
+     * 
+     * @throws     UserNotFoundException if the id specified is not valid
      */
     public ArrayList<ItemValoracioEstimada> hybridFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         
