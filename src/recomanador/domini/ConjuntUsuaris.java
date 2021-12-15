@@ -87,6 +87,8 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      */
     @Override public boolean add(Usuari u) {
         int pos = cercaBinaria(u.getId());
+        if(this.get(pos).getId() == u.getId()) return false;
+        
         try {
             this.add(pos,u);
         }
@@ -94,6 +96,12 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
             return false;
         }
         return true;
+    }
+
+    public void removeUsuari(int id) throws UserNotFoundException{
+        int pos = cercaBinaria(id);
+        if(this.get(pos).getId() != id) throw new UserNotFoundException(id);
+        this.remove(pos);
     }
 
     /**
