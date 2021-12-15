@@ -137,12 +137,13 @@ public class VistaPrincipal extends JFrame {
 			dreta.add(recomana);
 			
 			//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
+			recs = new JScrollPane();
 			
-			//id_recomanacions = cp.getIdRecomanacions();
-			//nom_recomanacions = cp.getNomRecomanacions();
+			id_recomanacions = cp.getIdRecomanacions();
+			nom_recomanacions = cp.getNomRecomanacions();
 			
 			int nb = id_recomanacions.size();
-			recs.setLayout(new GridLayout(3, nb));
+			//recs.setLayout(new GridLayout(3, nb));
 			
 			header = new ArrayList<JLabel>();
 			header.add(new JLabel("id"));
@@ -163,11 +164,12 @@ public class VistaPrincipal extends JFrame {
 				nom_item.add(new JLabel(nom_recomanacions.get(i)));
 				rate.add(new JComboBox(options));
 				
-				recs.add(id_item.get(-1));
-				recs.add(nom_item.get(-1));
-				recs.add(rate.get(-1));
+				recs.add(id_item.get(id_item.size()-1));
+				recs.add(nom_item.get(nom_item.size()-1));
+				recs.add(rate.get(rate.size()-1));
 			}
 			
+			dreta.add(recs);
 			
 		
 		//LAYER GLOBAL
