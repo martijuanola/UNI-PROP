@@ -57,7 +57,7 @@ public class ControladorDominiAlgorisme {
     private ControladorDominiAlgorisme() {
         colFilt = new CollaborativeFiltering();
         BasedFilt = new ContentBasedFiltering();
-        HybFilt = new HybridFiltering();
+        HybFilt = HybridFiltering.getInstance();
     }
 
     /*----- SETTERS -----*/

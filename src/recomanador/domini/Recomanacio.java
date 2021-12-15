@@ -19,9 +19,7 @@ public class Recomanacio implements Comparable<Recomanacio> {
     /**Values between [0,5] by steps of 0.5*/
     private float valoracio;
     
-    /**
-     * Value used as the null value for the atribute <i>valoracio</i>
-     */
+    /* Value used as the null value for the atribute <i>valoracio</i> */
     public static final float nul = 0;
 
 
@@ -45,6 +43,8 @@ public class Recomanacio implements Comparable<Recomanacio> {
      * @param      u     User
      * @param      i     Item
      * @param      v     Rating
+     * 
+     * @throws     DataNotValidException If the ratings is not a valid float.
      */
     public Recomanacio(Usuari u, Item i, float v) throws DataNotValidException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new DataNotValidException(v,"Rating value not valid. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
@@ -60,6 +60,8 @@ public class Recomanacio implements Comparable<Recomanacio> {
      * Set rating, and update the position of recomendation in the CjtRecomenacions of the user.
      *
      * @param      v                             New rating.
+     * 
+     * @throws     DataNotValidException If the ratings is not a valid float.
      */
     public void setVal(float v) throws RatingNotValidException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);
@@ -106,13 +108,12 @@ public class Recomanacio implements Comparable<Recomanacio> {
     }
 
     /**
-     * Checks if the item has id <i>id_item</i> and that user has id
-     * <i>id_usuari</i>.
+     * Checks if the item has id <i>id_item</i> and that user has id <i>id_usuari</i>.
      *
      * @param      id_item     The identifier of item
      * @param      id_usuari  The identifier of usuari
      *
-     * @return     true if the ids are the same as the instance's
+     * @return     true if the ids are the same as the instance's.
      */
     public boolean checkIds(int id_item, int id_usuari) {
         if(id_item != this.item.getId() || id_usuari != this.usr.getId()) return false;
