@@ -243,14 +243,15 @@ public class Item implements Comparable<Item>{
         Item.pesos = p;
     }
 
-    //s'hauràn d'afegir excepcions
+
+//faltarà mirar a veure que passa amb això!!!!
+//* @throws ItemStaticValuesAlreadyInitializedException
     /**
      * Sets the types array to the parameter
      * @param a array of types of the same size as the attributes
-     * @throws ItemStaticValuesAlreadyInitializedException
      */
-    public static void setTipusArray(ArrayList<tipus> a) throws ItemStaticValuesAlreadyInitializedException {
-        if (Item.tipusAtribut != null) throw new ItemStaticValuesAlreadyInitializedException();
+    public static void setTipusArray(ArrayList<tipus> a) /*throws ItemStaticValuesAlreadyInitializedException*/ {
+        //if (Item.tipusAtribut != null) throw new ItemStaticValuesAlreadyInitializedException();
         if (a.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Types array does not match items attributes size.");
         Item.tipusAtribut = a;
     }

@@ -47,7 +47,7 @@ public class ControladorPresentacio {
     }
 
     public static void carregarProjecteNou(String nom, String itemsFile, String ratingsFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException {
-        domini.loadNewSession(nom, itemsFile, ratingsFile);
+        domini.createSession(nom, itemsFile, ratingsFile);
     }
 
     public static ArrayList<String> getProjectesDisponibles() {
