@@ -13,16 +13,21 @@ public class Item implements Comparable<Item>{
     /*----- ATRIBUTS STATICS -----*/
     
     /**
-     * This enumaration represents the types that an attribute can have
-     * ID
-     * Nom
-     * Boolean
-     * Float
-     * String
-     * Date
+     * This enumaration represents the types that an attribute can have (ID, Nom, Boolean, Float, String, Date)
      */
     public static enum tipus {
-        I, N, B, F, S, D 
+        /** ID */
+        I,
+        /** Nom */
+        N,
+        /** Boolean */
+        B,
+        /** Float */
+        F,
+        /** String */
+        S,
+        /** Date */
+        D 
     }
 
     /**
@@ -152,7 +157,7 @@ public class Item implements Comparable<Item>{
 
     /**
      * Returns the array of weights
-     * @return ArrayList<Float> with the weights of an item
+     * @return ArrayList&lt;Float&gt; with the weights of an item
      */
     public static ArrayList<Float> getPesos() {
         return Item.pesos;
@@ -160,7 +165,7 @@ public class Item implements Comparable<Item>{
 
     /**
      * Returns the array of types
-     * @return ArrayList<tipus> with the types of an item
+     * @return ArrayList&lt;tipus&gt; with the types of an item
      */
     public static ArrayList<tipus> getTipusArray() {
         return Item.tipusAtribut;
@@ -168,7 +173,7 @@ public class Item implements Comparable<Item>{
 
     /**
      * Returns the array of names of the attributes(header)
-     * @return ArrayList<String> with the names of the attributes of an item
+     * @return ArrayList&lt;String&gt; with the names of the attributes of an item
      */
     public static ArrayList<String> getCapçalera() {
         return Item.nomAtribut;
@@ -219,9 +224,9 @@ public class Item implements Comparable<Item>{
      * Sets the type of column
      * @param columna column which will be modified
      * @param t new type that will be assigned
-     * @throws ItemTypeNotValidException    If the column does not accept the new type
-     * @throws ItemNomANotValidException    If the column of the name is already defined
-     * @throws ItemIdNotValidException      podID already defined
+     * @throws ItemTypeNotValidException                    If the column does not accept the new type.
+     * @throws ItemIdNotValidException                      podID already defined.
+     * @throws ItemStaticValuesAlreadyInitializedException  The static values are already initialized.
      */
     public static void setTipus(int columna, tipus t) throws ItemTypeNotValidException, ItemIdNotValidException, ItemStaticValuesAlreadyInitializedException {
         if (Item.id == columna) throw new ItemTypeNotValidException("Cannot change the Item ID.");
@@ -348,10 +353,10 @@ public class Item implements Comparable<Item>{
     /**
      * Function that overrides the compareTo by defalut. Compares 2 items by their id's
      * @param otherItem The other item that compares
-     * @return Returns an integer depending on the comparisson between the implicit item and the item given as a parameter
-     * 1 if implicit > otherItem, 
-     * 0 if implicit = otherItem, 
-     * -1 if implicit < otherItem
+     * @return Returns an integer depending on the comparisson between the implicit item and the item given as a parameter <br>
+     * 1 if implicit &gt; otherItem <br>
+     * 0 if implicit = otherItem <br>
+     * -1 if implicit &lt; otherItem <br>
      */
     @Override public int compareTo(Item otherItem) {
         int id1 = getId();

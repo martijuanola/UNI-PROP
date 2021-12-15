@@ -17,20 +17,26 @@ public class ControladorDomini {
     /*----- STATICS -----*/
     
     /* Controllers */
+
+    /** Contains the only instance of the class **/
     private static ControladorDomini inst;
+    /** Instance of the Algorithm Subcontroler **/
     private static ControladorDominiAlgorisme cda;
+    /** Instance of the Persistence Controler **/
     private static ControladorPersistencia cp;
 
     /* Data of the execution */
+    /** Set of Items of the execution **/
     private static ConjuntItems ci;
+    /** Set of Users of the execution **/
     private static ConjuntUsuaris cu;
+    /** Set of Recommendations of the execution **/
     private static ConjuntRecomanacions cr;
     
     /* Atributes */
-    /* Id of the user/actor of the application */
+    /** Id of the user/actor of the application **/
     private static int id;
-
-    /* True if active user/actor has admin privileges */
+    /** True if active user/actor has admin privileges **/
     private static boolean admin;
 
     /**
@@ -46,7 +52,7 @@ public class ControladorDomini {
 
     /*----- CONSTANTS -----*/
     
-    /* Value that represents null in the atribute id */
+    /** Value that represents null in the atribute id **/
     public static final int NULL_ID = -1;
 
 
@@ -109,8 +115,8 @@ public class ControladorDomini {
      * Gets the active user identifier.
      *
      * @return     The active user identifier.
-     *
-     * @throws     NotLogedInException  Thrown if no user session is opened.
+     * 
+     * @throws     PrivilegesException When the user is not loged in as a user.
      */
     public String getActiveUserId() throws PrivilegesException {
         if(this.id == NULL_ID) throw new PrivilegesException("Needs to be loged in as a USER.");
@@ -570,8 +576,6 @@ public class ControladorDomini {
      * Gets all the atribute types of the items.
      *
      * @return     The array of types as strings
-     *
-     * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
     public ArrayList<String> getTipus() {
         ArrayList<tipus> tipus = Item.getTipusArray();
@@ -664,6 +668,14 @@ public class ControladorDomini {
         cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Recomanacio.nul);
     }
 
+    /**
+     * Removes the recommendation specified by the ids.
+     *
+     * @param      itemId                           The item identifier
+     * @param      usrId                            The user identifier
+     *
+     * @throws     RecommendationNotFoundException  If the recommendation is not found.
+     */
     public void removeRecmonacio(String itemId, String usrId) throws RecommendationNotFoundException {
         cr.removeRecomanacio(Integer.parseInt(itemId), Integer.parseInt(usrId));
     }
@@ -733,7 +745,8 @@ public class ControladorDomini {
      *
      * @param     k                       The new value as a string
      *
-     * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
+     * @throws     PrivilegesException      You need to be an admin to perform this functionallity.
+     * @throws     DataNotValidException    The value entered is not valid.
      */
     public void setK(String k) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");

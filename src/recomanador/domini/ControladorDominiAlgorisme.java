@@ -13,6 +13,7 @@ public class ControladorDominiAlgorisme {
 
     /*----- STATICS -----*/
 
+    /** Contains the only instance of the class **/
     private static ControladorDominiAlgorisme inst;
 
     /**
@@ -58,8 +59,6 @@ public class ControladorDominiAlgorisme {
 
     /**
      *  Constructs a new empty instance
-     *
-     * @return      a new instance of ControladorDominiAlgorisme, which will be empty
      */
     private ControladorDominiAlgorisme() {
         resetStatics();
@@ -73,7 +72,7 @@ public class ControladorDominiAlgorisme {
     /**
      *  Sets the attribute K of the active instance
      *
-     * @param       k   an integer value representing the k value
+     * @param       K   an integer value representing the k value
      * 
      * @throws     DataNotValidException        K has a invalid value
      */

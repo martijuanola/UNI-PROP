@@ -16,10 +16,6 @@ import java.util.ArrayList;
  */
 public class ConjuntUsuaris extends ArrayList<Usuari> {
 
-    /*----- CONSTANTS -----*/
-    /*----- ATRIBUTS -----*/
-
-
     /*----- CONSTRUCTORS -----*/
 
     /**

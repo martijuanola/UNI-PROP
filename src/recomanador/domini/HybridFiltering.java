@@ -20,6 +20,7 @@ public class HybridFiltering {
 
     /*----- STATICS -----*/
 
+    /** Contains the only instance of the class **/
     private static HybridFiltering inst;
 
     /**
@@ -50,8 +51,10 @@ public class HybridFiltering {
     /**For each user ID, stores the centroid they belong to*/
     HashMap<Integer, Integer> closest_centroid;
 
+    /** Indicates if the centroids are already calculated */
     Boolean centroidesCalculats = false;
 
+    /** To add stochasticity to the centroids generation */
     Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
@@ -171,6 +174,7 @@ public class HybridFiltering {
      *  Executes k-means and returns the set of IDs of the users in the same cluster than user_ID
      *
      * @param      user_ID      ID of the user whose cluster will be returned
+     * @param      K            The value of K
      * 
      * @return     users of the cluster
      */
@@ -283,9 +287,9 @@ public class HybridFiltering {
     /**
      * Returns the distance between a user and a centroid.
      *
-     * @param      u    identifier of a user
+     * @param      idx_usuari    identifier of a user
      *
-     * @param      c    index of a centroid
+     * @param      centroid    index of a centroid
      *
      * @return     the distance between the user and the centroid
      */

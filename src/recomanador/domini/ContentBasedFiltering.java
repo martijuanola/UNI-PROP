@@ -15,6 +15,7 @@ public class ContentBasedFiltering {
 
     /*----- STATICS -----*/
 
+    /** Contains the only instance of the class **/
     private static ContentBasedFiltering inst;
 
     /**
@@ -57,7 +58,7 @@ public class ContentBasedFiltering {
      *
      * @param      Q            how many items to be recommended
      * @param      user_ID      ID of the user to be recommended
-     * @param      K   number of clusters to be generated on k-means
+     * @param      k   number of clusters to be generated on k-means
      * 
      * @return     a sorted set the recommended item IDs
      * 

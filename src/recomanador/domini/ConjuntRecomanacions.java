@@ -33,7 +33,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * 
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     DataNotValid                 If some value is not correct(ratings,...)
+     * @throws     DataNotValidException        If some value is not correct(ratings,...)
      */
     public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
     	this.afegirDades(ci,cu,raw);
@@ -194,7 +194,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     DataNotValid                 Errors with tipes of data for ratings or ids.
+     * @throws     DataNotValidException        Errors with tipes of data for ratings or ids.
      */
     public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
         raw.remove(0);//elimina la capçalera
@@ -242,8 +242,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * id = <i>user_id</i>, or if it doesn't exist, the position where it should be added. 
      * It uses a binary search.
      *
-     * @param      first      The first element
-     * @param      last       The last element
      * @param      item_id    The item identifier
      * @param      usuari_id  The user identifier
      *
