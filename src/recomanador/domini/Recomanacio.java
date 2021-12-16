@@ -19,7 +19,7 @@ public class Recomanacio implements Comparable<Recomanacio> {
     /**Values between [0,5] by steps of 0.5*/
     private float valoracio;
     
-    /* Value used as the null value for the atribute <i>valoracio</i> */
+    /** Value used as the null value for the atribute <i>valoracio</i> **/
     public static final float nul = 0;
 
 
@@ -61,7 +61,7 @@ public class Recomanacio implements Comparable<Recomanacio> {
      *
      * @param      v                             New rating.
      * 
-     * @throws     DataNotValidException If the ratings is not a valid float.
+     * @throws     RatingNotValidException If the ratings is not a valid float.
      */
     public void setVal(float v) throws RatingNotValidException {
         if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new RatingNotValidException(v);

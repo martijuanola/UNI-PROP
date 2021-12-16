@@ -30,10 +30,10 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @param      ci    Set of items from the Domain Controler
      * @param      cu    Set of users from the Domain Controler
      * @param      raw   The raw data from the ratings file
-     *
+     * 
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     DataNotValid                 If some value is not correct(ratings,...)
+     * @throws     DataNotValidException        If some value is not correct(ratings,...)
      */
     public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
     	this.afegirDades(ci,cu,raw);
@@ -108,12 +108,17 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return cv;
     }
 
+    /**
+     * Gets all the recommendations(rated and not rated) in orther to export them and save them in a file.
+     *
+     * @return     All recommendations + the header!!
+     */
     public ArrayList<ArrayList<String>> getAllRecomanacions() {
-        ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>(0);
-        ArrayList<String> header = new ArrayList<String>(0); header.add("userId"); header.add("itemId"); header.add("rating");
+        ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+        ArrayList<String> header = new ArrayList<String>(); header.add("userId"); header.add("itemId"); header.add("rating");
         D.add(header);
         for(int i = 0; i < this.size();i++){
-            ArrayList<String> aux = new ArrayList<String>(0);
+            ArrayList<String> aux = new ArrayList<String>();
             aux.add(String.valueOf(this.get(i).getUsuari().getId()));
             aux.add(String.valueOf(this.get(i).getItem().getId()));
             aux.add(String.valueOf(this.get(i).getVal()));
@@ -142,14 +147,40 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return true;
     }
 
+    /**
+     * Removes a recommendation specified with the 2 ids.
+     *
+     * @param      itemId                           The item identifier
+     * @param      usuariId                         The usuari identifier
+     *
+     * @throws     RecommendationNotFoundException  If the recommendation doesn't exist.
+     */
+    public void removeRecomanacio(int itemId, int usuariId) throws RecommendationNotFoundException {
+        int pos = cercaBinaria(itemId, usuariId);
+        if(this.size() == 0 || pos == this.size() || this.get(pos).getItem().getId() != itemId || this.get(pos).getUsuari().getId() != usuariId) {
+            throw new RecommendationNotFoundException(itemId, usuariId);
+        }
+        this.remove(pos);
+    }
+
+    /**
+     * Removes all the recommendation of the item specified
+     *
+     * @param      id    The identifier
+     */
     public void removeRecomanacionsItem(int id) {
-        for(Recomanacio r: this) {
+        for(Recomanacio r : this) {
             if(r.getItem().getId() == id) this.remove(r);
         }
     }
 
+    /**
+     * Removes all the recommenations of the user specified.
+     *
+     * @param      id    The identifier
+     */
     public void removeRecomanacionsUsuari(int id) {
-        for(Recomanacio r: this) {
+        for(Recomanacio r : this) {
             if(r.getUsuari().getId() == id) this.remove(r);
         }
     }
@@ -163,9 +194,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     RatingNotValidException      Thrown if a rating was not found.
-     * @throws     UserIdNotValidException      Thrown if a user id was not found.
-     * @throws     ItemIdNotValidException      Thrown if a item id was not found.
+     * @throws     DataNotValidException        Errors with tipes of data for ratings or ids.
      */
     public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
         raw.remove(0);//elimina la capçalera
@@ -213,8 +242,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * id = <i>user_id</i>, or if it doesn't exist, the position where it should be added. 
      * It uses a binary search.
      *
-     * @param      first      The first element
-     * @param      last       The last element
      * @param      item_id    The item identifier
      * @param      usuari_id  The user identifier
      *

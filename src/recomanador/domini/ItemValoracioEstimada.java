@@ -7,17 +7,17 @@ package src.recomanador.domini;
  * @author Adrià F.
  */
 public class ItemValoracioEstimada implements Comparable<ItemValoracioEstimada>{
-    /* estimated rating */
+    /** estimated rating */
     public float valoracioEstimada;
 
-    /* Item */
+    /** Item */
     public Item item;
 
     /**
     *  Constructs a new instance of ItemValoracioEstimada with the given parameters as attributes
     *
     * @param      valoracioEstimada         a value between 0 and 5 representing the estimated rating
-    * @param      Item                      an instance of the class Item representing the rated item
+    * @param      item                      an instance of the class Item representing the rated item
     */
     public ItemValoracioEstimada(float valoracioEstimada, Item item) {
         this.valoracioEstimada = valoracioEstimada;

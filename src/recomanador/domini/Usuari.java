@@ -8,7 +8,7 @@ public class Usuari implements Comparable<Usuari> {
     
     /*----- ATRIBUTS -----*/
 
-    /* ID of the user*/
+    /** ID of the user **/
     private int id;
 
     /*----- CONSTRUCTORS -----*/

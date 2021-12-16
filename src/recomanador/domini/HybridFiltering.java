@@ -20,6 +20,7 @@ public class HybridFiltering {
 
     /*----- STATICS -----*/
 
+    /** Contains the only instance of the class **/
     private static HybridFiltering inst;
 
     /**
@@ -50,8 +51,10 @@ public class HybridFiltering {
     /**For each user ID, stores the centroid they belong to*/
     HashMap<Integer, Integer> closest_centroid;
 
+    /** Indicates if the centroids are already calculated */
     Boolean centroidesCalculats = false;
 
+    /** To add stochasticity to the centroids generation */
     Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
@@ -116,7 +119,7 @@ public class HybridFiltering {
         //we execute content-based filtering on this set of items
         System.out.println("Executant k-NN" );
         System.out.println();
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valUser = valoracions.getValoracions(user.getId());
@@ -131,7 +134,7 @@ public class HybridFiltering {
             //una millor alternativa podria ser, per exemple, selection algorithm per trobar la valoracio en la posicio floor(0.75*size)
 
             Item item_val = valUser.get(val_user_idx).getItem();
-            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>(0);
+            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>();
 
             //iterem sobre tots els items no valorats
             for (int idxNV = 0; idxNV < items_cluster.size(); ++idxNV) {
@@ -154,7 +157,7 @@ public class HybridFiltering {
         }        
 
         Collections.sort(items_estimats);
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         int i = 0;
         while (Q_items.size() < Q && i < items_estimats.size()) {
@@ -171,6 +174,7 @@ public class HybridFiltering {
      *  Executes k-means and returns the set of IDs of the users in the same cluster than user_ID
      *
      * @param      user_ID      ID of the user whose cluster will be returned
+     * @param      K            The value of K
      * 
      * @return     users of the cluster
      */
@@ -283,9 +287,9 @@ public class HybridFiltering {
     /**
      * Returns the distance between a user and a centroid.
      *
-     * @param      u    identifier of a user
+     * @param      idx_usuari    identifier of a user
      *
-     * @param      c    index of a centroid
+     * @param      centroid    index of a centroid
      *
      * @return     the distance between the user and the centroid
      */

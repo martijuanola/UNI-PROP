@@ -16,10 +16,6 @@ import java.util.ArrayList;
  */
 public class ConjuntUsuaris extends ArrayList<Usuari> {
 
-    /*----- CONSTANTS -----*/
-    /*----- ATRIBUTS -----*/
-
-
     /*----- CONSTRUCTORS -----*/
 
     /**
@@ -88,9 +84,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      */
     @Override public boolean add(Usuari u) {
         int pos = cercaBinaria(u.getId());
-        if(size() > 0 && pos < size()) {
-            if(this.get(pos).getId() == u.getId()) return false;
-        }
+        if(this.size() != 0 && pos < this.size() && this.get(pos).getId() == u.getId()) return false;
         
         try {
             this.add(pos,u);

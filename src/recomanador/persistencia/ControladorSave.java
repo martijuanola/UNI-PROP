@@ -17,8 +17,14 @@ public class ControladorSave {
     
     /*----- STATICS -----*/
 
+    /** Contains the only instance of the class **/
     private static ControladorSave inst;
 
+    /**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
     public static ControladorSave getInstance() {
         if(ControladorSave.inst == null) inst = new ControladorSave();
         return inst;
@@ -29,8 +35,6 @@ public class ControladorSave {
 
     /**
      * Creates an instance of ControladorSave
-     * 
-     * @return Returns a new instance of ControladorSave
      */    
     private ControladorSave() {}
 

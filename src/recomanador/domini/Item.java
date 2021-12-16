@@ -13,20 +13,20 @@ public class Item implements Comparable<Item>{
     /*----- ATRIBUTS STATICS -----*/
     
     /**
-     * This enumaration represents the types that an attribute can have
-     * ID
-     * Nom
-     * Boolean
-     * Float
-     * String
-     * Date
+     * This enumaration represents the types that an attribute can have (ID, Nom, Boolean, Float, String, Date)
      */
     public static enum tipus {
-        I, 
-        N, 
-        B, 
-        F, 
+        /** ID */
+        I,
+        /** Nom */
+        N,
+        /** Boolean */
+        B,
+        /** Float */
+        F,
+        /** String */
         S,
+        /** Date */
         D 
     }
 
@@ -68,8 +68,11 @@ public class Item implements Comparable<Item>{
     /*----- CONSTRUCTORS -----*/
 
     /**
-     * Constructor with only the attribute id. Initialized all static elements
-     * @param id Item identifier
+     * Constructor with only the attribute id. All the static values need to be initialitzed.
+     *
+     * @param      idval  The id
+     * 
+     * @throws     ItemStaticValuesNotInitializedException      Thrown if the static values are not initialized.
      */
     public Item(int idval) throws ItemStaticValuesNotInitializedException {
         if(pesos == null) throw new ItemStaticValuesNotInitializedException("pesos");
@@ -77,9 +80,9 @@ public class Item implements Comparable<Item>{
         if(nomAtribut == null) throw new ItemStaticValuesNotInitializedException("nomAtribut");
         if(id == -1) throw new ItemStaticValuesNotInitializedException("id");
 
-        this.atributs = new ArrayList<ArrayList<String>>(0);
+        this.atributs = new ArrayList<ArrayList<String>>();
         for(int i = 0; i < Item.getNumAtributs(); i++) {
-            ArrayList<String> default_val = new ArrayList<String>(0);
+            ArrayList<String> default_val = new ArrayList<String>();
             if(i != Item.id) default_val.add("");
             else default_val.add(""+idval);
             this.atributs.add(default_val);
@@ -87,8 +90,12 @@ public class Item implements Comparable<Item>{
     }
 
     /**
-     * An item is created and the attributes are assigned to it
-     * @param atributs list of attributes where each attribute can have multiple subattributes
+     * Constructs a new instance with the all the new atributes.
+     *
+     * @param      atributsval  The atributes
+     * 
+     * @throws     ItemStaticValuesNotInitializedException      Thrown if the static values are not initialized.
+     * @throws     ItemNewAtributesNotValidException            There's some new atribute not valid
      */
     public Item(ArrayList<ArrayList<String>> atributsval) throws ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
         if(pesos == null) throw new ItemStaticValuesNotInitializedException("pesos");
@@ -150,7 +157,7 @@ public class Item implements Comparable<Item>{
 
     /**
      * Returns the array of weights
-     * @return ArrayList<Float> with the weights of an item
+     * @return ArrayList&lt;Float&gt; with the weights of an item
      */
     public static ArrayList<Float> getPesos() {
         return Item.pesos;
@@ -158,15 +165,15 @@ public class Item implements Comparable<Item>{
 
     /**
      * Returns the array of types
-     * @return ArrayList<tipus> with the types of an item
+     * @return ArrayList&lt;tipus&gt; with the types of an item
      */
     public static ArrayList<tipus> getTipusArray() {
         return Item.tipusAtribut;
     }
 
     /**
-     * Returns the array of names of the attributes
-     * @return ArrayList<String> with the names of the attributes of an item
+     * Returns the array of names of the attributes(header)
+     * @return ArrayList&lt;String&gt; with the names of the attributes of an item
      */
     public static ArrayList<String> getCapçalera() {
         return Item.nomAtribut;
@@ -178,8 +185,8 @@ public class Item implements Comparable<Item>{
     //TODO: ha de ser protected
     /**
      * Sets a column that will act as id
-     * @param c    new id that will be set
-     * @throws     ItemIdNotValidException      Thrown when id can not be changed to the column c
+     * @param c    The atribute that will reperesent the id of the items
+     * @throws     ItemIdNotValidException      posId is already defined or is an invalid column
      */
     public static void setId(int c) throws ItemIdNotValidException { //TODO: S'ha de ordenar el conjunt d'items quan es canvia l'id
         if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");    
@@ -192,7 +199,7 @@ public class Item implements Comparable<Item>{
      * @param c new name that will be set
      * @throws ItemStaticValuesAlreadyInitializedException If the column of the name is already defined
      */
-    public static void setNomA(int c) throws ArrayIndexOutOfBoundsException, ItemStaticValuesAlreadyInitializedException {
+    public static void setNomA(int c) throws ItemStaticValuesAlreadyInitializedException {
         if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");
         if (nomA != -1) throw new ItemStaticValuesAlreadyInitializedException();
         Item.nomA = c;
@@ -203,9 +210,8 @@ public class Item implements Comparable<Item>{
      * @param a column which will be modified
      * @param pes new weight that will be assigned
      * @throws ItemWeightNotCorrectException if weights is outside the range (0 - 100)
-     * @throws ArrayIndexOutOfBoundsException if the column is not between 0 and the number of attributes
      */
-    public static void setPes(int a, float pes) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException {
+    public static void setPes(int a, float pes) throws ItemWeightNotCorrectException {
         if (a < 0 || a >= Item.pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
         if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
         else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
@@ -218,11 +224,11 @@ public class Item implements Comparable<Item>{
      * Sets the type of column
      * @param columna column which will be modified
      * @param t new type that will be assigned
-     * @throws ItemTypeNotValidException if the column does not accept the new type
-     * @throws ItemNomANotValidException If the column of the name is already defined
-     * @throws ArrayIndexOutOfBoundsException
+     * @throws ItemTypeNotValidException                    If the column does not accept the new type.
+     * @throws ItemIdNotValidException                      podID already defined.
+     * @throws ItemStaticValuesAlreadyInitializedException  The static values are already initialized.
      */
-    public static void setTipus(int columna, tipus t) throws ItemTypeNotValidException, ItemIdNotValidException, ArrayIndexOutOfBoundsException, ItemStaticValuesAlreadyInitializedException {
+    public static void setTipus(int columna, tipus t) throws ItemTypeNotValidException, ItemIdNotValidException, ItemStaticValuesAlreadyInitializedException {
         if (Item.id == columna) throw new ItemTypeNotValidException("Cannot change the Item ID.");
         if (t == tipus.I) setId(columna);
         else if (t == tipus.N) setNomA(columna);
@@ -234,9 +240,8 @@ public class Item implements Comparable<Item>{
      * Sets the weights array to the parameter
      * @param p array of weights
      * @throws ItemWeightNotCorrectException if any weights is outside the range (0 - 100)
-     * @throws ArrayIndexOutOfBoundsException if the array is not the size of the attributes
      */
-    public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException, ArrayIndexOutOfBoundsException{
+    public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException {
         if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Weights array does not match items attributes size.");
         for (int i = 0; i < Item.getNumAtributs(); ++i) if (p.get(i) > 100 || p.get(i) < 0) throw new ItemWeightNotCorrectException("Weight smaller than 0 or bigger than 100");
         
@@ -244,21 +249,20 @@ public class Item implements Comparable<Item>{
     }
 
     /**
-     * Sets the types array to the parameter
+     * Changes de types of all the atributes. Also checks that any
      * @param a array of types of the same size as the attributes
      * 
-     * @throws ItemStaticValuesAlreadyInitializedException
+     * @throws     DataNotValidException            If the array given had problems with the ID position or NAM position.
      */
-    public static void setTipusArray(ArrayList<tipus> a) throws ItemStaticValuesAlreadyInitializedException {
-        if (Item.tipusAtribut != null) throw new ItemStaticValuesAlreadyInitializedException();
+    public static void setTipusArray(ArrayList<tipus> a) throws DataNotValidException {
         if (a.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Types array does not match items attributes size.");
         Item.tipusAtribut = a;
     }
 
     /**
-     * Sets the names of attributes array to the parameter
+     * Sets the names of the atributes
      * @param n array of names of attributes of the same size as the attributes
-     * @throws ItemStaticValuesAlreadyInitializedException
+     * @throws ItemStaticValuesAlreadyInitializedException      If the names are already defined
      */
     public static void setNomAtributs(ArrayList<String> n) throws ItemStaticValuesAlreadyInitializedException {
         if (Item.nomAtribut != null) throw new ItemStaticValuesAlreadyInitializedException();
@@ -266,7 +270,7 @@ public class Item implements Comparable<Item>{
     }
     
     /**
-     * Resetao
+     * Resets the static values to the default state.
      */
     public static void resetStatics() {
         Item.pesos = null;
@@ -280,7 +284,21 @@ public class Item implements Comparable<Item>{
         Item.nomA = -1;
     }
 
-    public static void inicialitzarStatics(ArrayList<Float> pesos, ArrayList<String> nomAtributs, ArrayList<tipus> tipusAtribut, int id, int nomA) throws ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException, ItemWeightNotCorrectException, ItemIdNotValidException {
+    /**
+     * Initializes the static values with the ones given.
+     *
+     * @param      pesos                                        Atribute weights
+     * @param      nomAtributs                                  Atribute names
+     * @param      tipusAtribut                                 Atribute types
+     * @param      id                                           Id position
+     * @param      nomA                                         name position
+     *
+     * @throws     DataNotValidException                        The types where not valid.
+     * @throws     ItemIdNotValidException                      posId is already defined or is an invalid column.
+     * @throws     ItemStaticValuesAlreadyInitializedException  Values were already initialized.
+     * @throws     ItemWeightNotCorrectException                The atribute weights were not valid.
+     */
+    public static void inicialitzarStatics(ArrayList<Float> pesos, ArrayList<String> nomAtributs, ArrayList<tipus> tipusAtribut, int id, int nomA) throws ItemStaticValuesAlreadyInitializedException, ItemWeightNotCorrectException, ItemIdNotValidException, DataNotValidException {
         Item.setNomAtributs(nomAtributs);
 
         Item.setPesos(pesos);
@@ -292,7 +310,19 @@ public class Item implements Comparable<Item>{
         Item.setNomA(nomA);
     }
 
-    public static void inicialitzarStaticsDefault(ArrayList<String> atributs) throws ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException, ItemWeightNotCorrectException, ItemTypeNotValidException, ItemIdNotValidException {
+
+    /**
+     * Initializes the static values automatically given the header of the items.
+     *
+     * @param      atributs                                     The atributes
+     *
+     * @throws     DataNotValidException                        The types where not valid.
+     * @throws     ItemIdNotValidException                      posId is already defined or is an invalid column.
+     * @throws     ItemStaticValuesAlreadyInitializedException  Values were already initialized.
+     * @throws     ItemTypeNotValidException                    There was a problem assigning the types.e
+     * @throws     ItemWeightNotCorrectException                The atribute weights were not valid.
+     */
+    public static void inicialitzarStaticsDefault(ArrayList<String> atributs) throws ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException, ItemWeightNotCorrectException, ItemTypeNotValidException, ItemIdNotValidException, DataNotValidException {
         int n = atributs.size();
 
         //VALORS ESTATICS DE ITEM
@@ -323,10 +353,10 @@ public class Item implements Comparable<Item>{
     /**
      * Function that overrides the compareTo by defalut. Compares 2 items by their id's
      * @param otherItem The other item that compares
-     * @return Returns an integer depending on the comparisson between the implicit item and the item given as a parameter
-     * 1 if implicit > otherItem, 
-     * 0 if implicit = otherItem, 
-     * -1 if implicit < otherItem
+     * @return Returns an integer depending on the comparisson between the implicit item and the item given as a parameter <br>
+     * 1 if implicit &gt; otherItem <br>
+     * 0 if implicit = otherItem <br>
+     * -1 if implicit &lt; otherItem <br>
      */
     @Override public int compareTo(Item otherItem) {
         int id1 = getId();
