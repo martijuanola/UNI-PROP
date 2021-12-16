@@ -26,10 +26,10 @@ public class ControladorPersistencia {
 	private static ControladorPersistencia inst;
 
 	/** Object from the class ControladorLoad used for reading the .csv data. **/
-	private static ControladorLoad cl; 
+	private ControladorLoad cl; 
 
 	/** Object from the class ControladorSave used for storing the data as .csv. **/
-	private static ControladorSave cs; 
+	private ControladorSave cs; 
 	
 	/**
      * Returs the only instance of the class, and if it's not created, it creates it.
@@ -45,12 +45,12 @@ public class ControladorPersistencia {
 	 * Contains a File that indicates wich project is being used from the
 	 * ./data folder.
 	 */
-    private static File carpeta;
+    private File carpeta;
     /**
 	 * Contains a File with the path and other information about the folder
 	 * ./data, where projects will be stored.
 	 */
-    private static File dades;
+    private File dades;
 
 
 /*-----CREADORES-----*/   

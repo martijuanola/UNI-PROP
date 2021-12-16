@@ -32,17 +32,17 @@ public class ControladorDominiAlgorisme {
      * 1 - content-based filtering(KNN)
      * 2 - hybrid approaches
      */
-    private static int ALGORISME_SELECCIONAT;
+    private int ALGORISME_SELECCIONAT;
 
     /**
      * Value used in the Kmeans algorithm. Determines how many centroids are used.
      */
-    private static int K;
+    private int K;
 
     /**
      * How many items to be recommended
      */
-    private static int Q;
+    private int Q;
 
     /*----- ATRIBUTS -----*/
     
@@ -61,7 +61,7 @@ public class ControladorDominiAlgorisme {
      *  Constructs a new empty instance
      */
     private ControladorDominiAlgorisme() {
-        resetStatics();
+        resetValues();
         colFilt = CollaborativeFiltering.getInstance();
         BasedFilt = ContentBasedFiltering.getInstance();
         HybFilt = HybridFiltering.getInstance();
@@ -76,9 +76,9 @@ public class ControladorDominiAlgorisme {
      * 
      * @throws     DataNotValidException        K has a invalid value
      */
-    public static void set_k(int K) throws DataNotValidException {
+    public void set_k(int K) throws DataNotValidException {
         if(K <= 0) throw new DataNotValidException(K, "El valor de K ha de ser superior a 0.");
-        ControladorDominiAlgorisme.K = K;
+        this.K = K;
     }
 
     /**
@@ -88,9 +88,9 @@ public class ControladorDominiAlgorisme {
      * 
      * @throws     DataNotValidException        Q has a invalid value
      */
-    public static void set_Q(int Q) throws DataNotValidException {
+    public void set_Q(int Q) throws DataNotValidException {
         if(Q <= 0) throw new DataNotValidException(Q, "El valor de Q ha de ser superior a 0.");
-        ControladorDominiAlgorisme.Q = Q;
+        this.Q = Q;
     }
 
     /**
@@ -103,18 +103,18 @@ public class ControladorDominiAlgorisme {
      *                  
      * @throws     DataNotValidException        Algorithm has a invalid value
      */
-    public static void seleccionar_algorisme(int a) throws DataNotValidException {
+    public void seleccionar_algorisme(int a) throws DataNotValidException {
         if(a < 0 || a > 2) throw new DataNotValidException(a, "Els valors per seleccionar algorisme son entre 0 i 2");
-        ControladorDominiAlgorisme.ALGORISME_SELECCIONAT = a;
+        this.ALGORISME_SELECCIONAT = a;
     }
 
     /**
-     * Resets static values of class
+     * Reset the 3 values of the controller
      */
-    public static void resetStatics() {
-        ALGORISME_SELECCIONAT = 0;
-        K = 5;
-        Q = 5;
+    public void resetValues() {
+        this.ALGORISME_SELECCIONAT = 0;
+        this.K = 5;
+        this.Q = 5;
     }
 	
     /*----- GETTERS -----*/
@@ -124,7 +124,7 @@ public class ControladorDominiAlgorisme {
      *
      * @return       the integer value of the K attribute of the active instance
      */
-	public static int get_k() {
+	public int get_k() {
 		return K;
 	}
 	
@@ -133,7 +133,7 @@ public class ControladorDominiAlgorisme {
      *
      * @return       the integer value of the Q attribute of the active instance
      */
-	public static int get_Q() {
+	public int get_Q() {
 		return Q;
 	}
 	
@@ -142,7 +142,7 @@ public class ControladorDominiAlgorisme {
      *
      * @return       the integer value of the ALGORISME_SELECCIONAT attribute of the active instance
      */
-	public static int get_algorisme() {
+	public int get_algorisme() {
 		return ALGORISME_SELECCIONAT;
 	}
 	
