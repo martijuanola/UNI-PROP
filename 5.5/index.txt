@@ -1,0 +1,10 @@
+DIRECTORI ARREL
+
+\DOCS: !!!!
+\EXE: !!!!
+\FONTS: !!!!
+\JOCS_DE_PROVA: !!!!
+\TEST: !!!!
+
+- G55.txt: Document de text amb la informació de l'entrega i els membres del grup.
+
