@@ -9,4 +9,7 @@ public class UserIdNotValidException extends Exception {
 		super("The value " + s + " is not valid as a user id. Needs to be an integer.");
 	}
 
+	public UserIdNotValidException(int id) {
+		super("The id " + id + " is already in use!");
+	}
 }

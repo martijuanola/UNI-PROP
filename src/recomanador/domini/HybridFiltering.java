@@ -17,7 +17,21 @@ import java.util.Collections;
  * @author Adrià F.
  */
 public class HybridFiltering {
-    /*----- CONSTANTS -----*/
+
+    /*----- STATICS -----*/
+
+    /** Contains the only instance of the class **/
+    private static HybridFiltering inst;
+
+    /**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
+    public static HybridFiltering getInstance() {
+        if(HybridFiltering.inst == null) inst = new HybridFiltering();
+        return inst;
+    }
 
     /*----- ATRIBUTS -----*/
 
@@ -30,7 +44,6 @@ public class HybridFiltering {
      /** stores if the centroids have been calculated, so they dont get recalculated for multiple iterations of the algorithm
      * (mainly, when calculating the DCG and NDCG)
      */
-    Boolean centroidesCalculats = false;
 
     /**Stores a set of k centroids with their ratings. Used for k-NN*/
     Centroid[] centroids;
@@ -38,28 +51,18 @@ public class HybridFiltering {
     /**For each user ID, stores the centroid they belong to*/
     HashMap<Integer, Integer> closest_centroid;
 
+    /** Indicates if the centroids are already calculated */
+    Boolean centroidesCalculats = false;
+
+    /** To add stochasticity to the centroids generation */
     Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
 
     /**
-     *  Constructs a new instance with the given items, users and recommendations
-     *
-     * @param      items    Set of items
-     * @param      usuaris    Set of users
-     * @param      valoracions   set of recommendations (which include ratings)
-     */
-    public HybridFiltering(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
-        this.items = items;
-        this.usuaris = usuaris;
-        this.valoracions = valoracions;
-    }
-
-    /**
      *  Constructs a new empty instance
      */
-    public HybridFiltering() {
-    }
+    private HybridFiltering() {}
 
     /*----- OPERADORS -----*/
 
@@ -84,6 +87,8 @@ public class HybridFiltering {
      * @param      K   number of clusters to be generated on k-means
      * 
      * @return     a sorted set the recommended item IDs with their estimated ratings
+     * 
+     * @throws     UserNotFoundException if the id specified is not valid
      */
     public ArrayList<ItemValoracioEstimada> hybridFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         
@@ -114,7 +119,7 @@ public class HybridFiltering {
         //we execute content-based filtering on this set of items
         System.out.println("Executant k-NN" );
         System.out.println();
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
 
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valUser = valoracions.getValoracions(user.getId());
@@ -129,7 +134,7 @@ public class HybridFiltering {
             //una millor alternativa podria ser, per exemple, selection algorithm per trobar la valoracio en la posicio floor(0.75*size)
 
             Item item_val = valUser.get(val_user_idx).getItem();
-            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>(0);
+            ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>();
 
             //iterem sobre tots els items no valorats
             for (int idxNV = 0; idxNV < items_cluster.size(); ++idxNV) {
@@ -152,7 +157,7 @@ public class HybridFiltering {
         }        
 
         Collections.sort(items_estimats);
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         int i = 0;
         while (Q_items.size() < Q && i < items_estimats.size()) {
@@ -169,6 +174,7 @@ public class HybridFiltering {
      *  Executes k-means and returns the set of IDs of the users in the same cluster than user_ID
      *
      * @param      user_ID      ID of the user whose cluster will be returned
+     * @param      K            The value of K
      * 
      * @return     users of the cluster
      */
@@ -281,9 +287,9 @@ public class HybridFiltering {
     /**
      * Returns the distance between a user and a centroid.
      *
-     * @param      u    identifier of a user
+     * @param      idx_usuari    identifier of a user
      *
-     * @param      c    index of a centroid
+     * @param      centroid    index of a centroid
      *
      * @return     the distance between the user and the centroid
      */

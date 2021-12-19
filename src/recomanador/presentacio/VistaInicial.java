@@ -4,10 +4,18 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import src.recomanador.Utils.StringOperations;
+import src.recomanador.excepcions.AlreadyLogedInException;
+import src.recomanador.excepcions.DataNotValidException;
+import src.recomanador.excepcions.FileNotFoundException;
+import src.recomanador.excepcions.FileNotValidException;
+import src.recomanador.excepcions.FolderNotFoundException;
+import src.recomanador.excepcions.FolderNotValidException;
+
 import java.awt.event.*;
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class VistaInicial extends JFrame {
     JPanel panel;
@@ -36,15 +44,20 @@ public class VistaInicial extends JFrame {
     JButton ratings;
     JPanel PRatings;
 
-    Path itemsFile;
-    Path ratingsFile;
-    
+    String itemsFile;
+    String ratingsFile;
+
+    JTextField nomProjecte;
+
+    ArrayList<String> projectesDisponibles;
+
     public VistaInicial() {
-        //domini = new ControladorDomini();
-        setMinimumSize(new Dimension(550, 250));
-        setSize(new Dimension(1000, 900));
+        itemsFile = "";
+        ratingsFile = "";
 
         panel = new JPanel();
+
+        projectesDisponibles = ControladorPresentacio.getProjectesDisponibles();
 
         //LAYER 1
         user = new JRadioButton("User", true);
@@ -60,16 +73,18 @@ public class VistaInicial extends JFrame {
 
         //LAYER 2
         id = new JTextField("ID usuari");
-        id.setColumns(10);
+        id.setColumns(11);
+        nomProjecte = new JTextField("Nom nou projecte");
+        nomProjecte.setColumns(11);
         textId = new JPanel();
         textId.setLayout(new FlowLayout());
         JLabel a = new JLabel("");
-        a.setPreferredSize(new Dimension(290, 30));
-        a.setMinimumSize(new Dimension(290, 0));
+        a.setPreferredSize(new Dimension(150, 30));
+        textId.add(nomProjecte);
         textId.add(a);
         textId.add(id);
 
-        //LAYER 4
+        //LAYER 3
         SessioNova = new JButton("Sessió nova");
         SessioNova.setMaximumSize(new Dimension(1000, 50));
         SessioNova.setEnabled(false);
@@ -92,10 +107,14 @@ public class VistaInicial extends JFrame {
         peinel.add(fitxerit);
         peinel.add(items);
 		preprocessat = new JComboBox<String>();
-        preprocessat.addItem("carpeta 1");
-        preprocessat.addItem("carpeta 2");
-        preprocessat.addItem("carpeta 3");
-        preprocessat.addItem("carpeta de porno furro");
+        for (int i = 0; i < projectesDisponibles.size(); ++i) {
+            preprocessat.addItem(projectesDisponibles.get(i));
+        }
+        //TODO:/*****NOMES PER TESTING!!!!!!!!!!!!!!!!!!!!!! */
+        preprocessat.addItem("testing-load-basic");
+        //TODO:/*****NOMES PER TESTING!!!!!!!!!!!!!!!!!!!!!! */
+        preprocessat.addItem("test-conjuntItems");
+
         inicis.add(peinel);
         inicis.add(preprocessat);
         inicis.add(new JLabel());
@@ -112,6 +131,7 @@ public class VistaInicial extends JFrame {
         inicis.add(new JLabel());
         inicis.add(new JLabel());
 
+        //ADD TO FRAME
         panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
         panel.setLayout(new GridLayout(3, 1));
         panel.add(escollirUA);
@@ -122,10 +142,11 @@ public class VistaInicial extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Sistema Recomanador");
         pack();
+        setMinimumSize(getBounds().getSize());
         setVisible(true);
     
-        id.addFocusListener(
-            new FocusListener() {
+        //EVENT LISTENERS
+        id.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
                 if (id.getText().equals("ID usuari")) {
                     id.setText("");
@@ -135,6 +156,20 @@ public class VistaInicial extends JFrame {
             public void focusLost(FocusEvent e) {
                 if (id.getText().equals("")) {
                     id.setText("ID usuari");
+                }
+            }
+        });
+
+        nomProjecte.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                if (nomProjecte.getText().equals("Nom nou projecte")) {
+                    nomProjecte.setText("");
+                }
+            }
+
+            public void focusLost(FocusEvent e) {
+                if (nomProjecte.getText().equals("")) {
+                    nomProjecte.setText("Nom nou projecte");
                 }
             }
         });
@@ -152,10 +187,8 @@ public class VistaInicial extends JFrame {
                 int returnVal = fc.showOpenDialog(fc);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile();
-                    itemsFile = Paths.get(file.getAbsolutePath());
-                    Path base = Paths.get(System.getProperty("user.dir"));
-                    Path relative = base.relativize(Paths.get(file.getAbsolutePath()));
-                    System.out.println("Opening: " + relative + ".");
+                    itemsFile = file.getAbsolutePath();
+                    System.out.println("Opening: " + file.getName() + ".");
                     fitxerit.setText(file.getName());
                 }
                 else System.out.println("Open items file cancelled by user.");
@@ -174,10 +207,8 @@ public class VistaInicial extends JFrame {
                 int returnVal = fc.showOpenDialog(fc);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile();
-                    ratingsFile = Paths.get(file.getAbsolutePath());
-                    Path base = Paths.get(System.getProperty("user.dir"));
-                    Path relative = base.relativize(Paths.get(file.getAbsolutePath()));
-                    System.out.println("Opening: " + relative + ".");
+                    ratingsFile = file.getAbsolutePath();
+                    System.out.println("Opening: " + file.getName() + ".");
                     fitxerra.setText(file.getName());
                 }
                 else System.out.println("Open ratings file cancelled by user.");
@@ -197,6 +228,116 @@ public class VistaInicial extends JFrame {
                 id.setEnabled(false);
             }
         });
-    }
 
+        CarregaDades.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                if (user.isSelected()) {
+                    if (!StringOperations.esNombre(id.getText()) || id.getText().equals("")) {
+                        new VistaError("Identificador d'usuari en format incorrecte.");
+                        return;
+                    }
+                }
+
+                try {
+                    ControladorPresentacio.carregarProjecte(preprocessat.getSelectedItem().toString());
+                }
+                catch (Exception e2) {
+                    new VistaError(e2.getMessage());
+                    return;
+                }
+
+                if (user.isSelected()) {
+                    try {
+                        ControladorPresentacio.logInUser(Integer.parseInt(id.getText()));
+                    }
+                    catch (Exception e2) {
+                        new VistaError(e2.getMessage());
+                        return;
+                    }
+                }
+                else {
+                    try {
+                        ControladorPresentacio.logInAdmin();
+                    }
+                    catch (Exception e2) {
+                        new VistaError(e2.getMessage());
+                        return;
+                    }
+                }
+                
+                ControladorPresentacio.obreVistaPrincipal();
+                dispose();
+            }
+        });
+        
+        CarregaFitxers.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (user.isSelected()) {
+                    if (!StringOperations.esNombre(id.getText()) || id.getText().equals("")) {
+                        new VistaError("Identificador d'usuari en format incorrecte.");
+                        return;
+                    }
+                }
+
+                if (nomProjecte.getText().equals("") || nomProjecte.getText().equals("Nom nou projecte")) {
+                    new VistaError("Nom del Projecte buit.");
+                    return;
+                }
+                for (int i = 0; i < projectesDisponibles.size(); ++i) {
+                    if (nomProjecte.getText().equals(projectesDisponibles.get(i))) {
+                        new VistaError("Projecte ja existeix.");
+                        return;
+                    }
+                }
+
+                try {
+                    ControladorPresentacio.carregarProjecteNou(nomProjecte.getText(), itemsFile, ratingsFile);
+                }
+                catch (Exception e2) {
+                    new VistaError(e2.getMessage());
+                    return;
+                }
+
+                if (user.isSelected()) {
+                    try {
+                        ControladorPresentacio.logInUser(Integer.parseInt(id.getText()));
+                    }
+                    catch (Exception e1) {
+                        new VistaError(e1.getMessage());
+                        return;
+                    }
+                }
+                else {
+                    try {
+                        ControladorPresentacio.logInAdmin();
+                    }
+                    catch (Exception e1) {
+                        new VistaError(e1.getMessage());
+                        return;
+                    }
+                }
+                
+                ControladorPresentacio.obreVistaEscollirAtributs();
+                dispose();
+            }
+        });
+    
+        SessioNova.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (user.isSelected()) {
+                    new VistaError("Només un administrador pot crear una sessió nova");
+                    return;
+                }
+
+                if (nomProjecte.getText().equals("") || nomProjecte.getText().equals("Nom nou projecte")) {
+                    new VistaError("Nom del Projecte buit.");
+                    return;
+                }          
+
+                ControladorPresentacio.obreVistaSessioNova(nomProjecte.getText());
+                dispose();
+            }
+
+        });
+    }
 }

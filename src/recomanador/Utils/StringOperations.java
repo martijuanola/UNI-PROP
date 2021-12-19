@@ -100,9 +100,9 @@ public class StringOperations {
      * @param s2 second input string
      * @param tipus type of the two strings, must be common for both
      * @return Three cases:
-     *  -1 if s1 < s2 
+     *  -1 if s1 &lt; s2 
      *  0 if s1 = s2
-     *  1 id s1 > s2
+     *  1 id s1 &gt; s2
      */
     public static int compararAtributs(String s1, String s2, tipus tipus) {
         boolean s1Bigger = false, s2Bigger = false;
@@ -370,7 +370,9 @@ public class StringOperations {
      * Computes the similarity between to strings that belong to the same column. The similarity for each type is measured differently
      * @param a1 first string to be compared
      * @param a2 second string to be compared
-     * @param columna column to which a1 and a2 belong
+     * @param t Type of atribute
+     * @param min Min value possible
+     * @param max Max value possible
      * @return float between 0 and 1 where 0 means completely different and 1 means exaclty the same
      * @throws ItemTypeNotValidException if a1 and a2 are not of the same type
      */

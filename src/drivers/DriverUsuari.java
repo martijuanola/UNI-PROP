@@ -12,14 +12,7 @@ import src.recomanador.domini.Recomanacio;
 import src.recomanador.domini.ConjuntRecomanacions;
 
 //Excepcions
-import src.recomanador.excepcions.RatingNotValidException;
-import src.recomanador.excepcions.RecommendationNotRatedException;
-import src.recomanador.excepcions.RecommendationRatedException;
-import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-import src.recomanador.excepcions.ItemIdNotValidException;
-import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemStaticValuesAlreadyInitializedException;
+import src.recomanador.excepcions.*;
 /**
  * Driver tot test the class Usuari.
  * @author     Martí J.

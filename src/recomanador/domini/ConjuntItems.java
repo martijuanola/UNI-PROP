@@ -35,7 +35,9 @@ public class ConjuntItems extends ArrayList<Item> {
     /*----- CONSTRUCTORS -----*/
 
     /**
-     * Empty constructor
+     * Empty constructor. It only can be performed if the different Item static atributes are initialized.
+     * 
+     * @throws ItemStaticValuesNotInitializedException If the static values are not initialised
      */
     public ConjuntItems() throws ItemStaticValuesNotInitializedException {
         if (Item.getCapçalera() == null || Item.getPesos() == null || Item.getPosId() == -1
@@ -47,27 +49,29 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     /**
-     * Constructor with an array of items. This array is subdivided for atributes with ; 
-     * For each item it is assigned an array of strings.
-     * Furthermore:
-     *  -Automatically detects the attributes types
-     *  -Calculates the maximums and minimums of the attributes
-     *  -Defaults all the weights to its maximum value (100)
-     *  -Fills the array with the names of each attribute
-     *  -Sets the position of id to the attribute with name id
+     * Constructor with an array of items. This array is subdivided for atributes with ; <br>
+     * For each item it is assigned an array of strings.<br>
+     * Furthermore:<br>
+     *  -Automatically detects the attributes types<br>
+     *  -Calculates the maximums and minimums of the attributes<br>
+     *  -Defaults all the weights to its maximum value (100)<br>
+     *  -Fills the array with the names of each attribute<br>
+     *  -Sets the position of id to the attribute with name id<br>
      *  -Sorts all items
      * 
      * @param items Array of an array of atributes. The first must be a header with the name of each attribute
-     * @throws ItemTypeNotValidException Is thrown when the header does not contain "id" or when it is not valid
-     * @throws ItemWeightNotCorrectException Is thrown if it tries to assign a weight out of the range (0-100)
-     * @throws ItemStaticValuesAlreadyInitializedException
-     * @throws ItemIdNotValidException
-     * @throws ItemNewAtributesNotValidException
-     * @throws ItemStaticValuesNotInitializedException
+     * @throws ItemTypeNotValidException                    Is thrown when the header does not contain "id" or when it is not valid
+     * @throws ItemWeightNotCorrectException                Is thrown if it tries to assign a weight out of the range (0-100)
+     * @throws ItemStaticValuesAlreadyInitializedException  Static values of items are already initialized
+     * @throws ItemIdNotValidException                      There's no atribute valid tu use as ID
+     * @throws ItemStaticValuesNotInitializedException      Thrown if the values are not correctlly initialized at the begining of the constructor
+     * @throws ItemNewAtributesNotValidException            There's some new atribute not valid
+     * @throws DataNotValidException                        Problem with the definition of atribute types
      */
     public ConjuntItems(ArrayList<ArrayList<String>> items) throws ItemTypeNotValidException,
-            ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException, ArrayIndexOutOfBoundsException,
-            ItemIdNotValidException, ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
+            ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException,
+            ItemIdNotValidException, ItemStaticValuesNotInitializedException,
+            ItemNewAtributesNotValidException, DataNotValidException {
         //Inicialitzar tots els valors estàtics d'item i els max i min Atributs
         Item.inicialitzarStaticsDefault(items.get(0));
         inicialitzarMinMax();
@@ -86,25 +90,26 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /**
      * Constructor with an array of items, weights, attribute types, maximum attributes, minimum attributes, a string for the name, the position of the id attribute and the position of the name attribute.
-     * @param items Array of an array of atributes. The first must be a header with the name of each attribute
-     * @param pesos Array of weights for each attribute
-     * @param tipusAtribut Array of types of each attributes
-     * @param id Position of the attribute "id" in the array of name of attributes
-     * @param nomA Position of the attribute of the name of each item in the array of name of attributes
-     * @param nom Name that represents the set
-     * @param maxAtributs Array of the maximum attributes of each column
-     * @param minAtributs Array of the minimum attributes of each column
-     * @throws ItemWeightNotCorrectException Is thrown if it tries to assign a weight out of the range (0-100)
-     * @throws ItemStaticValuesAlreadyInitializedException
-     * @throws ItemIdNotValidException
-     * @throws ItemNewAtributesNotValidException
-     * @throws ItemStaticValuesNotInitializedException
+     * @param items                             Array of an array of atributes. The first must be a header with the name of each attribute
+     * @param pesos                             Array of weights for each attribute
+     * @param tipusAtribut                      Array of types of each attributes
+     * @param id                                Position of the attribute "id" in the array of name of attributes
+     * @param nomA                              Position of the attribute of the name of each item in the array of name of attributes
+     * @param nom                               Name that represents the set
+     * @param maxAtributs                       Array of the maximum attributes of each column
+     * @param minAtributs                       Array of the minimum attributes of each column
+     * @throws ItemWeightNotCorrectException                Is thrown if it tries to assign a weight out of the range (0-100)
+     * @throws ItemStaticValuesAlreadyInitializedException  Static values of items are already initialized
+     * @throws ItemIdNotValidException                      There's no atribute valid tu use as ID
+     * @throws ItemStaticValuesNotInitializedException      Thrown if the values are not correctlly initialized at the begining of the constructor
+     * @throws ItemNewAtributesNotValidException            There's some new atribute not valid
+     * @throws DataNotValidException                        Problem with the definition of atribute types
      */
     public ConjuntItems(ArrayList<ArrayList<String>> items, ArrayList<Float> pesos,
             ArrayList<tipus> tipusAtribut, int id, int nomA, String nom, ArrayList<Float> maxAtributs,
             ArrayList<Float> minAtributs)
             throws ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException, ItemIdNotValidException,
-            ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
+            ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException, DataNotValidException {
 
         // Inicialitzar atributs ConjuntItems
         ConjuntItems.nom = nom;
@@ -126,18 +131,36 @@ public class ConjuntItems extends ArrayList<Item> {
         Collections.sort(this); //TODO: NO ÉS NECESSARI PERO EL DRIVER TÉ DADES DESORDENADES
     }
 
-    /*----- GETTERS -----*/
-
+    /*----- STATICS -----*/
+    
+    /**
+     * Gets the name of the set of items
+     *
+     * @return     The name
+     */
     public static String getNomCjItems() {
         return nom;
     }
+
+    /**
+     * Sets the name of the set of items
+     *
+     * @param     s     The new name
+     */
+    public static void setNomCjItems(String s) {
+        nom = s;
+    }
+
+
+    /*----- GETTERS -----*/
+
     /**
      * Return the item specified by its id
      * @param id ID of the item to get
      * @return Item with attribute "id" equals to id
      * @throws ItemNotFoundException Item with specified id does not exist
      */
-    public Item getItem(int id) throws ItemNotFoundException { //Cerca dicotòmica
+    public Item getItem(int id) throws ItemNotFoundException {
         int pos = binarySearchItem(this, id, 0, size() - 1);
         if (pos < 0)
             throw new ItemNotFoundException("Item amb id: " + id + " no existeix");
@@ -145,7 +168,7 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     /**
-     * Get all items in the set
+     * Get all items in the set. The result is used to store the contents of the set in a file by the persistance layer.
      * @return Return an array of an array of an array of strings which is the representation for an array of attributes of items
      */
     public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
@@ -168,7 +191,7 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /**
      * Returns array of maximum attributes
-     * @return ArrayList<Float> of maximum attributes
+     * @return ArrayList&lt;Float&gt; of maximum attributes
      */
     public ArrayList<Float> getMaxAtributs() {
         return maxAtributs;
@@ -176,13 +199,14 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /**
      * Returns array of minimum attributes
-     * @return ArrayList<Float> of minimum attributes
+     * @return ArrayList&lt;Float&gt; of minimum attributes
      */
     public ArrayList<Float> getMinAtributs() {
         return minAtributs;
     }
 
     /*----- SETTERS -----*/
+
 
     //TODO: setMinAtributs hauria de ser private
     /**
@@ -196,7 +220,7 @@ public class ConjuntItems extends ArrayList<Item> {
     //TODO: setMaxAtributs hauria de ser private
     /**
      * Sets the maximum attributes to the parameter array
-     * @param minAtributs2 Must be an array with the maximum values in the set and with size equals to the number of attributes
+     * @param maxAtributs2 Must be an array with the maximum values in the set and with size equals to the number of attributes
      */
     public void setMaxAtributs(ArrayList<Float> maxAtributs2) {
         this.maxAtributs = maxAtributs2;
@@ -250,7 +274,7 @@ public class ConjuntItems extends ArrayList<Item> {
     /**
      * Checks if an item has bigger of lower attributes than the current max attributes and min attributes, respectively
      * @param it Item that is going to be checked
-     * @throws ConjuntItemsAtributeNotInitializedException
+     * @throws ConjuntItemsAtributeNotInitializedException     If ther's one non-initialized atribute in the Item it 
      */
     public void checkMaxMin(Item it) throws ConjuntItemsAtributeNotInitializedException {
         if (maxAtributs == null || minAtributs == null) {
@@ -280,9 +304,9 @@ public class ConjuntItems extends ArrayList<Item> {
      * Removes item specified by its id
      * @param id ID of the item that is going to be deleted
      * @throws ItemNotFoundException if it does not exist an item with such id
-     * @throws ItemStaticValuesNotInitializedException
+     * @throws ItemStaticValuesNotInitializedException      The static values need to be initialized.
      */
-    public void eliminarItem(int id) throws ItemNotFoundException, ItemStaticValuesNotInitializedException { //Cerca dicotòmica
+    public void eliminarItem(int id) throws ItemNotFoundException, ItemStaticValuesNotInitializedException {
         int pos = binarySearchItem(this, id, 0, size() - 1);
         if (pos < 0)
             throw new ItemNotFoundException("Item with id " + id + " does not exist");
@@ -311,8 +335,7 @@ public class ConjuntItems extends ArrayList<Item> {
      * @param i Item that is going to be added
      * @return true if the item has been added, false if there has been an error
      */
-    @Override
-    public boolean add(Item i) {
+    @Override public boolean add(Item i) {
         int pos = Collections.binarySearch(this, i);
         if (pos < 0)
             pos = ~pos;
@@ -328,7 +351,12 @@ public class ConjuntItems extends ArrayList<Item> {
     }
 
     /*----- COMPUTATIONS -----*/
+
     //TODO: inicialitzarMinMax hauria de ser private
+
+    /**
+     * Initializes de max and min values for every atribute with a default value.
+     */
     public void inicialitzarMinMax() {
         maxAtributs = new ArrayList<Float>();
         minAtributs = new ArrayList<Float>();
@@ -341,7 +369,7 @@ public class ConjuntItems extends ArrayList<Item> {
     /**
      * Computes and sets the minimum and maximums attributes for the column col
      * @param col int column must be between 0 and the number of attributes
-     * @throws ItemStaticValuesNotInitializedException
+     * @throws ItemStaticValuesNotInitializedException  The static values of Item are not yet initialized
      */
     public void computeMinMaxAtribut(int col) throws ItemStaticValuesNotInitializedException {
         if (Item.getTipusArray() == null)
@@ -384,25 +412,18 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /**
      * Detects the type of each column and assigns it to the type array
-     * @throws ItemTypeNotValidException if it doesn't exist an id column
-     * @throws ItemStaticValuesAlreadyInitializedException
-     * @throws ItemIdNotValidException
-     * @throws ArrayIndexOutOfBoundsException
+     * @throws ItemTypeNotValidException if it doesn't exist an id column.
+     * @throws ItemStaticValuesAlreadyInitializedException     The static values are already initialized.
+     * @throws ItemIdNotValidException  There's not a valid column to use ad the ID of the items.
      */
-    public void detectarTipusAtributs() throws ArrayIndexOutOfBoundsException, ItemTypeNotValidException,
-            ItemIdNotValidException, ItemStaticValuesAlreadyInitializedException { //Es pot assignar qualsevol tipus menys nom, aquest s'ha d'assignar manualment
+    public void detectarTipusAtributs() throws ItemTypeNotValidException, ItemIdNotValidException,
+                ItemStaticValuesAlreadyInitializedException {
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
-            if (Item.getPosId() == i)
-                continue;
-
-            if (tipusCorrecteColumna(i, tipus.B))
-                Item.setTipus(i, tipus.B);
-            else if (tipusCorrecteColumna(i, tipus.F))
-                Item.setTipus(i, tipus.F);
-            else if (tipusCorrecteColumna(i, tipus.D))
-                Item.setTipus(i, tipus.D);
-            else
-                Item.setTipus(i, tipus.S);
+            if (Item.getPosId() == i) continue;
+            if (tipusCorrecteColumna(i, tipus.B)) Item.setTipus(i, tipus.B);
+            else if (tipusCorrecteColumna(i, tipus.F)) Item.setTipus(i, tipus.F);
+            else if (tipusCorrecteColumna(i, tipus.D)) Item.setTipus(i, tipus.D);
+            else Item.setTipus(i, tipus.S);
         }
     }
 

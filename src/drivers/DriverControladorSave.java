@@ -15,7 +15,7 @@ public class DriverControladorSave {
     
     public static void main(String[] args) {
         try{
-			c = new ControladorSave();
+			c = ControladorSave.getInstance();
 			io = new inout();
 			a = new ArrayList<ArrayList<String>>();
 			initializeDummyData();

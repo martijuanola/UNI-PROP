@@ -49,7 +49,7 @@ public class TestControladorSave {
 	
 	@Test
 	public void GuardarArxiuTest() {
-		ControladorSave cs = new ControladorSave();
+		ControladorSave cs = ControladorSave.getInstance();
 		File arxiu = new File("data");
 		arxiu = new File(arxiu, "JUNIT-TEST-ControladorSave");
 		arxiu = new File(arxiu, "items.csv");
@@ -62,7 +62,7 @@ public class TestControladorSave {
 		}
 		
 		//Inici load per a provar la correctesa
-		ControladorLoad cl = new ControladorLoad();
+		ControladorLoad cl = ControladorLoad.getInstance();
 		ArrayList<ArrayList<String>> data_read = null;
 		try {data_read = cl.carregarArxiu(arxiu); }
 		catch(Exception e) { System.out.print("ERROR: " + e.getMessage()); }
