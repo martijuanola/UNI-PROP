@@ -14,13 +14,34 @@ import src.recomanador.excepcions.*;
 * @author Pol Sturlese 
 */
 public class ControladorPersistencia {
+
 /*----- INFO SOBRE VALORS -----*/
 	//Atributs que son usats per diverses parts del programa. Es troben en el següent ordre:
 	//			0		    | 1 | 2 | 		3	    | 	4	 | 	 5
 	//algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom
     
 /*----- STATICS -----*/
+
+	/** Contains the only instance of the class **/
+	private static ControladorPersistencia inst;
+
+	/** Object from the class ControladorLoad used for reading the .csv data. **/
+	private static ControladorLoad cl; 
+
+	/** Object from the class ControladorSave used for storing the data as .csv. **/
+	private static ControladorSave cs; 
+	
 	/**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
+    public static ControladorPersistencia getInstance() {
+        if(ControladorPersistencia.inst == null) inst = new ControladorPersistencia();
+        return inst;
+    }
+
+    /**
 	 * Contains a File that indicates wich project is being used from the
 	 * ./data folder.
 	 */
@@ -29,29 +50,14 @@ public class ControladorPersistencia {
 	 * Contains a File with the path and other information about the folder
 	 * ./data, where projects will be stored.
 	 */
-    private static File dades; 		//Carpeta de dades
-    
-    private static ControladorPersistencia inst;
-    /**
-	 * Object from the class ControladorLoad used for reading the .csv data.
-	 */
-    private static ControladorLoad cl;
-    /**
-	 * Object from the class ControladorSave used for storing the data as .csv.
-	 */
-    private static ControladorSave cs;
+    private static File dades;
 
-    public static ControladorPersistencia getInstance() {
-        if(ControladorPersistencia.inst == null) inst = new ControladorPersistencia();
-        return inst;
-    }
 
 /*-----CREADORES-----*/   
+    
     /**
 	 * Creates a new instance of the class ControladorPersistencia. It also finds the
 	 * data folder, and if it doen't exist, it creates it.
-	 * 
-	 * @return			 Returns a new instance of ControladorPersistencia.
 	 */
     private ControladorPersistencia()
     {
@@ -70,7 +76,7 @@ public class ControladorPersistencia {
 	 * a folder inside /data, where the information will be held.
 	 * 
 	 * @return		The name of the folder is returned, or <b>null</b> in case there's no folder assigned to.
-	 * @exception 	FolderNotFoundException Throws a an exception if the folder is missing.
+	 * @exception 	FolderNotValidException Throws a an exception if the folder is missing.
 	 */
     public String getNomProjecte() throws FolderNotValidException
     {
@@ -313,9 +319,9 @@ public class ControladorPersistencia {
      * contains an array of strings (columns). 
      * The first line corresponds to the header of the file, where each
      * column is its identifier. 
-     * The rest of the lines contain the values read. <p>
+     * The rest of the lines contain the values read.
      * 
-     * @exception FolderNotValidException Throws a FileNotValidException if the file is corrupted.
+     * @exception FileNotValidException Throws a FileNotValidException if the file is corrupted.
      * @exception FileNotFoundException Throws a FileNotFoundException if the file is missing.
      */
 	public ArrayList<ArrayList<String>> carregarFitxerExtern(String s) throws FileNotValidException, FileNotFoundException
@@ -363,13 +369,13 @@ public class ControladorPersistencia {
 	 * Loads the following values if the folder specified by the 
 	 * attribute carpeta contains them:
 	 *
-	 * The attributes are ordered inside the array as stated below: <p>
-	 * &emsp;&emsp; <b>0.</b> algorisme_seleccionat <p>
-	 * &emsp;&emsp; <b>1.</b> Q <p>
-	 * &emsp;&emsp; <b>2.</b> K <p>
-	 * &emsp;&emsp; <b>3.</b> nom_cjt_items <p>
-	 * &emsp;&emsp; <b>4.</b> pos_id <p>
-	 * &emsp;&emsp; <b>5.</b> pos_nom <p>
+	 * The attributes are ordered inside the array as stated below: <br>
+	 * &emsp;&emsp; <b>0.</b> algorisme_seleccionat <br>
+	 * &emsp;&emsp; <b>1.</b> Q <br>
+	 * &emsp;&emsp; <b>2.</b> K <br>
+	 * &emsp;&emsp; <b>3.</b> nom_cjt_items <br>
+	 * &emsp;&emsp; <b>4.</b> pos_id <br>
+	 * &emsp;&emsp; <b>5.</b> pos_nom <br>
 	 * 
      * @return Returns an ArrayList of the values (represented as Strings). 
      * 
@@ -383,6 +389,7 @@ public class ControladorPersistencia {
 	}
 	
 /*-----ESCRIPTURA-----*/
+
 	/**
 	 * Creates an empty folder to store all the files. It also sets the
 	 * variable carpeta as the file pointing the new one.
@@ -421,7 +428,7 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data into the file specified. <p>
+	 * Save the data into the file specified. <br>
 	 * To avoid data loss, a temporal file is created, and then it's replaced
 	 * by the original one. This prevents the anihilation of the data in case
 	 * that the computer suddenlty stops working.
@@ -471,7 +478,7 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data into the file ratings.db.csv <p>
+	 * Save the data into the file ratings.db.csv <br>
      * 
      * @param		D		It's an ArrayList of ArrayList of Strings. The array
      * needs to have the same number of columns for each row. The first
@@ -485,7 +492,7 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data into the file items.csv <p>
+	 * Save the data into the file items.csv <br>
      * 
      * @param		head		It's an ArrayList of Strings. It represents the header
      * of the .csv table, and will be printed as the first line
@@ -528,7 +535,7 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data into the file pesos.csv <p>
+	 * Save the data into the file pesos.csv <br>
      * 
      * @param		pesos		It's an ArrayList of Floats wich represents
      * the weight of each attribute from the item set.
@@ -544,7 +551,7 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data into the file tipus.csv <p>
+	 * Save the data into the file tipus.csv <br>
      * 
      * @param		tip		It's an ArrayList of Strings wich represents
      * the type of each attribute from the item set.
@@ -560,7 +567,7 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data into the file maxAtributs.items.csv <p>
+	 * Save the data into the file maxAtributs.items.csv <br>
      * 
      * @param		max_atr		It's an ArrayList of Strings wich contains
      * the maximum value of each attribute from the item set.
@@ -576,7 +583,7 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data into the file minAtributs.items.csv <p>
+	 * Save the data into the file minAtributs.items.csv <br>
      * 
      * @param		min_atr		It's an ArrayList of Strings wich contains
      * the minimum value of each attribute from the item set.
@@ -592,8 +599,10 @@ public class ControladorPersistencia {
 	}
 	
 	/**
-	 * Save the data from the estat ArrayList into the file estat.csv <p>
+	 * Save the data from the estat ArrayList into the file estat.csv <br>
      * 
+	 * @param      estat The values that need to be stored: (algorisme_seleccionat | Q | K | nom_cjt_items | pos_id | pos_nom)
+	 * 
      * @exception FolderNotValidException Throws an exception if the file is corrupted. 
      */	
 	public void guardarEstat(ArrayList<String> estat) throws FolderNotValidException
@@ -621,7 +630,7 @@ public class ControladorPersistencia {
  * final s'hauran d'eliminar*/
 
 /* Per aquestes funcions no es faran testos especifics, sinó que s'usaran per
- * a provar les classes privades que es criden. <p>
+ * a provar les classes privades que es criden. <br>
  * Demostració formal de que la seva correctesa d'una funció depèn de la funció que crida:
  * És facil veure que aquestes classes funcionaran si i només si funcionen les classes
  * que criden (ja que aquestes classes es componen d'una unica crida).
@@ -638,8 +647,8 @@ public class ControladorPersistencia {
  */
 	/**
 	 * Implements a public format for the function carregarArxiuCarpeta(...).
-	 * Reads the file specified from the folder "carpeta". <p>
-	 * After Testing, this function will be eliminated. <p>
+	 * Reads the file specified from the folder "carpeta". <br>
+	 * After Testing, this function will be eliminated. <br>
 	 * For a demonstration that this function will work if and only if
 	 * carregarArxiuCarpeta(...) works, go to line 834 on the source code. 
 	 * The demonstration lets us test the private class unsing this one.
@@ -658,8 +667,8 @@ public class ControladorPersistencia {
 	
 	/**
 	 * Implements a public format for the function guardarDades(...).
-	 * It saves the data into the file specified. <p>
-	 * After Testing, this function will be eliminated. <p>
+	 * It saves the data into the file specified. <br>
+	 * After Testing, this function will be eliminated. <br>
 	 * For a demonstration that this function will work if and only if
 	 * guardarDades(...) works, go to line 834 on the source code. 
 	 * The demonstration lets us test the private class unsing this one.

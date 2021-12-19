@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 /**
  * Class for working with arraylists that act like sets, in particular, the union and intersection of those sets
- * @autoh Jaume C.
+ * @author Jaume C.
  */
 public class UnionIntersection {
     

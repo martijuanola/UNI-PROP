@@ -16,8 +16,14 @@ public class ControladorLoad {
 
 	/*----- STATICS -----*/
 
+	/** Contains the only instance of the class **/
 	private static ControladorLoad inst;
 
+	/**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
 	public static ControladorLoad getInstance() {
         if(ControladorLoad.inst == null) inst = new ControladorLoad();
         return inst;
@@ -27,8 +33,6 @@ public class ControladorLoad {
 
     /**
      * Creates an instance of ControladorLoad
-     * 
-     * @return Returns a new instance of ControladorLoad
      */     
     private ControladorLoad() {}
     
@@ -44,7 +48,7 @@ public class ControladorLoad {
      * contains an array of strings (columns). 
      * The first line corresponds to the header of the file, where each
      * column its identifier. 
-     * The rest of the lines contain the values read. <p>
+     * The rest of the lines contain the values read. <br>
      * @exception	IOException If there's an error reading, the IOException will be thrown
      */
     public ArrayList<ArrayList<String>> carregarArxiu(File file) throws IOException
