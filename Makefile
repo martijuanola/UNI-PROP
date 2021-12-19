@@ -5,6 +5,7 @@ compile:
 	@rm classes.txt
 
 run:
+	make compile
 	java -cp bin:. src.recomanador.presentacio.ControladorPresentacio
 
 
@@ -26,11 +27,6 @@ junit:
 	make compile
 	@read -p "Enter the name of class: " name; \
 	java -cp bin:.:/src/junits/junit.jar src.junits.Test$$name # org.junit.runner.JUnitCore 
-
-junitCL:
-	make compile
-	java -cp bin:.:/src/junits/junit.jar org.junit.runner.JUnitCore src.junits.TestControladorLoad 
-
 
 # ---------- DRIVER JARS ---------- #
 

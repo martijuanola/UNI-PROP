@@ -119,7 +119,11 @@ public class ControladorPresentacio {
         obreVistaPrincipal();
     }
 
-    
+    /* -----------------------------------------------------------------
+     * ---Funció treta d'internet, per a canviar la font i el tamany ---
+     * -----------------------------------------------------------------
+     */
+    ///*
     public static void canviarFontUI (javax.swing.plaf.FontUIResource f){
 		//Informació extreta de:
 		//https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
@@ -131,5 +135,6 @@ public class ControladorPresentacio {
 			if (value instanceof javax.swing.plaf.FontUIResource)
 			UIManager.put(key, f);
 		}
-    } 
+    }
+    //*/
 }
