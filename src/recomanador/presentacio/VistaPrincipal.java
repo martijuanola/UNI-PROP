@@ -143,7 +143,7 @@ public class VistaPrincipal extends JFrame {
 			nom_recomanacions = cp.getNomRecomanacions();
 			
 			int nb = id_recomanacions.size();
-			recs.setLayout(new GridLayout(3, nb));
+			recs.setLayout(new GridLayout(nb, 3));
 			
 			header = new ArrayList<JLabel>();
 			header.add(new JLabel("id"));
@@ -177,11 +177,32 @@ public class VistaPrincipal extends JFrame {
 		//LAYER GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
         panel.setLayout(new GridLayout(1, 2));	//1, 3
-        panel.add(menu_esquerra);
-        //Afegir espai en blanc per separar separador
+        
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+        
+        layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		
+		JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
+		
+		layout.setHorizontalGroup(
+		   layout.createSequentialGroup()
+			  .addComponent(menu_esquerra)
+			  .addComponent(sep)
+			  .addComponent(dreta)
+		);
+		layout.setVerticalGroup(
+		   layout.createSequentialGroup()
+			  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				   .addComponent(menu_esquerra)
+				   .addComponent(sep)
+				   .addComponent(dreta))
+		);
+        
+        //panel.add(menu_esquerra);
         //panel.add(new JSeparator(SwingConstants.VERTICAL));
-		//Afegir espai en blanc per separar separador
-		panel.add(dreta);
+		//panel.add(dreta);
 
         add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
