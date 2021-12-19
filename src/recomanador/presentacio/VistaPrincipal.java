@@ -50,7 +50,7 @@ public class VistaPrincipal extends JFrame {
 	//Part de recomanacions en directe
 		JPanel dreta;
 		JButton recomana;
-		JScrollPane recs;			//Amb scrollbar
+		JPanel recs;			//Amb scrollbar
 			ArrayList<JLabel> header;	//Per id, nom, valoracio
 			ArrayList<JLabel> id_item;
 			ArrayList<JLabel> nom_item;
@@ -137,13 +137,13 @@ public class VistaPrincipal extends JFrame {
 			dreta.add(recomana);
 			
 			//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
-			recs = new JScrollPane();
+			recs = new JPanel();
 			
 			id_recomanacions = cp.getIdRecomanacions();
 			nom_recomanacions = cp.getNomRecomanacions();
 			
 			int nb = id_recomanacions.size();
-			//recs.setLayout(new GridLayout(3, nb));
+			recs.setLayout(new GridLayout(3, nb));
 			
 			header = new ArrayList<JLabel>();
 			header.add(new JLabel("id"));
@@ -169,15 +169,17 @@ public class VistaPrincipal extends JFrame {
 				recs.add(rate.get(rate.size()-1));
 			}
 			
-			dreta.add(recs);
+			JScrollPane recsScrollable = new JScrollPane(recs);
+			recs.setAutoscrolls(true);
+			dreta.add(recsScrollable);
 			
 		
 		//LAYER GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
-        panel.setLayout(new GridLayout(1, 3));	//1, 3
+        panel.setLayout(new GridLayout(1, 2));	//1, 3
         panel.add(menu_esquerra);
         //Afegir espai en blanc per separar separador
-        panel.add(new JSeparator(SwingConstants.VERTICAL));
+        //panel.add(new JSeparator(SwingConstants.VERTICAL));
 		//Afegir espai en blanc per separar separador
 		panel.add(dreta);
 
