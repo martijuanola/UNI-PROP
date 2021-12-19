@@ -1,6 +1,8 @@
 package src.recomanador.presentacio;
 
 import java.util.ArrayList;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import src.recomanador.domini.ControladorDomini;
 import src.recomanador.excepcions.AlreadyLogedInException;
@@ -27,15 +29,46 @@ public class ControladorPresentacio {
 	
 	public static ArrayList<ArrayList<String>> executarAlgorisme()
 	{
-		//ArrayList<ArrayList<String>> old = 
-		//	domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
-		
-		//domini.createRecomanacions();
-		//ArrayList<ArrayList<String>> young = 
-		//	domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
-		
-		//La diferència de conjunts serà els que es mostrarà
-		return new ArrayList<ArrayList<String>>();
+		try
+		{
+			ArrayList<ArrayList<String>> old = 
+				domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
+			
+			domini.createRecomanacions();
+			ArrayList<ArrayList<String>> young = 
+				domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
+			
+			ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
+			
+			for (int i = 0; i < young.size(); ++i)
+			{
+				ArrayList<String> one = young.get(i);
+				boolean found = false;
+				
+				for (int j = 0; j < old.size(); ++j)
+					if (one.get(0) == old.get(j).get(0)) found = true;
+				
+				if (!found)
+				{
+					temp.add(new ArrayList<String>());
+					temp.get(temp.size()-1).add(one.get(0));
+				}
+			}
+			
+			for (int i = 0; i < temp.size(); ++i)
+			{
+				ArrayList<ArrayList<String>> item =
+					domini.getItem(Integer.parseInt(temp.get(i).get(0)));
+				String nom = item.get(Integer.parseInt(domini.getPosNomItem())).get(0);
+				temp.get(i).add(nom);
+			}
+			
+			//La diferència de conjunts serà els que es mostrarà
+			return temp;
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return null;
+		}
 	}
 	
 	public static String getId() {
