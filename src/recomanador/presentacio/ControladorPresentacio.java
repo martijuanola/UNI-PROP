@@ -98,7 +98,7 @@ public class ControladorPresentacio {
 			return "ERROR";
 		}
 		//*/
-		return true;
+		return false;
 	}
 	
     public static void obreVistaPrincipal() {
@@ -144,6 +144,17 @@ public class ControladorPresentacio {
         //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         instancia = new ControladorPresentacio();
         //obreVistaInicial();
+        
+        /* //Funcio per a provar la vista principal sense usar la inicial
+         * //Ara em falla aquest carregar carpeta de sota
+        try
+        {
+			domini.loadSession("00-Projecte-funcional");
+			domini.login(50);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+		//*/
         obreVistaPrincipal();
     }
 
