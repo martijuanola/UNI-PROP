@@ -22,6 +22,19 @@ public class ControladorPresentacio {
         return instancia;
     }
 	
+	public static ArrayList<ArrayList<String>> executarAlgorisme()
+	{
+		//ArrayList<ArrayList<String>> old = 
+		//	domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
+		
+		//domini.createRecomanacions();
+		//ArrayList<ArrayList<String>> young = 
+		//	domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
+		
+		//La diferència de conjunts serà els que es mostrarà
+		return new ArrayList<ArrayList<String>>();
+	}
+	
 	public static String getId() {
 		//return domini.getId()
 		return "32";
@@ -38,6 +51,7 @@ public class ControladorPresentacio {
 		n.add("1232354");
 		n.add("42");
 		n.add("3141592");
+		n.add("3141592");
 		return n;
 	}
 	
@@ -45,6 +59,7 @@ public class ControladorPresentacio {
 		ArrayList<String> n = new ArrayList<String>();
 		n.add("abc");
 		n.add("abcbced");
+		n.add("clau de l'univers");
 		n.add("clau de l'univers");
 		n.add("pi");
 		return n;

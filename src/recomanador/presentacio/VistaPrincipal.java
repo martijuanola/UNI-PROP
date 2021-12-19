@@ -50,6 +50,7 @@ public class VistaPrincipal extends JFrame {
 	//Part de recomanacions en directe
 		JPanel dreta;
 		JButton recomana;
+		JScrollPane recsScrollable;
 		JPanel recs;			//Amb scrollbar
 			ArrayList<JLabel> header;	//Per id, nom, valoracio
 			ArrayList<JLabel> id_item;
@@ -59,7 +60,9 @@ public class VistaPrincipal extends JFrame {
     /*----- DADES -----*/
     ArrayList<String> id_recomanacions;
     ArrayList<String> nom_recomanacions;
-    
+    String[] options = {"Sense valoració", "0.5", "1.0", 
+								"1.5", "2.0", "2.5", "3.0",
+								"3.5", "4.0", "4.5", "5.0"};
     
     /*----- FUNCIONS -----*/
     public VistaPrincipal() {
@@ -137,39 +140,9 @@ public class VistaPrincipal extends JFrame {
 			dreta.add(recomana);
 			
 			//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
-			recs = new JPanel();
+			recs = new JPanel();	
 			
-			id_recomanacions = cp.getIdRecomanacions();
-			nom_recomanacions = cp.getNomRecomanacions();
-			
-			int nb = id_recomanacions.size();
-			recs.setLayout(new GridLayout(nb, 3));
-			
-			header = new ArrayList<JLabel>();
-			header.add(new JLabel("id"));
-			header.add(new JLabel("nom"));
-			header.add(new JLabel("valoració"));
-			
-			id_item = new ArrayList<JLabel>();
-			nom_item = new ArrayList<JLabel>();
-			rate = new ArrayList<JComboBox>();
-			
-			String[] options = {"Sense valoració", "0.5", "1.0", 
-								"1.5", "2.0", "2.5", "3.0",
-								"3.5", "4.0", "4.5", "5.0"};
-						
-			for (int i = 0; i < nb; ++i)
-			{
-				id_item.add(new JLabel(id_recomanacions.get(i)));
-				nom_item.add(new JLabel(nom_recomanacions.get(i)));
-				rate.add(new JComboBox(options));
-				
-				recs.add(id_item.get(id_item.size()-1));
-				recs.add(nom_item.get(nom_item.size()-1));
-				recs.add(rate.get(rate.size()-1));
-			}
-			
-			JScrollPane recsScrollable = new JScrollPane(recs);
+			recsScrollable = new JScrollPane(recs);
 			recs.setAutoscrolls(true);
 			dreta.add(recsScrollable);
 			
@@ -209,5 +182,53 @@ public class VistaPrincipal extends JFrame {
         setTitle("Sistema Recomanador");
         pack();
         setVisible(true);
+        
+        recomana.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+				
+				//ArrayList<ArrayList<String>> recomanacions = cp.executarAlgorisme();
+				
+				id_recomanacions = cp.getIdRecomanacions();
+				nom_recomanacions = cp.getNomRecomanacions();
+				
+				//int nb = recomanacions.size();
+				int nb = nom_recomanacions.size();
+				
+				dreta.remove(recsScrollable);
+				
+				id_item = new ArrayList<JLabel>();
+				nom_item = new ArrayList<JLabel>();
+				rate = new ArrayList<JComboBox>();
+							
+				recs = new JPanel();
+				recs.setLayout(new GridLayout(nb + 1, 3));
+				
+				header = new ArrayList<JLabel>();
+				header.add(new JLabel("id"));
+				header.add(new JLabel("nom"));
+				header.add(new JLabel("valoració"));
+				
+				recs.add(header.get(0));
+				recs.add(header.get(1));
+				recs.add(header.get(2));
+					
+				for (int i = 0; i < nb; ++i)
+				{
+					id_item.add(new JLabel(id_recomanacions.get(i)));
+					nom_item.add(new JLabel(nom_recomanacions.get(i)));
+					rate.add(new JComboBox(options));
+					
+					recs.add(id_item.get(id_item.size()-1));
+					recs.add(nom_item.get(nom_item.size()-1));
+					recs.add(rate.get(rate.size()-1));
+				}
+				
+				recsScrollable = new JScrollPane(recs);
+				recs.setAutoscrolls(true);
+				dreta.add(recsScrollable);
+				
+				setVisible(true);
+            }
+        });
 	}
 }
