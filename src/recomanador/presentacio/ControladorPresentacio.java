@@ -46,12 +46,12 @@ public class ControladorPresentacio {
 				boolean found = false;
 				
 				for (int j = 0; j < old.size(); ++j)
-					if (one.get(0) == old.get(j).get(0)) found = true;
+					if (one.get(1) == old.get(j).get(1)) found = true;
 				
 				if (!found)
 				{
 					temp.add(new ArrayList<String>());
-					temp.get(temp.size()-1).add(one.get(0));
+					temp.get(temp.size()-1).add(one.get(1));
 				}
 			}
 			
@@ -72,37 +72,32 @@ public class ControladorPresentacio {
 	}
 	
 	public static String getId() {
-		//return domini.getId()
-		return "32";
+		try {		
+			return domini.getActiveUserId();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "ERROR";
+		}
 	}
 	
 	public static String getNomProjecte() {
-		//return domini.getId()
-		return "Un gran projecte";
+		try {		
+			return domini.getNomProjecte();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "ERROR";
+		}
 	}
-	
-	public static ArrayList<String> getIdRecomanacions() {
-		ArrayList<String> n = new ArrayList<String>();
-		n.add("1234");
-		n.add("1232354");
-		n.add("42");
-		n.add("3141592");
-		n.add("3141592");
-		return n;
-	}
-	
-	public static ArrayList<String> getNomRecomanacions() {
-		ArrayList<String> n = new ArrayList<String>();
-		n.add("abc");
-		n.add("abcbced");
-		n.add("clau de l'univers");
-		n.add("clau de l'univers");
-		n.add("pi");
-		return n;
-	}
-	
+		
 	public static boolean isAdmin() {
-		//return domini.isAdmin()
+		/*
+		try {		
+			return domini.isAdmin();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "ERROR";
+		}
+		//*/
 		return true;
 	}
 	

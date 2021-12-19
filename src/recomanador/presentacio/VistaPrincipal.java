@@ -186,13 +186,9 @@ public class VistaPrincipal extends JFrame {
         recomana.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				
-				//ArrayList<ArrayList<String>> recomanacions = cp.executarAlgorisme();
+				ArrayList<ArrayList<String>> recomanacions = cp.executarAlgorisme();
 				
-				id_recomanacions = cp.getIdRecomanacions();
-				nom_recomanacions = cp.getNomRecomanacions();
-				
-				//int nb = recomanacions.size();
-				int nb = nom_recomanacions.size();
+				int nb = recomanacions.size();
 				
 				dreta.remove(recsScrollable);
 				
@@ -214,8 +210,8 @@ public class VistaPrincipal extends JFrame {
 					
 				for (int i = 0; i < nb; ++i)
 				{
-					id_item.add(new JLabel(id_recomanacions.get(i)));
-					nom_item.add(new JLabel(nom_recomanacions.get(i)));
+					id_item.add(new JLabel(recomanacions.get(i).get(0)));
+					nom_item.add(new JLabel(recomanacions.get(i).get(0)));
 					rate.add(new JComboBox(options));
 					
 					recs.add(id_item.get(id_item.size()-1));
