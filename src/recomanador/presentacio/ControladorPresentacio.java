@@ -134,6 +134,15 @@ public class ControladorPresentacio {
 		}
 	}
 	
+	public static void setAlgorisme(String alg) {
+		try
+		{
+			domini.setAlgorisme(alg);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
     public static void obreVistaPrincipal() {
         new VistaPrincipal();
     }

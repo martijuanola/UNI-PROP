@@ -73,7 +73,7 @@ public class VistaPrincipal extends JFrame {
         setSize(new Dimension(1000, 900));
 
         panel = new JPanel();
-		
+        
 		//cp.canviarFontUI (new javax.swing.plaf.FontUIResource("Calibri",Font.PLAIN,20));
 		//this.setFont(this.getFont().deriveFont(Float(20.0f)));
         
