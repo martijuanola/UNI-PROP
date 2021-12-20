@@ -1,6 +1,8 @@
 package src.recomanador.presentacio;
 
 import java.util.ArrayList;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import src.recomanador.domini.ControladorDomini;
 import src.recomanador.excepcions.AlreadyLogedInException;
@@ -26,10 +28,117 @@ public class ControladorPresentacio {
         }
         return instancia;
     }
-
+	
+	public static ArrayList<ArrayList<String>> executarAlgorisme()
+	{
+		try
+		{
+			ArrayList<ArrayList<String>> old = 
+				domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
+			
+			domini.createRecomanacions();
+			ArrayList<ArrayList<String>> young = 
+				domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
+			
+			ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
+			
+			for (int i = 0; i < young.size(); ++i)
+			{
+				ArrayList<String> one = young.get(i);
+				boolean found = false;
+				
+				for (int j = 0; j < old.size(); ++j)
+					if (one.get(1) == old.get(j).get(1)) found = true;
+				
+				if (!found)
+				{
+					temp.add(new ArrayList<String>());
+					temp.get(temp.size()-1).add(one.get(1));
+				}
+			}
+			
+			for (int i = 0; i < temp.size(); ++i)
+			{
+				ArrayList<ArrayList<String>> item =
+					domini.getItem(Integer.parseInt(temp.get(i).get(0)));
+				String nom = item.get(Integer.parseInt(domini.getPosNomItem())).get(0);
+				temp.get(i).add(nom);
+			}
+			
+			//La diferència de conjunts serà els que es mostrarà
+			return temp;
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return null;
+		}
+	}
+	
+	public static String getId() {
+		/*try {		
+			return domini.getActiveUserId();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "ERROR";
+		}*/
+		return "32";
+	}
+	
+	public static String getNomProjecte() {
+		return "32";
+		/*try {		
+			return domini.getNomProjecte();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "ERROR";
+		}*/
+	}
+	
+	public static void guardar() {
+		try {		
+			domini.saveSession();
+		} catch(Exception e) {
+			//new VistaError(e.getMessage());
+			//No va, pq l'error està buit
+			new VistaError("Error en guardar.");
+		}
+	}
+		
+	public static boolean isAdmin() {
+		/*
+		try {		
+			return domini.isAdmin();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "ERROR";
+		}
+		//*/
+		return false;
+	}
+	
+	public static void logOut() {
+		domini.logout();
+	}
+	
+	public static void setAdmin() {
+		try
+		{
+			domini.loginAdmin();
+		 } catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void setUser(String id) {
+		try
+		{
+			domini.login(Integer.parseInt(id));
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
     public static void obreVistaPrincipal() {
-        //TODO:OMPLIR
-        new VistaError("OBERTA VISTA PRINCIPAL!");
+        new VistaPrincipal();
     }
 
     public static void obreVistaInicial() {
@@ -84,6 +193,36 @@ public class ControladorPresentacio {
     public static void setTipusItems(ArrayList<String> tipusS) throws PrivilegesException, ItemTypeNotValidException, DataNotValidException {
         domini.setTipus(tipusS);
     }
+    
+    public static void obreVistaItems() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA ITEMS");
+    }
+    
+    public static void obreVistaUsuari(String id) {
+        //TODO:OMPLIR
+        new VistaError("OBRE USUARI CONCRET: " + id);
+    }
+    
+    public static void obreVistaInformacioItem(String id) {
+        //TODO:OMPLIR
+        new VistaError("OBRE ITEM CONCRET: " + id);
+    }
+    
+    public static void obreVistaTotalUsuari() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
+    }
+    
+    public static void obreVistaModificarAlgorisme() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA DE MODIFICAR L'ALGORISME");
+    }
+    
+    public static void obreVistaTestAlgorisme() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA DE TEST DE L'ALGORISME");
+    }
 
     public static void main(String[] args) {
         //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -98,4 +237,22 @@ public class ControladorPresentacio {
 		}
     }
 
+    /* -----------------------------------------------------------------
+     * ---Funció treta d'internet, per a canviar la font i el tamany ---
+     * -----------------------------------------------------------------
+     */
+    ///*
+    public static void canviarFontUI (javax.swing.plaf.FontUIResource f){
+		//Informació extreta de:
+		//https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
+		
+		java.util.Enumeration keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get (key);
+			if (value instanceof javax.swing.plaf.FontUIResource)
+			UIManager.put(key, f);
+		}
+    }
+    //*/
 }
