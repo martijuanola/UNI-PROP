@@ -44,7 +44,10 @@ public class VistaInicial extends JFrame {
 
     ArrayList<String> projectesDisponibles;
 
+    VistaInicial instancia;
+
     public VistaInicial() {
+        instancia = this;
         itemsFile = "";
         ratingsFile = "";
 
@@ -284,7 +287,6 @@ public class VistaInicial extends JFrame {
                     ControladorPresentacio.carregarProjecteNou(nomProjecte.getText(), itemsFile, ratingsFile);
                 }
                 catch (Exception e2) {
-                    System.out.println("ERORRR");
                     ControladorPresentacio.obreVistaError(e2.getMessage());
                     return;
                 }
@@ -323,12 +325,22 @@ public class VistaInicial extends JFrame {
                 if (nomProjecte.getText().equals("") || nomProjecte.getText().equals("Nom nou projecte")) {
                     ControladorPresentacio.obreVistaError("Nom del Projecte buit.");
                     return;
-                }          
+                }
+                for (int i = 0; i < projectesDisponibles.size(); ++i) {
+                    if (nomProjecte.getText().equals(projectesDisponibles.get(i))) {
+                        ControladorPresentacio.obreVistaError("Projecte ja existeix.");
+                        return;
+                    }
+                }  
 
-                ControladorPresentacio.obreVistaSessioNova(nomProjecte.getText());
-                dispose();
+                ControladorPresentacio.obreVistaSessioNova(nomProjecte.getText(), instancia);
+                setVisible(false);
             }
 
         });
+    }
+
+    void fesVisible() {
+        setVisible(true);
     }
 }

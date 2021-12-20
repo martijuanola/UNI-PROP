@@ -2,7 +2,6 @@ package src.recomanador.presentacio;
 
 import java.util.ArrayList;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import src.recomanador.domini.ControladorDomini;
 import src.recomanador.excepcions.AlreadyLogedInException;
@@ -165,9 +164,8 @@ public class ControladorPresentacio {
         return domini.getAllProjectes();
     }
 
-    public static void obreVistaSessioNova(String text) {
-        //TODO:OMPLIR
-        new VistaError("OBRE SESSIO NOVA");
+    public static void obreVistaSessioNova(String text, VistaInicial inst) {
+		new VistaSessioNova(text, inst);
     }
 
     public static void obreVistaError(String text) {
@@ -225,9 +223,10 @@ public class ControladorPresentacio {
     }
 
     public static void main(String[] args) {
-        //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         instancia = new ControladorPresentacio();
-        //obreVistaInicial();  
+        obreVistaInicial();  
+
+		/* CREAR SESSIO "totalll" AMB ITEMS 250
 		try {
 			domini.loginAdmin();
 			domini.createSession("totalll", "/home/jaume/Documents/PROP/projecte/subgrup-prop5-5/data/movies-250/items.csv", "/home/jaume/Documents/PROP/projecte/subgrup-prop5-5/data/movies-250/ratings.db.csv");
@@ -235,6 +234,7 @@ public class ControladorPresentacio {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		*/
     }
 
     /* -----------------------------------------------------------------

@@ -32,6 +32,7 @@ public class VistaEscollirAtributs extends JFrame {
 
         panel = new JPanel();
         panel.setLayout(new GridLayout(nomAtributs.size(), 3));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
 
         nousTipus = new ArrayList<JComboBox<String>>(nomAtributs.size());
 
@@ -81,7 +82,7 @@ public class VistaEscollirAtributs extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Escull el tipus dels atributs");
         pack();
-        setMinimumSize(getBounds().getSize());
+        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
         setVisible(true);
 
         reset.addActionListener(new ActionListener() {

@@ -178,11 +178,7 @@ public class ControladorDomini {
         ci.setNomCjItems(estat.get(3));
 
         try{
-            Item.setId(Integer.parseInt(estat.get(4)));
             Item.setNomA(Integer.parseInt(estat.get(5)));
-        }
-        catch(ItemIdNotValidException e) {
-            throw new DataNotValidException(estat.get(4),"El valor guardat de POS ITEM ID no és correcte!");
         }
         catch(ItemStaticValuesAlreadyInitializedException e) {
             System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
