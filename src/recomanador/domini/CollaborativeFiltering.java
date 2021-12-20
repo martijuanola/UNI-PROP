@@ -13,7 +13,21 @@ import src.recomanador.excepcions.UserNotFoundException;
  * @author Adrià F.
  */
 public class CollaborativeFiltering {
-    /*----- CONSTANTS -----*/
+   
+    /*----- STATICS -----*/
+
+    /** Contains the only instance of the class **/
+    private static CollaborativeFiltering inst;
+
+    /**
+     * Returs the only instance of the class, and if it's not created, it creates it.
+     *
+     * @return     The instance.
+     */
+    public static CollaborativeFiltering getInstance() {
+        if(CollaborativeFiltering.inst == null) inst = new CollaborativeFiltering();
+        return inst;
+    }
 
     /*----- ATRIBUTS -----*/
 
@@ -26,7 +40,6 @@ public class CollaborativeFiltering {
     /** stores if the centroids have been calculated, so they dont get recalculated for multiple iterations of the algorithm
      * (mainly, when calculating the DCG and NDCG)
      */
-    Boolean centroidesCalculats = false;
 
     /**Stores a set of k centroids with their ratings. Used for k-NN*/
     Centroid[] centroids;
@@ -34,26 +47,18 @@ public class CollaborativeFiltering {
     /**For each user ID, stores the centroid they belong to*/
     HashMap<Integer, Integer> closest_centroid;
 
+    /** Indicates if the centroids are already calculated */
+    Boolean centroidesCalculats = false;
+
+    /** To add stochasticity to the centroids generation */
     Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
+
     /**
      *  Constructs a new empty instance
      */
-    public CollaborativeFiltering() {
-    }
-
-    /**
-     *  Constructs a new instance with the given items, users and recommendations
-     *
-     * @param      items    Set of items
-     * @param      usuaris    Set of users
-     * @param      valoracions   set of recommendations (which include ratings)
-     */
-    public CollaborativeFiltering(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
-        this.items = items;
-        this.usuaris = usuaris;
-        this.valoracions = valoracions;
+    private CollaborativeFiltering() {
     }
 
     /*----- OPERADORS -----*/
@@ -79,6 +84,8 @@ public class CollaborativeFiltering {
      * @param      K   number of clusters to be generated on k-means
      * 
      * @return     a sorted set the recommended item IDs with their estimated ratings
+     * 
+     * @throws     UserNotFoundException if the id specified is not valid
      */
     public ArrayList<ItemValoracioEstimada> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
@@ -87,7 +94,7 @@ public class CollaborativeFiltering {
         System.out.println();
 
         ArrayList<ItemValoracioEstimada> items_sorted = slope1(user_ID, usuaris_cluster);
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
 
         for(int i = 0; i < Q && i < items_sorted.size(); ++i){
             Q_items.add(items_sorted.get(i));
@@ -99,6 +106,7 @@ public class CollaborativeFiltering {
      *  Executes k-means and returns the set of IDs of the users in the same cluster than user_ID
      *
      * @param      user_ID      ID of the user whose cluster will be returned
+     * @param      K            The value K
      * 
      * @return     users of the cluster
      */
@@ -209,48 +217,20 @@ public class CollaborativeFiltering {
     }
 
     /**
-     * Returns the distance between a user and a centroid.
-     *
-     * @param      u    identifier of a user
-     *
-     * @param      c    index of a centroid
-     *
-     * @return     the distance between the user and the centroid
-     */
-    private float distance(int idx_usuari, int centroid) {
-        //System.out.println("calculating the distance between " + idx_usuari + " and centroid " + centroid);
-        
-        float distance = 0;
-
-        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
-
-        for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
-            Recomanacio rec = valoracionsUser.get(idx_rec);
-            Item item = rec.getItem();
-            if (rec.recomanacioValorada()) {
-                float distance_add = rec.getVal()-centroids[centroid].valoracio.get(item); 
-                distance += distance_add*distance_add;
-            }
-        }
-		
-		//~ System.out.println("distance = " + Math.sqrt(distance));
-		
-        return (float) Math.sqrt(distance);
-    }
-
-    /**
      * Returns a set of item IDs, sorted by relevance, using Collaborative Filtering for the given user
      *
-     * @param      u    identifier of a user
+     * @param      user_ID    identifier of a user
      *
-     * @param      c    index of a centroid
+     * @param      usuaris_cluster    index of a centroid
      *
      * @return     the distance between the user and the centroid
+     * 
+     * @throws     UserNotFoundException if the id specified is not valid
      */
     private ArrayList<ItemValoracioEstimada> slope1(int user_ID, ArrayList<Usuari> usuaris_cluster) throws UserNotFoundException {
         Usuari user = usuaris.getUsuari(user_ID);
         ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(user.getId());
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>(0);
+        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
         
         //System.out.println("\n\nFOR1: Checking every item");
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
@@ -313,6 +293,36 @@ public class CollaborativeFiltering {
         }
         Collections.sort(items_estimats);
         return items_estimats;
+    }
+
+    /**
+     * Returns the distance between a user and a centroid.
+     *
+     * @param      idx_usuari    identifier of a user
+     *
+     * @param      centroid    index of a centroid
+     *
+     * @return     the distance between the user and the centroid
+     */
+    private float distance(int idx_usuari, int centroid) {
+        //System.out.println("calculating the distance between " + idx_usuari + " and centroid " + centroid);
+        
+        float distance = 0;
+
+        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
+
+        for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
+            Recomanacio rec = valoracionsUser.get(idx_rec);
+            Item item = rec.getItem();
+            if (rec.recomanacioValorada()) {
+                float distance_add = rec.getVal()-centroids[centroid].valoracio.get(item); 
+                distance += distance_add*distance_add;
+            }
+        }
+        
+        //~ System.out.println("distance = " + Math.sqrt(distance));
+        
+        return (float) Math.sqrt(distance);
     }
 
 }

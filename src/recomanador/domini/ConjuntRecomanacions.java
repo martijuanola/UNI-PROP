@@ -8,13 +8,10 @@ import java.util.ArrayList;
 /**
  * This class describes a set of recommendations as an extenssion of ArrayList of recommendations.
  * It always has the array sorted by item id and user id to improve efficency on certain calls.
+ * 
  * @author Martí J.
  */
 public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
-	
-	/*----- CONSTANTS -----*/
-    /*----- ATRIBUTS -----*/
-
 
     /*----- CONSTRUCTORS -----*/
 
@@ -25,11 +22,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	super();
     }
 
-
-    //en principi les de user no haurien de petar perquè ja haurien petat abans però les poso igualment
-
-    //es podria generalitzar perquè poguessis seleccionar quines columnes son que però de moment es supsoa
-    //que sempre sera ordre idUsuari + idItem + rating
     /**
      * Constructs a new instance with the recommendations and ratings from the raw data
      *  obtained from the ratings file. It also sets the correct elements in the sets of 
@@ -38,12 +30,10 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @param      ci    Set of items from the Domain Controler
      * @param      cu    Set of users from the Domain Controler
      * @param      raw   The raw data from the ratings file
-     *
+     * 
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     RatingNotValidException      Thrown if a rating was not found.
-     * @throws     UserIdNotValidException      Thrown if a user id was not found.
-     * @throws     ItemIdNotValidException      Thrown if a item id was not found.
+     * @throws     DataNotValidException        If some value is not correct(ratings,...)
      */
     public ConjuntRecomanacions(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
     	this.afegirDades(ci,cu,raw);
@@ -51,24 +41,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
 
 
     /*----- CONSULTORES -----*/
-    //quan s'acabi d'implementar l'algorisme es borren les que no es fan servir
-
-//es podria treure també
-    /**
-     * Returns if a recommendation between of an item <i>itemid</i> to a user <i>userid</i> exisist in 
-     * the set of recommendations.
-     *
-     * @param      itemid  The id of the item
-     * @param      userid  The id of the user
-     *
-     * @return     True if the recommendation has been found
-     */
-    public boolean existeixRecomanacio(int itemid, int userid) {
-    	int pos = cercaBinaria(itemid,userid);
-        if(pos < 0 || pos >= this.size()) return false;
-    	else if(this.get(pos).checkIds(itemid, userid)) return true;
-    	else return false;
-    }
 
     /**
      * Returns if a recommendation with a rating of an item <i>itemid</i> to a user <i>userid</i> 
@@ -102,16 +74,13 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     	else throw new RecommendationNotFoundException(itemid, userid);
     }
 
-    public ConjuntRecomanacions getRecomanacions(int userid) {
-        ConjuntRecomanacions cr = new ConjuntRecomanacions();
-
-        for(int i = 0; i < this.size(); i++) {
-            if(this.get(i).getUsuari().getId() == userid) cr.add(this.get(i));
-        }
-
-        return cr;
-    }
-
+    /**
+     * Gets the unrated recommendations of a user
+     *
+     * @param      userid  The userid
+     *
+     * @return     A ConjuntRecomanacions with the unrated recommendations.
+     */
     public ConjuntRecomanacions getRecomanacionsNoValorades(int userid) {
         ConjuntRecomanacions cr = new ConjuntRecomanacions();
 
@@ -122,6 +91,13 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return cr;
     }
 
+    /**
+     * Gets the rated recommendations of a user
+     *
+     * @param      userid  The userid
+     *
+     * @return     A ConjuntRecomanacions with the rated recommendations.
+     */
     public ConjuntRecomanacions getValoracions(int userid) {
         ConjuntRecomanacions cv = new ConjuntRecomanacions();
 
@@ -132,12 +108,17 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return cv;
     }
 
+    /**
+     * Gets all the recommendations(rated and not rated) in orther to export them and save them in a file.
+     *
+     * @return     All recommendations + the header!!
+     */
     public ArrayList<ArrayList<String>> getAllRecomanacions() {
-        ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>(0);
-        ArrayList<String> header = new ArrayList<String>(0); header.add("userId"); header.add("itemId"); header.add("rating");
+        ArrayList<ArrayList<String>> D = new ArrayList<ArrayList<String>>();
+        ArrayList<String> header = new ArrayList<String>(); header.add("userId"); header.add("itemId"); header.add("rating");
         D.add(header);
         for(int i = 0; i < this.size();i++){
-            ArrayList<String> aux = new ArrayList<String>(0);
+            ArrayList<String> aux = new ArrayList<String>();
             aux.add(String.valueOf(this.get(i).getUsuari().getId()));
             aux.add(String.valueOf(this.get(i).getItem().getId()));
             aux.add(String.valueOf(this.get(i).getVal()));
@@ -166,14 +147,40 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
         return true;
     }
 
+    /**
+     * Removes a recommendation specified with the 2 ids.
+     *
+     * @param      itemId                           The item identifier
+     * @param      usuariId                         The usuari identifier
+     *
+     * @throws     RecommendationNotFoundException  If the recommendation doesn't exist.
+     */
+    public void removeRecomanacio(int itemId, int usuariId) throws RecommendationNotFoundException {
+        int pos = cercaBinaria(itemId, usuariId);
+        if(this.size() == 0 || pos == this.size() || this.get(pos).getItem().getId() != itemId || this.get(pos).getUsuari().getId() != usuariId) {
+            throw new RecommendationNotFoundException(itemId, usuariId);
+        }
+        this.remove(pos);
+    }
+
+    /**
+     * Removes all the recommendation of the item specified
+     *
+     * @param      id    The identifier
+     */
     public void removeRecomanacionsItem(int id) {
-        for(Recomanacio r: this) {
+        for(Recomanacio r : this) {
             if(r.getItem().getId() == id) this.remove(r);
         }
     }
 
+    /**
+     * Removes all the recommenations of the user specified.
+     *
+     * @param      id    The identifier
+     */
     public void removeRecomanacionsUsuari(int id) {
-        for(Recomanacio r: this) {
+        for(Recomanacio r : this) {
             if(r.getUsuari().getId() == id) this.remove(r);
         }
     }
@@ -187,9 +194,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @throws     ItemNotFoundException        Thrown if a item was not found.
      * @throws     UserNotFoundException        Thrown if a user was not found.
-     * @throws     RatingNotValidException      Thrown if a rating was not found.
-     * @throws     UserIdNotValidException      Thrown if a user id was not found.
-     * @throws     ItemIdNotValidException      Thrown if a item id was not found.
+     * @throws     DataNotValidException        Errors with tipes of data for ratings or ids.
      */
     public void afegirDades(ConjuntItems ci, ConjuntUsuaris cu, ArrayList<ArrayList<String>> raw) throws ItemNotFoundException, UserNotFoundException, DataNotValidException {
         raw.remove(0);//elimina la capçalera
@@ -237,8 +242,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * id = <i>user_id</i>, or if it doesn't exist, the position where it should be added. 
      * It uses a binary search.
      *
-     * @param      first      The first element
-     * @param      last       The last element
      * @param      item_id    The item identifier
      * @param      usuari_id  The user identifier
      *

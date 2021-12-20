@@ -17,21 +17,27 @@ public class ControladorDomini {
     /*----- STATICS -----*/
     
     /* Controllers */
+
+    /** Contains the only instance of the class **/
     private static ControladorDomini inst;
-    private static ControladorDominiAlgorisme cda;
-    private static ControladorPersistencia cp;
+    /** Instance of the Algorithm Subcontroler **/
+    private ControladorDominiAlgorisme cda;
+    /** Instance of the Persistence Controler **/
+    private ControladorPersistencia cp;
 
     /* Data of the execution */
-    private static ConjuntItems ci;
-    private static ConjuntUsuaris cu;
-    private static ConjuntRecomanacions cr;
+    /** Set of Items of the execution **/
+    private ConjuntItems ci;
+    /** Set of Users of the execution **/
+    private ConjuntUsuaris cu;
+    /** Set of Recommendations of the execution **/
+    private ConjuntRecomanacions cr;
     
     /* Atributes */
-    /* Id of the user/actor of the application */
-    private static int id;
-
-    /* True if active user/actor has admin privileges */
-    private static boolean admin;
+    /** Id of the user/actor of the application **/
+    private int id;
+    /** True if active user/actor has admin privileges **/
+    private boolean admin;
 
     /**
      * Returs the only instance of the class, and if it's not created, it creates it.
@@ -46,8 +52,8 @@ public class ControladorDomini {
 
     /*----- CONSTANTS -----*/
     
-    /* Value that represents null in the atribute id */
-    public static final int NULL_ID = -1;
+    /** Value that represents null in the atribute id **/
+    public final int NULL_ID = -1;
 
 
     /*----- CONSTRUCTORS -----*/
@@ -61,11 +67,14 @@ public class ControladorDomini {
 
         id = NULL_ID;
         admin = false;
+        resetData();
     }
 
 
     /*----- SESSIONS/PRIVILEGIS -----*/
     
+    //no pots passar de usuari a admin
+
     /**
      * User logs in a with an ID. If the id is not in the data already gathered, a new object Usuari is created.
      *
@@ -99,19 +108,20 @@ public class ControladorDomini {
     public void logout() {
         id = NULL_ID;
         admin = false;
+        resetData();
     }
 
     /**
      * Gets the active user identifier.
      *
      * @return     The active user identifier.
-     *
-     * @throws     NotLogedInException  Thrown if no user session is opened.
+     * 
+     * @throws     PrivilegesException When the user is not loged in as a user.
      */
-    public int getActiveUserId() throws PrivilegesException {
+    public String getActiveUserId() throws PrivilegesException {
         if(this.id == NULL_ID) throw new PrivilegesException("Needs to be loged in as a USER.");
 
-        return this.id;
+        return String.valueOf(this.id);
     }
 
     /**
@@ -128,6 +138,7 @@ public class ControladorDomini {
 
     /**
      * Loads a session/project. The Recomanacions, Usuaris and Items set are initialized, as well as all the other extra informations stored.
+     * Fist, all the previous data is erased.
      *
      * @param      directory                The directory where the files are stored
      *
@@ -136,6 +147,7 @@ public class ControladorDomini {
      * @throws     FolderNotValidException  Thrown when the folder contains faulty files or has some missing.
      */
     public void loadSession(String directory) throws FolderNotFoundException, FolderNotValidException, DataNotValidException {
+        resetData();
         cp.escollirProjecte(directory);
        
         try {
@@ -181,6 +193,7 @@ public class ControladorDomini {
     /**
      * Creates a new session/project from a items file and a ratings file. All the other constants are either calculated from the input data
      * or set with default values.
+     * Fist, all the previous data is erased.
      *
      * @param      projName                 The project name
      * @param      itemsFile                The items file
@@ -191,6 +204,8 @@ public class ControladorDomini {
      * @throws     FolderNotValidException  Thrown if the current folder has missing files.
      */
     public void createSession(String projName, String itemsFile, String usersFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException{
+        resetData();
+
         //Llegir fitxers
         try {
             ci = new ConjuntItems(cp.carregarFitxerExtern(itemsFile));
@@ -205,7 +220,7 @@ public class ControladorDomini {
             cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
         catch(DataNotValidException e) {
-            throw new FolderNotValidException("There is invalid data in ratings file", true);
+            throw new FolderNotValidException("There is invalid data in ratings file" + e.getMessage(), true);
         }
         catch(ItemNotFoundException | UserNotFoundException e) {
             throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
@@ -220,18 +235,24 @@ public class ControladorDomini {
 
     /**
      * Creates a new session without any initial data input.
+     * Fist, all the previous data is erased.
      *
      * @param      projName                   The project name
      * @param      nomsAtriubts               The item atribute names
      * @param      tipusAtriubtsS             The item atribute types
      *
-     * @throws     FolderNotValidException    Thrown if the current folder has missing files.
-     * @throws     ItemTypeNotValidException  Thrown if there are problems with the atirubute type assignation.
+     * @throws     DataNotValidException        Problems with the initialization of the static values of Item
+     * @throws     FolderNotValidException      Thrown if the current folder has missing files.
+     * @throws     ItemTypeNotValidException    Thrown if there are problems with the atirubute type assignation.
+     * @throws     PrivilegesException          You need to be an admin to perform this functionallity.
      */
-    public void createEmptySession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws FolderNotValidException, ItemTypeNotValidException {
+    public void createEmptySession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws PrivilegesException, FolderNotValidException, ItemTypeNotValidException, DataNotValidException {
+        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");       
+        resetData();
+
         cp.crearProjecte(projName);
 
-        ArrayList<tipus> tipusAtributs = new ArrayList<tipus>(0);
+        ArrayList<tipus> tipusAtributs = new ArrayList<tipus>();
         for(int i = 0; i < tipusAtriubtsS.size(); i++) tipusAtributs.add(StringOperations.stringToType(tipusAtriubtsS.get(i)));
 
         try {
@@ -255,10 +276,10 @@ public class ControladorDomini {
     public void saveSession() throws FolderNotValidException {
         //CONVERSIONS de coses d'items
         //pesos + tipus + max + min
-        ArrayList<String> pesoss = new ArrayList<String>(0);
-        ArrayList<String> ts = new ArrayList<String>(0);
-        ArrayList<String> maxs = new ArrayList<String>(0);
-        ArrayList<String> mins = new ArrayList<String>(0);
+        ArrayList<String> pesoss = new ArrayList<String>();
+        ArrayList<String> ts = new ArrayList<String>();
+        ArrayList<String> maxs = new ArrayList<String>();
+        ArrayList<String> mins = new ArrayList<String>();
 
         ArrayList<Float> pesos = Item.getPesos();
         ArrayList<tipus> t = Item.getTipusArray();
@@ -273,7 +294,7 @@ public class ControladorDomini {
         }
 
         //Valors
-        ArrayList<String> vals = new ArrayList<String>(0);
+        ArrayList<String> vals = new ArrayList<String>();
         vals.add(String.valueOf(cda.get_algorisme()));
         vals.add(String.valueOf(cda.get_Q()));
         vals.add(String.valueOf(cda.get_k()));
@@ -304,7 +325,7 @@ public class ControladorDomini {
      * @throws     DataNotValidException    Thrown in a very specific case where the Q value can't be assignet due to a lack of user.
      * @throws     FolderNotValidException  Thrown if there are problems when getting the information from the Unknown and Known files.
      */
-    ArrayList<Integer> runTest() throws FolderNotValidException, DataNotValidException {
+    ArrayList<String> runTest() throws FolderNotValidException, DataNotValidException {
         int auxQ = cda.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
 
@@ -358,7 +379,7 @@ public class ControladorDomini {
 
             //Per calcular el NDGC, ens cal ordenar les valoracions de l'usuari a Unknown per valoraciÃ³.
             //Per fer-ho, podem reutilitzar la classe itemValoracioEstimada
-            ArrayList<ItemValoracioEstimada> val_unknown = new ArrayList<ItemValoracioEstimada>(0);
+            ArrayList<ItemValoracioEstimada> val_unknown = new ArrayList<ItemValoracioEstimada>();
             for (int val_idx = 0; val_idx < val_unknown_aux.size(); ++val_idx) {
                 val_unknown.add(new ItemValoracioEstimada
                 (val_unknown_aux.get(val_idx).getVal(), val_unknown_aux.get(val_idx).getItem()));
@@ -403,9 +424,9 @@ public class ControladorDomini {
 
         cda.set_Q(auxQ); //reset de la Q anterior
 
-        ArrayList<Integer> result = new ArrayList<Integer>(0);
-        result.add(DCG);
-        result.add((100*DCG)/IDCG);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add(String.valueOf(DCG));
+        result.add(String.valueOf((100*DCG)/IDCG));
         return result;
     }
 
@@ -531,7 +552,7 @@ public class ControladorDomini {
     public ArrayList<String> getPesos() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
         ArrayList<Float> pesos = Item.getPesos();
-        ArrayList<String> aux = new ArrayList<String>(0);
+        ArrayList<String> aux = new ArrayList<String>();
         for(int i = 0; i < pesos.size(); i++) aux.add(String.valueOf(pesos.get(i)));
         return aux;
     }
@@ -546,7 +567,7 @@ public class ControladorDomini {
      */
     public void setPesos(ArrayList<String> pesosS) throws PrivilegesException, ItemWeightNotCorrectException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ArrayList<Float> pesos = new ArrayList<Float>(0);
+        ArrayList<Float> pesos = new ArrayList<Float>();
         for(int i = 0; i < pesosS.size(); i++) pesos.add(Float.parseFloat(pesosS.get(i)));
         Item.setPesos(pesos);
     }
@@ -555,29 +576,26 @@ public class ControladorDomini {
      * Gets all the atribute types of the items.
      *
      * @return     The array of types as strings
-     *
-     * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
-    public ArrayList<String> getTipus() throws PrivilegesException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+    public ArrayList<String> getTipus() {
         ArrayList<tipus> tipus = Item.getTipusArray();
-        ArrayList<String> aux = new ArrayList<String>(0);
+        ArrayList<String> aux = new ArrayList<String>();
         for(int i = 0; i < tipus.size(); i++) aux.add(StringOperations.tipusToString(tipus.get(i)));
         return aux;
     }
 
-//* @throws     ItemStaticValuesAlreadyInitializedException  
     /**
      * Sets all the atribute types of the items.
      *
      * @param      tipusS                                       The new types of data for the atributes
      *
+     * @throws     DataNotValidException                        Problems with the initialization of the static values of Item
      * @throws     ItemTypeNotValidException                    Some type assignation is not possible.
      * @throws     PrivilegesException                          You need to be an admin to perform this functionallity.
      */
-    public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemStaticValuesAlreadyInitializedException, ItemTypeNotValidException {
+    public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemTypeNotValidException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ArrayList<tipus> tipus = new ArrayList<tipus>(0);
+        ArrayList<tipus> tipus = new ArrayList<tipus>();
         for(int i = 0; i < tipusS.size(); i++) tipus.add(StringOperations.stringToType(tipusS.get(i)));
         Item.setTipusArray(tipus);
     }
@@ -651,6 +669,18 @@ public class ControladorDomini {
     }
 
     /**
+     * Removes the recommendation specified by the ids.
+     *
+     * @param      itemId                           The item identifier
+     * @param      usrId                            The user identifier
+     *
+     * @throws     RecommendationNotFoundException  If the recommendation is not found.
+     */
+    public void removeRecmonacio(String itemId, String usrId) throws RecommendationNotFoundException {
+        cr.removeRecomanacio(Integer.parseInt(itemId), Integer.parseInt(usrId));
+    }
+
+    /**
      * Main functionality of this project. It generates recommendations for the current user from all the other information.
      * This calculations are performed in the algorithm controller.
      *
@@ -710,12 +740,13 @@ public class ControladorDomini {
         return String.valueOf(cda.get_algorisme());
     }
 
-     /**
+    /**
      * Sets the value K used in the algorithm to perform user clustering.
      *
      * @param     k                       The new value as a string
      *
-     * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
+     * @throws     PrivilegesException      You need to be an admin to perform this functionallity.
+     * @throws     DataNotValidException    The value entered is not valid.
      */
     public void setK(String k) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
@@ -762,7 +793,7 @@ public class ControladorDomini {
      */
     public ArrayList<String> getAllUsuaris() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ArrayList<String> r = new ArrayList<String>(0);
+        ArrayList<String> r = new ArrayList<String>();
         for(int i = 0; i < cu.size(); i++) r.add(String.valueOf(cu.get(i).getId()));
         return r;
     }
@@ -803,7 +834,7 @@ public class ControladorDomini {
      * @return     The array with the different types as strings.
      */
     public ArrayList<String> getTipusAsStrings() {
-        ArrayList<String> r = new ArrayList<String>(0);
+        ArrayList<String> r = new ArrayList<String>();
         for(tipus t: tipus.values()) r.add(StringOperations.tipusToString(t));
         return r;
     }
@@ -826,6 +857,18 @@ public class ControladorDomini {
      */
     public ArrayList<String> getAllProjectes() {
         return cp.llistatCarpetes();
+    }
+
+    /**
+     * Resets all the data stored in a temporary state.
+     */
+    private void resetData() {
+        cp.sortirDelProjecte();
+        Item.resetStatics();
+        cda.resetValues();
+        ci = null;
+        cr = null;
+        cu = null;
     }
 
 }

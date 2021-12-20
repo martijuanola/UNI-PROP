@@ -3,7 +3,13 @@ package src.recomanador.presentacio;
 import java.util.ArrayList;
 
 import java.awt.*;
+import java.awt.event.*;
+
 import javax.swing.*;
+
+import src.recomanador.excepcions.DataNotValidException;
+import src.recomanador.excepcions.ItemTypeNotValidException;
+import src.recomanador.excepcions.PrivilegesException;
 
 public class VistaEscollirAtributs extends JFrame {
     JPanel panel;
@@ -19,9 +25,13 @@ public class VistaEscollirAtributs extends JFrame {
     public VistaEscollirAtributs () {
         diferentsTipus = ControladorPresentacio.getTipus();
         nomAtributs = ControladorPresentacio.getHeaderItems();
+        tipusAtributs = ControladorPresentacio.getTipusItems();
+        for (int j = 0; j < diferentsTipus.size(); ++j) {
+            if (diferentsTipus.get(j).equals("Identificador")) diferentsTipus.remove(j);
+        }
 
         panel = new JPanel();
-        panel.setLayout(new GridLayout(nomAtributs.size(), 2));
+        panel.setLayout(new GridLayout(nomAtributs.size(), 3));
 
         nousTipus = new ArrayList<JComboBox<String>>(nomAtributs.size());
 
@@ -30,30 +40,36 @@ public class VistaEscollirAtributs extends JFrame {
 
         for (int i = 0; i < nomAtributs.size(); ++i) {
             JComboBox<String> aux = new JComboBox<String>();
-            for (int j = 0; j < diferentsTipus.size(); ++j) aux.addItem(diferentsTipus.get(j));
+            if (nomAtributs.get(i).equals("id")){
+                aux.addItem("Identificador");
+            }
+            else for (int j = 0; j < diferentsTipus.size(); ++j) {
+                aux.addItem(diferentsTipus.get(j));
+            }
             aux.setSelectedItem(tipusAtributs.get(i));
+            nousTipus.add(aux);
 
             JPanel esq = new JPanel();
             esq.setLayout(new FlowLayout());
             JLabel nom = new JLabel(nomAtributs.get(i));
             esq.add(nom);
-            esq.add(aux);
-            nousTipus.add(aux);
             panel.add(esq);
+
+            JPanel mig = new JPanel();
+            mig.setLayout(new FlowLayout());
+            mig.add(aux);
+            panel.add(mig);
 
             JPanel dre = new JPanel();
             dre.setLayout(new FlowLayout());
             if (i == 0) {
-                JLabel ei = new JLabel("TEST");
-                dre.add(ei);
+                dre.add(accept);
             }
             else if (i == 1) {
-                JLabel ei = new JLabel("TEST");
-                dre.add(ei);
+                dre.add(reset);
             }
             else {
-                JLabel ei = new JLabel("TEST");
-                dre.add(ei);
+                dre.add(new JLabel());
             }
             panel.add(dre);
             
@@ -67,5 +83,45 @@ public class VistaEscollirAtributs extends JFrame {
         pack();
         setMinimumSize(getBounds().getSize());
         setVisible(true);
+
+        reset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < nousTipus.size(); ++i) {
+                    nousTipus.get(i).setSelectedItem(tipusAtributs.get(i));
+                }
+            }
+        });
+
+        accept.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ArrayList<String> tipuses = new ArrayList<String>();
+                for (int i = 0; i < nousTipus.size(); ++i) {
+                    tipuses.add(nousTipus.get(i).getItemAt(nousTipus.get(i).getSelectedIndex()));
+                }
+                boolean nom = false;
+                for (int i = 0; i < tipuses.size(); ++i) {
+                    if (tipuses.get(i).equals("Nom")) {
+                        if (nom) {
+                            ControladorPresentacio.obreVistaError("Hi ha més d'una casella amb l'atribut nom");
+                            return;
+                        }
+                        else nom = true;
+                    }
+                }
+                if (!nom) {
+                    ControladorPresentacio.obreVistaError("Selecciona una casella amb l'atribut nom");
+                    return;
+                }
+                try {
+                    ControladorPresentacio.setTipusItems(tipuses);
+                    ControladorPresentacio.obreVistaPrincipal();
+                    dispose();
+                }
+                catch (PrivilegesException | ItemTypeNotValidException | DataNotValidException e1) {
+                    ControladorPresentacio.obreVistaError(e1.getMessage());
+                    return;
+                }
+            }
+        });
     }
 }
