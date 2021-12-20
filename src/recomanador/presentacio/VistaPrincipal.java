@@ -236,6 +236,74 @@ public class VistaPrincipal extends JFrame {
 			}
         });
         
+        info_usuari.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cp.obreVistaUsuari(cp.getId());
+				//Fer invisible temporalment la vista aquesta?
+				//Això si, sense eliminar-la
+			}
+        });
+        
+        info_total_usuaris.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cp.obreVistaTotalUsuari();
+				//Fer invisible temporalment la vista aquesta?
+				//Això si, sense eliminar-la
+			}
+        });
+        
+        info_items.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cp.obreVistaItems();
+				//Fer invisible temporalment la vista aquesta?
+				//Això si, sense eliminar-la
+			}
+        });
+        
+        modificar_algorisme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cp.obreVistaModificarAlgorisme();
+				//Fer invisible temporalment la vista aquesta?
+				//Això si, sense eliminar-la
+			}
+        });
+        
+        test_algorisme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cp.obreVistaTestAlgorisme();
+				//Fer invisible temporalment la vista aquesta?
+				//Això si, sense eliminar-la
+			}
+        });
+        
+        guardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cp.guardar();
+				//Fer invisible temporalment la vista aquesta?
+				//Això si, sense eliminar-la
+			}
+        });
+        
+        recuperar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String id_activa = null;
+					boolean admin = false;
+					if (!cp.isAdmin()) id_activa = cp.getId();
+					else admin = true;
+					cp.carregarProjecte(cp.getNomProjecte());
+					if (admin) cp.setAdmin();
+					else cp.setUser(id_activa);
+					
+					dreta.remove(recsScrollable);
+					setVisible(true);
+					
+				} catch(Exception err) {
+					new VistaError(err.getMessage());
+				}
+			}
+        });
+        
         /*
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

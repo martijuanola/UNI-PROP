@@ -72,12 +72,13 @@ public class ControladorPresentacio {
 	}
 	
 	public static String getId() {
-		try {		
+		/*try {		
 			return domini.getActiveUserId();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 			return "ERROR";
-		}
+		}*/
+		return "32";
 	}
 	
 	public static String getNomProjecte() {
@@ -88,6 +89,16 @@ public class ControladorPresentacio {
 			new VistaError(e.getMessage());
 			return "ERROR";
 		}*/
+	}
+	
+	public static void guardar() {
+		try {		
+			domini.saveSession();
+		} catch(Exception e) {
+			//new VistaError(e.getMessage());
+			//No va, pq l'error està buit
+			new VistaError("Error en guardar.");
+		}
 	}
 		
 	public static boolean isAdmin() {
@@ -104,6 +115,24 @@ public class ControladorPresentacio {
 	
 	public static void logOut() {
 		domini.logout();
+	}
+	
+	public static void setAdmin() {
+		try
+		{
+			domini.loginAdmin();
+		 } catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void setUser(String id) {
+		try
+		{
+			domini.login(Integer.parseInt(id));
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
 	}
 	
     public static void obreVistaPrincipal() {
@@ -143,6 +172,31 @@ public class ControladorPresentacio {
     public static void obreVistaEscollirAtributs() {
         //TODO:OMPLIR
         new VistaError("OBRE SESSIO NOVA");
+    }
+    
+    public static void obreVistaItems() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA ITEMS");
+    }
+    
+    public static void obreVistaUsuari(String id) {
+        //TODO:OMPLIR
+        new VistaError("OBRE USUARI CONCRET: " + id);
+    }
+    
+    public static void obreVistaTotalUsuari() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
+    }
+    
+    public static void obreVistaModificarAlgorisme() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA DE MODIFICAR L'ALGORISME");
+    }
+    
+    public static void obreVistaTestAlgorisme() {
+        //TODO:OMPLIR
+        new VistaError("OBRE VISTA DE TEST DE L'ALGORISME");
     }
 
     public static void main(String[] args) {
