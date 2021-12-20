@@ -176,6 +176,18 @@ public class ControladorPresentacio {
         return domini.getTipusAsStrings();
     }
 
+    public static ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
+        return domini.getAllItems();
+    }
+
+	public static String getPosItemId() {
+		return domini.getPosIdItem();
+	}
+
+	public static String getPosItemNom() {
+		return domini.getPosNomItem();
+	}
+
     public static ArrayList<String> getHeaderItems() {
         return domini.getHeader();
     }
