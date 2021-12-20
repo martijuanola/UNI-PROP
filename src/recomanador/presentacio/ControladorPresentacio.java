@@ -203,7 +203,16 @@ public class ControladorPresentacio {
         //TODO:OMPLIR
         new VistaError("OBRE VISTA DE TEST DE L'ALGORISME");
     }
-
+	
+	public static void valorar(String id_item, String rate)
+	{
+		try {
+			domini.setValoracio(id_item, getId(), rate);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
     public static void main(String[] args) {
         //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
         instancia = new ControladorPresentacio();
