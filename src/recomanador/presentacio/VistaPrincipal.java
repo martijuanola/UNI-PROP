@@ -225,6 +225,16 @@ public class VistaPrincipal extends JFrame {
 				dreta.add(recsScrollable);
 				
 				setVisible(true);
+				
+				for (int k = 0; k < id_item.size(); ++k)
+				{
+					String stringedId = id_item.get(k).getText();
+					id_item.get(k).addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							cp.obreVistaInformacioItem(stringedId);
+						}
+					});
+				}
             }
         });
         

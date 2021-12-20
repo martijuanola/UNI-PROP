@@ -184,6 +184,11 @@ public class ControladorPresentacio {
         new VistaError("OBRE USUARI CONCRET: " + id);
     }
     
+    public static void obreVistaInformacioItem(String id) {
+        //TODO:OMPLIR
+        new VistaError("OBRE ITEM CONCRET: " + id);
+    }
+    
     public static void obreVistaTotalUsuari() {
         //TODO:OMPLIR
         new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
