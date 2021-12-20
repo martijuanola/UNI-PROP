@@ -187,7 +187,11 @@ public class ControladorPresentacio {
     public static void setTipusItems(ArrayList<String> tipusS) throws PrivilegesException, ItemTypeNotValidException, DataNotValidException {
         domini.setTipus(tipusS);
     }
-
+    
+    public static void obreVistaItems() {
+		new VistaError("OBRE VISTA ALL ITEMS");
+    }
+    
     public static void obreVistaUsuari(String id) {
         //TODO:OMPLIR
         new VistaError("OBRE USUARI CONCRET: " + id);
