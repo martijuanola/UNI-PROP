@@ -74,7 +74,7 @@ public class VistaPrincipal extends JFrame {
 
         panel = new JPanel();
 		
-		cp.canviarFontUI (new javax.swing.plaf.FontUIResource("Calibri",Font.PLAIN,20));
+		//cp.canviarFontUI (new javax.swing.plaf.FontUIResource("Calibri",Font.PLAIN,20));
 		//this.setFont(this.getFont().deriveFont(Float(20.0f)));
         
         //LAYER E
@@ -236,13 +236,18 @@ public class VistaPrincipal extends JFrame {
 						}
 					});
 					
-					rate.get(k).addItemListener(new ItemListener() {
-						public void itemStateChanged(ItemEvent e) {
-							if (e.getStateChange() == ItemEvent.SELECTED)
-								cb = (JComboBox<String>)e.getSource();
-								String rate_value = cb.getSelectedItem().toString();
-								if (rate_value == "Sense valoració") rate_value = "0";
-								cp.valorar(stringedId, rate_value);
+					nom_item.get(k).addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							cp.obreVistaInformacioItem(stringedId);
+						}
+					});
+					
+					rate.get(k).addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent  e) {
+							cb = (JComboBox<String>)e.getSource();
+							String rate_value = cb.getSelectedItem().toString();
+							if (rate_value == "Sense valoració") rate_value = "0";
+							cp.valorar(stringedId, rate_value);
 						}
 					});
 				}
