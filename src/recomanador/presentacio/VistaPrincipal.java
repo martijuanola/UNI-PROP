@@ -158,19 +158,19 @@ public class VistaPrincipal extends JFrame {
         layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 		
-		JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
+		//JSeparator sep = new JSeparator(SwingConstants.VERTICAL);
 		
 		layout.setHorizontalGroup(
 		   layout.createSequentialGroup()
 			  .addComponent(menu_esquerra)
-			  .addComponent(sep)
+			  //.addComponent(sep)
 			  .addComponent(dreta)
 		);
 		layout.setVerticalGroup(
 		   layout.createSequentialGroup()
 			  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 				   .addComponent(menu_esquerra)
-				   .addComponent(sep)
+				   //.addComponent(sep)
 				   .addComponent(dreta))
 		);
         
@@ -227,5 +227,21 @@ public class VistaPrincipal extends JFrame {
 				setVisible(true);
             }
         });
+        
+        logout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+				cp.logOut();
+				cp.obreVistaInicial();
+                dispose();
+			}
+        });
+        
+        /*
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+        });
+         */
 	}
 }

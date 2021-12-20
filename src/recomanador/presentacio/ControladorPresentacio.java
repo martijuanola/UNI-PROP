@@ -102,6 +102,10 @@ public class ControladorPresentacio {
 		return false;
 	}
 	
+	public static void logOut() {
+		domini.logout();
+	}
+	
     public static void obreVistaPrincipal() {
         new VistaPrincipal();
     }
