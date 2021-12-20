@@ -21,7 +21,7 @@ public class VistaSessioNova extends JFrame {
     GridLayout myLayout;
     int numAtributsTot = 3;
 
-    public VistaSessioNova (String nomProj, VistaInicial vistaIni) {
+    public VistaSessioNova (String nomProj) {
         diferentsTipus = new ArrayList<String>();
         ArrayList<String> auxiliar = ControladorPresentacio.getTipus();
         for (int i = 0; i < auxiliar.size(); ++i) {
@@ -205,11 +205,7 @@ public class VistaSessioNova extends JFrame {
                 ArrayList<String> noms = new ArrayList<String>();
                 for (int i = 0; i < nomAtributs.size(); ++i) {
                     String act = nomAtributs.get(i).getText();
-                    if (act.contains(" ")) {
-                        ControladorPresentacio.obreVistaError("Els atributs no poden tenir espais. \nRevisa l'atribut " + (i+1));
-                        return;
-                    }
-                    if (act.equals("")) {
+                    if (act.replace(" ", "").equals("")) {
                         ControladorPresentacio.obreVistaError("Els atributs no poden estar buits. \nRevisa l'atribut " + (i+1));
                         return;
                     }
@@ -219,13 +215,14 @@ public class VistaSessioNova extends JFrame {
                     }
                     noms.add(act);
                 }
-                System.out.println();
+
                 ArrayList<String> tipuses = new ArrayList<String>();
                 for (int i = 0; i < tipusAtributs.size(); ++i) {
                     tipuses.add(tipusAtributs.get(i).getItemAt(tipusAtributs.get(i).getSelectedIndex()));
                 }
 
                 
+
             }
         });
     }    

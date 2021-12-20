@@ -333,14 +333,10 @@ public class VistaInicial extends JFrame {
                     }
                 }  
 
-                ControladorPresentacio.obreVistaSessioNova(nomProjecte.getText(), instancia);
-                setVisible(false);
+                new VistaSessioNova(nomProjecte.getText());
+                dispose();
             }
 
         });
-    }
-
-    void fesVisible() {
-        setVisible(true);
     }
 }
