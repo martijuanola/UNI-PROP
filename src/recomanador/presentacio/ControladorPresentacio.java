@@ -73,23 +73,21 @@ public class ControladorPresentacio {
 	}
 	
 	public static String getId() {
-		/*try {		
+		try {		
 			return domini.getActiveUserId();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 			return "ERROR";
-		}*/
-		return "32";
+		}
 	}
 	
 	public static String getNomProjecte() {
-		return "32";
-		/*try {		
+		try {		
 			return domini.getNomProjecte();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 			return "ERROR";
-		}*/
+		}
 	}
 	
 	public static void guardar() {
@@ -103,15 +101,15 @@ public class ControladorPresentacio {
 	}
 		
 	public static boolean isAdmin() {
-		/*
+		///*
 		try {		
 			return domini.isAdmin();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			return "ERROR";
+			return false;
 		}
 		//*/
-		return false;
+		//return false;
 	}
 	
 	public static void logOut() {
@@ -221,6 +219,7 @@ public class ControladorPresentacio {
 	{
 		try {
 			domini.setValoracio(id_item, getId(), rate);
+			new VistaError("You are a fucking GOD");
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 		}
