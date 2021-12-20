@@ -189,7 +189,7 @@ public class Item implements Comparable<Item>{
      * @throws     ItemIdNotValidException      posId is already defined or is an invalid column
      */
     public static void setId(int c) throws ItemIdNotValidException { //TODO: S'ha de ordenar el conjunt d'items quan es canvia l'id
-        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");    
+        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");   
         if (Item.id != -1 || !Item.nomAtribut.get(c).equalsIgnoreCase("id")) throw new ItemIdNotValidException(id);
         Item.id = c;
     }

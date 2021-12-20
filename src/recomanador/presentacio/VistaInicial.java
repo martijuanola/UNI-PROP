@@ -44,7 +44,10 @@ public class VistaInicial extends JFrame {
 
     ArrayList<String> projectesDisponibles;
 
+    VistaInicial instancia;
+
     public VistaInicial() {
+        instancia = this;
         itemsFile = "";
         ratingsFile = "";
 
@@ -222,7 +225,7 @@ public class VistaInicial extends JFrame {
             public void actionPerformed(ActionEvent e) { 
                 if (user.isSelected()) {
                     if (!StringOperations.esNombre(id.getText()) || id.getText().equals("")) {
-                        new VistaError("Identificador d'usuari en format incorrecte.");
+                        ControladorPresentacio.obreVistaError("Identificador d'usuari en format incorrecte.");
                         return;
                     }
                 }
@@ -231,7 +234,7 @@ public class VistaInicial extends JFrame {
                     ControladorPresentacio.carregarProjecte(preprocessat.getSelectedItem().toString());
                 }
                 catch (Exception e2) {
-                    new VistaError(e2.getMessage());
+                    ControladorPresentacio.obreVistaError(e2.getMessage());
                     return;
                 }
 
@@ -240,7 +243,7 @@ public class VistaInicial extends JFrame {
                         ControladorPresentacio.logInUser(Integer.parseInt(id.getText()));
                     }
                     catch (Exception e2) {
-                        new VistaError(e2.getMessage());
+                        ControladorPresentacio.obreVistaError(e2.getMessage());
                         return;
                     }
                 }
@@ -249,7 +252,7 @@ public class VistaInicial extends JFrame {
                         ControladorPresentacio.logInAdmin();
                     }
                     catch (Exception e2) {
-                        new VistaError(e2.getMessage());
+                        ControladorPresentacio.obreVistaError(e2.getMessage());
                         return;
                     }
                 }
@@ -263,28 +266,28 @@ public class VistaInicial extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (user.isSelected()) {
                     if (!StringOperations.esNombre(id.getText()) || id.getText().equals("")) {
-                        new VistaError("Identificador d'usuari en format incorrecte.");
+                        ControladorPresentacio.obreVistaError("Identificador d'usuari en format incorrecte.");
                         return;
                     }
                 }
 
                 if (nomProjecte.getText().equals("") || nomProjecte.getText().equals("Nom nou projecte")) {
-                    new VistaError("Nom del Projecte buit.");
+                    ControladorPresentacio.obreVistaError("Nom del Projecte buit.");
                     return;
                 }
                 for (int i = 0; i < projectesDisponibles.size(); ++i) {
                     if (nomProjecte.getText().equals(projectesDisponibles.get(i))) {
-                        new VistaError("Projecte ja existeix.");
+                        ControladorPresentacio.obreVistaError("Projecte ja existeix.");
                         return;
                     }
                 }
 
                 try {
+                    System.out.println(nomProjecte.getText() + " " + itemsFile + " " + ratingsFile);
                     ControladorPresentacio.carregarProjecteNou(nomProjecte.getText(), itemsFile, ratingsFile);
                 }
                 catch (Exception e2) {
-                    System.out.println("ERORRR");
-                    new VistaError(e2.getMessage());
+                    ControladorPresentacio.obreVistaError(e2.getMessage());
                     return;
                 }
 
@@ -293,7 +296,7 @@ public class VistaInicial extends JFrame {
                         ControladorPresentacio.logInUser(Integer.parseInt(id.getText()));
                     }
                     catch (Exception e1) {
-                        new VistaError(e1.getMessage());
+                        ControladorPresentacio.obreVistaError(e1.getMessage());
                         return;
                     }
                 }
@@ -302,7 +305,7 @@ public class VistaInicial extends JFrame {
                         ControladorPresentacio.logInAdmin();
                     }
                     catch (Exception e1) {
-                        new VistaError(e1.getMessage());
+                        ControladorPresentacio.obreVistaError(e1.getMessage());
                         return;
                     }
                 }
@@ -315,16 +318,22 @@ public class VistaInicial extends JFrame {
         SessioNova.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (user.isSelected()) {
-                    new VistaError("Només un administrador pot crear una sessió nova");
+                    ControladorPresentacio.obreVistaError("Només un administrador pot crear una sessió nova");
                     return;
                 }
 
                 if (nomProjecte.getText().equals("") || nomProjecte.getText().equals("Nom nou projecte")) {
-                    new VistaError("Nom del Projecte buit.");
+                    ControladorPresentacio.obreVistaError("Nom del Projecte buit.");
                     return;
-                }          
+                }
+                for (int i = 0; i < projectesDisponibles.size(); ++i) {
+                    if (nomProjecte.getText().equals(projectesDisponibles.get(i))) {
+                        ControladorPresentacio.obreVistaError("Projecte ja existeix.");
+                        return;
+                    }
+                }  
 
-                ControladorPresentacio.obreVistaSessioNova(nomProjecte.getText());
+                new VistaSessioNova(nomProjecte.getText());
                 dispose();
             }
 

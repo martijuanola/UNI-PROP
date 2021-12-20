@@ -21,23 +21,23 @@ public class ControladorDomini {
     /** Contains the only instance of the class **/
     private static ControladorDomini inst;
     /** Instance of the Algorithm Subcontroler **/
-    private static ControladorDominiAlgorisme cda;
+    private ControladorDominiAlgorisme cda;
     /** Instance of the Persistence Controler **/
-    private static ControladorPersistencia cp;
+    private ControladorPersistencia cp;
 
     /* Data of the execution */
     /** Set of Items of the execution **/
-    private static ConjuntItems ci;
+    private ConjuntItems ci;
     /** Set of Users of the execution **/
-    private static ConjuntUsuaris cu;
+    private ConjuntUsuaris cu;
     /** Set of Recommendations of the execution **/
-    private static ConjuntRecomanacions cr;
+    private ConjuntRecomanacions cr;
     
     /* Atributes */
     /** Id of the user/actor of the application **/
-    private static int id;
+    private int id;
     /** True if active user/actor has admin privileges **/
-    private static boolean admin;
+    private boolean admin;
 
     /**
      * Returs the only instance of the class, and if it's not created, it creates it.
@@ -53,7 +53,7 @@ public class ControladorDomini {
     /*----- CONSTANTS -----*/
     
     /** Value that represents null in the atribute id **/
-    public static final int NULL_ID = -1;
+    public final int NULL_ID = -1;
 
 
     /*----- CONSTRUCTORS -----*/
@@ -171,18 +171,14 @@ public class ControladorDomini {
 
         ArrayList<String> estat = cp.carregarEstat();
 
-        ControladorDominiAlgorisme.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
-        ControladorDominiAlgorisme.set_Q(Integer.parseInt(estat.get(1)));
-        ControladorDominiAlgorisme.set_k(Integer.parseInt(estat.get(2)));
+        cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
+        cda.set_Q(Integer.parseInt(estat.get(1)));
+        cda.set_k(Integer.parseInt(estat.get(2)));
 
         ci.setNomCjItems(estat.get(3));
 
         try{
-            Item.setId(Integer.parseInt(estat.get(4)));
             Item.setNomA(Integer.parseInt(estat.get(5)));
-        }
-        catch(ItemIdNotValidException e) {
-            throw new DataNotValidException(estat.get(4),"El valor guardat de POS ITEM ID no és correcte!");
         }
         catch(ItemStaticValuesAlreadyInitializedException e) {
             System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
@@ -295,9 +291,9 @@ public class ControladorDomini {
 
         //Valors
         ArrayList<String> vals = new ArrayList<String>();
-        vals.add(String.valueOf(ControladorDominiAlgorisme.get_algorisme()));
-        vals.add(String.valueOf(ControladorDominiAlgorisme.get_Q()));
-        vals.add(String.valueOf(ControladorDominiAlgorisme.get_k()));
+        vals.add(String.valueOf(cda.get_algorisme()));
+        vals.add(String.valueOf(cda.get_Q()));
+        vals.add(String.valueOf(cda.get_k()));
         vals.add(String.valueOf(ConjuntItems.getNomCjItems()));
         vals.add(String.valueOf(String.valueOf(Item.getPosId())));
         vals.add(String.valueOf(String.valueOf(Item.getPosNomA())));
@@ -326,11 +322,11 @@ public class ControladorDomini {
      * @throws     FolderNotValidException  Thrown if there are problems when getting the information from the Unknown and Known files.
      */
     ArrayList<String> runTest() throws FolderNotValidException, DataNotValidException {
-        int auxQ = ControladorDominiAlgorisme.get_Q(); //per no perdre el valor
+        int auxQ = cda.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
 
         try {
-            ControladorDominiAlgorisme.set_Q(ci.size()/2);
+            cda.set_Q(ci.size()/2);
         }
         catch (DataNotValidException e) {
             throw new DataNotValidException(ci.size()/2,"Q needs to be greater than 0(There are no items)");
@@ -422,7 +418,7 @@ public class ControladorDomini {
         System.out.println("IDCG TOTAL: " + IDCG);
         System.out.println("NORMALIZED DCG : " + DCG/IDCG);
 
-        ControladorDominiAlgorisme.set_Q(auxQ); //reset de la Q anterior
+        cda.set_Q(auxQ); //reset de la Q anterior
 
         ArrayList<String> result = new ArrayList<String>();
         result.add(String.valueOf(DCG));
@@ -710,7 +706,7 @@ public class ControladorDomini {
      */
     public String getK() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        return String.valueOf(ControladorDominiAlgorisme.get_k());
+        return String.valueOf(cda.get_k());
     }
 
     /**
@@ -722,7 +718,7 @@ public class ControladorDomini {
      */
     public String getQ() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        return String.valueOf(ControladorDominiAlgorisme.get_Q());
+        return String.valueOf(cda.get_Q());
     }
 
     /**
@@ -737,7 +733,7 @@ public class ControladorDomini {
      */
     public String getAlgorisme() throws PrivilegesException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        return String.valueOf(ControladorDominiAlgorisme.get_algorisme());
+        return String.valueOf(cda.get_algorisme());
     }
 
     /**
@@ -750,7 +746,7 @@ public class ControladorDomini {
      */
     public void setK(String k) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ControladorDominiAlgorisme.set_k(Integer.parseInt(k));
+        cda.set_k(Integer.parseInt(k));
     }
 
     /**
@@ -763,7 +759,7 @@ public class ControladorDomini {
      */
     public void setQ(String q) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ControladorDominiAlgorisme.set_Q(Integer.parseInt(q));
+        cda.set_Q(Integer.parseInt(q));
     }
 
     /**
@@ -779,7 +775,7 @@ public class ControladorDomini {
      */
     public void setAlgorisme(String a) throws PrivilegesException, DataNotValidException {
         if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
-        ControladorDominiAlgorisme.seleccionar_algorisme(Integer.parseInt(a));
+        cda.seleccionar_algorisme(Integer.parseInt(a));
     }
 
     /*----- USUARIS -----*/
@@ -865,7 +861,7 @@ public class ControladorDomini {
     private void resetData() {
         cp.sortirDelProjecte();
         Item.resetStatics();
-        ControladorDominiAlgorisme.resetStatics();
+        cda.resetValues();
         ci = null;
         cr = null;
         cu = null;

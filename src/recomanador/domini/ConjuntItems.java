@@ -174,11 +174,9 @@ public class ConjuntItems extends ArrayList<Item> {
     public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
         ArrayList<ArrayList<ArrayList<String>>> result = new ArrayList<ArrayList<ArrayList<String>>>();
         ArrayList<ArrayList<String>> aux = new ArrayList<ArrayList<String>>();
-        ArrayList<String> header = Item.getCapçalera();
 
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
             ArrayList<String> a2 = new ArrayList<String>();
-            a2.add(header.get(i));
             aux.add(a2);
         }
         result.add(aux);
