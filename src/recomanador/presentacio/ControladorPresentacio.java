@@ -81,12 +81,13 @@ public class ControladorPresentacio {
 	}
 	
 	public static String getNomProjecte() {
-		try {		
+		return "32";
+		/*try {		
 			return domini.getNomProjecte();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 			return "ERROR";
-		}
+		}*/
 	}
 		
 	public static boolean isAdmin() {

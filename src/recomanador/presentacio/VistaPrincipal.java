@@ -104,10 +104,6 @@ public class VistaPrincipal extends JFrame {
 			if (cp.isAdmin()) menu_esquerra.add(info_total_usuaris);
 			else menu_esquerra.add(info_usuari);
 			menu_esquerra.add(info_items);
-			if (cp.isAdmin()) {
-				menu_esquerra.add(modificar_algorisme);
-				menu_esquerra.add(test_algorisme);
-			}
 			
 			//SEPARACIO
 			//menu_esquerra.add(new Box.createVerticalStrut(30));
@@ -133,19 +129,24 @@ public class VistaPrincipal extends JFrame {
 		
 			//LAYER DRETA
 			dreta = new JPanel();
-			
-			recomana = new JButton("RECOMANA");
-			//recomana.setBackground(Color.RED);
-			//recomana.setForeground(Color.BLACK);
-			dreta.add(recomana);
-			
-			//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
-			recs = new JPanel();	
-			
-			recsScrollable = new JScrollPane(recs);
-			recs.setAutoscrolls(true);
-			dreta.add(recsScrollable);
-			
+			dreta.setLayout(new GridLayout(2, 1, 0, 10));
+			if (cp.isAdmin()) {
+				dreta.add(modificar_algorisme);
+				dreta.add(test_algorisme);
+			}
+			else
+			{
+				recomana = new JButton("RECOMANA");
+				//recomana.setBackground(Color.RED);
+				//recomana.setForeground(Color.BLACK);
+				dreta.add(recomana);
+				
+				//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
+				recs = new JPanel();
+				recsScrollable = new JScrollPane(recs);
+				recs.setAutoscrolls(true);
+				dreta.add(recsScrollable);
+			}
 		
 		//LAYER GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
