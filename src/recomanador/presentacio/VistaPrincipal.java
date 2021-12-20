@@ -60,6 +60,7 @@ public class VistaPrincipal extends JFrame {
     /*----- DADES -----*/
     ArrayList<String> id_recomanacions;
     ArrayList<String> nom_recomanacions;
+    JComboBox<String> cb;
     String[] options = {"Sense valoració", "0.5", "1.0", 
 								"1.5", "2.0", "2.5", "3.0",
 								"3.5", "4.0", "4.5", "5.0"};
@@ -232,6 +233,16 @@ public class VistaPrincipal extends JFrame {
 					id_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							cp.obreVistaInformacioItem(stringedId);
+						}
+					});
+					
+					rate.get(k).addItemListener(new ItemListener() {
+						public void itemStateChanged(ItemEvent e) {
+							if (e.getStateChange() == ItemEvent.SELECTED)
+								cb = (JComboBox<String>)e.getSource();
+								String rate_value = cb.getSelectedItem().toString();
+								if (rate_value == "Sense valoració") rate_value = "0";
+								cp.valorar(stringedId, rate_value);
 						}
 					});
 				}
