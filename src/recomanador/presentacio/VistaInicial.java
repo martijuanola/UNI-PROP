@@ -44,10 +44,8 @@ public class VistaInicial extends JFrame {
 
     ArrayList<String> projectesDisponibles;
 
-    VistaInicial instancia;
 
     public VistaInicial() {
-        instancia = this;
         itemsFile = "";
         ratingsFile = "";
 

@@ -21,7 +21,10 @@ public class VistaSessioNova extends JFrame {
     GridLayout myLayout;
     int numAtributsTot = 3;
 
+    VistaSessioNova instancia;
+
     public VistaSessioNova (String nomProj) {
+        instancia = this;
         diferentsTipus = new ArrayList<String>();
         ArrayList<String> auxiliar = ControladorPresentacio.getTipus();
         for (int i = 0; i < auxiliar.size(); ++i) {
@@ -170,6 +173,7 @@ public class VistaSessioNova extends JFrame {
 
                 JLabel escarpa = new JLabel("");
                 JButton elim19 = new JButton("Eliminar");
+                elim19.setForeground(Color.WHITE);
                 elim19.setBackground(Color.RED);
                 elim19.setContentAreaFilled(false);
                 elim19.setOpaque(true);
@@ -221,9 +225,13 @@ public class VistaSessioNova extends JFrame {
                     tipuses.add(tipusAtributs.get(i).getItemAt(tipusAtributs.get(i).getSelectedIndex()));
                 }
 
-                
-
+                new VistaAllItems(noms, tipuses, instancia);
+                setVisible(false);
             }
         });
     }    
+
+    public void ItemsAcabats() {
+        setVisible(true);
+    }
 }
