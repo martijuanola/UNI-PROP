@@ -63,13 +63,33 @@ public class ControladorPresentacio {
 				String nom = item.get(Integer.parseInt(domini.getPosNomItem())).get(0);
 				temp.get(i).add(nom);
 			}
-			
+			System.out.print("--------------------");
+			System.out.print("--- Provant algo ---");
+			System.out.print("--------------------");
 			//La diferència de conjunts serà els que es mostrarà
 			return temp;
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
+			System.out.print("--------------------");
+			System.out.print("--- Error  Error ---");
+			System.out.print("--------------------");
 			return null;
 		}
+	}
+	
+	public static ArrayList<ArrayList<String>> executarAlgorisme3()
+	{
+		ArrayList<ArrayList<String>> x = new ArrayList<ArrayList<String>>();
+		
+		x.add(new ArrayList<String>());
+		x.get(0).add("123");
+		x.get(0).add("Regreso al futuro");
+		
+		x.add(new ArrayList<String>());
+		x.get(1).add("80085");
+		x.get(1).add("Nananan bat-man");
+		
+		return x;
 	}
 	
 	public static String getId() {
@@ -228,7 +248,6 @@ public class ControladorPresentacio {
 	{
 		try {
 			domini.setValoracio(id_item, getId(), rate);
-			new VistaError("You are a fucking GOD");
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 		}
