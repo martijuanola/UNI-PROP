@@ -214,7 +214,7 @@ public class VistaPrincipal extends JFrame {
 				for (int i = 0; i < nb; ++i)
 				{
 					id_item.add(new JLabel(recomanacions.get(i).get(0)));
-					nom_item.add(new JLabel(recomanacions.get(i).get(0)));
+					nom_item.add(new JLabel(recomanacions.get(i).get(1)));
 					rate.add(new JComboBox(options));
 					
 					recs.add(id_item.get(id_item.size()-1));

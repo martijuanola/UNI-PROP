@@ -496,7 +496,7 @@ public class ControladorDomini {
      * @return     The value
      */
     public String getPosNomItem() {
-        return String.valueOf(Item.getPosId());
+        return String.valueOf(Item.getPosNomA());
     }
 
     /**
