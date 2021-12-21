@@ -111,11 +111,19 @@ public class VistaUsuari extends JFrame {
 		text_recs_vals = new JLabel("Ítems recomanats i valorats:");
 		
         panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
-        panel.setLayout(new GridLayout(3 + nb, 1));
+        panel.setLayout(new GridLayout(4 + nb, 1));
         
 		panel.add(tornar_enrere);
 		panel.add(text_inicial);
 		panel.add(text_recs_vals);
+		
+		JPanel header = new JPanel();
+		header.setLayout(new GridLayout(1, 4));
+		header.add(new JLabel("id"));
+		header.add(new JLabel("nom"));
+		header.add(new JLabel("valoració"));
+		header.add(new JLabel(""));
+		panel.add(header);
 		
 		for (int i = 0; i < nb; ++i)
 		{
@@ -132,6 +140,37 @@ public class VistaUsuari extends JFrame {
 			item_valorat.add(nomLab);
 			item_valorat.add(rate);
 			item_valorat.add(eliminar);
+			
+			panel.add(item_valorat);
+			
+			String tempId = id_items.get(i);
+			
+			idLab.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					cp.obreVistaInformacioItem(tempId);
+				}
+			});
+			
+			nomLab.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					cp.obreVistaInformacioItem(tempId);
+				}
+			});
+			
+			rate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent  e) {
+					String rate_value = rate.getSelectedItem().toString();
+					if (rate_value == "Sense valoració") rate_value = "0";
+					cp.valorar(tempId, rate_value);
+				}
+			});
+			
+			eliminar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new VistaError("Fer que s'elimini la recomanacio");
+				}
+			});
+			
 		}
 		
 		JScrollPane scrollFrame = new JScrollPane(panel);
