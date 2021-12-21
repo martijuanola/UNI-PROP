@@ -9,6 +9,10 @@ import java.util.Scanner;
 import org.junit.*;
 import static org.junit.Assert.*;
 
+/**
+ * Junit for the class ControladorLoad
+ * @author     Pol
+ */
 public class TestControladorLoad {
 
 	private ArrayList<ArrayList<String>> solucio_read() {
