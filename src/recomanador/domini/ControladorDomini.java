@@ -618,10 +618,8 @@ public class ControladorDomini {
      *
      * @throws     DataNotValidException                        Problems with the initialization of the static values of Item
      * @throws     ItemTypeNotValidException                    Some type assignation is not possible.
-     * @throws     PrivilegesException                          You need to be an admin to perform this functionallity.
      */
-    public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemTypeNotValidException, DataNotValidException {
-        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
+    public void setTipus(ArrayList<String> tipusS) throws ItemTypeNotValidException, DataNotValidException {
         ArrayList<tipus> tipus = new ArrayList<tipus>();
         for(int i = 0; i < tipusS.size(); i++) tipus.add(StringOperations.stringToType(tipusS.get(i)));
         Item.setTipusArray(tipus);
