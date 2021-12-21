@@ -131,6 +131,59 @@ public class ControladorPresentacio {
 		//*/
 		//return false;
 	}
+	public static String getAlgorisme() {
+		try {		
+			return domini.getAlgorisme();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "0";
+		}
+	}
+	
+	public static String getQ() {
+		try {		
+			return domini.getQ();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "0";
+		}
+	}
+	
+	public static String getK() {
+		try {		
+			return domini.getK();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "0";
+		}
+	}
+	
+	public static void setAlgorisme(String alg) {
+		try
+		{
+			domini.setAlgorisme(alg);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void setQ(String q) {
+		try
+		{
+			domini.setAlgorisme(q);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void setK(String k) {
+		try
+		{
+			domini.setAlgorisme(k);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
 	
 	public static void logOut() {
 		domini.logout();
@@ -149,15 +202,6 @@ public class ControladorPresentacio {
 		try
 		{
 			domini.login(Integer.parseInt(id));
-		} catch(Exception e) {
-			new VistaError(e.getMessage());
-		}
-	}
-	
-	public static void setAlgorisme(String alg) {
-		try
-		{
-			domini.setAlgorisme(alg);
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 		}
