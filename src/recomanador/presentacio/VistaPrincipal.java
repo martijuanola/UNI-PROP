@@ -267,7 +267,7 @@ public class VistaPrincipal extends JFrame {
         info_usuari.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new VistaUsuari(vp);
+				new VistaUsuari(vp, cp.getId());
 			}
         });
         

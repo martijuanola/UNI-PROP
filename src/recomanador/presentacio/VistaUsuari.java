@@ -23,6 +23,7 @@ public class VistaUsuari extends JFrame {
     
     
     /*----- DADES -----*/
+    String USER_ID;
     ArrayList<String> id_items;
     ArrayList<String> nom_items;
     ArrayList<Integer> option_idx;
@@ -32,9 +33,11 @@ public class VistaUsuari extends JFrame {
 								"3.5", "4.0", "4.5", "5.0"};
     
     /*----- FUNCIONS -----*/
-    public VistaUsuari(VistaPrincipal vp) {
+    public VistaUsuari(VistaPrincipal vp, String usuari_id) {
 		setMinimumSize(new Dimension(550, 250));
         setSize(new Dimension(1000, 900));
+		
+		USER_ID = usuari_id;
 		
 		inicialitza_vista();
 		
@@ -77,8 +80,8 @@ public class VistaUsuari extends JFrame {
 		
 		try
 		{
-			all_recs = cp.getRecomanacions();
-			all_vals = cp.getValoracions();
+			all_recs = cp.getRecomanacions(USER_ID);
+			all_vals = cp.getValoracions(USER_ID);
 		}
 		catch (Exception e)
 		{
@@ -107,7 +110,7 @@ public class VistaUsuari extends JFrame {
 		int nb = id_items.size();
         
 		tornar_enrere = new JButton("Tornar enrere");
-		text_inicial = new JLabel("Informació Usuari amb id " + cp.getId());
+		text_inicial = new JLabel("Informació Usuari amb id " + USER_ID);
 		text_recs_vals = new JLabel("Ítems recomanats i valorats:");
 		
         panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
@@ -161,14 +164,14 @@ public class VistaUsuari extends JFrame {
 				public void actionPerformed(ActionEvent  e) {
 					String rate_value = rate.getSelectedItem().toString();
 					if (rate_value == "Sense valoració")
-						cp.eliminarValoracio(cp.getId(), tempId);
+						cp.eliminarValoracio(USER_ID, tempId);
 					else cp.valorar(tempId, rate_value);
 				}
 			});
 			
 			eliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					cp.eliminarRecomanacio(cp.getId(), tempId);
+					cp.eliminarRecomanacio(USER_ID, tempId);
 					panel.remove(item_valorat);
 					setVisible(true);
 				}
