@@ -132,21 +132,29 @@ public class CollaborativeFiltering {
                 }
 
             }
+
+            //PROVA
+            ArrayList<ConjuntRecomanacions> crs = new ArrayList<ConjuntRecomanacions>();
+            for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
+                crs.add(valoracions.getValoracions(usuaris.get(idx_usuari).getId()));
+            }
             
             boolean has_changed = true;
-            
+            int count = 0;
             while (has_changed){
+                System.out.println(count + " ");
+                count++;
                 has_changed = false;
-
+                System.out.println("A");
                 for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {                
 
                     int min_centroid = 0;
-                    float min_distance = distance(idx_usuari, 0);
+                    float min_distance = distance(crs.get(idx_usuari), 0);
                 
                     float dist_aux;
                     for(int centroid = 1; centroid < K; ++centroid) {
                         
-                        dist_aux = distance(idx_usuari,centroid);
+                        dist_aux = distance(crs.get(idx_usuari),centroid);
                         
                         if (dist_aux < min_distance) {
                             min_distance = dist_aux;
@@ -159,13 +167,12 @@ public class CollaborativeFiltering {
                         closest_centroid.put(idx_usuari, min_centroid);
                     }
                 }
-
+                System.out.println("B");
                 if(has_changed) {
                     for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                         int centroid = closest_centroid.get(idx_usuari);
                         
-                        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
-                        //~ System.out.println("loaded " + valoracionsUser.size() + " ratings");
+                        ConjuntRecomanacions valoracionsUser = crs.get(idx_usuari);//l'array esta ordenat com usuaris
 
                         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
                             Recomanacio rec = valoracionsUser.get(idx_rec);
@@ -180,7 +187,7 @@ public class CollaborativeFiltering {
                         }
 
                     }
-
+                    System.out.println("C");
                     for (int centroid = 0; centroid < K; ++centroid) {
                         for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
 
@@ -293,6 +300,27 @@ public class CollaborativeFiltering {
         }
         Collections.sort(items_estimats);
         return items_estimats;
+    }
+
+    private float distance(ConjuntRecomanacions valoracionsUser, int centroid) {
+        //System.out.println("calculating the distance between " + idx_usuari + " and centroid " + centroid);
+        
+        float distance = 0;
+
+        //ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
+
+        for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
+            Recomanacio rec = valoracionsUser.get(idx_rec);
+            Item item = rec.getItem();
+            if (rec.recomanacioValorada()) {
+                float distance_add = rec.getVal()-centroids[centroid].valoracio.get(item); 
+                distance += distance_add*distance_add;
+            }
+        }
+        
+        //~ System.out.println("distance = " + Math.sqrt(distance));
+        
+        return (float) Math.sqrt(distance);
     }
 
     /**
