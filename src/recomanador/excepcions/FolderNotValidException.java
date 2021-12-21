@@ -3,15 +3,15 @@ package src.recomanador.excepcions;
 public class FolderNotValidException extends Exception {
 
 	public FolderNotValidException() {
-		super("You are not in a valid folder to save the data.");
+		super("No estàs en una carpeta vàlida per guardar dades.");
 	}
 	
 	public FolderNotValidException(String s) {
-		super("The folder named " + s + " is not a valid one.");
+		super("La carpeta " + s + " no és vàlida.");
 	}
 	
 	public FolderNotValidException(String s, String f) {
-		super("The folder named " + s + " does not contain the file " + f + ", or it's not valid.");
+		super("La carpeta " + s + " no conté el fitxer " + f + " o no és vàlida.");
 	}
 
 	public FolderNotValidException(String s, boolean b) {
@@ -19,6 +19,6 @@ public class FolderNotValidException extends Exception {
 	}
 	
 	public FolderNotValidException(boolean b) {
-		super("Something went wrong while saving the file.");
+		super("Alguna cosa ha anat malament quan es guardava el fitxer.");
 	}
 }

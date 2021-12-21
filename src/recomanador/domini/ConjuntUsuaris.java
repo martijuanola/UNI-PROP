@@ -126,7 +126,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
                 prev = newID;
             }
             catch(NumberFormatException e) {
-                throw new DataNotValidException(raw.get(i).get(0),"User ID not valid. Needs to be an integer.");
+                throw new DataNotValidException(raw.get(i).get(0),"Usuari ID no vàlid. Ha de ser un int.");
             }
             catch(IndexOutOfBoundsException e) {
                 throw new DataNotValidException(i,"Error amb l'input raw de ConjuntsUsuaris a l'iteració: ");
@@ -137,7 +137,6 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
 
     /*----- ALTRES -----*/
 
-    //hauria de ser privat però per testejar l'he posat public
     /**
      * Returns de index of the element with id = <i>id</i>, or if it doesn't exist,
      *  the position where it should be added. It uses a binary search.
@@ -146,7 +145,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      *
      * @return     The index where the user should be
      */
-    public int cercaBinaria(int id) { 
+    private int cercaBinaria(int id) { 
         int first = 0;
         int last = this.size()-1;
         

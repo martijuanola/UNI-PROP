@@ -43,7 +43,7 @@ public class ConjuntItems extends ArrayList<Item> {
         if (Item.getCapçalera() == null || Item.getPesos() == null || Item.getPosId() == -1
                 || Item.getTipusArray() == null)
             throw new ItemStaticValuesNotInitializedException (
-                    "To create an empty \"ConjuntItems\" you first have to initialize the Item static attributes.");
+                    "Per crear un \"ConjuntItems\" buit primer has d'inicialitzar els atributs estàtics d'Item.");
 
         inicialitzarMinMax();
     }
@@ -72,7 +72,7 @@ public class ConjuntItems extends ArrayList<Item> {
             ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException,
             ItemIdNotValidException, ItemStaticValuesNotInitializedException,
             ItemNewAtributesNotValidException, DataNotValidException {
-        //Inicialitzar tots els valors estàtics d'item i els max i min Atributs
+        //Inicialitzar tots els valors estàtics d'item i els max i min per defecte d'Atributs
         Item.inicialitzarStaticsDefault(items.get(0));
         inicialitzarMinMax();
 
@@ -84,8 +84,12 @@ public class ConjuntItems extends ArrayList<Item> {
             Item it = new Item(str);
             add(it);//Afegeix ordenat
         }
+
         //S'assignen els tipus de cada columna
         detectarTipusAtributs();
+
+        //calcular maxims i minims
+        for (int i = 0; i < Item.getNumAtributs(); ++i) computeMinMaxAtribut(i);
     }
 
     /**
@@ -128,7 +132,6 @@ public class ConjuntItems extends ArrayList<Item> {
             Item it = new Item(str);
             super.add(it);
         }
-        Collections.sort(this); //TODO: NO ÉS NECESSARI PERO EL DRIVER TÉ DADES DESORDENADES
     }
 
     /*----- STATICS -----*/
@@ -199,34 +202,31 @@ public class ConjuntItems extends ArrayList<Item> {
     /*----- SETTERS -----*/
 
 
-    //TODO: setMinAtributs hauria de ser private
     /**
      * Sets the minimum attributes to the parameter array
      * @param minAtributs2 Must be an array with the minimum values in the set and with size equals to the number of attributes
      */
-    public void setMinAtributs(ArrayList<Float> minAtributs2) {
+    private void setMinAtributs(ArrayList<Float> minAtributs2) {
         this.minAtributs = minAtributs2;
     }
 
-    //TODO: setMaxAtributs hauria de ser private
     /**
      * Sets the maximum attributes to the parameter array
      * @param maxAtributs2 Must be an array with the maximum values in the set and with size equals to the number of attributes
      */
-    public void setMaxAtributs(ArrayList<Float> maxAtributs2) {
+    private void setMaxAtributs(ArrayList<Float> maxAtributs2) {
         this.maxAtributs = maxAtributs2;
     }
 
     /*----- CHECKERS -----*/
 
-    //TODO: tipusCorrecteColumna hauria de ser private
     /**
      * Checks if the column "columna" could be treated as a type t
      * @param columna int column
      * @param t type which will be checked
      * @return boolean, if true it can be treated as type t, if false the column cannot be treated as type t
      */
-    public boolean tipusCorrecteColumna(int columna, tipus t) {
+    private boolean tipusCorrecteColumna(int columna, tipus t) {
         if (t == tipus.S || t == tipus.N)
             return true;
         boolean empty = true;
@@ -261,13 +261,12 @@ public class ConjuntItems extends ArrayList<Item> {
         return res > -1;
     }
 
-    //TODO: checkMaxMin hauria de ser private
     /**
      * Checks if an item has bigger of lower attributes than the current max attributes and min attributes, respectively
      * @param it Item that is going to be checked
      * @throws ConjuntItemsAtributeNotInitializedException     If ther's one non-initialized atribute in the Item it 
      */
-    public void checkMaxMin(Item it) throws ConjuntItemsAtributeNotInitializedException {
+    private void checkMaxMin(Item it) throws ConjuntItemsAtributeNotInitializedException {
         if (maxAtributs == null || minAtributs == null) {
             throw new ConjuntItemsAtributeNotInitializedException();
         }
@@ -300,7 +299,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public void eliminarItem(int id) throws ItemNotFoundException, ItemStaticValuesNotInitializedException {
         int pos = binarySearchItem(this, id, 0, size() - 1);
         if (pos < 0)
-            throw new ItemNotFoundException("Item with id " + id + " does not exist");
+            throw new ItemNotFoundException("Item amb id " + id + " no existeix.");
 
         Item it = get(pos);
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
@@ -343,12 +342,10 @@ public class ConjuntItems extends ArrayList<Item> {
 
     /*----- COMPUTATIONS -----*/
 
-    //TODO: inicialitzarMinMax hauria de ser private
-
     /**
      * Initializes de max and min values for every atribute with a default value.
      */
-    public void inicialitzarMinMax() {
+    private void inicialitzarMinMax() {
         maxAtributs = new ArrayList<Float>();
         minAtributs = new ArrayList<Float>();
         for (int i = 0; i < Item.getNumAtributs(); ++i) {
@@ -365,7 +362,7 @@ public class ConjuntItems extends ArrayList<Item> {
     public void computeMinMaxAtribut(int col) throws ItemStaticValuesNotInitializedException {
         if (Item.getTipusArray() == null)
             throw new ItemStaticValuesNotInitializedException(
-                    "Static values of Item must be initilized before calculating the maximums and minimums");
+                    "Els valors estàtics d'Item han d'estar inicialitzats abans de calculars els màxims i mínims d'atributs.");
         tipus t = Item.getTipusArray().get(col);
         String sMin = "", sMax = "";
 

@@ -161,7 +161,23 @@ public class ControladorDominiAlgorisme {
      *              
      * @throws     UserNotFoundException if the id specified is not valid
      */
-    public ArrayList<ItemValoracioEstimada> run_algorithm(int user_ID, ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) throws UserNotFoundException {
+    public void setData(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
+        colFilt.setData(items, usuaris, valoracions);
+        BasedFilt.setData(items, usuaris, valoracions);
+        HybFilt.setData(items, usuaris, valoracions);
+    }
+
+    /**
+     *  Runs the selected recommendation algorithm, without updating the values.
+     *
+     * @param       user_ID       user whose recommendations will be generated
+     * 
+     * @return     A sorted ArrayList of Q ItemValoracioEstimada, containing the items to be recommended and their estimated ratings.
+     *              How these are generated depends on the attributes Q, K and ALGORISME_SELECCIONAT of the active ControladorDominiAlgorisme instance.
+     *              
+     * @throws     UserNotFoundException if the id specified is not valid
+     */
+    public ArrayList<ItemValoracioEstimada> run_algorithm(int user_ID) throws UserNotFoundException {
 
         ArrayList<ItemValoracioEstimada> recomanacions_alg = new ArrayList<ItemValoracioEstimada>();
 
@@ -169,20 +185,18 @@ public class ControladorDominiAlgorisme {
             //collaborative filtering
             case 0:
                 System.out.println("Executant Collaborative Filtering");
-                colFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = colFilt.collaborativeFiltering(Q, user_ID, K);
                 break;
                 
             //content based filtering
             case 1:
                 System.out.println("Executant Content-Based Filtering");
-                BasedFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = BasedFilt.contentBasedFiltering(Q, user_ID, K);
                 break;
+                
             //Hybrid approaches
             case 2:
                 System.out.println("Executant Hybrid Filtering");
-                HybFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = HybFilt.hybridFiltering(Q, user_ID, K);
                 break;
         }

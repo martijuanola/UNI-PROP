@@ -54,6 +54,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		q_param_lab = new JLabel("Paràmetre Q:");
 		
 		alg = new JComboBox(algorismes);
+		alg.setSelectedIndex(Integer.parseInt(cp.getAlgorisme()));
 		
 		int nb = Math.max(Integer.parseInt(cp.getQ()), Integer.parseInt(cp.getK()));
 		nb = Math.max(cp.getAllItems().size(), nb);
@@ -63,6 +64,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		k.setPaintTicks(true);
 		k.setPaintLabels(true);
 		k.setMajorTickSpacing(nb/5);
+		k.setValue(Integer.parseInt(cp.getK()));
 		
 		ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getK()), 1, nb, 1));
 		
@@ -70,6 +72,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		q.setPaintTicks(true);
 		q.setPaintLabels(true);
 		q.setMajorTickSpacing(nb/5);
+		q.setValue(Integer.parseInt(cp.getQ()));
 		
 		qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 1, nb, 1));
 		

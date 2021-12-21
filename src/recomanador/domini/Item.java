@@ -182,14 +182,13 @@ public class Item implements Comparable<Item>{
 
     /*----- STATICS SETTERS -----*/
 
-    //TODO: ha de ser protected
     /**
      * Sets a column that will act as id
      * @param c    The atribute that will reperesent the id of the items
      * @throws     ItemIdNotValidException      posId is already defined or is an invalid column
      */
-    public static void setId(int c) throws ItemIdNotValidException { //TODO: S'ha de ordenar el conjunt d'items quan es canvia l'id
-        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");   
+    protected static void setId(int c) throws ItemIdNotValidException {
+        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("La columna indicada no és correcte.");   
         if (Item.id != -1 || !Item.nomAtribut.get(c).equalsIgnoreCase("id")) throw new ItemIdNotValidException(id);
         Item.id = c;
     }
@@ -200,7 +199,7 @@ public class Item implements Comparable<Item>{
      * @throws ItemStaticValuesAlreadyInitializedException If the column of the name is already defined
      */
     public static void setNomA(int c) throws ItemStaticValuesAlreadyInitializedException {
-        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("The column is incorrect");
+        if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("La columna indicada no és correcte.");
         if (nomA != -1) throw new ItemStaticValuesAlreadyInitializedException();
         Item.nomA = c;
     }
@@ -212,9 +211,8 @@ public class Item implements Comparable<Item>{
      * @throws ItemWeightNotCorrectException if weights is outside the range (0 - 100)
      */
     public static void setPes(int a, float pes) throws ItemWeightNotCorrectException {
-        if (a < 0 || a >= Item.pesos.size()) throw new ArrayIndexOutOfBoundsException("index " + a + " out of bounds for array of size " + pesos.size());
-        if (pes < 0.0) throw new ItemWeightNotCorrectException("Weight smaller than 0");
-        else if (pes > 100.0) throw new ItemWeightNotCorrectException("Weight bigger than 100");
+        if (pes < 0.0) throw new ItemWeightNotCorrectException("Pes inferior a 0!");
+        else if (pes > 100.0) throw new ItemWeightNotCorrectException("Pes superior a 100!");
         
         Item.pesos.set(a, pes);
     }
@@ -229,7 +227,7 @@ public class Item implements Comparable<Item>{
      * @throws ItemStaticValuesAlreadyInitializedException  The static values are already initialized.
      */
     public static void setTipus(int columna, tipus t) throws ItemTypeNotValidException, ItemIdNotValidException, ItemStaticValuesAlreadyInitializedException {
-        if (Item.id == columna) throw new ItemTypeNotValidException("Cannot change the Item ID.");
+        if (Item.id == columna) throw new ItemTypeNotValidException("No es pot canviar l'ID d'un Item");
         if (t == tipus.I) setId(columna);
         else if (t == tipus.N) setNomA(columna);
 
@@ -242,8 +240,8 @@ public class Item implements Comparable<Item>{
      * @throws ItemWeightNotCorrectException if any weights is outside the range (0 - 100)
      */
     public static void setPesos(ArrayList<Float> p) throws ItemWeightNotCorrectException {
-        if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Weights array does not match items attributes size.");
-        for (int i = 0; i < Item.getNumAtributs(); ++i) if (p.get(i) > 100 || p.get(i) < 0) throw new ItemWeightNotCorrectException("Weight smaller than 0 or bigger than 100");
+        if (p.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("La llista de pesos no concorda amb el nombre d'atibuts.");
+        for (int i = 0; i < Item.getNumAtributs(); ++i) if (p.get(i) > 100 || p.get(i) < 0) throw new ItemWeightNotCorrectException("Els pesos han de ser entre 0 i 100.");
         
         Item.pesos = p;
     }
@@ -255,7 +253,7 @@ public class Item implements Comparable<Item>{
      * @throws     DataNotValidException            If the array given had problems with the ID position or NAM position.
      */
     public static void setTipusArray(ArrayList<tipus> a) throws DataNotValidException {
-        if (a.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("Types array does not match items attributes size.");
+        if (a.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("La llista de tipus d'atributs no concorda amb el nombre d'atibuts.");
         Item.tipusAtribut = a;
     }
 
@@ -345,7 +343,7 @@ public class Item implements Comparable<Item>{
                 found = true;
             }
         }
-        if (!found) throw new ItemTypeNotValidException("Items has no column named \"id\"");
+        if (!found) throw new ItemTypeNotValidException("No hi ha cap atribut d'Item amb el nom \"id\".");
     }
 
     /*----- ALTRES -----*/

@@ -6,11 +6,11 @@ package src.recomanador.excepcions;
 public class RatingNotValidException extends Exception {
 
 	public RatingNotValidException (String s) {
-		super("The value " + s + " is not valid as rating. Needs to be a float.");
+		super("El valor " + s + " no és un puntuació vàlida. Ha de ser un float.");
 	}
 
 	public RatingNotValidException (float f) {
-		super("The value " + f + " is not valid as rating. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
+		super("El valor " + f + " no és un puntuació vàlida. Ha de ser un float entre 0.0 i 5.0 amb la part decimal igual a .0 o a .5.");
 	}
 
 }
