@@ -33,6 +33,9 @@ public class VistaUsuari extends JFrame {
     
     /*----- FUNCIONS -----*/
     public VistaUsuari(VistaPrincipal vp) {
+		setMinimumSize(new Dimension(550, 250));
+        setSize(new Dimension(1000, 900));
+		
 		inicialitza_vista();
 		
 		tornar_enrere.addActionListener(new ActionListener() {
@@ -60,9 +63,6 @@ public class VistaUsuari extends JFrame {
 	
 	private void inicialitza_vista() {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
-        
-        setMinimumSize(new Dimension(550, 250));
-        setSize(new Dimension(1000, 900));
 
         panel = new JPanel();
         
@@ -160,14 +160,16 @@ public class VistaUsuari extends JFrame {
 			rate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent  e) {
 					String rate_value = rate.getSelectedItem().toString();
-					if (rate_value == "Sense valoració") rate_value = "0";
-					cp.valorar(tempId, rate_value);
+					if (rate_value == "Sense valoració")
+						cp.eliminarValoracio(cp.getId(), tempId);
+					else cp.valorar(tempId, rate_value);
 				}
 			});
 			
 			eliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new VistaError("Fer que s'elimini la recomanacio");
+					cp.eliminarRecomanacio(cp.getId(), tempId);
+					inicialitza_vista();
 				}
 			});
 			

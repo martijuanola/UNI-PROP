@@ -298,6 +298,24 @@ public class ControladorPresentacio {
         domini.setTipus(tipusS);
     }
     
+    public static void eliminarValoracio(String user_id, String item_id)
+    {
+		try{
+			domini.removeValoracio(item_id, user_id);
+		}catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void eliminarRecomanacio(String user_id, String item_id)
+    {
+		try{
+			domini.removeRecmonacio(item_id, user_id);
+		}catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+    
     public static void obreVistaItems() {
 		new VistaError("OBRE VISTA ALL ITEMS");
     }

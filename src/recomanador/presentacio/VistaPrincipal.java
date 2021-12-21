@@ -247,8 +247,9 @@ public class VistaPrincipal extends JFrame {
 						public void actionPerformed(ActionEvent  e) {
 							cb = (JComboBox<String>)e.getSource();
 							String rate_value = cb.getSelectedItem().toString();
-							if (rate_value == "Sense valoració") rate_value = "0";
-							cp.valorar(stringedId, rate_value);
+							if (rate_value == "Sense valoració") 
+								cp.eliminarValoracio(cp.getId(), stringedId);
+							else cp.valorar(stringedId, rate_value);
 						}
 					});
 				}
