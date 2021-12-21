@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.PrivilegesException;
 
 public class VistaAllItems extends JFrame {
@@ -48,7 +49,7 @@ public class VistaAllItems extends JFrame {
         }
 
         vs = vsn;
-        SessioNova = true;
+        SessioNova = false;
         na = nomAtributs;
         ta = tipusAtributs;
         crearVistaItems();
@@ -110,7 +111,7 @@ public class VistaAllItems extends JFrame {
             afegir.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e)
                 {
-                    System.out.println("obre afegir items");
+                    new VistaAfegirItem(na, ta, instancia);
                 }
             });
             botons.add(afegir);
@@ -139,8 +140,9 @@ public class VistaAllItems extends JFrame {
 
 
         JPanel sota = new JPanel();
-        sota.setLayout(new GridLayout(ids.size()+1, 5)); //+1 per posar id i nom
-        
+        if (admin) sota.setLayout(new GridLayout(ids.size()+1, 5)); //tipus id info modificar eliminar
+        else sota.setLayout(new GridLayout(ids.size()+1, 3)); //-2 per treure modificar i eliminar
+         
         JPanel f1 = new JPanel();
         f1.setLayout(new FlowLayout());
         f1.add(new JLabel("Nom"));
@@ -152,8 +154,10 @@ public class VistaAllItems extends JFrame {
         sota.add(f2);
 
         sota.add(new JLabel(""));
-        sota.add(new JLabel(""));
-        sota.add(new JLabel(""));
+        if (admin) {
+            sota.add(new JLabel(""));
+            sota.add(new JLabel(""));
+        }
 
         for (int i = 0; i < ids.size(); ++i) {
             JPanel f3 = new JPanel();
@@ -173,46 +177,55 @@ public class VistaAllItems extends JFrame {
                 public void actionPerformed(ActionEvent e)
                 {
                     ArrayList<ArrayList<String>> item;
-                    /*
-                    try {
-                        item = ControladorPresentacio.getItem(Integer.parseInt(ids.get(nonChanger)));
-                    }
-                    catch (NumberFormatException | ItemNotFoundException e1) {
-                        ControladorPresentacio.obreVistaError(e1.getMessage());
-                        return;
-                    }*/
-
-                    item = new ArrayList<ArrayList<String>>();
-                    for (int i = 0; i < na.size(); ++i) {
-                        ArrayList<String> atribut = new ArrayList<String>();
-                        for (int j = i; j < 26; ++j) {
-                            if (j == na.size()+1) atribut.add("");
-                            else atribut.add("test");
+                    if (!SessioNova) {
+                        try {
+                            item = ControladorPresentacio.getItem(Integer.parseInt(ids.get(nonChanger)));
                         }
-                        item.add(atribut);
+                        catch (NumberFormatException | ItemNotFoundException e1) {
+                            ControladorPresentacio.obreVistaError(e1.getMessage());
+                            return;
+                        }
                     }
+                    else {
+                        item = new ArrayList<ArrayList<String>>();
+                        for (int i = 0; i < na.size(); ++i) {
+                            ArrayList<String> atribut = new ArrayList<String>();
+                            for (int j = i; j < 26; ++j) {
+                                if (j == na.size()+1) atribut.add("");
+                                else atribut.add("test");
+                            }
+                            item.add(atribut);
+                        }
+                    }
+
                     new VistaInformacioItem(item, na, ta, instancia);
                     setVisible(false);
                 }
             });
-            
-            JButton mod = new JButton("Modificar");
-            JButton elim = new JButton("Eliminar");
 
             JPanel f5 = new JPanel();
             f5.setLayout(new FlowLayout());
             f5.add(info);
             sota.add(f5);
 
-            JPanel f6 = new JPanel();
-            f6.setLayout(new FlowLayout());
-            f6.add(mod);
-            sota.add(f6);
+            if (admin) {
+                JButton mod = new JButton("Modificar");
+                JButton elim = new JButton("Eliminar");
+                elim.setForeground(Color.WHITE);
+                elim.setBackground(Color.RED);
+                elim.setContentAreaFilled(false);
+                elim.setOpaque(true);
 
-            JPanel f7 = new JPanel();
-            f7.setLayout(new FlowLayout());
-            f7.add(elim);
-            sota.add(f7);
+                JPanel f6 = new JPanel();
+                f6.setLayout(new FlowLayout());
+                f6.add(mod);
+                sota.add(f6);
+
+                JPanel f7 = new JPanel();
+                f7.setLayout(new FlowLayout());
+                f7.add(elim);
+                sota.add(f7);
+            }
         }
 
         panel = new JPanel();
@@ -231,12 +244,16 @@ public class VistaAllItems extends JFrame {
     }
 
     public void pesosFi (ArrayList<String> p) {
-        System.out.println(p);
         pesos = p;
         setVisible(true);
     }
 
     public void infoFi() {
+        setVisible(true);
+    }
+
+    public void afegirFi(ArrayList<String> nouItem) {
+        System.out.println(nouItem);
         setVisible(true);
     }
 }
