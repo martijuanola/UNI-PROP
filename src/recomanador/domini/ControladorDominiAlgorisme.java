@@ -179,6 +179,7 @@ public class ControladorDominiAlgorisme {
                 BasedFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = BasedFilt.contentBasedFiltering(Q, user_ID, K);
                 break;
+                
             //Hybrid approaches
             case 2:
                 System.out.println("Executant Hybrid Filtering");
