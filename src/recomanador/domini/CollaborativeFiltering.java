@@ -236,14 +236,10 @@ public class CollaborativeFiltering {
         ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(user.getId());
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
         
-        //System.out.println("\n\nFOR1: Checking every item");
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
-            //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
             Item j_item = items.get(j_idx);
-            if (valoracions.existeixRecomanacio(j_item.getId(), user.getId())) {
-                //System.out.println("Item had been rated");
-                continue;
-            } 
+            //si l'item ja esta recomanat o valorat
+            if (valoracions.existeixRecomanacio(j_item.getId(), user.getId())) continue;
             
             
             int card_rj = 0;

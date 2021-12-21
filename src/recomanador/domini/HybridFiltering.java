@@ -136,10 +136,10 @@ public class HybridFiltering {
             Item item_val = valUser.get(val_user_idx).getItem();
             ArrayList<ItemValoracioEstimada> Kpropers = new ArrayList<ItemValoracioEstimada>();
 
-            //iterem sobre tots els items no valorats
+            //iterem sobre tots els items no valorats i no recomanats previament!!
             for (int idxNV = 0; idxNV < items_cluster.size(); ++idxNV) {
                 Item iNV = items_cluster.get(idxNV);
-                if (valoracions.existeixValoracio(iNV.getId(), user.getId())) continue;
+                if (valoracions.existeixRecomanacio(iNV.getId(), user.getId())) continue;
                 
                 float similitud = 0;
                 try {similitud = items_cluster.distanciaItem(iNV, item_val);}
