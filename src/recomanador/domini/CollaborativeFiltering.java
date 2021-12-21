@@ -41,6 +41,9 @@ public class CollaborativeFiltering {
      * (mainly, when calculating the DCG and NDCG)
      */
 
+    /** lineal calls to Recomanacions of a user(by index) **/
+    ArrayList<ConjuntRecomanacions> crs;
+
     /**Stores a set of k centroids with their ratings. Used for k-NN*/
     Centroid[] centroids;
 	
@@ -117,6 +120,12 @@ public class CollaborativeFiltering {
             centroids = new Centroid[K];
             closest_centroid = new HashMap<Integer, Integer>(usuaris.size());
 
+            //per fer les cirdes lineals
+            crs = new ArrayList<ConjuntRecomanacions>();
+            for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
+                crs.add(valoracions.getValoracions(usuaris.get(idx_usuari).getId()));
+            }
+
             for (int centroid = 0; centroid < K; ++centroid) {
                 centroids[centroid] = new Centroid();
                 centroids[centroid].valoracio = new HashMap<Item,Float>();
@@ -131,12 +140,6 @@ public class CollaborativeFiltering {
                 }
 
             }
-
-            //PROVA
-            ArrayList<ConjuntRecomanacions> crs = new ArrayList<ConjuntRecomanacions>();
-            for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
-                crs.add(valoracions.getValoracions(usuaris.get(idx_usuari).getId()));
-            }
             
             boolean has_changed = true;
             //int count = 0;
@@ -148,12 +151,12 @@ public class CollaborativeFiltering {
                 for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {                
 
                     int min_centroid = 0;
-                    float min_distance = distance(crs.get(idx_usuari), 0);
+                    float min_distance = distance(idx_usuari, 0);
                 
                     float dist_aux;
                     for(int centroid = 1; centroid < K; ++centroid) {
                         
-                        dist_aux = distance(crs.get(idx_usuari),centroid);
+                        dist_aux = distance(idx_usuari,centroid);
                         
                         if (dist_aux < min_distance) {
                             min_distance = dist_aux;
@@ -302,27 +305,6 @@ public class CollaborativeFiltering {
         return items_estimats;
     }
 
-    private float distance(ConjuntRecomanacions valoracionsUser, int centroid) {
-        //System.out.println("calculating the distance between " + idx_usuari + " and centroid " + centroid);
-        
-        float distance = 0;
-
-        //ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
-
-        for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
-            Recomanacio rec = valoracionsUser.get(idx_rec);
-            Item item = rec.getItem();
-            if (rec.recomanacioValorada()) {
-                float distance_add = rec.getVal()-centroids[centroid].valoracio.get(item); 
-                distance += distance_add*distance_add;
-            }
-        }
-        
-        //~ System.out.println("distance = " + Math.sqrt(distance));
-        
-        return (float) Math.sqrt(distance);
-    }
-
     /**
      * Returns the distance between a user and a centroid.
      *
@@ -337,7 +319,7 @@ public class CollaborativeFiltering {
         
         float distance = 0;
 
-        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
+        ConjuntRecomanacions valoracionsUser = crs.get(idx_usuari);
 
         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
             Recomanacio rec = valoracionsUser.get(idx_rec);
