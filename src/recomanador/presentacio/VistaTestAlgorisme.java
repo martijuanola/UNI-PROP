@@ -54,6 +54,10 @@ public class VistaTestAlgorisme extends JFrame {
 	boolean spinnerChanged;
     boolean barChanged;
     
+    int original_alg;
+    int original_k;
+    int original_q;
+    
     /*----- FUNCIONS -----*/
     public VistaTestAlgorisme(VistaPrincipal vp) {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
@@ -63,6 +67,10 @@ public class VistaTestAlgorisme extends JFrame {
 
         panel = new JPanel();
         
+        original_alg = Integer.parseInt(cp.getAlgorisme());
+        original_k = Integer.parseInt(cp.getK());
+        original_q = Integer.parseInt(cp.getQ());
+        
         //Part ESQUERRA
 			text_inicial = new JLabel("NOTA: els canvis realitzars en aquest " +
 					"apartat són temporals. Es revertiran en sortir.");
@@ -71,8 +79,9 @@ public class VistaTestAlgorisme extends JFrame {
 			q_param_lab = new JLabel("Paràmetre Q:");
 			
 			alg = new JComboBox(algorismes);
+			alg.setSelectedIndex(original_alg);
 			
-			int nb = Math.max(Integer.parseInt(cp.getQ()), Integer.parseInt(cp.getK()));
+			int nb = Math.max(original_q, original_k);
 			nb = Math.max(cp.getAllItems().size(), nb);
 			nb = Math.max(1, nb);
 			
@@ -80,17 +89,17 @@ public class VistaTestAlgorisme extends JFrame {
 			k.setPaintTicks(true);
 			k.setPaintLabels(true);
 			k.setMajorTickSpacing(nb/5);
-			k.setValue(Integer.parseInt(cp.getK()));
+			k.setValue(original_k);
 			
-			ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getK()), 1, nb, 1));
+			ks = new JSpinner(new SpinnerNumberModel(original_k, 1, nb, 1));
 			
 			q = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
 			q.setPaintTicks(true);
 			q.setPaintLabels(true);
 			q.setMajorTickSpacing(nb/5);
-			q.setValue(Integer.parseInt(cp.getQ()));
+			q.setValue(original_q);
 			
-			qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 1, nb, 1));
+			qs = new JSpinner(new SpinnerNumberModel(original_q, 1, nb, 1));
 			
 			tornar_enrrere = new JButton("Enrrere");
 			

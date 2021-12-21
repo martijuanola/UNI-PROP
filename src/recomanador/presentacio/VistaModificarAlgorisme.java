@@ -54,6 +54,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		q_param_lab = new JLabel("Paràmetre Q:");
 		
 		alg = new JComboBox(algorismes);
+		alg.setSelectedIndex(Integer.parseInt(cp.getAlgorisme()));
 		
 		int nb = Math.max(Integer.parseInt(cp.getQ()), Integer.parseInt(cp.getK()));
 		nb = Math.max(cp.getAllItems().size(), nb);
