@@ -137,6 +137,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
 
     /*----- ALTRES -----*/
 
+    //hauria de ser privat però per testejar l'he posat public
     /**
      * Returns de index of the element with id = <i>id</i>, or if it doesn't exist,
      *  the position where it should be added. It uses a binary search.
@@ -145,7 +146,7 @@ public class ConjuntUsuaris extends ArrayList<Usuari> {
      *
      * @return     The index where the user should be
      */
-    private int cercaBinaria(int id) { 
+    public int cercaBinaria(int id) { 
         int first = 0;
         int last = this.size()-1;
         

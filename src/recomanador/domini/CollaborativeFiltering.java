@@ -109,10 +109,8 @@ public class CollaborativeFiltering {
      * @param      K            The value K
      * 
      * @return     users of the cluster
-     * 
-     * @throws     UserNotFoundException if the id specified is not valid
      */
-    private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) throws UserNotFoundException {
+    private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) {
         
         if(!centroidesCalculats) {
             System.out.println("Executant k-Means");
@@ -204,10 +202,10 @@ public class CollaborativeFiltering {
 
 
             }
-        }
+        }        
 
         ArrayList<Usuari> usuaris_cluster = new ArrayList<Usuari>();
-        int centroid = closest_centroid.get(usuaris.getUsuari(user_ID));
+        int centroid = closest_centroid.get(usuaris.cercaBinaria(user_ID));
         for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
             if (closest_centroid.get(idx_usuari) == centroid) {
                 usuaris_cluster.add(usuaris.get(idx_usuari));
@@ -236,6 +234,7 @@ public class CollaborativeFiltering {
         
         //System.out.println("\n\nFOR1: Checking every item");
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
+            //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
             Item j_item = items.get(j_idx);
             if (valoracions.existeixValoracio(j_item.getId(), user.getId())) {
                 //System.out.println("Item had been rated");

@@ -43,22 +43,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     /*----- CONSULTORES -----*/
 
     /**
-     * Returns if a recommendation of an item <i>itemid</i> to a user <i>userid</i> 
-     * exisist in the set of recommendations.
-     *
-     * @param      itemid  The id of the item
-     * @param      userid  The id of the user
-     *
-     * @return     True if the recomndation has been found
-     */
-    public boolean existeixRecomanacio(int itemid, int userid) {
-        int pos = cercaBinaria(itemid,userid);
-        if(pos < 0 || pos >= this.size()) return false;
-        else if(this.get(pos).checkIds(itemid, userid)) return true;
-        else return false;
-    }
-
-    /**
      * Returns if a recommendation with a rating of an item <i>itemid</i> to a user <i>userid</i> 
      * exisist in the set of recommendations.
      *
