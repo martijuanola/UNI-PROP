@@ -163,6 +163,18 @@ public class ControladorPresentacio {
 		}
 	}
 	
+	public static ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
+		try
+		{
+			return domini.getAllItems();
+		}
+		catch (Exception e)
+		{
+			new VistaError(e.getMessage());
+			return null;
+		}
+	}
+	
     public static void obreVistaPrincipal() {
         new VistaPrincipal();
     }
@@ -236,7 +248,7 @@ public class ControladorPresentacio {
     
     public static void obreVistaModificarAlgorisme() {
         //TODO:OMPLIR
-        new VistaError("OBRE VISTA DE MODIFICAR L'ALGORISME");
+        new VistaModificarAlgorisme();
     }
     
     public static void obreVistaTestAlgorisme() {
@@ -255,17 +267,7 @@ public class ControladorPresentacio {
 	
     public static void main(String[] args) {
         instancia = new ControladorPresentacio();
-        obreVistaInicial();  
-
-		/* CREAR SESSIO "totalll" AMB ITEMS 250
-		try {
-			domini.loginAdmin();
-			domini.createSession("totalll", "/home/jaume/Documents/PROP/projecte/subgrup-prop5-5/data/movies-250/items.csv", "/home/jaume/Documents/PROP/projecte/subgrup-prop5-5/data/movies-250/ratings.db.csv");
-			obreVistaEscollirAtributs();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
+        obreVistaInicial();
     }
 
     /* -----------------------------------------------------------------
