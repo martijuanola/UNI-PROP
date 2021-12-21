@@ -57,20 +57,21 @@ public class VistaModificarAlgorisme extends JFrame {
 		
 		int nb = Math.max(Integer.parseInt(cp.getQ()), Integer.parseInt(cp.getK()));
 		nb = Math.max(cp.getAllItems().size(), nb);
+		nb = Math.max(1, nb);
 		
-		k = new JSlider(JSlider.HORIZONTAL, 0, nb, 5);
+		k = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
 		k.setPaintTicks(true);
 		k.setPaintLabels(true);
 		k.setMajorTickSpacing(nb/5);
 		
-		ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getK()), 0, nb, 1));
+		ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getK()), 1, nb, 1));
 		
-		q = new JSlider(JSlider.HORIZONTAL, 0, nb, 5);
+		q = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
 		q.setPaintTicks(true);
 		q.setPaintLabels(true);
 		q.setMajorTickSpacing(nb/5);
 		
-		qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 0, nb, 1));
+		qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 1, nb, 1));
 		
 		tornar_enrrere = new JButton("Enrrere");
 		

@@ -164,7 +164,7 @@ public class ControladorPresentacio {
 	public static void setQ(String q) {
 		try
 		{
-			domini.setAlgorisme(q);
+			domini.setQ(q);
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 		}
@@ -173,7 +173,7 @@ public class ControladorPresentacio {
 	public static void setK(String k) {
 		try
 		{
-			domini.setAlgorisme(k);
+			domini.setK(k);
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 		}
