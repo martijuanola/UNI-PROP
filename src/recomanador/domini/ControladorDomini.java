@@ -32,6 +32,9 @@ public class ControladorDomini {
     private ConjuntUsuaris cu;
     /** Set of Recommendations of the execution **/
     private ConjuntRecomanacions cr;
+
+    /** Indicates if the data for the algorithm needs to be reset **/
+    private boolean dadesModificades;
     
     /* Atributes */
     /** Id of the user/actor of the application **/
@@ -63,10 +66,11 @@ public class ControladorDomini {
      */
     private ControladorDomini() {
         cp = ControladorPersistencia.getInstance();
-        cda = ControladorDominiAlgorisme.getInstance(); //S'haurà de canviar per getInst()
+        cda = ControladorDominiAlgorisme.getInstance();
 
         id = NULL_ID;
         admin = false;
+        dadesModificades = true;
         resetData();
     }
 
@@ -85,6 +89,8 @@ public class ControladorDomini {
     public void login(int id) throws AlreadyLogedInException {
         if(this.id != NULL_ID) throw new AlreadyLogedInException(this.id);
         if(!cu.existeixUsuari(id)) cu.add(new Usuari(id));
+
+        dadesModificades = true;
 
         this.id = id;
         admin = false;
@@ -171,10 +177,6 @@ public class ControladorDomini {
 
         ArrayList<String> estat = cp.carregarEstat();
 
-        cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
-        cda.set_Q(Integer.parseInt(estat.get(1)));
-        cda.set_k(Integer.parseInt(estat.get(2)));
-
         ci.setNomCjItems(estat.get(3));
 
         try{
@@ -184,6 +186,12 @@ public class ControladorDomini {
             System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
             return;
         }
+
+        //dades algorisme
+        cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
+        cda.set_Q(Integer.parseInt(estat.get(1)));
+        cda.set_k(Integer.parseInt(estat.get(2)));
+        dadesModificades = true;
     }
 
     /**
@@ -227,6 +235,8 @@ public class ControladorDomini {
 
         //Primer Save
         saveSession();
+
+        dadesModificades = true;
     }
 
     /**
@@ -262,6 +272,8 @@ public class ControladorDomini {
 
         //Primer Save
         saveSession();
+
+        dadesModificades = true;
     }
 
     /**
@@ -369,6 +381,9 @@ public class ControladorDomini {
         int DCG = 0;
         int IDCG = 0;
 
+        //passar dades a algorisme
+        cda.setData(ci, usuaris, recomanacions);
+
         for(int idx_unknown = 0; idx_unknown < usuarisUnknown.size(); ++idx_unknown) {
             int id_unknown = usuarisUnknown.get(idx_unknown).getId();
             ConjuntRecomanacions val_unknown_aux = recomanacionsUnknown.getValoracions(usuarisUnknown.get(idx_unknown).getId());
@@ -383,7 +398,7 @@ public class ControladorDomini {
             Collections.sort(val_unknown);
 
             try {
-                items_recomanats = cda.run_algorithm(id_unknown, ci, usuaris, recomanacions);
+                items_recomanats = cda.run_algorithm(id_unknown);
             }
             catch(UserNotFoundException e) {
                 System.out.print("ERROR INTERN!! Algo va malament als testos" + e.getMessage());
@@ -413,6 +428,8 @@ public class ControladorDomini {
             System.out.println();
             DCG += DCG_user;
         }
+
+        dadesModificades = true;
 
         System.out.println("DCG TOTAL: " + DCG);
         System.out.println("IDCG TOTAL: " + IDCG);
@@ -504,6 +521,7 @@ public class ControladorDomini {
     public void addItem(ArrayList<ArrayList<String>> atributs) throws PrivilegesException, ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
         if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         ci.add(new Item(atributs));
+        dadesModificades = true;
     }
 
     /**
@@ -519,6 +537,7 @@ public class ControladorDomini {
         if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         cr.removeRecomanacionsItem(Integer.parseInt(id));
         ci.eliminarItem(Integer.parseInt(id));
+        dadesModificades = true;
     }
 
     /**
@@ -535,6 +554,7 @@ public class ControladorDomini {
         if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         ci.eliminarItem(Integer.parseInt(atributs.get(Item.getPosId()).get(0)));
         ci.add(new Item(atributs));
+        dadesModificades = true;
     }
 
 
@@ -647,6 +667,7 @@ public class ControladorDomini {
     public void setValoracio(String itemId, String usuariId, String rating) throws PrivilegesException, RecommendationNotFoundException, RatingNotValidException {
         if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("Un usuari només pot treballar amb les seves recomanacions.");
         cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Float.parseFloat(rating));
+        dadesModificades = true;
     }
 
     /**
@@ -662,6 +683,7 @@ public class ControladorDomini {
     public void removeValoracio(String itemId, String usuariId) throws PrivilegesException, RecommendationNotFoundException, RatingNotValidException {
         if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("Un usuari només pot treballar amb les seves recomanacions.");
         cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Recomanacio.nul);
+        dadesModificades = true;
     }
 
     /**
@@ -674,6 +696,7 @@ public class ControladorDomini {
      */
     public void removeRecmonacio(String itemId, String usrId) throws RecommendationNotFoundException {
         cr.removeRecomanacio(Integer.parseInt(itemId), Integer.parseInt(usrId));
+        dadesModificades = true;
     }
 
     /**
@@ -684,14 +707,18 @@ public class ControladorDomini {
      */
     public void createRecomanacions() throws PrivilegesException {
         if(admin) throw new PrivilegesException("Has d'haver entrat com un usuari.");
+
+        if(dadesModificades) cda.setData(ci, cu, cr);
+
         try{
-            ArrayList<ItemValoracioEstimada> newRecomanacions = cda.run_algorithm(id, ci, cu, cr);
+            ArrayList<ItemValoracioEstimada> newRecomanacions = cda.run_algorithm(id);
             for(int i = 0; i < newRecomanacions.size(); i++) cr.add(new Recomanacio(cu.getUsuari(id),newRecomanacions.get(i).item));
         }
         catch(UserNotFoundException e) {
             System.out.print("ERROR INTERN!! Problema amb l'usuari actiu. No es troba en algun conjunt." + e.getMessage());
             return;
         }
+        dadesModificades = true;
     }
 
 
@@ -805,6 +832,7 @@ public class ControladorDomini {
     public void addUsuari(String id) throws PrivilegesException, UserIdNotValidException {
         if(!admin) throw new PrivilegesException("Has de ser administrador.");
         if(!cu.add(new Usuari(Integer.parseInt(id)))) throw new UserIdNotValidException(Integer.parseInt(id));
+        dadesModificades = true;
     }
 
     /**
@@ -819,6 +847,7 @@ public class ControladorDomini {
         if(!admin) throw new PrivilegesException("Has de ser administrador.");
         cr.removeRecomanacionsUsuari(Integer.parseInt(id));
         cu.removeUsuari(Integer.parseInt(id));
+        dadesModificades = true;
     }
 
 
@@ -865,6 +894,7 @@ public class ControladorDomini {
         ci = null;
         cr = null;
         cu = null;
+        dadesModificades = true;
     }
 
 }

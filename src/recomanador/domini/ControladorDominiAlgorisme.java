@@ -161,33 +161,10 @@ public class ControladorDominiAlgorisme {
      *              
      * @throws     UserNotFoundException if the id specified is not valid
      */
-    public ArrayList<ItemValoracioEstimada> run_algorithm(int user_ID, ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) throws UserNotFoundException {
-
-        ArrayList<ItemValoracioEstimada> recomanacions_alg = new ArrayList<ItemValoracioEstimada>();
-
-        switch(ALGORISME_SELECCIONAT) {
-            //collaborative filtering
-            case 0:
-                System.out.println("Executant Collaborative Filtering");
-                colFilt.setData(items, usuaris, valoracions);
-                recomanacions_alg = colFilt.collaborativeFiltering(Q, user_ID, K);
-                break;
-                
-            //content based filtering
-            case 1:
-                System.out.println("Executant Content-Based Filtering");
-                BasedFilt.setData(items, usuaris, valoracions);
-                recomanacions_alg = BasedFilt.contentBasedFiltering(Q, user_ID, K);
-                break;
-            //Hybrid approaches
-            case 2:
-                System.out.println("Executant Hybrid Filtering");
-                HybFilt.setData(items, usuaris, valoracions);
-                recomanacions_alg = HybFilt.hybridFiltering(Q, user_ID, K);
-                break;
-        }
-        
-        return recomanacions_alg;
+    public void setData(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
+        colFilt.setData(items, usuaris, valoracions);
+        BasedFilt.setData(items, usuaris, valoracions);
+        HybFilt.setData(items, usuaris, valoracions);
     }
 
     /**
@@ -208,20 +185,18 @@ public class ControladorDominiAlgorisme {
             //collaborative filtering
             case 0:
                 System.out.println("Executant Collaborative Filtering");
-                //colFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = colFilt.collaborativeFiltering(Q, user_ID, K);
                 break;
                 
             //content based filtering
             case 1:
                 System.out.println("Executant Content-Based Filtering");
-                //BasedFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = BasedFilt.contentBasedFiltering(Q, user_ID, K);
                 break;
+                
             //Hybrid approaches
             case 2:
                 System.out.println("Executant Hybrid Filtering");
-                //HybFilt.setData(items, usuaris, valoracions);
                 recomanacions_alg = HybFilt.hybridFiltering(Q, user_ID, K);
                 break;
         }

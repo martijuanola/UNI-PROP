@@ -202,7 +202,8 @@ public class DriverControladorDominiAlgorisme {
             }
             System.out.println();
 
-            items_recomanats = algorisme.run_algorithm(user_ID, items, usuaris, recomanacions);
+            algorisme.setData(items, usuaris, recomanacions);
+            items_recomanats = algorisme.run_algorithm(user_ID);
             
 
             System.out.println("Et recomanem aquests items dels " + items.size() + " del nostre catàleg:");
@@ -252,7 +253,8 @@ public class DriverControladorDominiAlgorisme {
                     }
                     Collections.sort(val_unknown);
 
-                    items_recomanats = algorisme.run_algorithm(id_unknown, items, usuaris, recomanacions);
+                    algorisme.setData(items, usuaris, recomanacions);
+                    items_recomanats = algorisme.run_algorithm(id_unknown);
                     int DCG_user = 0;
 
                     for (int val_idx = 0; val_idx < val_unknown.size(); ++val_idx) {
