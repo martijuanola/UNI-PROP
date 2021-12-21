@@ -32,29 +32,26 @@ public class CollaborativeFiltering {
     /*----- ATRIBUTS -----*/
 
     /**items from which to base the recommendation*/
-    ConjuntItems items;
+    private ConjuntItems items;
     /**users from which to base the recommendation*/
-    ConjuntUsuaris usuaris;
+    private ConjuntUsuaris usuaris;
     /**ratings from which to base the recommendation*/
-    ConjuntRecomanacions valoracions;
-    /** stores if the centroids have been calculated, so they dont get recalculated for multiple iterations of the algorithm
-     * (mainly, when calculating the DCG and NDCG)
-     */
+    private ConjuntRecomanacions valoracions;
 
     /** lineal calls to Recomanacions of a user(by index) **/
-    ArrayList<ConjuntRecomanacions> crs;
+    private ArrayList<ConjuntRecomanacions> crs;
 
     /**Stores a set of k centroids with their ratings. Used for k-NN*/
-    Centroid[] centroids;
+    private Centroid[] centroids;
 	
     /**For each user ID, stores the centroid they belong to*/
-    HashMap<Integer, Integer> closest_centroid;
+    private HashMap<Integer, Integer> closest_centroid;
 
     /** Indicates if the centroids are already calculated */
-    Boolean centroidesCalculats = false;
+    private Boolean centroidesCalculats = false;
 
     /** To add stochasticity to the centroids generation */
-    Random rand = new Random();
+    private Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
 
@@ -77,6 +74,7 @@ public class CollaborativeFiltering {
         this.items = items;
         this.usuaris = usuaris;
         this.valoracions = valoracions;
+        centroidesCalculats = false;
     }
 
     /**

@@ -29,11 +29,11 @@ public class ContentBasedFiltering {
     }
 
     /**items from which to base the recommendation*/
-    ConjuntItems items;
+    private ConjuntItems items;
     /**users from which to base the recommendation*/
-    ConjuntUsuaris usuaris;
+    private ConjuntUsuaris usuaris;
     /**ratings from which to base the recommendation*/
-    ConjuntRecomanacions valoracions;
+    private ConjuntRecomanacions valoracions;
 
     /**
      *  Constructs a new empty instance

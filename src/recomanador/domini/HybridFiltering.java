@@ -36,26 +36,26 @@ public class HybridFiltering {
     /*----- ATRIBUTS -----*/
 
     /**items from which to base the recommendation*/
-    ConjuntItems items;
+    private ConjuntItems items;
     /**users from which to base the recommendation*/
-    ConjuntUsuaris usuaris;
+    private ConjuntUsuaris usuaris;
     /**ratings from which to base the recommendation*/
-    ConjuntRecomanacions valoracions;
-     /** stores if the centroids have been calculated, so they dont get recalculated for multiple iterations of the algorithm
-     * (mainly, when calculating the DCG and NDCG)
-     */
+    private ConjuntRecomanacions valoracions;
+
+    /** lineal calls to Recomanacions of a user(by index) **/
+    private ArrayList<ConjuntRecomanacions> crs;
 
     /**Stores a set of k centroids with their ratings. Used for k-NN*/
-    Centroid[] centroids;
+    private Centroid[] centroids;
 	
     /**For each user ID, stores the centroid they belong to*/
-    HashMap<Integer, Integer> closest_centroid;
+    private HashMap<Integer, Integer> closest_centroid;
 
     /** Indicates if the centroids are already calculated */
-    Boolean centroidesCalculats = false;
+    private Boolean centroidesCalculats = false;
 
     /** To add stochasticity to the centroids generation */
-    Random rand = new Random();
+    private Random rand = new Random();
 
     /*----- CONSTRUCTORS -----*/
 
@@ -77,6 +77,7 @@ public class HybridFiltering {
         this.items = items;
         this.usuaris = usuaris;
         this.valoracions = valoracions;
+        centroidesCalculats = false;
     }
 
     /**
@@ -179,12 +180,17 @@ public class HybridFiltering {
      * @return     users of the cluster
      */
     private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) throws UserNotFoundException {
-        
         if(!centroidesCalculats) {
-            System.out.println("Executant k-means");
+            System.out.println("Executant k-Means");
             centroidesCalculats = true;
             centroids = new Centroid[K];
             closest_centroid = new HashMap<Integer, Integer>(usuaris.size());
+
+            //per fer les cirdes lineals
+            crs = new ArrayList<ConjuntRecomanacions>();
+            for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
+                crs.add(valoracions.getValoracions(usuaris.get(idx_usuari).getId()));
+            }
 
             for (int centroid = 0; centroid < K; ++centroid) {
                 centroids[centroid] = new Centroid();
@@ -202,10 +208,12 @@ public class HybridFiltering {
             }
             
             boolean has_changed = true;
-            
+            //int count = 0;
             while (has_changed){
+                //System.out.println(count + " ");
+                //count++;
                 has_changed = false;
-
+                //System.out.println("A");
                 for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {                
 
                     int min_centroid = 0;
@@ -227,13 +235,12 @@ public class HybridFiltering {
                         closest_centroid.put(idx_usuari, min_centroid);
                     }
                 }
-
+                //System.out.println("B");
                 if(has_changed) {
                     for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                         int centroid = closest_centroid.get(idx_usuari);
                         
-                        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
-                        //~ System.out.println("loaded " + valoracionsUser.size() + " ratings");
+                        ConjuntRecomanacions valoracionsUser = crs.get(idx_usuari);//l'array esta ordenat com usuaris
 
                         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
                             Recomanacio rec = valoracionsUser.get(idx_rec);
@@ -248,7 +255,7 @@ public class HybridFiltering {
                         }
 
                     }
-
+                    //System.out.println("C");
                     for (int centroid = 0; centroid < K; ++centroid) {
                         for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
 
