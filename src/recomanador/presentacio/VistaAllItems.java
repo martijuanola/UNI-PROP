@@ -7,14 +7,20 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import src.recomanador.excepcions.PrivilegesException;
+
 public class VistaAllItems extends JFrame {
     boolean SessioNova;
+    boolean admin;
+
     VistaSessioNova vs;
     ArrayList<String> na;
     ArrayList<String> ta;
 
     ArrayList<String> ids;
     ArrayList<String> noms;
+
+    ArrayList<String> pesos;
     
     JPanel panel;
 
@@ -28,6 +34,12 @@ public class VistaAllItems extends JFrame {
     public VistaAllItems(ArrayList<String> nomAtributs, ArrayList<String> tipusAtributs, VistaSessioNova vsn) {
         ids = new ArrayList<String>();
         noms = new ArrayList<String>();
+        admin = true;
+
+        pesos = new ArrayList<String>();
+        for (int i = 0; i < nomAtributs.size(); ++i) {
+            pesos.add("100.0");
+        }
 
         //TODO: esborrar aquesta cosa de prova
         for (int i = 0; i < 50; ++i) {
@@ -51,6 +63,15 @@ public class VistaAllItems extends JFrame {
             ids.add(items.get(i).get(idPos).get(0));
             noms.add(items.get(i).get(nomPos).get(0));
         }
+
+        admin = ControladorPresentacio.isAdmin();
+        if (admin) {
+            try {
+                pesos = ControladorPresentacio.getPesos();
+            } catch (PrivilegesException e) {
+                System.out.println("Si no tens privilegis d'admin, és impossible arribar aqui");
+            }
+        }
         SessioNova = false;
         na = ControladorPresentacio.getHeaderItems();
         ta = ControladorPresentacio.getTipusItems();
@@ -70,26 +91,37 @@ public class VistaAllItems extends JFrame {
         JPanel botons = new JPanel();
         botons.setLayout(new FlowLayout());
 
-        canviarPesos = new JButton("Modificar Pesos");
-        canviarPesos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                System.out.println("obre modificar pesos");
-            }
-        });
-        botons.add(canviarPesos);
-        
-        afegir = new JButton("Afegir item");
-        afegir.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                System.out.println("obre afegir items");
-            }
-        });
-        botons.add(afegir);
+        if (admin) {
+            canviarPesos = new JButton("Modificar Pesos");
+            canviarPesos.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e)
+                {
+                    new VistaCanviarPesos(pesos, na, instancia);
+                    System.out.println("pesos oberta");
+                }
+            });
+            botons.add(canviarPesos);
+
+            JLabel espai1 = new JLabel("");
+            espai1.setPreferredSize(new Dimension(40, 1));
+            botons.add(espai1);
+            
+            afegir = new JButton("Afegir item");
+            afegir.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e)
+                {
+                    System.out.println("obre afegir items");
+                }
+            });
+            botons.add(afegir);
+
+            JLabel espai2 = new JLabel("");
+            espai2.setPreferredSize(new Dimension(40, 1));
+            botons.add(espai2);
+        }
 
         exit = new JButton("Guardar i tornar");
-        exit.addActionListener(new ActionListener() {
+        exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
             public void actionPerformed(ActionEvent e)
             {
                 dispatchEvent(new WindowEvent(instancia, WindowEvent.WINDOW_CLOSING));
@@ -159,5 +191,10 @@ public class VistaAllItems extends JFrame {
         pack();
         setMinimumSize(new Dimension(getBounds().getSize().width, 200));
         setVisible(true);
+    }
+
+    public void pesosFi (ArrayList<String> p) {
+        System.out.println("Han arribat els pesos!");
+        System.out.println(p);
     }
 }

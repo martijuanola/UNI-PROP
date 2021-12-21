@@ -6,15 +6,17 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class VistaSessioNova extends JFrame {
-    JPanel panel;
     ArrayList<JTextField> nomAtributs;
     ArrayList<JComboBox<String>> tipusAtributs;
     ArrayList<JButton> eliminarAtributs;
     ArrayList<String> diferentsTipus;
+    JPanel atributs;
+    JPanel botons;
 
     JButton afegir;
     JButton accept;
@@ -33,9 +35,13 @@ public class VistaSessioNova extends JFrame {
             }
         }
 
-        myLayout = new GridLayout(2, 4);
-        panel = new JPanel();
-        panel.setLayout(myLayout);
+        myLayout = new GridLayout(2, 3);
+        atributs = new JPanel();
+        atributs.setLayout(myLayout);
+
+        botons = new JPanel();
+        botons.setLayout(new FlowLayout());
+        botons.setPreferredSize(new Dimension(150, 200));
 
         nomAtributs = new ArrayList<JTextField>();
         tipusAtributs = new ArrayList<JComboBox<String>>();
@@ -47,7 +53,7 @@ public class VistaSessioNova extends JFrame {
         JPanel flow1 = new JPanel();
         flow1.setLayout(new FlowLayout());
         flow1.add(id);
-        panel.add(flow1);
+        atributs.add(flow1);
 
         JComboBox<String> auxid = new JComboBox<String>();
         auxid.addItem("Identificador");
@@ -55,7 +61,7 @@ public class VistaSessioNova extends JFrame {
         JPanel flow2 = new JPanel();
         flow2.setLayout(new FlowLayout());
         flow2.add(auxid);
-        panel.add(flow2);
+        atributs.add(flow2);
 
         JButton elim1 = new JButton("Eliminar");
         elim1.setBackground(Color.RED);
@@ -63,16 +69,13 @@ public class VistaSessioNova extends JFrame {
         elim1.setOpaque(true);
         elim1.setVisible(false);
         eliminarAtributs.add(elim1);
-        JPanel flow3 = new JPanel();
-        flow3.setLayout(new FlowLayout());
-        flow3.add(elim1);
-        panel.add(flow3);
+        atributs.add(elim1);
 
         accept = new JButton("OK");
-        JPanel flow4 = new JPanel();
-        flow4.setLayout(new FlowLayout());
-        flow4.add(accept);
-        panel.add(flow4);
+        botons.add(accept);
+        JLabel espais = new JLabel("");
+        espais.setPreferredSize(new Dimension(100, 15));
+        botons.add(espais);
 
         JTextField nom = new JTextField("Nom");
         nom.getDocument().addDocumentListener(new DocumentListener() {
@@ -95,7 +98,7 @@ public class VistaSessioNova extends JFrame {
         JPanel flow5 = new JPanel();
         flow5.setLayout(new FlowLayout());
         flow5.add(nom);
-        panel.add(flow5);
+        atributs.add(flow5);
 
         JComboBox<String> auxnom = new JComboBox<String>();
         auxnom.addItem("Nom");
@@ -103,7 +106,7 @@ public class VistaSessioNova extends JFrame {
         JPanel flow6 = new JPanel();
         flow6.setLayout(new FlowLayout());
         flow6.add(auxnom);
-        panel.add(flow6);
+        atributs.add(flow6);
 
         JButton elim2 = new JButton("Eliminar");
         elim2.setBackground(Color.RED);
@@ -114,18 +117,16 @@ public class VistaSessioNova extends JFrame {
         JPanel flow7 = new JPanel();
         flow7.setLayout(new FlowLayout());
         flow7.add(elim2);
-        panel.add(flow7);
+        atributs.add(flow7);
 
         afegir = new JButton("Afegir atribut");
-        JPanel flow8 = new JPanel();
-        flow8.setLayout(new FlowLayout());
-        flow8.add(afegir);
-        panel.add(flow8);
+        botons.add(afegir);
         
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
-        JScrollPane scrollFrame = new JScrollPane(panel);
-        panel.setAutoscrolls(true);
-        add(scrollFrame);
+        //SET BORDER?
+        JScrollPane scrollFrame = new JScrollPane(atributs);
+        atributs.setAutoscrolls(true);
+        add(scrollFrame, BorderLayout.CENTER);
+        add(botons, BorderLayout.LINE_END);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Afegeix els atributs i els tipus que tindran");
         pack();
@@ -158,7 +159,7 @@ public class VistaSessioNova extends JFrame {
                 JPanel flow = new JPanel();
                 flow.setLayout(new FlowLayout());
                 flow.add(nom2);
-                panel.add(flow);
+                atributs.add(flow);
         
                 JComboBox<String> auxcom = new JComboBox<String>();
                 for (int i = 0; i < diferentsTipus.size(); ++i) {
@@ -168,10 +169,9 @@ public class VistaSessioNova extends JFrame {
                 JPanel flow12 = new JPanel();
                 flow12.setLayout(new FlowLayout());
                 flow12.add(auxcom);
-                panel.add(flow12);
+                atributs.add(flow12);
                 JPanel flow13 = new JPanel();
 
-                JLabel escarpa = new JLabel("");
                 JButton elim19 = new JButton("Eliminar");
                 elim19.setForeground(Color.WHITE);
                 elim19.setBackground(Color.RED);
@@ -179,28 +179,26 @@ public class VistaSessioNova extends JFrame {
                 elim19.setOpaque(true);
                 elim19.addActionListener(new ActionListener() { //Quina desgràcia de codi
                     public void actionPerformed(ActionEvent e) {
-                        panel.remove(flow);
+                        atributs.remove(flow);
                         nomAtributs.remove(nom2);
 
-                        panel.remove(flow12);
+                        atributs.remove(flow12);
                         tipusAtributs.remove(auxcom);
 
-                        panel.remove(flow13);
+                        atributs.remove(flow13);
                         eliminarAtributs.remove(elim19);
 
-                        panel.remove(escarpa);
                         myLayout.setRows(myLayout.getRows() - 1);
-                        panel.revalidate();
+                        atributs.revalidate();
                     }
                 });
 
                 eliminarAtributs.add(elim19);
                 flow13.setLayout(new FlowLayout());
                 flow13.add(elim19);
-                panel.add(flow13);
+                atributs.add(flow13);
 
-                panel.add(escarpa);
-                panel.revalidate();
+                atributs.revalidate();
             }
         });
     

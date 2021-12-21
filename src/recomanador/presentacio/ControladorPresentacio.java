@@ -102,16 +102,8 @@ public class ControladorPresentacio {
 		}
 	}
 		
-	public static boolean isAdmin() {
-		/*
-		try {		
-			return domini.isAdmin();
-		} catch(Exception e) {
-			new VistaError(e.getMessage());
-			return "ERROR";
-		}
-		//*/
-		return false;
+	public static boolean isAdmin() {	
+		return domini.isAdmin();
 	}
 	
 	public static void logOut() {
@@ -186,6 +178,10 @@ public class ControladorPresentacio {
 
 	public static String getPosItemNom() {
 		return domini.getPosNomItem();
+	}
+
+	public static ArrayList<String> getPesos() throws PrivilegesException {
+		return domini.getPesos();
 	}
 
     public static ArrayList<String> getHeaderItems() {
