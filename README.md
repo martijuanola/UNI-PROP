@@ -1,3 +1,15 @@
+## To execute
+
+
+
+```bash
+make run
+```
+
+
+
+
+
 ## Documentació
 
 
