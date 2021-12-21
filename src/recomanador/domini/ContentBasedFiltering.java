@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.UserNotFoundException;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * This class implements the recomendation algorithm content based filtering.
@@ -34,6 +35,8 @@ public class ContentBasedFiltering {
     private ConjuntUsuaris usuaris;
     /**ratings from which to base the recommendation*/
     private ConjuntRecomanacions valoracions;
+
+    private Random rand = new Random();
 
     /**
      *  Constructs a new empty instance
@@ -65,11 +68,28 @@ public class ContentBasedFiltering {
      * @throws     UserNotFoundException if the id specified is not valid
      */
     public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID, int k) throws UserNotFoundException {
-       
+        
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
 
-        Usuari user = usuaris.getUsuari(user_ID);
-        ConjuntRecomanacions valUser = valoracions.getValoracions(user.getId());
+        Usuari user = null;
+
+        try {user = usuaris.getUsuari(user_ID);}
+        catch (UserNotFoundException e) {}
+        
+        ConjuntRecomanacions valUser = new ConjuntRecomanacions();
+        if (user != null) valUser = valoracions.getValoracions(user.getId());
+
+        if (user == null || valUser.size() == 0) {
+            System.out.println("L'usuari no té cap valoració. Generant valoracions aleatories.");
+            
+            ArrayList<ItemValoracioEstimada> random_items = new ArrayList<ItemValoracioEstimada>();
+            for (int i = 0; i < items.size(); ++i) random_items.add(new ItemValoracioEstimada(rand.nextFloat(5.0f), items.get(i)));
+            Collections.sort(random_items);
+
+            ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
+            for (int i = 0; i < Q; ++i) Q_items.add(random_items.get(i));
+            return Q_items;
+        }
         
         //necessari per a que els Q items nomes tinguin un item un cop
         ArrayList<Item> items_afegits = new ArrayList<Item>();
