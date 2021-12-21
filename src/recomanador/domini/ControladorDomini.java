@@ -333,7 +333,7 @@ public class ControladorDomini {
      * @throws     DataNotValidException    Thrown in a very specific case where the Q value can't be assignet due to a lack of user.
      * @throws     FolderNotValidException  Thrown if there are problems when getting the information from the Unknown and Known files.
      */
-    ArrayList<String> runTest() throws FolderNotValidException, DataNotValidException {
+    public ArrayList<String> runTest() throws FolderNotValidException, DataNotValidException {
         int auxQ = cda.get_Q(); //per no perdre el valor
         ArrayList<ItemValoracioEstimada> items_recomanats = new ArrayList<ItemValoracioEstimada>();
 
