@@ -265,7 +265,15 @@ public class ControladorPresentacio {
 	public static String getPosItemNom() {
 		return domini.getPosNomItem();
 	}
-
+	
+	public ArrayList<ArrayList<String>> getRecomanacions() throws PrivilegesException {
+		return domini.getAllRecomanacionsUsuari(domini.getActiveUserId());
+	}
+	
+	public ArrayList<ArrayList<String>> getValoracions() throws PrivilegesException {
+		return domini.getAllValoracionsUsuari(domini.getActiveUserId());
+	}
+	
 	public static ArrayList<String> getPesos() throws PrivilegesException {
 		return domini.getPesos();
 	}
