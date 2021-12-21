@@ -318,9 +318,11 @@ public class VistaPrincipal extends JFrame {
 				try {
 					String id_activa = null;
 					boolean admin = false;
+					String nomProj = cp.getNomProjecte();
 					if (!cp.isAdmin()) id_activa = cp.getId();
 					else admin = true;
-					cp.carregarProjecte(cp.getNomProjecte());
+					cp.logOut();
+					cp.carregarProjecte(nomProj);
 					if (admin) cp.setAdmin();
 					else cp.setUser(id_activa);
 					

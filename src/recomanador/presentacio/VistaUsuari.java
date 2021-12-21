@@ -169,7 +169,8 @@ public class VistaUsuari extends JFrame {
 			eliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					cp.eliminarRecomanacio(cp.getId(), tempId);
-					inicialitza_vista();
+					panel.remove(item_valorat);
+					setVisible(true);
 				}
 			});
 			
