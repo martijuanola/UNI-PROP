@@ -166,14 +166,23 @@ public class VistaAllItems extends JFrame {
                 public void actionPerformed(ActionEvent e)
                 {
                     ArrayList<ArrayList<String>> item;
+                    /*
                     try {
                         item = ControladorPresentacio.getItem(Integer.parseInt(ids.get(nonChanger)));
                     }
                     catch (NumberFormatException | ItemNotFoundException e1) {
                         ControladorPresentacio.obreVistaError(e1.getMessage());
                         return;
-                    }
+                    }*/
 
+                    item = new ArrayList<ArrayList<String>>();
+                    for (int i = 0; i < 25; ++i) {
+                        ArrayList<String> atribut = new ArrayList<String>();
+                        for (int j = i; j < 26; ++j) {
+                            if (j == 25) atribut.add("");
+                            else atribut.add("test");
+                        }
+                    }
                     new VistaInformacioItem(item, instancia);
                     setVisible(false);
                 }
@@ -207,7 +216,7 @@ public class VistaAllItems extends JFrame {
         panel.setAutoscrolls(true);
         add(scrollFrame);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setTitle("Escull el tipus dels atributs");
+        setTitle("Tots els items");
         pack();
         setMinimumSize(new Dimension(getBounds().getSize().width, 200));
         setVisible(true);

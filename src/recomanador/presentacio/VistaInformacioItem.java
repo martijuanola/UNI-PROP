@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 public class VistaInformacioItem extends JFrame {
     public VistaInformacioItem(ArrayList<ArrayList<String>> item, VistaAllItems inst) {
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Escull el tipus dels atributs");
         pack();
