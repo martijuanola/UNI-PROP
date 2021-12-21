@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.lang.Math;
 
-public class VistaModificarAlgorisme extends JFrame {
+public class VistaTestAlgorisme extends JFrame {
     JPanel panel;
 	
 	JLabel text_inicial;
@@ -40,7 +40,7 @@ public class VistaModificarAlgorisme extends JFrame {
     boolean barChanged;
     
     /*----- FUNCIONS -----*/
-    public VistaModificarAlgorisme(VistaPrincipal vp) {
+    public VistaTestAlgorisme(VistaPrincipal vp) {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
         
         setMinimumSize(new Dimension(550, 250));
@@ -96,7 +96,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		
         add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Modificació de paràmetres de l'algorisme");
+        setTitle("Prova dels algorismes de recomanació");
         pack();
         setVisible(true);
         
@@ -169,9 +169,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		
 		tornar_enrrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.mostra();
-				dispose();				
-				//new VistaError("Falta tornar enrrere");
+				new VistaError("Falta tornar enrrere");
 			}
         });
 				

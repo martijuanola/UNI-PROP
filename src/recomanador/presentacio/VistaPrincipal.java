@@ -68,7 +68,7 @@ public class VistaPrincipal extends JFrame {
     /*----- FUNCIONS -----*/
     public VistaPrincipal() {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
-        
+        VistaPrincipal vp = this;
         setMinimumSize(new Dimension(550, 250));
         setSize(new Dimension(1000, 900));
 
@@ -264,8 +264,9 @@ public class VistaPrincipal extends JFrame {
         
         info_usuari.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//cp.obreVistaUsuari(cp.getId());
-				cp.obreVistaModificarAlgorisme();				
+				cp.obreVistaUsuari(cp.getId());
+				//cp.obreVistaModificarAlgorisme();				
+				
 				//Fer invisible temporalment la vista aquesta?
 				//Això si, sense eliminar-la
 			}
@@ -289,7 +290,8 @@ public class VistaPrincipal extends JFrame {
         
         modificar_algorisme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaModificarAlgorisme();
+				setVisible(false);
+				new VistaModificarAlgorisme(vp);
 				//Fer invisible temporalment la vista aquesta?
 				//Això si, sense eliminar-la
 			}
@@ -297,7 +299,8 @@ public class VistaPrincipal extends JFrame {
         
         test_algorisme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaTestAlgorisme();
+				setVisible(false);
+				new VistaTestAlgorisme(vp);
 				//Fer invisible temporalment la vista aquesta?
 				//Això si, sense eliminar-la
 			}
@@ -338,5 +341,9 @@ public class VistaPrincipal extends JFrame {
 			}
         });
          */
+	}
+	
+	public void mostra() {
+		setVisible(true);
 	}
 }

@@ -289,17 +289,7 @@ public class ControladorPresentacio {
         //TODO:OMPLIR
         new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
     }
-    
-    public static void obreVistaModificarAlgorisme() {
-        //TODO:OMPLIR
-        new VistaModificarAlgorisme();
-    }
-    
-    public static void obreVistaTestAlgorisme() {
-        //TODO:OMPLIR
-        new VistaError("OBRE VISTA DE TEST DE L'ALGORISME");
-    }
-	
+    	
 	public static void valorar(String id_item, String rate)
 	{
 		try {
