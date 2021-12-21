@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.PrivilegesException;
 
 public class VistaAllItems extends JFrame {
@@ -97,7 +98,7 @@ public class VistaAllItems extends JFrame {
                 public void actionPerformed(ActionEvent e)
                 {
                     new VistaCanviarPesos(pesos, na, instancia);
-                    System.out.println("pesos oberta");
+                    setVisible(false);
                 }
             });
             botons.add(canviarPesos);
@@ -159,6 +160,25 @@ public class VistaAllItems extends JFrame {
             sota.add(f4);
 
             JButton info = new JButton("Informació");
+
+            final int nonChanger = i;
+            info.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e)
+                {
+                    ArrayList<ArrayList<String>> item;
+                    try {
+                        item = ControladorPresentacio.getItem(Integer.parseInt(ids.get(nonChanger)));
+                    }
+                    catch (NumberFormatException | ItemNotFoundException e1) {
+                        ControladorPresentacio.obreVistaError(e1.getMessage());
+                        return;
+                    }
+
+                    new VistaInformacioItem(item, instancia);
+                    setVisible(false);
+                }
+            });
+            
             JButton mod = new JButton("Modificar");
             JButton elim = new JButton("Eliminar");
 
@@ -194,7 +214,12 @@ public class VistaAllItems extends JFrame {
     }
 
     public void pesosFi (ArrayList<String> p) {
-        System.out.println("Han arribat els pesos!");
         System.out.println(p);
+        pesos = p;
+        setVisible(true);
+    }
+
+    public void infoFi() {
+        setVisible(true);
     }
 }

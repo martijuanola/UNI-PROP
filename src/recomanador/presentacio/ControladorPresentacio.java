@@ -10,7 +10,9 @@ import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
+import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
+import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.PrivilegesException;
 
 public class ControladorPresentacio {
@@ -182,6 +184,14 @@ public class ControladorPresentacio {
 
 	public static ArrayList<String> getPesos() throws PrivilegesException {
 		return domini.getPesos();
+	}
+
+	public static void setPesos(ArrayList<String> pesosS) throws PrivilegesException, ItemWeightNotCorrectException {
+		domini.setPesos(pesosS);
+	}
+
+	public static ArrayList<ArrayList<String>> getItem(int id) throws ItemNotFoundException {
+		return domini.getItem(id);
 	}
 
     public static ArrayList<String> getHeaderItems() {
