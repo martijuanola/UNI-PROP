@@ -77,6 +77,7 @@ public class ContentBasedFiltering {
         for (int val_user_idx = 0; val_user_idx < valUser.size(); ++val_user_idx) {
             
             float val = valUser.get(val_user_idx).getVal();
+
             if (val < 3.5f) continue; //THRESHHOLD. ARBITRARI
             //una millor alternativa podria ser, per exemple, selection algorithm per trobar la valoracio en la posicio floor(0.75*size)
 
@@ -86,7 +87,7 @@ public class ContentBasedFiltering {
             //iterem sobre tots els items no valorats
             for (int idxNV = 0; idxNV < items.size(); ++idxNV) {
                 Item iNV = items.get(idxNV);
-                if (valoracions.existeixValoracio(iNV.getId(), user.getId())) continue;
+                if (valoracions.existeixRecomanacio(iNV.getId(), user.getId())) continue;
                 
                 float similitud = 0;
                 try {similitud = items.distanciaItem(iNV, item_val);}
