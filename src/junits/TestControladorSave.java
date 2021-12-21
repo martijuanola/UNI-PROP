@@ -14,6 +14,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.After;
 
+/**
+ * Junit for the class ControladorSave
+ * @author     Pol
+ */
 public class TestControladorSave {
 	/* NOTA: Per a provar que aquesta classe funciona correctament, s'ha
 	 * s'ha de fer una lectura del que s'ha escrit en el fitxer, i
