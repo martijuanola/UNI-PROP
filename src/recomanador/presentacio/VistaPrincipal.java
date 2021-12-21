@@ -131,21 +131,22 @@ public class VistaPrincipal extends JFrame {
 			//LAYER DRETA
 			dreta = new JPanel();
 			dreta.setLayout(new GridLayout(2, 1, 0, 10));
+			
+			
+			recomana = new JButton("RECOMANA");
+			//recomana.setBackground(Color.RED);
+			//recomana.setForeground(Color.BLACK);
+			recs = new JPanel();
+			recsScrollable = new JScrollPane(recs);
+			recs.setAutoscrolls(true);
+			
 			if (cp.isAdmin()) {
 				dreta.add(modificar_algorisme);
 				dreta.add(test_algorisme);
 			}
 			else
 			{
-				recomana = new JButton("RECOMANA");
-				//recomana.setBackground(Color.RED);
-				//recomana.setForeground(Color.BLACK);
 				dreta.add(recomana);
-				
-				//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
-				recs = new JPanel();
-				recsScrollable = new JScrollPane(recs);
-				recs.setAutoscrolls(true);
 				dreta.add(recsScrollable);
 			}
 		

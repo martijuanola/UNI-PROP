@@ -200,19 +200,7 @@ public class ControladorPresentacio {
 			new VistaError(e.getMessage());
 		}
 	}
-	
-	public static ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
-		try
-		{
-			return domini.getAllItems();
-		}
-		catch (Exception e)
-		{
-			new VistaError(e.getMessage());
-			return null;
-		}
-	}
-	
+		
     public static void obreVistaPrincipal() {
         new VistaPrincipal();
     }
