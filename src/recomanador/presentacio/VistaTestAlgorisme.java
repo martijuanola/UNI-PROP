@@ -216,6 +216,9 @@ public class VistaTestAlgorisme extends JFrame {
 		
 		tornar_enrrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cp.setAlgorisme(Integer.toString(original_alg));
+				cp.setK(Integer.toString(original_k));
+				cp.setQ(Integer.toString(original_q));
 				vp.mostra();
 				dispose();				
 				//new VistaError("Falta tornar enrrere");
