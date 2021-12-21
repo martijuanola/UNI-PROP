@@ -265,11 +265,8 @@ public class VistaPrincipal extends JFrame {
         
         info_usuari.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaUsuari(cp.getId());
-				//cp.obreVistaModificarAlgorisme();				
-				
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
+				setVisible(false);
+				new VistaUsuari(vp);
 			}
         });
         
