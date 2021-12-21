@@ -108,11 +108,10 @@ public class VistaModificarAlgorisme extends JFrame {
 				if (!spinnerChanged)
 				{
 					spinnerChanged = true;
-					//if (barChanged)
-					//{
-						//cp.setK(ks.getValue().toString());
-						k.setValue(Integer.parseInt(ks.getValue().toString()));
-					//}
+					
+					cp.setK(ks.getValue().toString());
+					k.setValue(Integer.parseInt(ks.getValue().toString()));
+					
 					spinnerChanged = false;
 				}
 			}
@@ -123,11 +122,10 @@ public class VistaModificarAlgorisme extends JFrame {
 				if (!barChanged)
 				{
 					barChanged = true;
-					//if (!spinnerChanged)
-					//{
-						//cp.setK(Integer.toString(k.getValue()));
-						ks.setValue(k.getValue());
-					//}
+					
+					cp.setK(Integer.toString(k.getValue()));
+					ks.setValue(k.getValue());
+					
 					barChanged = false;
 				}
 			}
@@ -138,11 +136,10 @@ public class VistaModificarAlgorisme extends JFrame {
 				if (!spinnerChanged)
 				{
 					spinnerChanged = true;
-					if (barChanged)
-					{
-						//cp.setQ(qs.getValue().toString());
-						q.setValue(Integer.parseInt(qs.getValue().toString()));
-					}
+					
+					cp.setQ(qs.getValue().toString());
+					q.setValue(Integer.parseInt(qs.getValue().toString()));
+					
 					spinnerChanged = false;
 				}
 			}
@@ -153,25 +150,29 @@ public class VistaModificarAlgorisme extends JFrame {
 				if (!barChanged)
 				{
 					barChanged = true;
-					if (!spinnerChanged)
-					{
-						//cp.setQ(Integer.toString(q.getValue()));
-						qs.setValue(q.getValue());
-					}
+					
+					cp.setQ(Integer.toString(q.getValue()));
+					qs.setValue(q.getValue());
+					
 					barChanged = false;
 				}
 			}
 		});
         
-        /*alg.addActionListener(new ActionListener() {
+        alg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent  e) {
-				cb = (JComboBox<String>)e.getSource();
-				String algValue = cb.getSelectedItem().toString();
-				if (rate_value == "Sense valoració") rate_value = "0";
-				cp.valorar(stringedId, rate_value);
+				String algValue = Integer.toString(alg.getSelectedIndex());
+				System.out.print(algValue);
+				cp.setAlgorisme(algValue);
 			}
 		});
-					
+		
+		tornar_enrrere.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VistaError("Falta tornar enrrere");
+			}
+        });
+				
         /*
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
