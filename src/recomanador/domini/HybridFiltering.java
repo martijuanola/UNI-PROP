@@ -178,7 +178,7 @@ public class HybridFiltering {
      * 
      * @return     users of the cluster
      */
-    private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) {
+    private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) throws UserNotFoundException {
         
         if(!centroidesCalculats) {
             System.out.println("Executant k-means");
@@ -273,7 +273,12 @@ public class HybridFiltering {
         }        
 
         ArrayList<Usuari> usuaris_cluster = new ArrayList<Usuari>();
-        int centroid = closest_centroid.get(usuaris.cercaBinaria(user_ID));
+        int user_ID_pos = -1;
+        for(int i = 0; i < usuaris.size() && user_ID_pos == -1; i++) {
+            if(usuaris.get(i).getId() == user_ID) user_ID_pos = i;
+        }
+        if(user_ID_pos == -1) throw new UserNotFoundException(user_ID);
+        int centroid = closest_centroid.get(user_ID_pos);
         for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
             if (closest_centroid.get(idx_usuari) == centroid) {
                 usuaris_cluster.add(usuaris.get(idx_usuari));

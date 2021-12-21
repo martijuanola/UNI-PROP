@@ -5,8 +5,8 @@ package src.recomanador.excepcions;
 public class RecommendationNotFoundException extends Exception {
 
 	public RecommendationNotFoundException(int item_id, int user_id) {
-		super("The recommendation with the user with id " + user_id + " and the with the item with id " 
-			+ item_id + " was not found in de set of recomendations.");
+		super("La recomanació amb id d'usuari " + user_id + " i id d'item " 
+			+ item_id + " nos s'ha trobat al conjunt de recomanacions.");
 	}
 
 }

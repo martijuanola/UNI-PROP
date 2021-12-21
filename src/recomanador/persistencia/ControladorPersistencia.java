@@ -80,7 +80,7 @@ public class ControladorPersistencia {
 	 */
     public String getNomProjecte() throws FolderNotValidException
     {
-		if (carpeta == null) throw new FolderNotValidException("Project not initalized!!",true);
+		if (carpeta == null) throw new FolderNotValidException("Projecte no inicialitzat!!",true);
 		return carpeta.getName();
 	}
 	
@@ -607,7 +607,7 @@ public class ControladorPersistencia {
      */	
 	public void guardarEstat(ArrayList<String> estat) throws FolderNotValidException
 	{
-		if (estat.size() != 6) throw new FolderNotValidException("Too much/few values. (a,1,k,nomCjtI,posID,posNOM)");
+		if (estat.size() != 6) throw new FolderNotValidException("El nombre de valors no és el correcte. (a,1,k,nomCjtI,posID,posNOM)");
 		
 		ArrayList<ArrayList<String>> a = new ArrayList<ArrayList<String>>();
 		a.add(new ArrayList<String>());

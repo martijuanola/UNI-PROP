@@ -6,11 +6,11 @@ package src.recomanador.excepcions;
 public class ItemIdNotValidException extends Exception {
 
 	public ItemIdNotValidException(String s) {
-		super("The value " + s + " is not valid as a item id. Needs to be a integer.");
+		super("El valor " + s + " no és vàlid com a id. Ha de ser un int.");
 	}
 
 	public ItemIdNotValidException(int i) {
-		super("The column with index="+i+" can not be the id of items");
+		super("La columna amb index "+i+" no pot representar l'id dels items.");
 	}
 
 }
