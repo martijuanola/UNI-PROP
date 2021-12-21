@@ -7,7 +7,6 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.PrivilegesException;
 
 public class VistaAllItems extends JFrame {
@@ -15,8 +14,8 @@ public class VistaAllItems extends JFrame {
     boolean admin;
 
     VistaSessioNova vs;
-    ArrayList<String> na;
-    ArrayList<String> ta;
+    ArrayList<String> na; //Noms atributs
+    ArrayList<String> ta; //Tipus atributs
 
     ArrayList<String> ids;
     ArrayList<String> noms;
@@ -121,7 +120,15 @@ public class VistaAllItems extends JFrame {
             botons.add(espai2);
         }
 
-        exit = new JButton("Guardar i tornar");
+        if (SessioNova) {
+            exit = new JButton("Crear Projecte");
+        }
+        else if (admin) {
+            exit = new JButton("Guardar i tornar");
+        }
+        else {
+            exit = new JButton("Tornar");
+        }
         exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
             public void actionPerformed(ActionEvent e)
             {
@@ -176,14 +183,15 @@ public class VistaAllItems extends JFrame {
                     }*/
 
                     item = new ArrayList<ArrayList<String>>();
-                    for (int i = 0; i < 25; ++i) {
+                    for (int i = 0; i < na.size(); ++i) {
                         ArrayList<String> atribut = new ArrayList<String>();
                         for (int j = i; j < 26; ++j) {
-                            if (j == 25) atribut.add("");
+                            if (j == na.size()+1) atribut.add("");
                             else atribut.add("test");
                         }
+                        item.add(atribut);
                     }
-                    new VistaInformacioItem(item, instancia);
+                    new VistaInformacioItem(item, na, ta, instancia);
                     setVisible(false);
                 }
             });
