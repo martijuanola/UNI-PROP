@@ -6,6 +6,7 @@ compile:
 	@rm classes.txt
 
 run:
+	make compile
 	java -cp bin:. src.recomanador.presentacio.ControladorPresentacio
 
 

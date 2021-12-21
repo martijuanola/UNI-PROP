@@ -110,8 +110,7 @@ public class CollaborativeFiltering {
      * 
      * @return     users of the cluster
      */
-    private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) {
-        
+    private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) throws UserNotFoundException {
         if(!centroidesCalculats) {
             System.out.println("Executant k-Means");
             centroidesCalculats = true;
@@ -205,7 +204,12 @@ public class CollaborativeFiltering {
         }        
 
         ArrayList<Usuari> usuaris_cluster = new ArrayList<Usuari>();
-        int centroid = closest_centroid.get(usuaris.cercaBinaria(user_ID));
+        int user_ID_pos = -1;
+        for(int i = 0; i < usuaris.size() && user_ID_pos == -1; i++) {
+            if(usuaris.get(i).getId() == user_ID) user_ID_pos = i;
+        }
+        if(user_ID_pos == -1) throw new UserNotFoundException(user_ID);
+        int centroid = closest_centroid.get(user_ID_pos);
         for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
             if (closest_centroid.get(idx_usuari) == centroid) {
                 usuaris_cluster.add(usuaris.get(idx_usuari));
@@ -232,14 +236,10 @@ public class CollaborativeFiltering {
         ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(user.getId());
         ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
         
-        //System.out.println("\n\nFOR1: Checking every item");
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
-            //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
             Item j_item = items.get(j_idx);
-            if (valoracions.existeixValoracio(j_item.getId(), user.getId())) {
-                //System.out.println("Item had been rated");
-                continue;
-            } 
+            //si l'item ja esta recomanat o valorat
+            if (valoracions.existeixRecomanacio(j_item.getId(), user.getId())) continue;
             
             
             int card_rj = 0;

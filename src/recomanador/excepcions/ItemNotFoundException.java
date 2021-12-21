@@ -3,6 +3,6 @@ package src.recomanador.excepcions;
 
 public class ItemNotFoundException extends Exception { 
     public ItemNotFoundException(String errorMessage) {
-        super("Tried to access an Item which doesn't exist " + errorMessage);
+        super("S'ha provat d'accedir a un item que no existeix." + errorMessage);
     }
 }

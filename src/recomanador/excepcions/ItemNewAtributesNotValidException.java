@@ -3,7 +3,7 @@ package src.recomanador.excepcions;
 public class ItemNewAtributesNotValidException extends Exception {
 
 	public ItemNewAtributesNotValidException(int n) {
-		super("The number of atributes is not correct. There should be " + n + " atributes for each item.");
+		super("El nombre d'atributs no és correcte. Hi hauria d'haver " + n + " atributs per cada Item.");
 	}
 
 }

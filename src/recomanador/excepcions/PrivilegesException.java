@@ -5,11 +5,11 @@ package src.recomanador.excepcions;
 public class PrivilegesException extends Exception {
 
 	public PrivilegesException() {
-		super("The active user doesn't have the privileges to execute this functionality of the application.");
+		super("L'usuari actiu no té privilegis per executar aquesta funcionalitat de l'aplicació.");
 	}
 
 	public PrivilegesException(String s) {
-		super("The active user doesn't have the privileges to execute this functionality of the application." + s);
+		super("L'usuari actiu no té privilegis per executar aquesta funcionalitat de l'aplicació." + s);
 	}
 
 }

@@ -43,6 +43,22 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     /*----- CONSULTORES -----*/
 
     /**
+     * Returns if a recommendation of an item <i>itemid</i> to a user <i>userid</i> 
+     * exisist in the set of recommendations.
+     *
+     * @param      itemid  The id of the item
+     * @param      userid  The id of the user
+     *
+     * @return     True if the recomndation has been found
+     */
+    public boolean existeixRecomanacio(int itemid, int userid) {
+        int pos = cercaBinaria(itemid,userid);
+        if(pos < 0 || pos >= this.size()) return false;
+        else if(this.get(pos).checkIds(itemid, userid)) return true;
+        else return false;
+    }
+
+    /**
      * Returns if a recommendation with a rating of an item <i>itemid</i> to a user <i>userid</i> 
      * exisist in the set of recommendations.
      *
@@ -208,16 +224,16 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
                 v = Float.parseFloat(fila.get(2));
             }
             catch(NumberFormatException e) {
-                throw new DataNotValidException(fila.get(2),"Rating value not valid. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
+                throw new DataNotValidException(fila.get(2),"Valor de recomanació no vàlid. Ha de ser un float entre 0.0 i 5.0 amb la part decimal igual a .0 o a .5.");
             }
 
-            if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new DataNotValidException(fila.get(2),"Rating value not valid. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
+            if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new DataNotValidException(fila.get(2),"Valor de recomanació no vàlid. Ha de ser un float entre 0.0 i 5.0 amb la part decimal igual a .0 o a .5.");
 
             try {
                 i = ci.getItem(Integer.parseInt(fila.get(1)));
             }
             catch(NumberFormatException e) {
-                throw new DataNotValidException(fila.get(1),"Item ID not valid. Needs to be an integer.");
+                throw new DataNotValidException(fila.get(1),"Item ID no vàlid. Ha de ser un int.");
             }
 
             try {
@@ -225,7 +241,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
                 u = cu.getUsuari(Integer.parseInt(fila.get(0)));
             }
             catch(NumberFormatException e) {
-                throw new DataNotValidException(fila.get(0),"User ID not valid. Needs to be an integer.");
+                throw new DataNotValidException(fila.get(0),"Usuari ID no vàlid. Ha de ser un int.");
             }
 
             Recomanacio r = new Recomanacio(u, i, v);
@@ -234,8 +250,6 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
     }
 
     /*----- ALTRES -----*/
-
-    //hauria de ser private
 
    /**
      * Returns de index of the element with item id = <i>item_id</i> and user 
@@ -247,7 +261,7 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      *
      * @return     The index where the user should be
      */
-    public int cercaBinaria(int item_id, int usuari_id) {  
+    private int cercaBinaria(int item_id, int usuari_id) {  
         int first = 0;
         int last = this.size()-1;
         while(first <= last) {

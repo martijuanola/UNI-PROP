@@ -119,7 +119,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException When the user is not loged in as a user.
      */
     public String getActiveUserId() throws PrivilegesException {
-        if(this.id == NULL_ID) throw new PrivilegesException("Needs to be loged in as a USER.");
+        if(this.id == NULL_ID) throw new PrivilegesException("Has d'haver entrat com un usuari.");
 
         return String.valueOf(this.id);
     }
@@ -163,10 +163,10 @@ public class ControladorDomini {
             cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
         catch(DataNotValidException e) {
-            throw new FolderNotValidException("There is invalid data in ratings file." + e.getMessage(), true);
+            throw new FolderNotValidException("Hi ha dades no vàlides al fitxer de ratings." + e.getMessage(), true);
         }
         catch(ItemNotFoundException | UserNotFoundException e) {
-            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
+            throw new FolderNotValidException("Hi ha algun Item o Usuari no trobat. Alguns fitxers no son vàlids.", true);
         }
 
         ArrayList<String> estat = cp.carregarEstat();
@@ -178,11 +178,7 @@ public class ControladorDomini {
         ci.setNomCjItems(estat.get(3));
 
         try{
-            Item.setId(Integer.parseInt(estat.get(4)));
             Item.setNomA(Integer.parseInt(estat.get(5)));
-        }
-        catch(ItemIdNotValidException e) {
-            throw new DataNotValidException(estat.get(4),"El valor guardat de POS ITEM ID no és correcte!");
         }
         catch(ItemStaticValuesAlreadyInitializedException e) {
             System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
@@ -220,10 +216,10 @@ public class ControladorDomini {
             cr = new ConjuntRecomanacions(ci,cu,valoracions);
         }
         catch(DataNotValidException e) {
-            throw new FolderNotValidException("There is invalid data in ratings file" + e.getMessage(), true);
+            throw new FolderNotValidException("Hi ha dades no vàlides al fitxer de ratings." + e.getMessage(), true);
         }
         catch(ItemNotFoundException | UserNotFoundException e) {
-            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
+            throw new FolderNotValidException("Hi ha algun Item o Usuari no trobat. Alguns fitxers no son vàlids.", true);
         }
 
         //Crear Projecte
@@ -247,7 +243,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException          You need to be an admin to perform this functionallity.
      */
     public void createEmptySession(String projName, ArrayList<String> nomsAtriubts, ArrayList<String> tipusAtriubtsS) throws PrivilegesException, FolderNotValidException, ItemTypeNotValidException, DataNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");       
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");       
         resetData();
 
         cp.crearProjecte(projName);
@@ -333,7 +329,7 @@ public class ControladorDomini {
             cda.set_Q(ci.size()/2);
         }
         catch (DataNotValidException e) {
-            throw new DataNotValidException(ci.size()/2,"Q needs to be greater than 0(There are no items)");
+            throw new DataNotValidException(ci.size()/2,"Q ha de ser superior a 0(No hi ha Items)");
         }
 
         ConjuntUsuaris usuarisUnknown = new ConjuntUsuaris();
@@ -348,10 +344,10 @@ public class ControladorDomini {
             recomanacionsUnknown.afegirDades(ci,usuarisUnknown,raw);
         }
         catch(DataNotValidException e) {
-            throw new FolderNotValidException("There is invalid data in ratings file", true);
+            throw new FolderNotValidException("Hi ha dades no vàlides al fitxer de ratings.", true);
         }
         catch(ItemNotFoundException | UserNotFoundException e) {
-            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
+            throw new FolderNotValidException("Hi ha algun Item o Usuari no trobat. Alguns fitxers no son vàlids.", true);
         }
 
         //KNOWN
@@ -364,10 +360,10 @@ public class ControladorDomini {
             recomanacions.afegirDades(ci,usuaris,raw);
         }
         catch(DataNotValidException e) {
-            throw new FolderNotValidException("There is invalid data in ratings file", true);
+            throw new FolderNotValidException("Hi ha dades no vàlides al fitxer de ratings.", true);
         }
         catch(ItemNotFoundException | UserNotFoundException e) {
-            throw new FolderNotValidException("There are missing Users or Items. Some files are not valid.", true);
+            throw new FolderNotValidException("Hi ha algun Item o Usuari no trobat. Alguns fitxers no son vàlids.", true);
         }
 
         int DCG = 0;
@@ -506,7 +502,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException                      You need to be an admin to perform this functionallity.
      */
     public void addItem(ArrayList<ArrayList<String>> atributs) throws PrivilegesException, ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         ci.add(new Item(atributs));
     }
 
@@ -520,7 +516,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException                      You need to be an admin to perform this functionallity.
      */
     public void removeItem(String id) throws PrivilegesException, ItemNotFoundException, ItemStaticValuesNotInitializedException{
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         cr.removeRecomanacionsItem(Integer.parseInt(id));
         ci.eliminarItem(Integer.parseInt(id));
     }
@@ -536,7 +532,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException                      You need to be an admin to perform this functionallity.
      */
     public void editItem(ArrayList<ArrayList<String>> atributs) throws PrivilegesException, ItemNotFoundException, ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         ci.eliminarItem(Integer.parseInt(atributs.get(Item.getPosId()).get(0)));
         ci.add(new Item(atributs));
     }
@@ -550,7 +546,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
     public ArrayList<String> getPesos() throws PrivilegesException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         ArrayList<Float> pesos = Item.getPesos();
         ArrayList<String> aux = new ArrayList<String>();
         for(int i = 0; i < pesos.size(); i++) aux.add(String.valueOf(pesos.get(i)));
@@ -566,7 +562,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException            You need to be an admin to perform this functionallity.
      */
     public void setPesos(ArrayList<String> pesosS) throws PrivilegesException, ItemWeightNotCorrectException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         ArrayList<Float> pesos = new ArrayList<Float>();
         for(int i = 0; i < pesosS.size(); i++) pesos.add(Float.parseFloat(pesosS.get(i)));
         Item.setPesos(pesos);
@@ -594,7 +590,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException                          You need to be an admin to perform this functionallity.
      */
     public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemTypeNotValidException, DataNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
         ArrayList<tipus> tipus = new ArrayList<tipus>();
         for(int i = 0; i < tipusS.size(); i++) tipus.add(StringOperations.stringToType(tipusS.get(i)));
         Item.setTipusArray(tipus);
@@ -614,7 +610,7 @@ public class ControladorDomini {
      */
     public ArrayList<ArrayList<String>> getAllRecomanacionsUsuari(String idS) throws PrivilegesException {
         int idR = Integer.parseInt(idS);
-        if(!admin && idR != this.id) throw new PrivilegesException("A USER can only work with its Recommendations.");
+        if(!admin && idR != this.id) throw new PrivilegesException("Un usuari només pot treballar amb les seves recomanacions.");
         ArrayList<ArrayList<String>> aux = cr.getRecomanacionsNoValorades(idR).getAllRecomanacions();
         aux.remove(0);
         return aux;
@@ -631,7 +627,7 @@ public class ControladorDomini {
      */
     public ArrayList<ArrayList<String>> getAllValoracionsUsuari(String idS) throws PrivilegesException {
         int idR = Integer.parseInt(idS);
-        if(!admin && idR != this.id) throw new PrivilegesException("A USER can only work with its Recommendations.");
+        if(!admin && idR != this.id) throw new PrivilegesException("Un usuari només pot treballar amb les seves recomanacions.");
         ArrayList<ArrayList<String>> aux = cr.getValoracions(idR).getAllRecomanacions();
         aux.remove(0);
         return aux;
@@ -649,7 +645,7 @@ public class ControladorDomini {
      * @throws     RecommendationNotFoundException  The item and user has no relation as a recommendation.
      */
     public void setValoracio(String itemId, String usuariId, String rating) throws PrivilegesException, RecommendationNotFoundException, RatingNotValidException {
-        if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("A USER can only work with its Recommendations.");
+        if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("Un usuari només pot treballar amb les seves recomanacions.");
         cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Float.parseFloat(rating));
     }
 
@@ -664,7 +660,7 @@ public class ControladorDomini {
      * @throws     RecommendationNotFoundException  The item and user has no relation as a recommendation.
      */
     public void removeValoracio(String itemId, String usuariId) throws PrivilegesException, RecommendationNotFoundException, RatingNotValidException {
-        if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("A USER can only work with its Recommendations.");
+        if(!admin && Integer.parseInt(usuariId) != this.id) throw new PrivilegesException("Un usuari només pot treballar amb les seves recomanacions.");
         cr.getRecomanacio(Integer.parseInt(itemId),Integer.parseInt(usuariId)).setVal(Recomanacio.nul);
     }
 
@@ -687,7 +683,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException  You need to be loged in as a user to perform this functionallity.
      */
     public void createRecomanacions() throws PrivilegesException {
-        if(admin) throw new PrivilegesException("Needs to be loged in as a USER.");
+        if(admin) throw new PrivilegesException("Has d'haver entrat com un usuari.");
         try{
             ArrayList<ItemValoracioEstimada> newRecomanacions = cda.run_algorithm(id, ci, cu, cr);
             for(int i = 0; i < newRecomanacions.size(); i++) cr.add(new Recomanacio(cu.getUsuari(id),newRecomanacions.get(i).item));
@@ -709,7 +705,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
     public String getK() throws PrivilegesException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         return String.valueOf(cda.get_k());
     }
 
@@ -721,7 +717,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
     public String getQ() throws PrivilegesException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         return String.valueOf(cda.get_Q());
     }
 
@@ -736,7 +732,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
     public String getAlgorisme() throws PrivilegesException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         return String.valueOf(cda.get_algorisme());
     }
 
@@ -749,7 +745,7 @@ public class ControladorDomini {
      * @throws     DataNotValidException    The value entered is not valid.
      */
     public void setK(String k) throws PrivilegesException, DataNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         cda.set_k(Integer.parseInt(k));
     }
 
@@ -762,7 +758,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException    You need to be an admin to perform this functionallity.
      */
     public void setQ(String q) throws PrivilegesException, DataNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         cda.set_Q(Integer.parseInt(q));
     }
 
@@ -778,7 +774,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException    You need to be an admin to perform this functionallity.
      */
     public void setAlgorisme(String a) throws PrivilegesException, DataNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         cda.seleccionar_algorisme(Integer.parseInt(a));
     }
 
@@ -792,7 +788,7 @@ public class ControladorDomini {
      * @throws     PrivilegesException  You need to be an admin to perform this functionallity.
      */
     public ArrayList<String> getAllUsuaris() throws PrivilegesException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         ArrayList<String> r = new ArrayList<String>();
         for(int i = 0; i < cu.size(); i++) r.add(String.valueOf(cu.get(i).getId()));
         return r;
@@ -807,7 +803,7 @@ public class ControladorDomini {
      * @throws     UserIdNotValidException  The id is not a valid id(it may already be being used)
      */
     public void addUsuari(String id) throws PrivilegesException, UserIdNotValidException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         if(!cu.add(new Usuari(Integer.parseInt(id)))) throw new UserIdNotValidException(Integer.parseInt(id));
     }
 
@@ -820,7 +816,7 @@ public class ControladorDomini {
      * @throws     UserNotFoundException  The id is not a valid user id.
      */
     public void removeUsuari(String id) throws PrivilegesException, UserNotFoundException {
-        if(!admin) throw new PrivilegesException("Needs to be ADMIN.");
+        if(!admin) throw new PrivilegesException("Has de ser administrador.");
         cr.removeRecomanacionsUsuari(Integer.parseInt(id));
         cu.removeUsuari(Integer.parseInt(id));
     }

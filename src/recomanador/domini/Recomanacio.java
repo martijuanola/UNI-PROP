@@ -47,7 +47,7 @@ public class Recomanacio implements Comparable<Recomanacio> {
      * @throws     DataNotValidException If the ratings is not a valid float.
      */
     public Recomanacio(Usuari u, Item i, float v) throws DataNotValidException {
-        if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new DataNotValidException(v,"Rating value not valid. Needs to be a float between 0.0 and 5.0 and the floating part can be .0 or .5.");
+        if(v < 0.0 || v > 5.0 || !( v % 1 == 0.0 || v % 1 == 0.5 )) throw new DataNotValidException(v,"Valor de recomanació no vàlid. Ha de ser un float entre 0.0 i 5.0 amb la part decimal igual a .0 o a .5");
         usr = u;
         item = i;
         valoracio = v;
