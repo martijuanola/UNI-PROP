@@ -15,22 +15,37 @@ import java.lang.Math;
 public class VistaTestAlgorisme extends JFrame {
     JPanel panel;
 	
-	JLabel text_inicial;
+	//Esquerra
+	JPanel esquerra;
+		
+		JLabel text_inicial;
+		
+		JPanel dataPanel;
+		
+		JLabel alg_lab;
+		JLabel k_param_lab;
+		JLabel q_param_lab;
+		
+		JComboBox alg;
+		JSlider k;
+		JSlider q;
+		
+		JSpinner ks;
+		JSpinner qs;
+		
+		JButton pesos;
+		JButton tornar_enrrere;
+	//Dreta
+	JPanel dreta;
+		
+		JButton testejar;
+		
+		JPanel resultsPanel;
+		JLabel DCG;
+		JLabel NDCG;
 	
-	JPanel dataPanel;
 	
-	JLabel alg_lab;
-	JLabel k_param_lab;
-	JLabel q_param_lab;
-	
-	JComboBox alg;
-	JSlider k;
-	JSlider q;
-	
-	JSpinner ks;
-	JSpinner qs;
-	
-    JButton tornar_enrrere;
+    
     
     /*----- DADES -----*/
     String[] algorismes =  {"Collaborative filtering", 
@@ -48,55 +63,76 @@ public class VistaTestAlgorisme extends JFrame {
 
         panel = new JPanel();
         
-		text_inicial = new JLabel("Paràmetres de l'algorisme");
-		alg_lab = new JLabel("Algorisme seleccionat: ");
-		k_param_lab = new JLabel("Paràmetre K:");
-		q_param_lab = new JLabel("Paràmetre Q:");
+        //Part ESQUERRA
+			text_inicial = new JLabel("NOTA: els canvis realitzars en aquest " +
+					"apartat són temporals. Es revertiran en sortir.");
+			alg_lab = new JLabel("Algorisme seleccionat: ");
+			k_param_lab = new JLabel("Paràmetre K:");
+			q_param_lab = new JLabel("Paràmetre Q:");
+			
+			alg = new JComboBox(algorismes);
+			
+			int nb = Math.max(Integer.parseInt(cp.getQ()), Integer.parseInt(cp.getK()));
+			nb = Math.max(cp.getAllItems().size(), nb);
+			nb = Math.max(1, nb);
+			
+			k = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
+			k.setPaintTicks(true);
+			k.setPaintLabels(true);
+			k.setMajorTickSpacing(nb/5);
+			
+			ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getK()), 1, nb, 1));
+			
+			q = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
+			q.setPaintTicks(true);
+			q.setPaintLabels(true);
+			q.setMajorTickSpacing(nb/5);
+			
+			qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 1, nb, 1));
+			
+			tornar_enrrere = new JButton("Enrrere");
+			
+			
+			dataPanel = new JPanel();
+			dataPanel.setLayout(new GridLayout(3, 3));     
+			dataPanel.add(alg_lab);
+			dataPanel.add(alg);
+			dataPanel.add(new JLabel(""));
+			dataPanel.add(k_param_lab);
+			dataPanel.add(k);
+			dataPanel.add(ks);
+			dataPanel.add(q_param_lab);
+			dataPanel.add(q);
+			dataPanel.add(qs);
+			
+			pesos = new JButton("Modificar Pesos");
+			
+			esquerra = new JPanel();
+			esquerra.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
+			esquerra.setLayout(new GridLayout(4, 1));
+			
+			esquerra.add(text_inicial);
+			esquerra.add(dataPanel);
+			esquerra.add(tornar_enrrere);
 		
-		alg = new JComboBox(algorismes);
-		
-		int nb = Math.max(Integer.parseInt(cp.getQ()), Integer.parseInt(cp.getK()));
-		nb = Math.max(cp.getAllItems().size(), nb);
-		
-		k = new JSlider(JSlider.HORIZONTAL, 0, nb, 5);
-		k.setPaintTicks(true);
-		k.setPaintLabels(true);
-		k.setMajorTickSpacing(nb/5);
-		
-		ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getK()), 0, nb, 1));
-		
-		q = new JSlider(JSlider.HORIZONTAL, 0, nb, 5);
-		q.setPaintTicks(true);
-		q.setPaintLabels(true);
-		q.setMajorTickSpacing(nb/5);
-		
-		qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 0, nb, 1));
-		
-		tornar_enrrere = new JButton("Enrrere");
-		
-		
-		dataPanel = new JPanel();
-		dataPanel.setLayout(new GridLayout(3, 3));     
-		dataPanel.add(alg_lab);
-		dataPanel.add(alg);
-		dataPanel.add(new JLabel(""));
-		dataPanel.add(k_param_lab);
-		dataPanel.add(k);
-		dataPanel.add(ks);
-		dataPanel.add(q_param_lab);
-		dataPanel.add(q);
-		dataPanel.add(qs);
-		
+		//Part DRETA
+			dreta = new JPanel();
+			dreta.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
+			dreta.setLayout(new GridLayout(2, 1));
+			
+			
+		//Part GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
-        panel.setLayout(new GridLayout(3, 1));
-		
-		panel.add(text_inicial);
-		panel.add(dataPanel);
-		panel.add(tornar_enrrere);
-		
+        panel.setLayout(new GridLayout(1, 2));
+        
+        panel.add(esquerra);
+        panel.add(dreta);
+        
+        
+        
         add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Prova dels algorismes de recomanació");
+        setTitle("Avaluació de l'algorisme.");
         pack();
         setVisible(true);
         
@@ -169,7 +205,9 @@ public class VistaTestAlgorisme extends JFrame {
 		
 		tornar_enrrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VistaError("Falta tornar enrrere");
+				vp.mostra();
+				dispose();				
+				//new VistaError("Falta tornar enrrere");
 			}
         });
 				
