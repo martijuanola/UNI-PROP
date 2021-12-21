@@ -34,7 +34,7 @@ public class VistaTestAlgorisme extends JFrame {
 		JSpinner qs;
 		
 		JButton pesos;
-		JButton tornar_enrrere;
+		JButton tornar_enrere;
 	//Dreta
 	JPanel dreta;
 		
@@ -57,6 +57,7 @@ public class VistaTestAlgorisme extends JFrame {
     int original_alg;
     int original_k;
     int original_q;
+    ArrayList<String> original_pesos;
     
     /*----- FUNCIONS -----*/
     public VistaTestAlgorisme(VistaPrincipal vp) {
@@ -70,7 +71,15 @@ public class VistaTestAlgorisme extends JFrame {
         original_alg = Integer.parseInt(cp.getAlgorisme());
         original_k = Integer.parseInt(cp.getK());
         original_q = Integer.parseInt(cp.getQ());
-        
+        try
+		{
+			original_pesos = cp.getPesos();
+		}
+		catch (Exception e)
+		{
+			new VistaError(e.getMessage());
+			original_pesos = null;
+		}
         //Part ESQUERRA
 			text_inicial = new JLabel("NOTA: els canvis realitzars en aquest " +
 					"apartat són temporals. Es revertiran en sortir.");
@@ -101,7 +110,7 @@ public class VistaTestAlgorisme extends JFrame {
 			
 			qs = new JSpinner(new SpinnerNumberModel(original_q, 1, nb, 1));
 			
-			tornar_enrrere = new JButton("Enrrere");
+			tornar_enrere = new JButton("Enrere");
 			
 			
 			dataPanel = new JPanel();
@@ -124,9 +133,9 @@ public class VistaTestAlgorisme extends JFrame {
 			
 			esquerra.add(text_inicial);
 			esquerra.add(dataPanel);
-			esquerra.add(tornar_enrrere);
 			esquerra.add(pesos);
-		
+			esquerra.add(tornar_enrere);
+								
 		//Part DRETA
 			dreta = new JPanel();
 			dreta.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
@@ -222,11 +231,19 @@ public class VistaTestAlgorisme extends JFrame {
 			}
 		});
 		
-		tornar_enrrere.addActionListener(new ActionListener() {
+		tornar_enrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cp.setAlgorisme(Integer.toString(original_alg));
 				cp.setK(Integer.toString(original_k));
 				cp.setQ(Integer.toString(original_q));
+				try
+				{
+					cp.setPesos(original_pesos);
+				}
+				catch (Exception error)
+				{
+					new VistaError(error.getMessage());
+				}
 				vp.mostra();
 				dispose();				
 				//new VistaError("Falta tornar enrrere");
@@ -243,7 +260,13 @@ public class VistaTestAlgorisme extends JFrame {
 				}
 			}
         });
-				
+        
+        pesos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new VistaError("Canviar a vista pesos");
+			}
+        });
+					
         /*
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
