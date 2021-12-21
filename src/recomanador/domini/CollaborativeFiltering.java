@@ -140,12 +140,12 @@ public class CollaborativeFiltering {
             }
             
             boolean has_changed = true;
-            int count = 0;
+            //int count = 0;
             while (has_changed){
-                System.out.println(count + " ");
-                count++;
+                //System.out.println(count + " ");
+                //count++;
                 has_changed = false;
-                System.out.println("A");
+                //System.out.println("A");
                 for(int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {                
 
                     int min_centroid = 0;
@@ -167,7 +167,7 @@ public class CollaborativeFiltering {
                         closest_centroid.put(idx_usuari, min_centroid);
                     }
                 }
-                System.out.println("B");
+                //System.out.println("B");
                 if(has_changed) {
                     for (int idx_usuari = 0; idx_usuari < usuaris.size(); ++idx_usuari) {
                         int centroid = closest_centroid.get(idx_usuari);
@@ -187,7 +187,7 @@ public class CollaborativeFiltering {
                         }
 
                     }
-                    System.out.println("C");
+                    //System.out.println("C");
                     for (int centroid = 0; centroid < K; ++centroid) {
                         for (int idx_item = 0; idx_item < items.size(); ++idx_item) {
 
