@@ -65,33 +65,51 @@ public class ControladorPresentacio {
 				String nom = item.get(Integer.parseInt(domini.getPosNomItem())).get(0);
 				temp.get(i).add(nom);
 			}
-			
+			System.out.print("--------------------");
+			System.out.print("--- Provant algo ---");
+			System.out.print("--------------------");
 			//La diferència de conjunts serà els que es mostrarà
 			return temp;
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
+			System.out.print("--------------------");
+			System.out.print("--- Error  Error ---");
+			System.out.print("--------------------");
 			return null;
 		}
 	}
 	
+	public static ArrayList<ArrayList<String>> executarAlgorisme3()
+	{
+		ArrayList<ArrayList<String>> x = new ArrayList<ArrayList<String>>();
+		
+		x.add(new ArrayList<String>());
+		x.get(0).add("123");
+		x.get(0).add("Regreso al futuro");
+		
+		x.add(new ArrayList<String>());
+		x.get(1).add("80085");
+		x.get(1).add("Nananan bat-man");
+		
+		return x;
+	}
+	
 	public static String getId() {
-		/*try {		
+		try {		
 			return domini.getActiveUserId();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 			return "ERROR";
-		}*/
-		return "32";
+		}
 	}
 	
 	public static String getNomProjecte() {
-		return "32";
-		/*try {		
+		try {		
 			return domini.getNomProjecte();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 			return "ERROR";
-		}*/
+		}
 	}
 	
 	public static void guardar() {
@@ -104,8 +122,61 @@ public class ControladorPresentacio {
 		}
 	}
 		
-	public static boolean isAdmin() {	
+	public static boolean isAdmin() {
 		return domini.isAdmin();
+	}
+	public static String getAlgorisme() {
+		try {		
+			return domini.getAlgorisme();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "0";
+		}
+	}
+	
+	public static String getQ() {
+		try {		
+			return domini.getQ();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "0";
+		}
+	}
+	
+	public static String getK() {
+		try {		
+			return domini.getK();
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+			return "0";
+		}
+	}
+	
+	public static void setAlgorisme(String alg) {
+		try
+		{
+			domini.setAlgorisme(alg);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void setQ(String q) {
+		try
+		{
+			domini.setQ(q);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void setK(String k) {
+		try
+		{
+			domini.setK(k);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
 	}
 	
 	public static void logOut() {
@@ -129,7 +200,7 @@ public class ControladorPresentacio {
 			new VistaError(e.getMessage());
 		}
 	}
-	
+		
     public static void obreVistaPrincipal() {
         new VistaPrincipal();
     }
@@ -224,30 +295,19 @@ public class ControladorPresentacio {
         //TODO:OMPLIR
         new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
     }
-    
-    public static void obreVistaModificarAlgorisme() {
-        //TODO:OMPLIR
-        new VistaError("OBRE VISTA DE MODIFICAR L'ALGORISME");
-    }
-    
-    public static void obreVistaTestAlgorisme() {
-        //TODO:OMPLIR
-        new VistaError("OBRE VISTA DE TEST DE L'ALGORISME");
-    }
-
+    	
+	public static void valorar(String id_item, String rate)
+	{
+		try {
+			domini.setValoracio(id_item, getId(), rate);
+		} catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
     public static void main(String[] args) {
         instancia = new ControladorPresentacio();
-        obreVistaInicial();  
-
-		/* CREAR SESSIO "totalll" AMB ITEMS 250
-		try {
-			domini.loginAdmin();
-			domini.createSession("totalll", "/home/jaume/Documents/PROP/projecte/subgrup-prop5-5/data/movies-250/items.csv", "/home/jaume/Documents/PROP/projecte/subgrup-prop5-5/data/movies-250/ratings.db.csv");
-			obreVistaEscollirAtributs();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
+        obreVistaInicial();
     }
 
     /* -----------------------------------------------------------------

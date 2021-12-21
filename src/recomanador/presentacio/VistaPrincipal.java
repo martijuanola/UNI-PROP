@@ -60,6 +60,7 @@ public class VistaPrincipal extends JFrame {
     /*----- DADES -----*/
     ArrayList<String> id_recomanacions;
     ArrayList<String> nom_recomanacions;
+    JComboBox<String> cb;
     String[] options = {"Sense valoració", "0.5", "1.0", 
 								"1.5", "2.0", "2.5", "3.0",
 								"3.5", "4.0", "4.5", "5.0"};
@@ -67,13 +68,13 @@ public class VistaPrincipal extends JFrame {
     /*----- FUNCIONS -----*/
     public VistaPrincipal() {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
-        
+        VistaPrincipal vp = this;
         setMinimumSize(new Dimension(550, 250));
         setSize(new Dimension(1000, 900));
 
         panel = new JPanel();
-		
-		cp.canviarFontUI (new javax.swing.plaf.FontUIResource("Calibri",Font.PLAIN,20));
+        
+		//cp.canviarFontUI (new javax.swing.plaf.FontUIResource("Calibri",Font.PLAIN,20));
 		//this.setFont(this.getFont().deriveFont(Float(20.0f)));
         
         //LAYER E
@@ -130,21 +131,22 @@ public class VistaPrincipal extends JFrame {
 			//LAYER DRETA
 			dreta = new JPanel();
 			dreta.setLayout(new GridLayout(2, 1, 0, 10));
+			
+			
+			recomana = new JButton("RECOMANA");
+			//recomana.setBackground(Color.RED);
+			//recomana.setForeground(Color.BLACK);
+			recs = new JPanel();
+			recsScrollable = new JScrollPane(recs);
+			recs.setAutoscrolls(true);
+			
 			if (cp.isAdmin()) {
 				dreta.add(modificar_algorisme);
 				dreta.add(test_algorisme);
 			}
 			else
 			{
-				recomana = new JButton("RECOMANA");
-				//recomana.setBackground(Color.RED);
-				//recomana.setForeground(Color.BLACK);
 				dreta.add(recomana);
-				
-				//recs = new JScrollPane(Rule.VERTICAL_SCROLLBAR_ALWAYS, Rule.HORIZONTAL_SCROLLBAR_ALWAYS); //H never?
-				recs = new JPanel();
-				recsScrollable = new JScrollPane(recs);
-				recs.setAutoscrolls(true);
 				dreta.add(recsScrollable);
 			}
 		
@@ -234,6 +236,21 @@ public class VistaPrincipal extends JFrame {
 							cp.obreVistaInformacioItem(stringedId);
 						}
 					});
+					
+					nom_item.get(k).addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							cp.obreVistaInformacioItem(stringedId);
+						}
+					});
+					
+					rate.get(k).addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent  e) {
+							cb = (JComboBox<String>)e.getSource();
+							String rate_value = cb.getSelectedItem().toString();
+							if (rate_value == "Sense valoració") rate_value = "0";
+							cp.valorar(stringedId, rate_value);
+						}
+					});
 				}
             }
         });
@@ -249,6 +266,8 @@ public class VistaPrincipal extends JFrame {
         info_usuari.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cp.obreVistaUsuari(cp.getId());
+				//cp.obreVistaModificarAlgorisme();				
+				
 				//Fer invisible temporalment la vista aquesta?
 				//Això si, sense eliminar-la
 			}
@@ -272,7 +291,8 @@ public class VistaPrincipal extends JFrame {
         
         modificar_algorisme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaModificarAlgorisme();
+				setVisible(false);
+				new VistaModificarAlgorisme(vp);
 				//Fer invisible temporalment la vista aquesta?
 				//Això si, sense eliminar-la
 			}
@@ -280,7 +300,8 @@ public class VistaPrincipal extends JFrame {
         
         test_algorisme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaTestAlgorisme();
+				setVisible(false);
+				new VistaTestAlgorisme(vp);
 				//Fer invisible temporalment la vista aquesta?
 				//Això si, sense eliminar-la
 			}
@@ -321,5 +342,9 @@ public class VistaPrincipal extends JFrame {
 			}
         });
          */
+	}
+	
+	public void mostra() {
+		setVisible(true);
 	}
 }
