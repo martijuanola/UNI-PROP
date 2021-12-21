@@ -72,7 +72,7 @@ public class ConjuntItems extends ArrayList<Item> {
             ItemWeightNotCorrectException, ItemStaticValuesAlreadyInitializedException,
             ItemIdNotValidException, ItemStaticValuesNotInitializedException,
             ItemNewAtributesNotValidException, DataNotValidException {
-        //Inicialitzar tots els valors estàtics d'item i els max i min Atributs
+        //Inicialitzar tots els valors estàtics d'item i els max i min per defecte d'Atributs
         Item.inicialitzarStaticsDefault(items.get(0));
         inicialitzarMinMax();
 
@@ -84,8 +84,12 @@ public class ConjuntItems extends ArrayList<Item> {
             Item it = new Item(str);
             add(it);//Afegeix ordenat
         }
+
         //S'assignen els tipus de cada columna
         detectarTipusAtributs();
+
+        //calcular maxims i minims
+        for (int i = 0; i < Item.getNumAtributs(); ++i) computeMinMaxAtribut(i);
     }
 
     /**
@@ -128,7 +132,6 @@ public class ConjuntItems extends ArrayList<Item> {
             Item it = new Item(str);
             super.add(it);
         }
-        //Collections.sort(this);
     }
 
     /*----- STATICS -----*/

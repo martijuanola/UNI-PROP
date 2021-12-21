@@ -156,8 +156,35 @@ public class ControladorDomini {
         resetData();
         cp.escollirProjecte(directory);
        
+        ArrayList<String> estat = cp.carregarEstat();
+
+        //dades algorisme
+        cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
+        cda.set_Q(Integer.parseInt(estat.get(1)));
+        cda.set_k(Integer.parseInt(estat.get(2)));
+
+        ArrayList<String> pS = cp.carregarPesosAtributs();
+        ArrayList<Float> pF = new ArrayList<Float>();
+        ArrayList<String> tS = cp.carregarTipusAtributs();
+        ArrayList<tipus> tT = new ArrayList<tipus>();
+        ArrayList<String> maxS = cp.carregarMaxAtributsItems();
+        ArrayList<Float> maxF = new ArrayList<Float>();
+        ArrayList<String> minS = cp.carregarMinAtributsItems();
+        ArrayList<Float> minF = new ArrayList<Float>();
+
         try {
-            ci = new ConjuntItems(cp.carregarItemsCarpeta());
+            for(int i = 0; i < pS.size(); i++) {
+                pF.add(Float.parseFloat(pS.get(i)));
+                tT.add(StringOperations.stringToType(tS.get(i)));
+                maxF.add(Float.parseFloat(maxS.get(i)));
+                minF.add(Float.parseFloat(minS.get(i)));
+            }
+        }
+        catch(ItemTypeNotValidException e) { throw new FolderNotValidException("No es poden llegir bé els tipus d'atributs guardats.",true); }
+
+        try {
+            ci = new ConjuntItems(cp.carregarItemsCarpeta(), pF, tT,
+                Integer.parseInt(estat.get(4)), Integer.parseInt(estat.get(5)), estat.get(3), maxF, minF);
         }
         catch(Exception e) {
             throw new FolderNotValidException(e.getMessage());
@@ -175,22 +202,6 @@ public class ControladorDomini {
             throw new FolderNotValidException("Hi ha algun Item o Usuari no trobat. Alguns fitxers no son vàlids.", true);
         }
 
-        ArrayList<String> estat = cp.carregarEstat();
-
-        ci.setNomCjItems(estat.get(3));
-
-        try{
-            Item.setNomA(Integer.parseInt(estat.get(5)));
-        }
-        catch(ItemStaticValuesAlreadyInitializedException e) {
-            System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
-            return;
-        }
-
-        //dades algorisme
-        cda.seleccionar_algorisme(Integer.parseInt(estat.get(0)));
-        cda.set_Q(Integer.parseInt(estat.get(1)));
-        cda.set_k(Integer.parseInt(estat.get(2)));
         dadesModificades = true;
     }
 
