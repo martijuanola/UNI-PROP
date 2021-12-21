@@ -236,7 +236,7 @@ public class CollaborativeFiltering {
         for (int j_idx = 0; j_idx < items.size(); ++j_idx) {
             //System.out.println("(FOR1)ITEM INDEX = " + j_idx);
             Item j_item = items.get(j_idx);
-            if (valoracions.existeixValoracio(j_item.getId(), user.getId())) {
+            if (valoracions.existeixRecomanacio(j_item.getId(), user.getId())) {
                 //System.out.println("Item had been rated");
                 continue;
             } 
