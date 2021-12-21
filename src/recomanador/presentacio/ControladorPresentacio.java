@@ -79,6 +79,19 @@ public class ControladorPresentacio {
 		}
 	}
 	
+	public static ArrayList<String> executarTestAlgorisme()
+	{
+		try
+		{
+			return domini.runTest();
+		}
+		catch (Exception e)
+		{
+			new VistaError(e.getMessage());
+			return null;
+		}	
+	}
+	
 	public static ArrayList<ArrayList<String>> executarAlgorisme3()
 	{
 		ArrayList<ArrayList<String>> x = new ArrayList<ArrayList<String>>();

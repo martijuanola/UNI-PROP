@@ -40,7 +40,7 @@ public class VistaTestAlgorisme extends JFrame {
 		
 		JButton testejar;
 		
-		JPanel resultsPanel;
+		//JPanel resultsPanel;
 		JLabel DCG;
 		JLabel NDCG;
 	
@@ -125,12 +125,22 @@ public class VistaTestAlgorisme extends JFrame {
 			esquerra.add(text_inicial);
 			esquerra.add(dataPanel);
 			esquerra.add(tornar_enrrere);
+			esquerra.add(pesos);
 		
 		//Part DRETA
 			dreta = new JPanel();
 			dreta.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
-			dreta.setLayout(new GridLayout(2, 1));
+			dreta.setLayout(new GridLayout(3, 1));
 			
+			testejar = new JButton("AVALUA");
+			DCG = new JLabel("DCG = ?");
+			NDCG = new JLabel("NDCG = ?");
+			DCG.setFont(new Font(DCG.getFont().getName(), Font.PLAIN, 20));
+			NDCG.setFont(new Font(NDCG.getFont().getName(), Font.PLAIN, 20));
+			
+			dreta.add(testejar);
+			dreta.add(DCG);
+			dreta.add(NDCG);
 			
 		//Part GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
@@ -138,8 +148,6 @@ public class VistaTestAlgorisme extends JFrame {
         
         panel.add(esquerra);
         panel.add(dreta);
-        
-        
         
         add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -222,6 +230,17 @@ public class VistaTestAlgorisme extends JFrame {
 				vp.mostra();
 				dispose();				
 				//new VistaError("Falta tornar enrrere");
+			}
+        });
+		
+		testejar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> res = cp.executarTestAlgorisme();
+				if (res != null)
+				{
+					DCG.setText("DCG = " + res.get(0));
+					NDCG.setText("DCG = " + res.get(1) + "%");
+				}
 			}
         });
 				
