@@ -3,11 +3,11 @@ package src.recomanador.excepcions;
 public class FileNotValidException extends Exception {
 
 	public FileNotValidException(String s) {
-		super("The file named " + s + " is not valid.");
+		super("El fitxer " + s + " no és vàlid.");
 	}
 	
 	public FileNotValidException(String s, String type) {
-		super("The file named " + s + " is not a valid "+ type + " file.");
+		super("El fitxer " + s + " no és valid com a fitxer de " + type);
 	}
 
 }

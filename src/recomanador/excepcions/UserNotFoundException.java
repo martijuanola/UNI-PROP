@@ -5,7 +5,7 @@ package src.recomanador.excepcions;
 public class UserNotFoundException extends Exception {
 
 	public UserNotFoundException(int id) {
-		super("The user with id " + id + " was not found in de set of users");
+		super("L'usuari amb id " + id + " no s'ha trobat al conjunt d'usuaris.");
 	}
 
 }

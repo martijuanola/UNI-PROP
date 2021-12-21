@@ -5,7 +5,7 @@ package src.recomanador.excepcions;
 public class AlreadyLogedInException extends Exception {
 
 	public AlreadyLogedInException(int id) {
-		super("You are already loged in with the user id " + id + ". You first have to log out.");
+		super("Has entrat com a usuari amb id = " + id + ". Primer has de sortir.");
 	}
 
 }

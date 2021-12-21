@@ -3,7 +3,7 @@ package src.recomanador.excepcions;
 public class ConjuntItemsAtributeNotInitializedException extends Exception {
 
 	public ConjuntItemsAtributeNotInitializedException() {
-		super("Tried to access an atribute from ConjuntItems that has not been initialized yet.");
+		super("S'ha provat d'accedir a un atribut de Conjunt d'Items que encara no s'ha inicialitzat.");
 	}
 
 }
