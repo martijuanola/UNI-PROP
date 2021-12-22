@@ -115,7 +115,7 @@ public class VistaPrincipal extends JFrame {
 			//me_down = new JPanel();
 			
 			guardar = new JButton("Guardar");
-			recuperar = new JButton("Recuperar dades");
+			recuperar = new JButton("Revertir canvis");
 			logout = new JButton("Tancar sessió");
 			
 			//me_down.setLayout(new GridLayout(3, 1));//, 0, 10));
@@ -411,14 +411,14 @@ public class VistaPrincipal extends JFrame {
 		{
 			new VistaError(e.getMessage());
 		}
-		
+		System.out.println("Fins aqui be ");
 		ArrayList<Integer> idx_temp = new ArrayList<Integer>();
 		
 		for (int i = 0; i < recomanacions.size(); ++i)
 		{
 			boolean found_rec = false;
 			boolean found_val = false;
-			
+			System.out.println("FuckOf ");
 			for (int j = 0; j < all_recs.size(); ++j) {
 				if (all_recs.get(j).get(0).equals(ControladorPresentacio.getId()) &&
 					all_recs.get(j).get(1).equals(recomanacions.get(i).get(0))) 
@@ -454,6 +454,7 @@ public class VistaPrincipal extends JFrame {
 			}
 			else {
 				idx_temp.add(i);
+				
 			}	
 		}
 		
