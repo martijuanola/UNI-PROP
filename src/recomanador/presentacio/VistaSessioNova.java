@@ -177,7 +177,7 @@ public class VistaSessioNova extends JFrame {
                 JPanel flow13 = new JPanel();
 
                 JButton elim19 = new JButton("Eliminar");
-                elim19.setForeground(Color.WHITE);
+                //elim19.setForeground(Color.WHITE);
                 elim19.setBackground(Color.RED);
                 elim19.setContentAreaFilled(false);
                 elim19.setOpaque(true);

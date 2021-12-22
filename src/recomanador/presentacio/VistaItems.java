@@ -312,7 +312,7 @@ public class VistaItems extends JFrame {
                 }
             });      
 
-            elim.setForeground(Color.WHITE);
+            //elim.setForeground(Color.WHITE);
             elim.setBackground(Color.RED);
             elim.setContentAreaFilled(false);
             elim.setOpaque(true);
