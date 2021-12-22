@@ -7,7 +7,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.PrivilegesException;
 
 

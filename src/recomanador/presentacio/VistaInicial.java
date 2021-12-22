@@ -312,7 +312,7 @@ public class VistaInicial extends JFrame {
                     }
                 }
                 
-                ControladorPresentacio.obreVistaEscollirAtributs();
+                new VistaEscollirAtributs();
                 dispose();
             }
         });
