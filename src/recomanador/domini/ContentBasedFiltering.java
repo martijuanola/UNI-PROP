@@ -36,6 +36,7 @@ public class ContentBasedFiltering {
     /**ratings from which to base the recommendation*/
     private ConjuntRecomanacions valoracions;
 
+    /** To add stochasticity to the centroids generation */
     private Random rand = new Random();
 
     /**

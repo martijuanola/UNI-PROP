@@ -151,15 +151,10 @@ public class ControladorDominiAlgorisme {
     /**
      *  Runs the selected recommendation algorithm.
      *
-     * @param       user_ID       user whose recommendations will be generated
      * @param       items         ConjuntItems from which the ratings will be generated
      * @param       usuaris       ConjuntUsuaris which will help generate the ratings on Collaborative Filtering
      * @param       valoracions   ConjuntRecomanacions which contain the ratings from which we will base our new ratings.
      * 
-     * @return     A sorted ArrayList of Q ItemValoracioEstimada, containing the items to be recommended and their estimated ratings.
-     *              How these are generated depends on the attributes Q, K and ALGORISME_SELECCIONAT of the active ControladorDominiAlgorisme instance.
-     *              
-     * @throws     UserNotFoundException if the id specified is not valid
      */
     public void setData(ConjuntItems items, ConjuntUsuaris usuaris, ConjuntRecomanacions valoracions) {
         colFilt.setData(items, usuaris, valoracions);

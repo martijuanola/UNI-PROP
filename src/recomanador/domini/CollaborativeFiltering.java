@@ -131,6 +131,8 @@ public class CollaborativeFiltering {
      * @param      K            The value K
      * 
      * @return     users of the cluster
+     * 
+     * @throws     UserNotFoundException if the id specified is not valid
      */
     private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) throws UserNotFoundException {
         if(!centroidesCalculats) {
