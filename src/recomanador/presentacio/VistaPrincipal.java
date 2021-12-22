@@ -236,7 +236,7 @@ public class VistaPrincipal extends JFrame {
 					id_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							try {
-								new VistaInformacioItem(cp.getItem(Integer.parseInt(stringedId)));
+								new VistaInformacioItem(vp, cp.getItem(Integer.parseInt(stringedId)));
 								setVisible(false);
 							}
 							catch(ItemNotFoundException exce) {
@@ -248,7 +248,7 @@ public class VistaPrincipal extends JFrame {
 					nom_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							try {
-								new VistaInformacioItem(cp.getItem(Integer.parseInt(stringedId)));
+								new VistaInformacioItem(vp, cp.getItem(Integer.parseInt(stringedId)));
 								setVisible(false);
 							}
 							catch(ItemNotFoundException exce) {

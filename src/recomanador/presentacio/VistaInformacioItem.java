@@ -26,10 +26,18 @@ public class VistaInformacioItem extends JFrame {
         ta = tipusAtributs;
 
         crearVistaInfoItem();
+
+        sortir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                tornar();
+            }
+        });
+
     }
 
     //Vista informacio item cridada per VistaUsuari
-    public VistaInformacioItem(ArrayList<ArrayList<String>> item) {
+    public VistaInformacioItem(VistaPrincipal vp, ArrayList<ArrayList<String>> item) {
         it = item;
         //afegir vista usuari
 
@@ -40,6 +48,14 @@ public class VistaInformacioItem extends JFrame {
         ta = ControladorPresentacio.getTipusItems();
 
         crearVistaInfoItem();
+
+        sortir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                vp.mostra();
+                dispose();
+            }
+        });
     }
 
     private void crearVistaInfoItem() {
@@ -49,12 +65,7 @@ public class VistaInformacioItem extends JFrame {
         boto.setLayout(new FlowLayout());
         boto.setPreferredSize(new Dimension(140, 150));
         sortir = new JButton("Tornar enrere");
-        sortir.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-                tornar();
-            }
-        });
+        
         boto.add(sortir);
 
         JPanel nomTipus = new JPanel();
