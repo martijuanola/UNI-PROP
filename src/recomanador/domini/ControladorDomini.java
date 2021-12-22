@@ -290,6 +290,7 @@ public class ControladorDomini {
 
         ConjuntItems.setNomCjItems(projName);
         cr = new ConjuntRecomanacions();
+        cu = new ConjuntUsuaris();
 
         //Primer Save
         saveSession();
@@ -474,7 +475,6 @@ public class ControladorDomini {
      */
     public ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
         ArrayList<ArrayList<ArrayList<String>>> aux = ci.getAllItems();
-        aux.remove(0);
         return aux;
     }
 
