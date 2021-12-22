@@ -19,6 +19,7 @@ public class VistaAfegirItem extends JFrame {
 
     JButton acceptar;
     JButton cancelar;
+    JButton help;
 
     public VistaAfegirItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaItems inst) {
         vi = inst;
@@ -61,6 +62,16 @@ public class VistaAfegirItem extends JFrame {
             }
         });
         boto.add(cancelar);
+
+        help = new JButton("Ajuda");
+
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                tornar();
+            }
+        });
+        boto.add(help);
 
         JPanel nomTipus = new JPanel();
         nomTipus.setLayout(new GridLayout(na.size(), 2));
