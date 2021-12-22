@@ -344,10 +344,10 @@ public class ControladorPresentacio {
         new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
     }
     	
-	public static void valorar(String id_item, String rate)
+	public static void valorar(String id_item, String user_id, String rate)
 	{
 		try {
-			domini.setValoracio(id_item, getId(), rate);
+			domini.setValoracio(id_item, user_id, rate);
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 		}

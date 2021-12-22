@@ -249,7 +249,7 @@ public class VistaPrincipal extends JFrame {
 							String rate_value = cb.getSelectedItem().toString();
 							if (rate_value == "Sense valoració") 
 								cp.eliminarValoracio(cp.getId(), stringedId);
-							else cp.valorar(stringedId, rate_value);
+							else cp.valorar(stringedId, cp.getId(), rate_value);
 						}
 					});
 				}

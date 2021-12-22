@@ -178,7 +178,7 @@ public class VistaUsuari extends JFrame {
 					String rate_value = rate.getSelectedItem().toString();
 					if (rate_value == "Sense valoració")
 						cp.eliminarValoracio(USER_ID, tempId);
-					else cp.valorar(tempId, rate_value);
+					else cp.valorar(tempId, USER_ID, rate_value);
 				}
 			});
 			
@@ -186,6 +186,8 @@ public class VistaUsuari extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					cp.eliminarRecomanacio(USER_ID, tempId);
 					panel.remove(item_valorat);
+					//setVisible(false);
+					setVisible(true);
 					setVisible(true);
 				}
 			});
