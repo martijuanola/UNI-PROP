@@ -273,8 +273,8 @@ public class VistaInicial extends JFrame {
                     ControladorPresentacio.obreVistaError("Nom del Projecte buit.");
                     return;
                 }
-                if (nomProjecte.getText().indexOf('.') != -1 || nomProjecte.getText().indexOf('-') != -1 || nomProjecte.getText().indexOf('_') != -1) {
-                    ControladorPresentacio.obreVistaError("El nom del projecte no pot contenir '.', '_' o '-'");
+                if (nomProjecte.getText().indexOf(' ') != -1) {
+                    ControladorPresentacio.obreVistaError("El nom del projecte no pot contenir espais");
                     return;
                 }
                 for (int i = 0; i < projectesDisponibles.size(); ++i) {
@@ -328,8 +328,8 @@ public class VistaInicial extends JFrame {
                     ControladorPresentacio.obreVistaError("Nom del Projecte buit.");
                     return;
                 }
-                if (nomProjecte.getText().indexOf('.') != -1 || nomProjecte.getText().indexOf('-') != -1 || nomProjecte.getText().indexOf('_') != -1) {
-                    ControladorPresentacio.obreVistaError("El nom del projecte no pot contenir '.', '_' o '-'");
+                if (nomProjecte.getText().indexOf(' ') != -1) {
+                    ControladorPresentacio.obreVistaError("El nom del projecte no pot contenir espais");
                     return;
                 }
                 for (int i = 0; i < projectesDisponibles.size(); ++i) {
