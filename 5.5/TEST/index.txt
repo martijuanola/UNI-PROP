@@ -1,6 +1,6 @@
 DIRECTORI TEST
 
--
-
-
-(s'han d'incloure els junits nose com)
+- TestControladorLoad.java: JUnit de la classe ControladorLoad
+- TestControladorSave.java: JUnit de la classe ControladorSave
+- TestRecomanacio.java: JUnit de la classe Recomanacio
+- Makefile: programa Makefile per la compilació dels JUnits
