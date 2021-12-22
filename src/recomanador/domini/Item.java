@@ -196,12 +196,11 @@ public class Item implements Comparable<Item>{
     /**
      * Sets a column that will act as name of the items
      * @param c new name that will be set
-     * @throws ItemStaticValuesAlreadyInitializedException If the column of the name is already defined
+     * @throws ArrayIndexOutOfBoundsException If the column is out of range
      */
-    public static void setNomA(int c) throws ItemStaticValuesAlreadyInitializedException {
+    public static void setNomA(int c) {
         if (c < 0 || c >= Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("La columna indicada no és correcte.");
-        if (nomA != -1) throw new ItemStaticValuesAlreadyInitializedException();
-        Item.nomA = c;
+        if (nomA == -1) Item.nomA = c;
     }
 
     /**
@@ -255,6 +254,11 @@ public class Item implements Comparable<Item>{
     public static void setTipusArray(ArrayList<tipus> a) throws DataNotValidException {
         if (a.size() != Item.getNumAtributs()) throw new ArrayIndexOutOfBoundsException("La llista de tipus d'atributs no concorda amb el nombre d'atibuts.");
         Item.tipusAtribut = a;
+        for (int i = 0; i < a.size(); ++i) {
+            if (a.get(i) == tipus.N && nomA == -1) {
+                setNomA(i);
+            }
+        }
     }
 
     /**

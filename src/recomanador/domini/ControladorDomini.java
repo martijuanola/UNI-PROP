@@ -271,15 +271,25 @@ public class ControladorDomini {
 
         ArrayList<tipus> tipusAtributs = new ArrayList<tipus>();
         for(int i = 0; i < tipusAtriubtsS.size(); i++) tipusAtributs.add(StringOperations.stringToType(tipusAtriubtsS.get(i)));
+		
+        ArrayList<Float> p = new ArrayList<Float>();
+		for (int i = 0; i < nomsAtriubts.size(); ++i) p.add((float)100.0);
 
         try {
             Item.setNomAtributs(nomsAtriubts);
             Item.setTipusArray(tipusAtributs);
+            Item.setId(0); //Sempre està en aquesta posició quan es crea
+            Item.setNomA(1); //Sempre està en aquesta posició quan es crea
+            Item.setPesos(p);
+            ci = new ConjuntItems();
         }
-        catch(ItemStaticValuesAlreadyInitializedException e) {
+        catch(ItemStaticValuesAlreadyInitializedException | ItemStaticValuesNotInitializedException | NumberFormatException | ItemIdNotValidException | ItemWeightNotCorrectException e) {
             System.out.print("ERROR INTERN!! S'havien d'haver resetejat els valors estàtics d'items abans de tornar-los a inicialitzar." + e.getMessage());
             return;
         }
+
+        ConjuntItems.setNomCjItems(projName);
+        cr = new ConjuntRecomanacions();
 
         //Primer Save
         saveSession();
@@ -528,9 +538,13 @@ public class ControladorDomini {
      * @throws     ItemNewAtributesNotValidException        Some atribute is not valid.
      * @throws     ItemStaticValuesNotInitializedException  The statics values of Item were not initialized.
      * @throws     PrivilegesException                      You need to be an admin to perform this functionallity.
+     * @throws     ItemIdNotValidException                  There is already an item with the same id
      */
-    public void addItem(ArrayList<ArrayList<String>> atributs) throws PrivilegesException, ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException {
+    public void addItem(ArrayList<ArrayList<String>> atributs) throws PrivilegesException, ItemStaticValuesNotInitializedException, ItemNewAtributesNotValidException, ItemIdNotValidException {
         if(!admin) throw new PrivilegesException("Ha de ser administrador.");
+        if (ci.existeixItem(Integer.parseInt(atributs.get(Item.getPosId()).get(0)))) {
+            throw new ItemIdNotValidException(atributs.get(Item.getPosId()).get(0) + " (id repetit) ");
+        }
         ci.add(new Item(atributs));
         dadesModificades = true;
     }
@@ -618,10 +632,8 @@ public class ControladorDomini {
      *
      * @throws     DataNotValidException                        Problems with the initialization of the static values of Item
      * @throws     ItemTypeNotValidException                    Some type assignation is not possible.
-     * @throws     PrivilegesException                          You need to be an admin to perform this functionallity.
      */
-    public void setTipus(ArrayList<String> tipusS) throws PrivilegesException, ItemTypeNotValidException, DataNotValidException {
-        if(!admin) throw new PrivilegesException("Ha de ser administrador.");
+    public void setTipus(ArrayList<String> tipusS) throws ItemTypeNotValidException, DataNotValidException {
         ArrayList<tipus> tipus = new ArrayList<tipus>();
         for(int i = 0; i < tipusS.size(); i++) tipus.add(StringOperations.stringToType(tipusS.get(i)));
         Item.setTipusArray(tipus);

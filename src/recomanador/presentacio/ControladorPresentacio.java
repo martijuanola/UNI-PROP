@@ -10,7 +10,10 @@ import src.recomanador.excepcions.FileNotFoundException;
 import src.recomanador.excepcions.FileNotValidException;
 import src.recomanador.excepcions.FolderNotFoundException;
 import src.recomanador.excepcions.FolderNotValidException;
+import src.recomanador.excepcions.ItemIdNotValidException;
+import src.recomanador.excepcions.ItemNewAtributesNotValidException;
 import src.recomanador.excepcions.ItemNotFoundException;
+import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.PrivilegesException;
@@ -238,6 +241,29 @@ public class ControladorPresentacio {
         domini.createSession(nom, itemsFile, ratingsFile);
     }
 
+	public static boolean crearProjecte(String nomProj, ArrayList<String> tipus, ArrayList<String> noms) {
+		try {
+			domini.createEmptySession(nomProj, noms, tipus);
+			System.out.println("Projecte creat");
+			return true;
+		}
+		catch (PrivilegesException | FolderNotValidException | ItemTypeNotValidException | DataNotValidException e) {
+			ControladorPresentacio.obreVistaError(e.getMessage());
+			return false;
+		}
+	}
+
+	public static void editarItem(ArrayList<ArrayList<String>> atributs) {
+		try {
+			domini.editItem(atributs);
+			System.out.println("Item editat");
+		}
+		catch (PrivilegesException | ItemNotFoundException | ItemStaticValuesNotInitializedException
+				| ItemNewAtributesNotValidException e) {
+			ControladorPresentacio.obreVistaError(e.getMessage());
+		}
+	}
+
     public static ArrayList<String> getProjectesDisponibles() {
         return domini.getAllProjectes();
     }
@@ -270,12 +296,37 @@ public class ControladorPresentacio {
 		return domini.getPesos();
 	}
 
-	public static void setPesos(ArrayList<String> pesosS) throws PrivilegesException, ItemWeightNotCorrectException {
-		domini.setPesos(pesosS);
+	public static void setPesos(ArrayList<String> pesosS) {
+		try {
+			domini.setPesos(pesosS);
+			System.out.println("Pesos modificats");
+		}
+		catch (PrivilegesException | ItemWeightNotCorrectException e) {
+			ControladorPresentacio.obreVistaError(e.getMessage());
+		}
 	}
 
 	public static ArrayList<ArrayList<String>> getItem(int id) throws ItemNotFoundException {
 		return domini.getItem(id);
+	}
+
+    public static boolean addItem(ArrayList<ArrayList<String>> nouItem) {
+		try {
+			domini.addItem(nouItem);
+			return true;
+		} catch (PrivilegesException | ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException | ItemIdNotValidException e) {
+			ControladorPresentacio.obreVistaError(e.getMessage());
+			return false;
+		}
+    }
+
+	public static void eliminarItem(String id) {
+		try {
+			domini.removeItem(id);
+			System.out.println("Item eliminat");
+		} catch (PrivilegesException | ItemStaticValuesNotInitializedException | ItemNotFoundException e) {
+			ControladorPresentacio.obreVistaError(e.getMessage());
+		}
 	}
 
     public static ArrayList<String> getHeaderItems() {

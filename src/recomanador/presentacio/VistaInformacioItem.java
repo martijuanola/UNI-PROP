@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class VistaInformacioItem extends JFrame {
 
-    VistaAllItems vi;
+    VistaItems vi;
     ArrayList<ArrayList<String>> it;
     ArrayList<String> na; //nom atributs
     ArrayList<String> ta; //tipus atributs
@@ -16,7 +16,7 @@ public class VistaInformacioItem extends JFrame {
 
     boolean allI; //Indica si ve de all items (true) o de vistausuari (false)
 
-    public VistaInformacioItem(ArrayList<ArrayList<String>> item, ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaAllItems inst) {
+    public VistaInformacioItem(ArrayList<ArrayList<String>> item, ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaItems inst) {
         vi = inst;
         it = item;
 
@@ -67,7 +67,7 @@ public class VistaInformacioItem extends JFrame {
         nomTipus.setLayout(new GridLayout(na.size(), 2));
 
         for (int i = 0; i < na.size(); ++i) {
-            JLabel tip = new JLabel(na.get(i));
+            JLabel tip = new JLabel(ta.get(i));
             tip.setForeground(Color.GRAY);
             
             JPanel jp = new JPanel();
@@ -76,7 +76,7 @@ public class VistaInformacioItem extends JFrame {
             if (i%2 == 0) jp.setBackground(Color.LIGHT_GRAY);
             nomTipus.add(jp);
 
-            JLabel no = new JLabel(ta.get(i));
+            JLabel no = new JLabel(na.get(i));
             no.setForeground(Color.BLACK);
 
             JPanel l = new JPanel();
