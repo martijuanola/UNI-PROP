@@ -538,7 +538,25 @@ public class VistaPrincipal extends JFrame {
 					}
 				}
 			});
-			
+
+			final int noChange = k;
+			id_item.get(k).addMouseMotionListener(new MouseAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// only display a hand if the cursor is over the label
+					final Rectangle cellBounds = id_item.get(noChange).getBounds();
+					if (cellBounds != null) {
+						id_item.get(noChange).setCursor(new Cursor(Cursor.HAND_CURSOR));
+					}
+
+					id_item.get(noChange).getParent().repaint();
+				}
+
+				@Override
+				public void mouseDragged(MouseEvent e) {							
+				}
+			});
+		
 			nom_item.get(k).addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					try {
@@ -550,7 +568,24 @@ public class VistaPrincipal extends JFrame {
 					}
 				}
 			});
-			
+
+			nom_item.get(k).addMouseMotionListener(new MouseAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// only display a hand if the cursor is over the label
+					final Rectangle cellBounds = nom_item.get(noChange).getBounds();
+					if (cellBounds != null) {
+						nom_item.get(noChange).setCursor(new Cursor(Cursor.HAND_CURSOR));
+					}
+
+					nom_item.get(noChange).getParent().repaint();
+				}
+
+				@Override
+				public void mouseDragged(MouseEvent e) {							
+				}
+			});
+
 			rate.get(k).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent  e) {
 					cb = (JComboBox<String>)e.getSource();

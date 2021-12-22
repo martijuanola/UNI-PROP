@@ -334,7 +334,7 @@ public class ControladorDomini {
         
         //totes les funcions de guardar(s'han de mirar excepcions)
         cp.guardarRecomanacions(cr.getAllRecomanacions());
-        cp.guardarItems(Item.getCapçalera(), ci.getAllItems());
+        cp.guardarItems(Item.getHeader(), ci.getAllItems());
         cp.guardarPesosAtributs(pesoss);
         cp.guardarTipusAtributs(ts);
         cp.guardarMaxAtributsItems(maxs);
@@ -515,7 +515,7 @@ public class ControladorDomini {
      * @return     The header as an array of Strings, one for each atribute.
      */
     public ArrayList<String> getHeader() {
-        return Item.getCapçalera();
+        return Item.getHeader();
     }
 
     /**

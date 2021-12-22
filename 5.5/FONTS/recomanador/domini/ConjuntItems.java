@@ -40,7 +40,7 @@ public class ConjuntItems extends ArrayList<Item> {
      * @throws ItemStaticValuesNotInitializedException If the static values are not initialised
      */
     public ConjuntItems() throws ItemStaticValuesNotInitializedException {
-        if (Item.getCapçalera() == null || Item.getPesos() == null || Item.getPosId() == -1
+        if (Item.getHeader() == null || Item.getPesos() == null || Item.getPosId() == -1
                 || Item.getTipusArray() == null)
             throw new ItemStaticValuesNotInitializedException (
                     "Per crear un \"ConjuntItems\" buit primer has d'inicialitzar els atributs estàtics d'Item.");

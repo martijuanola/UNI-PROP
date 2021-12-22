@@ -120,7 +120,7 @@ public class DriverControladorDominiAlgorisme {
         if(int1 == 1) {
             int atribut_seleccionat = 0;
 
-            ArrayList<String> atributs = Item.getCapçalera();
+            ArrayList<String> atributs = Item.getHeader();
             ArrayList<Float> pesos = Item.getPesos();
 
             while(atribut_seleccionat != -1) {

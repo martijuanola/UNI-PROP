@@ -175,7 +175,7 @@ public class Item implements Comparable<Item>{
      * Returns the array of names of the attributes(header)
      * @return ArrayList&lt;String&gt; with the names of the attributes of an item
      */
-    public static ArrayList<String> getCapçalera() {
+    public static ArrayList<String> getHeader() {
         return Item.nomAtribut;
     }
 
@@ -342,7 +342,7 @@ public class Item implements Comparable<Item>{
 
         boolean found = false;
         for (int i = 0; i < n && !found; ++i) {
-            if (Item.getCapçalera().get(i).equalsIgnoreCase("id")) {
+            if (Item.getHeader().get(i).equalsIgnoreCase("id")) {
                 Item.setTipus(i, tipus.I);
                 found = true;
             }
