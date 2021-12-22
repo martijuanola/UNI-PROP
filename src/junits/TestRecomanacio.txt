@@ -15,6 +15,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.After;
 
+/**
+ * Junit for the class Recomanacio
+ * @author     Martí J.
+ */
 public class TestRecomanacio {
 
 	/*------Funcions Before / After------*/
