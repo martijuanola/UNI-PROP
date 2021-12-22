@@ -1,0 +1,2 @@
+javac -cp . ../FONTS/recomanador/presentacio/* ../FONTS/recomanador/domini/* ../FONTS/recomanador/persistencia/* ../FONTS/recomanador/excepcions/* ../FONTS/recomanador/Utils/* -d bin
+java -cp .\bin src.recomanador.presentacio.ControladorPresentacio

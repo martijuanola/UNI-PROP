@@ -127,7 +127,7 @@ public class VistaUsuari extends JFrame {
         
 		tornar_enrere = new JButton("Tornar enrere");
 		text_inicial = new JLabel("Informació Usuari amb id " + USER_ID);
-		text_recs_vals = new JLabel("Ítems recomanats i valorats:");
+		text_recs_vals = new JLabel("Items recomanats i valorats:");
 		
         panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
         panel.setLayout(new GridLayout(4 + nb, 1));
@@ -177,6 +177,23 @@ public class VistaUsuari extends JFrame {
 				}
 			});
 			
+			idLab.addMouseMotionListener(new MouseAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// only display a hand if the cursor is over the label
+					final Rectangle cellBounds = idLab.getBounds();
+					if (cellBounds != null) {
+						idLab.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					}
+
+					idLab.getParent().repaint();
+				}
+
+				@Override
+				public void mouseDragged(MouseEvent e) {							
+				}
+			});
+
 			nomLab.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					try {
@@ -189,6 +206,23 @@ public class VistaUsuari extends JFrame {
 				}
 			});
 			
+			nomLab.addMouseMotionListener(new MouseAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// only display a hand if the cursor is over the label
+					final Rectangle cellBounds = nomLab.getBounds();
+					if (cellBounds != null) {
+						nomLab.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					}
+
+					nomLab.getParent().repaint();
+				}
+
+				@Override
+				public void mouseDragged(MouseEvent e) {							
+				}
+			});
+
 			rate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent  e) {
 					String rate_value = rate.getSelectedItem().toString();

@@ -4,3 +4,4 @@ DIRECTORI EXE
 
 - autoexecutable.jar: Autoexecutable del projecte
 - jocsDeProva.pdf: Documentació dels jocs de prova (tambe es troba a DOC)
+- comandes.bat: Fitxer de comandes amb les opcions per compilar l’aplicació completa.
