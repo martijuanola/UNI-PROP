@@ -19,6 +19,7 @@ public class VistaAfegirItem extends JFrame {
 
     JButton acceptar;
     JButton cancelar;
+    JButton help;
 
     public VistaAfegirItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaItems inst) {
         vi = inst;
@@ -61,6 +62,16 @@ public class VistaAfegirItem extends JFrame {
             }
         });
         boto.add(cancelar);
+
+        help = new JButton("Ajuda");
+
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                tornar();
+            }
+        });
+        boto.add(help);
 
         JPanel nomTipus = new JPanel();
         nomTipus.setLayout(new GridLayout(na.size(), 2));
@@ -134,7 +145,8 @@ public class VistaAfegirItem extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Afegir ítem");
         pack();
-        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
+        setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 700));
         setVisible(true);
     }
 
