@@ -187,7 +187,7 @@ public class ControladorDomini {
                 Integer.parseInt(estat.get(4)), Integer.parseInt(estat.get(5)), estat.get(3), maxF, minF);
         }
         catch(Exception e) {
-            throw new FolderNotValidException(e.getMessage());
+            throw new FolderNotValidException(e.getMessage(),true);
         }
 
         ArrayList<ArrayList<String>> valoracions = cp.carregarRecomanacionsCarpeta();            
@@ -226,7 +226,7 @@ public class ControladorDomini {
             ci = new ConjuntItems(cp.carregarFitxerExtern(itemsFile));
         }
         catch(Exception e) {
-            throw new FolderNotValidException(e.getMessage());
+            throw new FolderNotValidException(e.getMessage(),true);
         }
 
         ArrayList<ArrayList<String>> valoracions = cp.carregarFitxerExtern(usersFile);            
