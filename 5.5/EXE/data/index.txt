@@ -5,3 +5,8 @@ DIRECTORI data
 \movies-750: Directori que conté els arxius necessaris per carregar una mostra de 750 pel·lícules
 \movies-2250: Directori que conté els arxius necessaris per carregar una mostra de 2250 pel·lícules
 \movies-6750: Directori que conté els arxius necessaris per carregar una mostra de 6750 pel·lícules
+
+- items.csv: Fitxer amb els ítems del conjunt de proves de mida 250
+- ratings.db.csv: Fitxer amb les recomanacions del conjunt de proves de mida 250
+- ratings.test.known.csv: Fitxer per testejar l'algorisme del conjunt de proves de mida 250
+- ratings.test.unknown.csv: Fitxer per testejar l'algorisme del conjunt de proves de mida 250
