@@ -135,7 +135,7 @@ public class VistaAfegirItem extends JFrame {
         setTitle("Afegir ítem");
         pack();
         setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
-        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 700));
         setVisible(true);
     }
 
