@@ -90,7 +90,7 @@ public class ContentBasedFiltering {
             Collections.sort(random_items);
 
             ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
-            for (int i = 0; i < Q; ++i) Q_items.add(random_items.get(i));
+            for (int i = 0; i < Q && i < random_items.size(); ++i) Q_items.add(random_items.get(i));
             return Q_items;
         }
         
@@ -149,13 +149,10 @@ public class ContentBasedFiltering {
             Collections.sort(random_items);
 
             Q_items = new ArrayList<ItemValoracioEstimada>();
-            for (int j = 0; j < Q; ++j) Q_items.add(random_items.get(j));
+            for (int j = 0; j < Q && j < random_items.size(); ++j) Q_items.add(random_items.get(j));
             return Q_items;
         }
 
         return Q_items;
-    }
-
-    
-    
+    }    
 }
