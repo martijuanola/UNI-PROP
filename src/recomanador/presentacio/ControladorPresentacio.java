@@ -289,11 +289,11 @@ public class ControladorPresentacio {
 		return domini.getPosNomItem();
 	}
 	
-	public ArrayList<ArrayList<String>> getRecomanacions(String USER_ID) throws PrivilegesException {
+	public static ArrayList<ArrayList<String>> getRecomanacions(String USER_ID) throws PrivilegesException {
 		return domini.getAllRecomanacionsUsuari(USER_ID);
 	}
 	
-	public ArrayList<ArrayList<String>> getValoracions(String USER_ID) throws PrivilegesException {
+	public static ArrayList<ArrayList<String>> getValoracions(String USER_ID) throws PrivilegesException {
 		return domini.getAllValoracionsUsuari(USER_ID);
 	}
 	
