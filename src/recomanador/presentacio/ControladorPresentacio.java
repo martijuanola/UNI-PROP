@@ -1,7 +1,6 @@
 package src.recomanador.presentacio;
 
 import java.util.ArrayList;
-import javax.swing.UIManager;
 
 import src.recomanador.domini.ControladorDomini;
 import src.recomanador.excepcions.*;
@@ -265,10 +264,6 @@ public class ControladorPresentacio {
         new VistaError(text);
     }
 
-    public static void obreVistaEscollirAtributs() {
-        new VistaEscollirAtributs();
-    }
-
     public static ArrayList<String> getTipus() {
         return domini.getTipusAsStrings();
     }
@@ -367,25 +362,6 @@ public class ControladorPresentacio {
 			new VistaError(e.getMessage());
 		}
 	}
-    
-    public static void obreVistaItems() {
-		new VistaError("OBRE VISTA ALL ITEMS");
-    }
-    
-    public static void obreVistaUsuari(String id) {
-        //TODO:OMPLIR
-        new VistaError("OBRE USUARI CONCRET: " + id);
-    }
-    
-    public static void obreVistaInformacioItem(String id) {
-        //TODO:OMPLIR
-        new VistaError("OBRE ITEM CONCRET: " + id);
-    }
-    
-    public static void obreVistaTotalUsuari() {
-        //TODO:OMPLIR
-        new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
-    }
     	
 	public static void valorar(String id_item, String user_id, String rate)
 	{
