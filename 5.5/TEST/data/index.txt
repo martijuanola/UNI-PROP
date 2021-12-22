@@ -1,0 +1,4 @@
+DIRECTORI data
+
+- JUNIT-TEST-ControladorLoad: carpeta amb un fitxer que es carregarà en el junit del controlador load
+- JUNIT-TEST-ControladorSave: carpeta amb un fitxer que es guardarà en el junit del controlador load
