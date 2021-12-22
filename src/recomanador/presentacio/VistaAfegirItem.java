@@ -51,7 +51,7 @@ public class VistaAfegirItem extends JFrame {
         boto.add(acceptar);
 
         cancelar = new JButton("Cancelar");
-        cancelar.setForeground(Color.WHITE);
+        //cancelar.setForeground(Color.WHITE);
         cancelar.setBackground(Color.RED);
         cancelar.setContentAreaFilled(false);
         cancelar.setOpaque(true);
