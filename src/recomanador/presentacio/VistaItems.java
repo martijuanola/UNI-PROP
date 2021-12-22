@@ -318,7 +318,7 @@ public class VistaItems extends JFrame {
             elim.setOpaque(true);
 
             f5.add(elim);
-            sota.add(f5);
         }
+        sota.add(f5);
     }
 }
