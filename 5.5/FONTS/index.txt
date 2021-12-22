@@ -1,0 +1,5 @@
+DIRECTORI FONTS
+
+\recomanador:
+
+- ???.bat: Executable per Windows/DOS

@@ -1,0 +1,6 @@
+DIRECTORI TEST
+
+-
+
+
+(s'han d'incloure els junits nose com)
