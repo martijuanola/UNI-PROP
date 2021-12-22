@@ -23,6 +23,8 @@ public class VistaModificarItem extends JFrame {
     JButton cancelar;
     JButton reset;
 
+    JButton help;
+
     int pos;
 
     public VistaModificarItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, int posicio, ArrayList<ArrayList<String>> item, VistaItems inst) {
@@ -66,8 +68,8 @@ public class VistaModificarItem extends JFrame {
         });
         boto.add(acceptar);
 
-        cancelar = new JButton("Cancelar");
-        cancelar.setForeground(Color.WHITE);
+        cancelar = new JButton("Cancel·lar");
+        //cancelar.setForeground(Color.WHITE);
         cancelar.setBackground(Color.RED);
         cancelar.setContentAreaFilled(false);
         cancelar.setOpaque(true);
@@ -91,6 +93,23 @@ public class VistaModificarItem extends JFrame {
             }
         });
         boto.add(reset);
+
+        help = new JButton("Ajuda");
+
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "Els formats acceptats són: \n" +
+                                                            "- Identificador: nombre enter.\n" +
+                                                            "- Nom: qualsevol.\n" +
+                                                            "- Boolean: true / false.\n" + 
+                                                            "- String: qualsevol.\n" +
+                                                            "- Float: nombre enter, nombre real i amb exponent: 1.23e3.\n" +
+                                                            "- Data: DD-MM-AAAA.\n");
+            }
+        });
+
+        boto.add(help);
 
         JPanel nomTipus = new JPanel();
         nomTipus.setLayout(new GridLayout(na.size(), 2));
@@ -129,7 +148,7 @@ public class VistaModificarItem extends JFrame {
             flow.setLayout(new FlowLayout());
 
             JTextField text = new JTextField(atributsVells.get(i));
-            if (i == 0) text.setEnabled(false);
+            if (i == Integer.parseInt(ControladorPresentacio.getPosItemId())) text.setEnabled(false);
 
             text.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -165,7 +184,8 @@ public class VistaModificarItem extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Modifcar ítem");
         pack();
-        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
+        setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 700));
         setVisible(true);
     }
 

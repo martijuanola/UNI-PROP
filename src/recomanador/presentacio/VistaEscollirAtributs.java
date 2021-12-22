@@ -115,6 +115,7 @@ public class VistaEscollirAtributs extends JFrame {
                 }
                 try {
                     ControladorPresentacio.setTipusItems(tipuses);
+                    ControladorPresentacio.guardar();
                     ControladorPresentacio.obreVistaPrincipal();
                     dispose();
                 }

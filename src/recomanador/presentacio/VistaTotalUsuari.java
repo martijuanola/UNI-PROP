@@ -113,18 +113,9 @@ public class VistaTotalUsuari extends JFrame {
         panel.setAutoscrolls(true);
         add(scrollFrame);
 		
-        //add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Informació Usuari");
         pack();
         setVisible(true);
-				
-        /*
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-        });
-         */
 	}
 }

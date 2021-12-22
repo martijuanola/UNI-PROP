@@ -84,7 +84,9 @@ public class ContentBasedFiltering {
             System.out.println("L'usuari no té cap valoració. Generant valoracions aleatories.");
             
             ArrayList<ItemValoracioEstimada> random_items = new ArrayList<ItemValoracioEstimada>();
-            for (int i = 0; i < items.size(); ++i) random_items.add(new ItemValoracioEstimada(rand.nextFloat()*5, items.get(i)));
+            for (int i = 0; i < items.size(); ++i) {
+                if (!valoracions.existeixRecomanacio(items.get(i).getId(), user_ID)) random_items.add(new ItemValoracioEstimada(rand.nextFloat()*5, items.get(i)));
+            }
             Collections.sort(random_items);
 
             ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
@@ -135,6 +137,20 @@ public class ContentBasedFiltering {
                 items_afegits.remove(items_estimats.get(i).item);
             }
             ++i;
+        }
+
+        if(Q_items.size() == 0) {
+            //System.out.println("L'usuari no té cap valoració. Generant valoracions aleatories.");
+            
+            ArrayList<ItemValoracioEstimada> random_items = new ArrayList<ItemValoracioEstimada>();
+            for (int j = 0; j < items.size(); ++j) {
+                if (!valoracions.existeixRecomanacio(items.get(j).getId(), user_ID)) random_items.add(new ItemValoracioEstimada(rand.nextFloat()*5, items.get(j)));
+            }
+            Collections.sort(random_items);
+
+            Q_items = new ArrayList<ItemValoracioEstimada>();
+            for (int j = 0; j < Q; ++j) Q_items.add(random_items.get(j));
+            return Q_items;
         }
 
         return Q_items;

@@ -1,7 +1,6 @@
 package src.recomanador.presentacio;
 
 import java.util.ArrayList;
-import javax.swing.UIManager;
 
 import src.recomanador.domini.ControladorDomini;
 import src.recomanador.excepcions.*;
@@ -40,7 +39,7 @@ public class ControladorPresentacio {
 				boolean found = false;
 				
 				for (int j = 0; j < old.size(); ++j)
-					if (one.get(1) == old.get(j).get(1)) found = true;
+					if (one.get(1).equals(old.get(j).get(1))) found = true;
 				
 				if (!found)
 				{
@@ -56,16 +55,10 @@ public class ControladorPresentacio {
 				String nom = item.get(Integer.parseInt(domini.getPosNomItem())).get(0);
 				temp.get(i).add(nom);
 			}
-			//System.out.println("--------------------");
-			//System.out.println("--- Provant algo ---");
-			//System.out.println("--------------------");
 			//La diferència de conjunts serà els que es mostrarà
 			return temp;
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			//System.out.println("--------------------");
-			//System.out.println("--- Error  Error ---");
-			//System.out.println("--------------------");
 			return null;
 		}
 	}
@@ -120,8 +113,6 @@ public class ControladorPresentacio {
 		try {		
 			domini.saveSession();
 		} catch(Exception e) {
-			//new VistaError(e.getMessage());
-			//No va, pq l'error està buit
 			new VistaError("Error en guardar.");
 		}
 	}
@@ -143,7 +134,7 @@ public class ControladorPresentacio {
 			return domini.getQ();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			return "0";
+			return "1";
 		}
 	}
 	
@@ -152,7 +143,7 @@ public class ControladorPresentacio {
 			return domini.getK();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			return "0";
+			return "1";
 		}
 	}
 	
@@ -265,10 +256,6 @@ public class ControladorPresentacio {
         new VistaError(text);
     }
 
-    public static void obreVistaEscollirAtributs() {
-        new VistaEscollirAtributs();
-    }
-
     public static ArrayList<String> getTipus() {
         return domini.getTipusAsStrings();
     }
@@ -319,8 +306,12 @@ public class ControladorPresentacio {
 		try {
 			domini.addItem(nouItem);
 			return true;
-		} catch (PrivilegesException | ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException | ItemIdNotValidException e) {
+		} catch (PrivilegesException | ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
 			ControladorPresentacio.obreVistaError(e.getMessage());
+			return false;
+		}
+		catch (ItemIdNotValidException e) {
+			ControladorPresentacio.obreVistaError("Ja existeix un ítem amb aquest Identificador.");
 			return false;
 		}
     }
@@ -363,25 +354,6 @@ public class ControladorPresentacio {
 			new VistaError(e.getMessage());
 		}
 	}
-    
-    public static void obreVistaItems() {
-		new VistaError("OBRE VISTA ALL ITEMS");
-    }
-    
-    public static void obreVistaUsuari(String id) {
-        //TODO:OMPLIR
-        new VistaError("OBRE USUARI CONCRET: " + id);
-    }
-    
-    public static void obreVistaInformacioItem(String id) {
-        //TODO:OMPLIR
-        new VistaError("OBRE ITEM CONCRET: " + id);
-    }
-    
-    public static void obreVistaTotalUsuari() {
-        //TODO:OMPLIR
-        new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
-    }
     	
 	public static void valorar(String id_item, String user_id, String rate)
 	{

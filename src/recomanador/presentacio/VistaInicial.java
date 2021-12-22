@@ -273,6 +273,10 @@ public class VistaInicial extends JFrame {
                     ControladorPresentacio.obreVistaError("Nom del Projecte buit.");
                     return;
                 }
+                if (nomProjecte.getText().indexOf(' ') != -1) {
+                    ControladorPresentacio.obreVistaError("El nom del projecte no pot contenir espais");
+                    return;
+                }
                 for (int i = 0; i < projectesDisponibles.size(); ++i) {
                     if (nomProjecte.getText().equals(projectesDisponibles.get(i))) {
                         ControladorPresentacio.obreVistaError("Projecte ja existeix.");
@@ -308,7 +312,7 @@ public class VistaInicial extends JFrame {
                     }
                 }
                 
-                ControladorPresentacio.obreVistaEscollirAtributs();
+                new VistaEscollirAtributs();
                 dispose();
             }
         });
@@ -322,6 +326,10 @@ public class VistaInicial extends JFrame {
 
                 if (nomProjecte.getText().equals("") || nomProjecte.getText().equals("Nom nou projecte")) {
                     ControladorPresentacio.obreVistaError("Nom del Projecte buit.");
+                    return;
+                }
+                if (nomProjecte.getText().indexOf(' ') != -1) {
+                    ControladorPresentacio.obreVistaError("El nom del projecte no pot contenir espais");
                     return;
                 }
                 for (int i = 0; i < projectesDisponibles.size(); ++i) {
