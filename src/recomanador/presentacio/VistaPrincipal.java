@@ -270,7 +270,7 @@ public class VistaPrincipal extends JFrame {
         
         logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-				if (VistaAdvertencia.Advertencia("Segur que vols tancar sessió? Es perdran totes les dades no guardades.")) {
+				if (VistaAdvertencia.Advertencia("Segur que vols tancar sessió? Es perdran tots els canvis no guardats.")) {
 					ControladorPresentacio.logOut();
 					ControladorPresentacio.obreVistaInicial();
 					dispose();
@@ -321,7 +321,7 @@ public class VistaPrincipal extends JFrame {
         
         recuperar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (VistaAdvertencia.Advertencia("Estas segur que vols revertir els canvis? Es perdràn tots els canvis no guardats.")) {
+				if (VistaAdvertencia.Advertencia("Segur que vols revertir els canvis? Es perdràn tots els canvis no guardats.")) {
 					try {
 						String id_activa = null;
 						boolean admin = false;
