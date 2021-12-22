@@ -68,7 +68,7 @@ public class VistaModificarItem extends JFrame {
         });
         boto.add(acceptar);
 
-        cancelar = new JButton("Cancelar");
+        cancelar = new JButton("Cancel·lar");
         //cancelar.setForeground(Color.WHITE);
         cancelar.setBackground(Color.RED);
         cancelar.setContentAreaFilled(false);
