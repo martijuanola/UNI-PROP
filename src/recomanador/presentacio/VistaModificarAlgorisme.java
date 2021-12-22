@@ -51,7 +51,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		text_inicial = new JLabel("Paràmetres de l'algorisme");
 		alg_lab = new JLabel("Algorisme seleccionat: ");
 		k_param_lab = new JLabel("Paràmetre K:");
-		q_param_lab = new JLabel("Paràmetre Q:");
+		q_param_lab = new JLabel("Nombre de recomanacions retornades:");
 		
 		alg = new JComboBox(algorismes);
 		alg.setSelectedIndex(Integer.parseInt(ControladorPresentacio.getAlgorisme()));

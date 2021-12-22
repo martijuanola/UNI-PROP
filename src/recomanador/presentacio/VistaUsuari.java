@@ -42,7 +42,7 @@ public class VistaUsuari extends JFrame {
 		
 		tornar_enrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vp.mostra();
+				vp.mostraDeUsuari();
 				dispose();
 			}
         });
