@@ -273,17 +273,14 @@ public class VistaPrincipal extends JFrame {
         
         info_total_usuaris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaTotalUsuari();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
+				setVisible(false);
+				new VistaTotalUsuari(vp);
 			}
         });
         
         info_items.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cp.obreVistaItems();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
@@ -291,8 +288,6 @@ public class VistaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				new VistaModificarAlgorisme(vp);
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
@@ -300,16 +295,12 @@ public class VistaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				new VistaTestAlgorisme(vp);
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
         guardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cp.guardar();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         

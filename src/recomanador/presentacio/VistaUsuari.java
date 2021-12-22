@@ -33,10 +33,7 @@ public class VistaUsuari extends JFrame {
 								"3.5", "4.0", "4.5", "5.0"};
     
     /*----- FUNCIONS -----*/
-    public VistaUsuari(VistaPrincipal vp, String usuari_id) {
-		setMinimumSize(new Dimension(550, 250));
-        setSize(new Dimension(1000, 900));
-		
+    public VistaUsuari(VistaPrincipal vp, String usuari_id) {	
 		USER_ID = usuari_id;
 		
 		inicialitza_vista();
@@ -44,6 +41,19 @@ public class VistaUsuari extends JFrame {
 		tornar_enrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.mostra();
+				dispose();
+			}
+        });
+	}
+	
+	public VistaUsuari(VistaTotalUsuari vtu, String usuari_id) {	
+		USER_ID = usuari_id;
+		
+		inicialitza_vista();
+		
+		tornar_enrere.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vtu.mostra();
 				dispose();
 			}
         });
@@ -65,6 +75,9 @@ public class VistaUsuari extends JFrame {
 	}
 	
 	private void inicialitza_vista() {
+		setMinimumSize(new Dimension(550, 250));
+        setSize(new Dimension(1000, 900));
+        
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
 
         panel = new JPanel();

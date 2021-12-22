@@ -257,6 +257,10 @@ public class ControladorPresentacio {
     public static ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
         return domini.getAllItems();
     }
+    
+    public static ArrayList<String> getAllUsers() throws PrivilegesException {
+		return domini.getAllUsers();
+	}
 
 	public static String getPosItemId() {
 		return domini.getPosIdItem();
