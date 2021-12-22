@@ -1,4 +1,6 @@
 DIRECTORI EXE
 
+\data: Diversos conjunts de dades per carregar al programa.
+
 - autoexecutable.jar: Autoexecutable del projecte
 - jocsDeProva.pdf: Documentació dels jocs de prova

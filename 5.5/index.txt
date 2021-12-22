@@ -1,5 +1,8 @@
 DIRECTORI ARREL
 
-\DOCS:
+\DOCS: Documentació del programa(inclou entre d'altres el manual d'usuari, els jocs de prova i la documentació en javadoc)
+\EXE: Executables .jar i .bat, documentació dels jocs de prova i direcori data amb dades per utilitzar amb el programa.
+\FONTS: Codi font del programa organitzat en packages.
+\TEST: Junits per provar les classes Recomanació de la capada de domini i ControladorLoad i ContrloadorSave de la capa de persistència.
 
 - G55.txt: Document de text amb la informació de l'entrega i els membres del grup.
