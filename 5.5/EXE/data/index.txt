@@ -1,5 +1,7 @@
 DIRECTORI data
 
-\????:
-
-- ???.txt:
+\movies-250: Directori que conté els arxius necessaris per carregar una mostra petita de pel·lícules
+\movies-250: Directori que conté els arxius necessaris per carregar una mostra de 250 pel·lícules
+\movies-750: Directori que conté els arxius necessaris per carregar una mostra de 750 pel·lícules
+\movies-2250: Directori que conté els arxius necessaris per carregar una mostra de 2250 pel·lícules
+\movies-6750: Directori que conté els arxius necessaris per carregar una mostra de 6750 pel·lícules
