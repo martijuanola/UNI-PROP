@@ -4,3 +4,5 @@ DIRECTORI DOCS
 
 - documentacio.pdf: Manual d'usuari + jocs de prova + repartició classes + llibreries externes
 - javadoc_index: Enllaç simbòlic a l'index.html del javadoc
+- explicacioClassesPresentacio.pdf: Documentació de les classes de la capa de presentació,
+  				    donat que aquestes no es troben al javadoc.
