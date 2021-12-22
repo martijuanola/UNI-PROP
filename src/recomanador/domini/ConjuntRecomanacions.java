@@ -185,9 +185,12 @@ public class ConjuntRecomanacions extends ArrayList<Recomanacio>{
      * @param      id    The identifier
      */
     public void removeRecomanacionsItem(int id) {
-        for(Recomanacio r : this) {
-            if(r.getItem().getId() == id) this.remove(r);
+        ArrayList<Recomanacio> temp = new ArrayList<Recomanacio>();
+        for (Recomanacio r : this) {
+            if(r.getItem().getId() == id) temp.add(r);
         }
+        
+        for (Recomanacio r : temp) this.remove(r);
     }
 
     /**

@@ -4,20 +4,7 @@ import java.util.ArrayList;
 import javax.swing.UIManager;
 
 import src.recomanador.domini.ControladorDomini;
-import src.recomanador.excepcions.AlreadyLogedInException;
-import src.recomanador.excepcions.DataNotValidException;
-import src.recomanador.excepcions.FileNotFoundException;
-import src.recomanador.excepcions.FileNotValidException;
-import src.recomanador.excepcions.FolderNotFoundException;
-import src.recomanador.excepcions.FolderNotValidException;
-import src.recomanador.excepcions.ItemIdNotValidException;
-import src.recomanador.excepcions.ItemNewAtributesNotValidException;
-import src.recomanador.excepcions.ItemNotFoundException;
-import src.recomanador.excepcions.ItemStaticValuesNotInitializedException;
-import src.recomanador.excepcions.ItemTypeNotValidException;
-import src.recomanador.excepcions.ItemWeightNotCorrectException;
-import src.recomanador.excepcions.PrivilegesException;
-import src.recomanador.excepcions.UserNotFoundException;
+import src.recomanador.excepcions.*;
 
 public class ControladorPresentacio {
     private static ControladorDomini domini;

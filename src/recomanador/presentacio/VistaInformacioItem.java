@@ -35,13 +35,7 @@ public class VistaInformacioItem extends JFrame {
 
         allI = false;
 
-        na = new ArrayList<String>();
-
-        ArrayList<ArrayList<ArrayList<String>>> items = ControladorPresentacio.getAllItems();
-        int nomPos = Integer.parseInt(ControladorPresentacio.getPosItemNom());
-        for (int i = 0; i < items.size(); ++i) {
-            na.add(items.get(i).get(nomPos).get(0));
-        }
+        na = ControladorPresentacio.getHeaderItems();
 
         ta = ControladorPresentacio.getTipusItems();
 

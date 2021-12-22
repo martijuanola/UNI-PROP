@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import src.recomanador.excepcions.*;
+
 public class VistaPrincipal extends JFrame {
     JPanel panel;
 	
@@ -233,13 +235,25 @@ public class VistaPrincipal extends JFrame {
 					String stringedId = id_item.get(k).getText();
 					id_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							cp.obreVistaInformacioItem(stringedId);
+							try {
+								new VistaInformacioItem(cp.getItem(Integer.parseInt(stringedId)));
+								setVisible(false);
+							}
+							catch(ItemNotFoundException exce) {
+								new VistaError(exce.getMessage());
+							}
 						}
 					});
 					
 					nom_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							cp.obreVistaInformacioItem(stringedId);
+							try {
+								new VistaInformacioItem(cp.getItem(Integer.parseInt(stringedId)));
+								setVisible(false);
+							}
+							catch(ItemNotFoundException exce) {
+								new VistaError(exce.getMessage());
+							}
 						}
 					});
 					
