@@ -1,44 +1,38 @@
 # ---------- RUN & COMPILE ---------- #
 
 compile:
-	@find ../FONTS/src/ -name "*.java" > classes.txt
+	@find ../FONTS/recomanador/ -name "*.java" > classes.txt
+	@find . -name "*.java" >> classes.txt
 	@javac -g -cp .:/usr/share/java/junit4.jar @classes.txt -d bin
 	@rm classes.txt
 
-run:
-	make compile
-	java -cp bin:. src.recomanador.presentacio.ControladorPresentacio
-
-
-# ---------- JAVADOC DOCUMENTATION ---------- #
-
-javadoc:
-	javadoc -d ./doc/javadoc -subpackages src.recomanador.Utils:src.recomanador.domini:src.recomanador.persistencia -private
-
-
 # ---------- TESTS ---------- #
 
-junit:
+junits:
 	make compile
-	@read -p "Enter the name of class: " name; \
-	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.Test$$name
-
+	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestControladorSave
+	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestControladorLoad
+	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestRecomanacio
+	make clean
 
 junitCL:
 	make compile
 	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestControladorSave
-
+	make clean
+	
 junitCS:
 	make compile
 	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestControladorLoad
-
+	make clean
+	
 junitRecomanacio:
 	make compile
 	java -cp bin:.:/usr/share/java/junit4.jar org.junit.runner.JUnitCore src.junits.TestRecomanacio
-
+	make clean
 
 # ---------- CLEAN ---------- #
 
 clean:
 	rm -Rf bin/*
+	rmdir bin
 
