@@ -14,6 +14,7 @@ import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.PrivilegesException;
+import src.recomanador.excepcions.UserNotFoundException;
 
 public class ControladorPresentacio {
     private static ControladorDomini domini;
@@ -65,16 +66,16 @@ public class ControladorPresentacio {
 				String nom = item.get(Integer.parseInt(domini.getPosNomItem())).get(0);
 				temp.get(i).add(nom);
 			}
-			System.out.print("--------------------");
-			System.out.print("--- Provant algo ---");
-			System.out.print("--------------------");
+			System.out.println("--------------------");
+			System.out.println("--- Provant algo ---");
+			System.out.println("--------------------");
 			//La diferència de conjunts serà els que es mostrarà
 			return temp;
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			System.out.print("--------------------");
-			System.out.print("--- Error  Error ---");
-			System.out.print("--------------------");
+			System.out.println("--------------------");
+			System.out.println("--- Error  Error ---");
+			System.out.println("--------------------");
 			return null;
 		}
 	}
@@ -237,7 +238,11 @@ public class ControladorPresentacio {
     public static void carregarProjecteNou(String nom, String itemsFile, String ratingsFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException {
         domini.createSession(nom, itemsFile, ratingsFile);
     }
-
+	
+	public static void eliminarUsuari(String user_id) throws PrivilegesException, UserNotFoundException{
+		domini.removeUsuari(user_id);
+	}
+	
     public static ArrayList<String> getProjectesDisponibles() {
         return domini.getAllProjectes();
     }
@@ -257,6 +262,10 @@ public class ControladorPresentacio {
     public static ArrayList<ArrayList<ArrayList<String>>> getAllItems() {
         return domini.getAllItems();
     }
+    
+    public static ArrayList<String> getAllUsers() throws PrivilegesException {
+		return domini.getAllUsuaris();
+	}
 
 	public static String getPosItemId() {
 		return domini.getPosIdItem();
@@ -265,7 +274,15 @@ public class ControladorPresentacio {
 	public static String getPosItemNom() {
 		return domini.getPosNomItem();
 	}
-
+	
+	public ArrayList<ArrayList<String>> getRecomanacions(String USER_ID) throws PrivilegesException {
+		return domini.getAllRecomanacionsUsuari(USER_ID);
+	}
+	
+	public ArrayList<ArrayList<String>> getValoracions(String USER_ID) throws PrivilegesException {
+		return domini.getAllValoracionsUsuari(USER_ID);
+	}
+	
 	public static ArrayList<String> getPesos() throws PrivilegesException {
 		return domini.getPesos();
 	}
@@ -290,6 +307,24 @@ public class ControladorPresentacio {
         domini.setTipus(tipusS);
     }
     
+    public static void eliminarValoracio(String user_id, String item_id)
+    {
+		try{
+			domini.removeValoracio(item_id, user_id);
+		}catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+	
+	public static void eliminarRecomanacio(String user_id, String item_id)
+    {
+		try{
+			domini.removeRecmonacio(item_id, user_id);
+		}catch(Exception e) {
+			new VistaError(e.getMessage());
+		}
+	}
+    
     public static void obreVistaItems() {
 		new VistaError("OBRE VISTA ALL ITEMS");
     }
@@ -309,10 +344,10 @@ public class ControladorPresentacio {
         new VistaError("OBRE VISTA DEL TOTAL D'USUARIS");
     }
     	
-	public static void valorar(String id_item, String rate)
+	public static void valorar(String id_item, String user_id, String rate)
 	{
 		try {
-			domini.setValoracio(id_item, getId(), rate);
+			domini.setValoracio(id_item, user_id, rate);
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
 		}

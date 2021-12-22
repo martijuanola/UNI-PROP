@@ -1,7 +1,6 @@
 package src.recomanador.presentacio;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
 

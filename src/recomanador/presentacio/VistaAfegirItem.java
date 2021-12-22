@@ -3,47 +3,25 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-public class VistaInformacioItem extends JFrame {
+public class VistaAfegirItem extends JFrame {
 
     VistaAllItems vi;
-    ArrayList<ArrayList<String>> it;
     ArrayList<String> na; //nom atributs
     ArrayList<String> ta; //tipus atributs
 
+    ArrayList<JTextField> atributsNous;
 
-    JButton sortir;
+    JButton acceptar;
+    JButton cancelar;
 
-    boolean allI; //Indica si ve de all items (true) o de vistausuari (false)
-
-    public VistaInformacioItem(ArrayList<ArrayList<String>> item, ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaAllItems inst) {
+    public VistaAfegirItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaAllItems inst) {
         vi = inst;
-        it = item;
-
-        allI = true;
 
         na = nomAtributs;
         ta = tipusAtributs;
-
-        crearVistaInfoItem();
-    }
-
-    //Vista informacio item cridada per VistaUsuari
-    public VistaInformacioItem(ArrayList<ArrayList<String>> item) {
-        it = item;
-        //afegir vista usuari
-
-        allI = false;
-
-        na = new ArrayList<String>();
-
-        ArrayList<ArrayList<ArrayList<String>>> items = ControladorPresentacio.getAllItems();
-        int nomPos = Integer.parseInt(ControladorPresentacio.getPosItemNom());
-        for (int i = 0; i < items.size(); ++i) {
-            na.add(items.get(i).get(nomPos).get(0));
-        }
-
-        ta = ControladorPresentacio.getTipusItems();
 
         crearVistaInfoItem();
     }
@@ -54,14 +32,32 @@ public class VistaInformacioItem extends JFrame {
         JPanel boto = new JPanel();
         boto.setLayout(new FlowLayout());
         boto.setPreferredSize(new Dimension(140, 150));
-        sortir = new JButton("Tornar enrere");
-        sortir.addActionListener(new ActionListener() {
+
+        acceptar = new JButton("Afegir item");
+        //acceptar.setForeground(Color.WHITE);
+        acceptar.setBackground(Color.GREEN);
+        acceptar.setContentAreaFilled(false);
+        acceptar.setOpaque(true);
+        acceptar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                afegir();
+            }
+        });
+        boto.add(acceptar);
+
+        cancelar = new JButton("Cancelar");
+        cancelar.setForeground(Color.WHITE);
+        cancelar.setBackground(Color.RED);
+        cancelar.setContentAreaFilled(false);
+        cancelar.setOpaque(true);
+        cancelar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
                 tornar();
             }
         });
-        boto.add(sortir);
+        boto.add(cancelar);
 
         JPanel nomTipus = new JPanel();
         nomTipus.setLayout(new GridLayout(na.size(), 2));
@@ -92,15 +88,35 @@ public class VistaInformacioItem extends JFrame {
 
 
         JPanel atributs = new JPanel();
-        atributs.setLayout(new GridLayout(it.size(), 1));
+        atributs.setLayout(new GridLayout(na.size(), 1));
+        atributsNous = new ArrayList<JTextField>();
 
-        for (int i = 0; i < it.size(); ++i) {
+        for (int i = 0; i < na.size(); ++i) {
             JPanel flow = new JPanel();
             flow.setLayout(new FlowLayout());
 
-            for (int j = 0; j < it.get(i).size(); ++j) {
-                flow.add(new JLabel(it.get(i).get(j)));
-            }
+            JTextField text = new JTextField("afegir atribut");
+
+            text.getDocument().addDocumentListener(new DocumentListener() {
+            
+                public void changedUpdate(DocumentEvent e) {
+                  warn();
+                }
+                public void removeUpdate(DocumentEvent e) {
+                  warn();
+                }
+                public void insertUpdate(DocumentEvent e) {
+                  warn();
+                }
+                
+                public void warn() {
+                    text.getParent().revalidate();
+                }
+            });
+
+            flow.add(text);
+            atributsNous.add(text);
+
             if (i%2 == 0) flow.setBackground(Color.LIGHT_GRAY);
             atributs.add(flow);
         }
@@ -120,12 +136,16 @@ public class VistaInformacioItem extends JFrame {
     }
 
     private void tornar() {
-        if (allI) {
-            vi.infoFi();
+        vi.infoFi();
+        dispose();
+    }
+
+    private void afegir() {
+        ArrayList<String> nouItem = new ArrayList<String>();
+        for (int i = 0; i < atributsNous.size(); ++i) {
+            nouItem.add(atributsNous.get(i).getText());
         }
-        else {
-            System.out.println("Sortir i tornar a VistaUsuari !!FALTA IMPLEMENTAR!!");
-        }
+        vi.afegirFi(nouItem);
         dispose();
     }
 }
