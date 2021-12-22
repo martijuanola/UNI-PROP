@@ -192,7 +192,7 @@ public class VistaUsuari extends JFrame {
 			rate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent  e) {
 					String rate_value = rate.getSelectedItem().toString();
-					if (rate_value == "Sense valoració")
+					if (rate_value.equals("Sense valoració"))
 						ControladorPresentacio.eliminarValoracio(USER_ID, tempId);
 					else ControladorPresentacio.valorar(tempId, USER_ID, rate_value);
 				}

@@ -297,7 +297,7 @@ public class VistaPrincipal extends JFrame {
 						public void actionPerformed(ActionEvent  e) {
 							cb = (JComboBox<String>)e.getSource();
 							String rate_value = cb.getSelectedItem().toString();
-							if (rate_value == "Sense valoració") 
+							if (rate_value.equals("Sense valoració")) 
 								ControladorPresentacio.eliminarValoracio(ControladorPresentacio.getId(), stringedId);
 							else ControladorPresentacio.valorar(stringedId, ControladorPresentacio.getId(), rate_value);
 						}
@@ -428,7 +428,8 @@ public class VistaPrincipal extends JFrame {
 		{
 			new VistaError(e.getMessage());
 		}
-		ArrayList<Integer> idx_temp = new ArrayList<Integer>();
+		
+		int eliminats = 0;
 		
 		for (int i = 0; i < recomanacions.size(); ++i)
 		{
@@ -451,14 +452,9 @@ public class VistaPrincipal extends JFrame {
 				
 			}
 			
-			if (!found_rec && !found_val) idx_temp.add(i);
+			if (!found_rec && !found_val) ++eliminats;
 		}
-		
-		for (int i = idx_temp.size()-1; i >= 0; --i)
-		{
-			recomanacions.remove(idx_temp.get(i));
-		}
-		
+			
 		
 		id_item = new ArrayList<JLabel>();
 		nom_item = new ArrayList<JLabel>();
@@ -467,7 +463,7 @@ public class VistaPrincipal extends JFrame {
 		System.out.println(recomanacions.size());
 					
 		recs = new JPanel();
-		recs.setLayout(new GridLayout(recomanacions.size() + 1, 3));
+		recs.setLayout(new GridLayout(recomanacions.size() - eliminats + 1, 3));
 		
 		header = new ArrayList<JLabel>();
 		header.add(new JLabel("id"));
@@ -494,10 +490,10 @@ public class VistaPrincipal extends JFrame {
 				for (int j = 0; j < all_vals.size(); ++j) {
 					if (all_vals.get(j).get(0).equals(ControladorPresentacio.getId()) &&
 						all_vals.get(j).get(1).equals(recomanacions.get(i).get(0)))
-						{
-							found_val = true;
-							rated_val = all_vals.get(j).get(2);
-						}
+					{
+						found_val = true;
+						rated_val = all_vals.get(j).get(2);
+					}
 				}
 				
 			}
@@ -521,17 +517,12 @@ public class VistaPrincipal extends JFrame {
 				recs.add(nom_item.get(nom_item.size() - 1));
 				recs.add(rate.get(rate.size() - 1));
 			}
-			//else {
-			//	idx_temp.add(i);
-			//	System.out.println("Eliminat");
-			//}	
 		}
 		recsScrollable = new JScrollPane(recs);
 		recs.setAutoscrolls(true);
 		dreta.add(recsScrollable);
 		
-		validate();
-		repaint();
+		
 		
 		for (int k = 0; k < id_item.size(); ++k)
 		{
@@ -564,15 +555,15 @@ public class VistaPrincipal extends JFrame {
 				public void actionPerformed(ActionEvent  e) {
 					cb = (JComboBox<String>)e.getSource();
 					String rate_value = cb.getSelectedItem().toString();
-					if (rate_value == "Sense valoració") 
+					if (rate_value.equals("Sense valoració")) 
 						ControladorPresentacio.eliminarValoracio(ControladorPresentacio.getId(), stringedId);
 					else ControladorPresentacio.valorar(stringedId, ControladorPresentacio.getId(), rate_value);
 				}
 			});
 		}
-		
-		
+				
 		setVisible(true);
-		
+		validate();
+		repaint();
 	}
 }
