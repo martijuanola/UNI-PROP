@@ -115,7 +115,7 @@ public class VistaPrincipal extends JFrame {
 			//me_down = new JPanel();
 			
 			guardar = new JButton("Guardar");
-			recuperar = new JButton("Recuperar dades");
+			recuperar = new JButton("Revertir canvis");
 			logout = new JButton("Tancar sessió");
 			
 			//me_down.setLayout(new GridLayout(3, 1));//, 0, 10));
@@ -446,12 +446,29 @@ public class VistaPrincipal extends JFrame {
 		{
 			new VistaError(e.getMessage());
 		}
-		
+		System.out.println("Fins aqui be ");
 		ArrayList<Integer> idx_temp = new ArrayList<Integer>();
 		
 		for (int i = 0; i < recomanacions.size(); ++i)
 		{
-			if (all_recs.contains(recomanacions.get(i).get(0))) {
+			boolean found_rec = false;
+			boolean found_val = false;
+			System.out.println("FuckOf ");
+			for (int j = 0; j < all_recs.size(); ++j) {
+				if (all_recs.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+					all_recs.get(j).get(1).equals(recomanacions.get(i).get(0))) 
+					found_rec = true;
+			}
+			
+			if (!found_rec) {
+				for (int j = 0; j < all_vals.size(); ++j) {
+					if (all_vals.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+						all_vals.get(j).get(1).equals(recomanacions.get(i).get(0))) 
+						found_val = true;
+				}
+			}
+			
+			if (found_rec) {
 				id_item.add(new JLabel(recomanacions.get(i).get(0)));
 				nom_item.add(new JLabel(recomanacions.get(i).get(1)));
 				rate.add(new JComboBox(options));
@@ -460,7 +477,7 @@ public class VistaPrincipal extends JFrame {
 				recs.add(nom_item.get(i));
 				recs.add(rate.get(i));
 			}
-			else if (all_vals.contains(recomanacions.get(i).get(0))) {
+			else if (found_val) {
 				id_item.add(new JLabel(recomanacions.get(i).get(0)));
 				nom_item.add(new JLabel(recomanacions.get(i).get(1)));
 				rate.add(new JComboBox(options));
@@ -472,6 +489,7 @@ public class VistaPrincipal extends JFrame {
 			}
 			else {
 				idx_temp.add(i);
+				
 			}	
 		}
 		
