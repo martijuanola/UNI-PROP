@@ -96,8 +96,8 @@ public class VistaUsuari extends JFrame {
 		
 		try
 		{
-			all_recs = cp.getRecomanacions(USER_ID);
-			all_vals = cp.getValoracions(USER_ID);
+			all_recs = ControladorPresentacio.getRecomanacions(USER_ID);
+			all_vals = ControladorPresentacio.getValoracions(USER_ID);
 		}
 		catch (Exception e)
 		{
@@ -108,15 +108,15 @@ public class VistaUsuari extends JFrame {
 		try {
 			for (int i = 0; i < all_vals.size(); ++i)
 			{
-				id_items.add(cp.getItem(Integer.parseInt(all_vals.get(i).get(1))).get(Integer.parseInt(cp.getPosItemId())).get(0));
-				nom_items.add(cp.getItem(Integer.parseInt(all_vals.get(i).get(1))).get(Integer.parseInt(cp.getPosItemNom())).get(0));
+				id_items.add(ControladorPresentacio.getItem(Integer.parseInt(all_vals.get(i).get(1))).get(Integer.parseInt(ControladorPresentacio.getPosItemId())).get(0));
+				nom_items.add(ControladorPresentacio.getItem(Integer.parseInt(all_vals.get(i).get(1))).get(Integer.parseInt(ControladorPresentacio.getPosItemNom())).get(0));
 				option_idx.add(stringToIndex(all_vals.get(i).get(2)));	
 			}
 			
 			for (int i = 0; i < all_recs.size(); ++i)
 			{
-				id_items.add(cp.getItem(Integer.parseInt(all_recs.get(i).get(1))).get(Integer.parseInt(cp.getPosItemId())).get(0));
-				nom_items.add(cp.getItem(Integer.parseInt(all_recs.get(i).get(1))).get(Integer.parseInt(cp.getPosItemNom())).get(0));
+				id_items.add(ControladorPresentacio.getItem(Integer.parseInt(all_recs.get(i).get(1))).get(Integer.parseInt(ControladorPresentacio.getPosItemId())).get(0));
+				nom_items.add(ControladorPresentacio.getItem(Integer.parseInt(all_recs.get(i).get(1))).get(Integer.parseInt(ControladorPresentacio.getPosItemNom())).get(0));
 				option_idx.add(0);
 			}
 		} catch (Exception e) {
@@ -168,7 +168,7 @@ public class VistaUsuari extends JFrame {
 			idLab.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					try {
-						new VistaInformacioItem(vu, cp.getItem(Integer.parseInt(tempId)));
+						new VistaInformacioItem(vu, ControladorPresentacio.getItem(Integer.parseInt(tempId)));
 						setVisible(false);
 					}
 					catch(ItemNotFoundException exce) {
@@ -180,7 +180,7 @@ public class VistaUsuari extends JFrame {
 			nomLab.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					try {
-						new VistaInformacioItem(vu, cp.getItem(Integer.parseInt(tempId)));
+						new VistaInformacioItem(vu, ControladorPresentacio.getItem(Integer.parseInt(tempId)));
 						setVisible(false);
 					}
 					catch(ItemNotFoundException exce) {
@@ -193,14 +193,14 @@ public class VistaUsuari extends JFrame {
 				public void actionPerformed(ActionEvent  e) {
 					String rate_value = rate.getSelectedItem().toString();
 					if (rate_value == "Sense valoració")
-						cp.eliminarValoracio(USER_ID, tempId);
-					else cp.valorar(tempId, USER_ID, rate_value);
+						ControladorPresentacio.eliminarValoracio(USER_ID, tempId);
+					else ControladorPresentacio.valorar(tempId, USER_ID, rate_value);
 				}
 			});
 			
 			eliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					cp.eliminarRecomanacio(USER_ID, tempId);
+					ControladorPresentacio.eliminarRecomanacio(USER_ID, tempId);
 					panel.remove(item_valorat);
 					validate();
 					repaint();

@@ -51,7 +51,7 @@ public class VistaTotalUsuari extends JFrame {
 		
 		try
 		{
-			id_usuaris = cp.getAllUsers();
+			id_usuaris = ControladorPresentacio.getAllUsers();
 		}
 		catch (Exception e)
 		{
@@ -97,7 +97,7 @@ public class VistaTotalUsuari extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					try
 					{
-						cp.eliminarUsuari(usrId);
+						ControladorPresentacio.eliminarUsuari(usrId);
 						panel.remove(usuari_ensenyat);
 						validate();
 						repaint();
