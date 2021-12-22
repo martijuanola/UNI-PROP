@@ -201,7 +201,8 @@ public class VistaUsuari extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					cp.eliminarRecomanacio(USER_ID, tempId);
 					panel.remove(item_valorat);
-					setVisible(true);
+					validate();
+					repaint();
 				}
 			});
 			

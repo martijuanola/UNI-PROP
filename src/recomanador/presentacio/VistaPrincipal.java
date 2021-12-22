@@ -228,7 +228,8 @@ public class VistaPrincipal extends JFrame {
 				recs.setAutoscrolls(true);
 				dreta.add(recsScrollable);
 				
-				setVisible(true);
+				validate();
+				repaint();
 				
 				for (int k = 0; k < id_item.size(); ++k)
 				{
@@ -333,7 +334,8 @@ public class VistaPrincipal extends JFrame {
 					else cp.setUser(id_activa);
 					
 					dreta.remove(recsScrollable);
-					setVisible(true);
+					validate();
+					repaint();
 					
 				} catch(Exception err) {
 					new VistaError(err.getMessage());

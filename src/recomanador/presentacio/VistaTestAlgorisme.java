@@ -214,6 +214,8 @@ public class VistaTestAlgorisme extends JFrame {
 					DCG.setText("DCG = " + res.get(0));
 					NDCG.setText("NDCG = " + res.get(1) + "%");
 				}
+				validate();
+				repaint();
 			}
         });
         

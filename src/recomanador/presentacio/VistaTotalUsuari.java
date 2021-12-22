@@ -99,7 +99,8 @@ public class VistaTotalUsuari extends JFrame {
 					{
 						cp.eliminarUsuari(usrId);
 						panel.remove(usuari_ensenyat);
-						setVisible(true);
+						validate();
+						repaint();
 					} catch(Exception err) {
 						new VistaError(err.getMessage());
 					}
