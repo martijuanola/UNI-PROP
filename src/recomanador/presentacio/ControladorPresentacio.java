@@ -319,8 +319,12 @@ public class ControladorPresentacio {
 		try {
 			domini.addItem(nouItem);
 			return true;
-		} catch (PrivilegesException | ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException | ItemIdNotValidException e) {
+		} catch (PrivilegesException | ItemStaticValuesNotInitializedException | ItemNewAtributesNotValidException e) {
 			ControladorPresentacio.obreVistaError(e.getMessage());
+			return false;
+		}
+		catch (ItemIdNotValidException e) {
+			ControladorPresentacio.obreVistaError("Ja existeix un ítem amb aquest Identificador.");
 			return false;
 		}
     }
