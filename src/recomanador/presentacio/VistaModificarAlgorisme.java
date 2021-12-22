@@ -54,27 +54,27 @@ public class VistaModificarAlgorisme extends JFrame {
 		q_param_lab = new JLabel("Paràmetre Q:");
 		
 		alg = new JComboBox(algorismes);
-		alg.setSelectedIndex(Integer.parseInt(cp.getAlgorisme()));
+		alg.setSelectedIndex(Integer.parseInt(ControladorPresentacio.getAlgorisme()));
 		
-		int nb = Math.max(Integer.parseInt(cp.getQ()), Integer.parseInt(cp.getK()));
-		nb = Math.max(cp.getAllItems().size(), nb);
+		int nb = Math.max(Integer.parseInt(ControladorPresentacio.getQ()), Integer.parseInt(ControladorPresentacio.getK()));
+		nb = Math.max(ControladorPresentacio.getAllItems().size(), nb);
 		nb = Math.max(1, nb);
 		
 		k = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
 		k.setPaintTicks(true);
 		k.setPaintLabels(true);
 		k.setMajorTickSpacing(nb/5);
-		k.setValue(Integer.parseInt(cp.getK()));
+		k.setValue(Integer.parseInt(ControladorPresentacio.getK()));
 		
-		ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getK()), 1, nb, 1));
+		ks = new JSpinner(new SpinnerNumberModel(Integer.parseInt(ControladorPresentacio.getK()), 1, nb, 1));
 		
 		q = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
 		q.setPaintTicks(true);
 		q.setPaintLabels(true);
 		q.setMajorTickSpacing(nb/5);
-		q.setValue(Integer.parseInt(cp.getQ()));
+		q.setValue(Integer.parseInt(ControladorPresentacio.getQ()));
 		
-		qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 1, nb, 1));
+		qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(ControladorPresentacio.getQ()), 1, nb, 1));
 		
 		tornar_enrere = new JButton("Enrere");
 		
@@ -113,7 +113,7 @@ public class VistaModificarAlgorisme extends JFrame {
 				{
 					spinnerChanged = true;
 					
-					cp.setK(ks.getValue().toString());
+					ControladorPresentacio.setK(ks.getValue().toString());
 					k.setValue(Integer.parseInt(ks.getValue().toString()));
 					
 					spinnerChanged = false;
@@ -127,7 +127,7 @@ public class VistaModificarAlgorisme extends JFrame {
 				{
 					barChanged = true;
 					
-					cp.setK(Integer.toString(k.getValue()));
+					ControladorPresentacio.setK(Integer.toString(k.getValue()));
 					ks.setValue(k.getValue());
 					
 					barChanged = false;
@@ -141,7 +141,7 @@ public class VistaModificarAlgorisme extends JFrame {
 				{
 					spinnerChanged = true;
 					
-					cp.setQ(qs.getValue().toString());
+					ControladorPresentacio.setQ(qs.getValue().toString());
 					q.setValue(Integer.parseInt(qs.getValue().toString()));
 					
 					spinnerChanged = false;
@@ -155,7 +155,7 @@ public class VistaModificarAlgorisme extends JFrame {
 				{
 					barChanged = true;
 					
-					cp.setQ(Integer.toString(q.getValue()));
+					ControladorPresentacio.setQ(Integer.toString(q.getValue()));
 					qs.setValue(q.getValue());
 					
 					barChanged = false;
@@ -167,7 +167,7 @@ public class VistaModificarAlgorisme extends JFrame {
 			public void actionPerformed(ActionEvent  e) {
 				String algValue = Integer.toString(alg.getSelectedIndex());
 				System.out.print(algValue);
-				cp.setAlgorisme(algValue);
+				ControladorPresentacio.setAlgorisme(algValue);
 			}
 		});
 		

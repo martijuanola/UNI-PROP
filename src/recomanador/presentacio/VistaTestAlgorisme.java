@@ -68,11 +68,11 @@ public class VistaTestAlgorisme extends JFrame {
 
         panel = new JPanel();
         
-        original_alg = Integer.parseInt(cp.getAlgorisme());
-        original_k = Integer.parseInt(cp.getK());
+        original_alg = Integer.parseInt(ControladorPresentacio.getAlgorisme());
+        original_k = Integer.parseInt(ControladorPresentacio.getK());
         try
 		{
-			original_pesos = cp.getPesos();
+			original_pesos = ControladorPresentacio.getPesos();
 		}
 		catch (Exception e)
 		{
@@ -89,7 +89,7 @@ public class VistaTestAlgorisme extends JFrame {
 			alg.setSelectedIndex(original_alg);
 			
 			int nb = Math.max(1, original_k);
-			nb = Math.max(cp.getAllItems().size(), nb);
+			nb = Math.max(ControladorPresentacio.getAllItems().size(), nb);
 			
 			k = new JSlider(JSlider.HORIZONTAL, 1, nb, 5);
 			k.setPaintTicks(true);
@@ -158,7 +158,7 @@ public class VistaTestAlgorisme extends JFrame {
 				{
 					spinnerChanged = true;
 					
-					cp.setK(ks.getValue().toString());
+					ControladorPresentacio.setK(ks.getValue().toString());
 					k.setValue(Integer.parseInt(ks.getValue().toString()));
 					
 					spinnerChanged = false;
@@ -172,7 +172,7 @@ public class VistaTestAlgorisme extends JFrame {
 				{
 					barChanged = true;
 					
-					cp.setK(Integer.toString(k.getValue()));
+					ControladorPresentacio.setK(Integer.toString(k.getValue()));
 					ks.setValue(k.getValue());
 					
 					barChanged = false;
@@ -184,17 +184,17 @@ public class VistaTestAlgorisme extends JFrame {
 			public void actionPerformed(ActionEvent  e) {
 				String algValue = Integer.toString(alg.getSelectedIndex());
 				System.out.print(algValue);
-				cp.setAlgorisme(algValue);
+				ControladorPresentacio.setAlgorisme(algValue);
 			}
 		});
 		
 		tornar_enrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.setAlgorisme(Integer.toString(original_alg));
-				cp.setK(Integer.toString(original_k));
+				ControladorPresentacio.setAlgorisme(Integer.toString(original_alg));
+				ControladorPresentacio.setK(Integer.toString(original_k));
 				try
 				{
-					cp.setPesos(original_pesos);
+					ControladorPresentacio.setPesos(original_pesos);
 				}
 				catch (Exception error)
 				{
@@ -208,12 +208,14 @@ public class VistaTestAlgorisme extends JFrame {
 		
 		testejar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<String> res = cp.executarTestAlgorisme();
+				ArrayList<String> res = ControladorPresentacio.executarTestAlgorisme();
 				if (res != null)
 				{
 					DCG.setText("DCG = " + res.get(0));
 					NDCG.setText("NDCG = " + res.get(1) + "%");
 				}
+				validate();
+				repaint();
 			}
         });
         

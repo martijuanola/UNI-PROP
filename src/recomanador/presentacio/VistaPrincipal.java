@@ -76,9 +76,6 @@ public class VistaPrincipal extends JFrame {
 
         panel = new JPanel();
         
-		//cp.canviarFontUI (new javax.swing.plaf.FontUIResource("Calibri",Font.PLAIN,20));
-		//this.setFont(this.getFont().deriveFont(Float(20.0f)));
-        
         //LAYER E
         menu_esquerra = new JPanel();
         
@@ -86,10 +83,10 @@ public class VistaPrincipal extends JFrame {
 			me_up = new JPanel();
 			
 			String lab_usr = null;
-			if (cp.isAdmin()) lab_usr = "Admin";
-			else lab_usr = cp.getId();
+			if (ControladorPresentacio.isAdmin()) lab_usr = "Admin";
+			else lab_usr = ControladorPresentacio.getId();
 			
-			nom_projecte = new JLabel("Projecte sobre el que es treballa: " + cp.getNomProjecte());
+			nom_projecte = new JLabel("Projecte sobre el que es treballa: " + ControladorPresentacio.getNomProjecte());
 			usuari_sessio_actual = new JLabel("Usuari de la sessió actual: " + lab_usr);
 			info_usuari = new JButton("Informació meva");
 			info_total_usuaris = new JButton("Informació dels usuaris");
@@ -97,14 +94,14 @@ public class VistaPrincipal extends JFrame {
 			modificar_algorisme = new JButton("Modificar algorisme");
 			test_algorisme = new JButton("Testejar algorisme");
 			
-			//if (cp.isAdmin()) menu_esquerra.setLayout(new GridLayout(6, 1));//, 0, 10));
+			//if (ControladorPresentacio.isAdmin()) menu_esquerra.setLayout(new GridLayout(6, 1));//, 0, 10));
 			//else menu_esquerra.setLayout(new GridLayout(4, 1));//, 0, 10));
-			if (cp.isAdmin()) menu_esquerra.setLayout(new GridLayout(9, 1, 0, 10));
+			if (ControladorPresentacio.isAdmin()) menu_esquerra.setLayout(new GridLayout(9, 1, 0, 10));
 			else menu_esquerra.setLayout(new GridLayout(7, 1, 0, 10));
 			
 			menu_esquerra.add(nom_projecte);
 			menu_esquerra.add(usuari_sessio_actual);
-			if (cp.isAdmin()) menu_esquerra.add(info_total_usuaris);
+			if (ControladorPresentacio.isAdmin()) menu_esquerra.add(info_total_usuaris);
 			else menu_esquerra.add(info_usuari);
 			menu_esquerra.add(info_items);
 			
@@ -142,7 +139,7 @@ public class VistaPrincipal extends JFrame {
 			recsScrollable = new JScrollPane(recs);
 			recs.setAutoscrolls(true);
 			
-			if (cp.isAdmin()) {
+			if (ControladorPresentacio.isAdmin()) {
 				dreta.add(modificar_algorisme);
 				dreta.add(test_algorisme);
 			}
@@ -191,7 +188,7 @@ public class VistaPrincipal extends JFrame {
         recomana.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				
-				ArrayList<ArrayList<String>> recomanacions = cp.executarAlgorisme();
+				ArrayList<ArrayList<String>> recomanacions = ControladorPresentacio.executarAlgorisme();
 				
 				int nb = recomanacions.size();
 				
@@ -228,7 +225,8 @@ public class VistaPrincipal extends JFrame {
 				recs.setAutoscrolls(true);
 				dreta.add(recsScrollable);
 				
-				setVisible(true);
+				validate();
+				repaint();
 				
 				for (int k = 0; k < id_item.size(); ++k)
 				{
@@ -236,7 +234,7 @@ public class VistaPrincipal extends JFrame {
 					id_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							try {
-								new VistaInformacioItem(vp, cp.getItem(Integer.parseInt(stringedId)));
+								new VistaInformacioItem(vp, ControladorPresentacio.getItem(Integer.parseInt(stringedId)));
 								setVisible(false);
 							}
 							catch(ItemNotFoundException exce) {
@@ -248,7 +246,7 @@ public class VistaPrincipal extends JFrame {
 					nom_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							try {
-								new VistaInformacioItem(vp, cp.getItem(Integer.parseInt(stringedId)));
+								new VistaInformacioItem(vp, ControladorPresentacio.getItem(Integer.parseInt(stringedId)));
 								setVisible(false);
 							}
 							catch(ItemNotFoundException exce) {
@@ -262,8 +260,8 @@ public class VistaPrincipal extends JFrame {
 							cb = (JComboBox<String>)e.getSource();
 							String rate_value = cb.getSelectedItem().toString();
 							if (rate_value == "Sense valoració") 
-								cp.eliminarValoracio(cp.getId(), stringedId);
-							else cp.valorar(stringedId, cp.getId(), rate_value);
+								ControladorPresentacio.eliminarValoracio(ControladorPresentacio.getId(), stringedId);
+							else ControladorPresentacio.valorar(stringedId, ControladorPresentacio.getId(), rate_value);
 						}
 					});
 				}
@@ -272,8 +270,8 @@ public class VistaPrincipal extends JFrame {
         
         logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-				cp.logOut();
-				cp.obreVistaInicial();
+				ControladorPresentacio.logOut();
+				ControladorPresentacio.obreVistaInicial();
                 dispose();
 			}
         });
@@ -281,7 +279,7 @@ public class VistaPrincipal extends JFrame {
         info_usuari.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				new VistaUsuari(vp, cp.getId());
+				new VistaUsuari(vp, ControladorPresentacio.getId());
 			}
         });
         
@@ -315,7 +313,7 @@ public class VistaPrincipal extends JFrame {
         
         guardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.guardar();
+				ControladorPresentacio.guardar();
 			}
         });
         
@@ -324,16 +322,17 @@ public class VistaPrincipal extends JFrame {
 				try {
 					String id_activa = null;
 					boolean admin = false;
-					String nomProj = cp.getNomProjecte();
-					if (!cp.isAdmin()) id_activa = cp.getId();
+					String nomProj = ControladorPresentacio.getNomProjecte();
+					if (!ControladorPresentacio.isAdmin()) id_activa = ControladorPresentacio.getId();
 					else admin = true;
-					cp.logOut();
-					cp.carregarProjecte(nomProj);
-					if (admin) cp.setAdmin();
-					else cp.setUser(id_activa);
+					ControladorPresentacio.logOut();
+					ControladorPresentacio.carregarProjecte(nomProj);
+					if (admin) ControladorPresentacio.setAdmin();
+					else ControladorPresentacio.setUser(id_activa);
 					
 					dreta.remove(recsScrollable);
-					setVisible(true);
+					validate();
+					repaint();
 					
 				} catch(Exception err) {
 					new VistaError(err.getMessage());
