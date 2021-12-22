@@ -9,7 +9,7 @@ import javax.swing.event.DocumentListener;
 import src.recomanador.Utils.StringOperations;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 
-public class VistaAfegirItem extends JFrame {
+public class VistaModificarItem extends JFrame {
 
     VistaItems vi;
     ArrayList<String> na; //nom atributs
@@ -17,14 +17,31 @@ public class VistaAfegirItem extends JFrame {
 
     ArrayList<JTextField> atributsNous;
 
+    ArrayList<String> atributsVells;
+
     JButton acceptar;
     JButton cancelar;
+    JButton reset;
 
-    public VistaAfegirItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaItems inst) {
+    int pos;
+
+    public VistaModificarItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, int posicio, ArrayList<ArrayList<String>> item, VistaItems inst) {
         vi = inst;
 
         na = nomAtributs;
         ta = tipusAtributs;
+
+        pos = posicio;
+
+        atributsVells = new ArrayList<String>();
+        for (int i = 0; i < item.size(); ++i) {
+            String atribut = "";
+            for (int j = 0; j < item.get(i).size(); ++j) {
+                if (atribut != "") atribut += ';';
+                atribut += item.get(i).get(j);
+            }
+            atributsVells.add(atribut);
+        }
 
         crearVistaInfoItem();
     }
@@ -36,7 +53,7 @@ public class VistaAfegirItem extends JFrame {
         boto.setLayout(new FlowLayout());
         boto.setPreferredSize(new Dimension(140, 150));
 
-        acceptar = new JButton("Afegir item");
+        acceptar = new JButton("Modificar item");
         //acceptar.setForeground(Color.WHITE);
         acceptar.setBackground(Color.GREEN);
         acceptar.setContentAreaFilled(false);
@@ -61,6 +78,19 @@ public class VistaAfegirItem extends JFrame {
             }
         });
         boto.add(cancelar);
+
+        reset = new JButton("Reset atributs");
+
+        reset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                for (int i = 0; i < atributsNous.size(); ++i) {
+                    atributsNous.get(i).setText(atributsVells.get(i));
+                }
+                revalidate();
+            }
+        });
+        boto.add(reset);
 
         JPanel nomTipus = new JPanel();
         nomTipus.setLayout(new GridLayout(na.size(), 2));
@@ -98,7 +128,8 @@ public class VistaAfegirItem extends JFrame {
             JPanel flow = new JPanel();
             flow.setLayout(new FlowLayout());
 
-            JTextField text = new JTextField("afegir atribut");
+            JTextField text = new JTextField(atributsVells.get(i));
+            if (i == 0) text.setEnabled(false);
 
             text.getDocument().addDocumentListener(new DocumentListener() {
             
@@ -132,7 +163,7 @@ public class VistaAfegirItem extends JFrame {
         add(scrollFrame, BorderLayout.CENTER);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Afegir ítem");
+        setTitle("Modifcar ítem");
         pack();
         setMinimumSize(new Dimension(getBounds().getSize().width, 200));
         setVisible(true);
@@ -162,7 +193,7 @@ public class VistaAfegirItem extends JFrame {
                 return;
             }
         }
-        vi.afegirFi(nouItem);
+        vi.modificarFi(nouItem, pos);
         dispose();
     }
 }
