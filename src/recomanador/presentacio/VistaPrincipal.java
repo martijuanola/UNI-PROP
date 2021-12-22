@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import src.recomanador.excepcions.*;
+
 public class VistaPrincipal extends JFrame {
     JPanel panel;
 	
@@ -214,7 +216,7 @@ public class VistaPrincipal extends JFrame {
 				for (int i = 0; i < nb; ++i)
 				{
 					id_item.add(new JLabel(recomanacions.get(i).get(0)));
-					nom_item.add(new JLabel(recomanacions.get(i).get(0)));
+					nom_item.add(new JLabel(recomanacions.get(i).get(1)));
 					rate.add(new JComboBox(options));
 					
 					recs.add(id_item.get(id_item.size()-1));
@@ -233,13 +235,25 @@ public class VistaPrincipal extends JFrame {
 					String stringedId = id_item.get(k).getText();
 					id_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							cp.obreVistaInformacioItem(stringedId);
+							try {
+								new VistaInformacioItem(vp, cp.getItem(Integer.parseInt(stringedId)));
+								setVisible(false);
+							}
+							catch(ItemNotFoundException exce) {
+								new VistaError(exce.getMessage());
+							}
 						}
 					});
 					
 					nom_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
-							cp.obreVistaInformacioItem(stringedId);
+							try {
+								new VistaInformacioItem(vp, cp.getItem(Integer.parseInt(stringedId)));
+								setVisible(false);
+							}
+							catch(ItemNotFoundException exce) {
+								new VistaError(exce.getMessage());
+							}
 						}
 					});
 					
@@ -247,8 +261,9 @@ public class VistaPrincipal extends JFrame {
 						public void actionPerformed(ActionEvent  e) {
 							cb = (JComboBox<String>)e.getSource();
 							String rate_value = cb.getSelectedItem().toString();
-							if (rate_value == "Sense valoració") rate_value = "0";
-							cp.valorar(stringedId, rate_value);
+							if (rate_value == "Sense valoració") 
+								cp.eliminarValoracio(cp.getId(), stringedId);
+							else cp.valorar(stringedId, cp.getId(), rate_value);
 						}
 					});
 				}
@@ -265,27 +280,22 @@ public class VistaPrincipal extends JFrame {
         
         info_usuari.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaUsuari(cp.getId());
-				//cp.obreVistaModificarAlgorisme();				
-				
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
+				setVisible(false);
+				new VistaUsuari(vp, cp.getId());
 			}
         });
         
         info_total_usuaris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaTotalUsuari();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
+				setVisible(false);
+				new VistaTotalUsuari(vp);
 			}
         });
         
         info_items.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaItems();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
+				setVisible(false);
+				new VistaItems(vp);
 			}
         });
         
@@ -293,8 +303,6 @@ public class VistaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				new VistaModificarAlgorisme(vp);
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
@@ -302,16 +310,12 @@ public class VistaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				new VistaTestAlgorisme(vp);
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
         guardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cp.guardar();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
@@ -320,9 +324,11 @@ public class VistaPrincipal extends JFrame {
 				try {
 					String id_activa = null;
 					boolean admin = false;
+					String nomProj = cp.getNomProjecte();
 					if (!cp.isAdmin()) id_activa = cp.getId();
 					else admin = true;
-					cp.carregarProjecte(cp.getNomProjecte());
+					cp.logOut();
+					cp.carregarProjecte(nomProj);
 					if (admin) cp.setAdmin();
 					else cp.setUser(id_activa);
 					

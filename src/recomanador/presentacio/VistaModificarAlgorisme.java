@@ -30,7 +30,7 @@ public class VistaModificarAlgorisme extends JFrame {
 	JSpinner ks;
 	JSpinner qs;
 	
-    JButton tornar_enrrere;
+    JButton tornar_enrere;
     
     /*----- DADES -----*/
     String[] algorismes =  {"Collaborative filtering", 
@@ -76,7 +76,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		
 		qs = new JSpinner(new SpinnerNumberModel(Integer.parseInt(cp.getQ()), 1, nb, 1));
 		
-		tornar_enrrere = new JButton("Enrrere");
+		tornar_enrere = new JButton("Enrere");
 		
 		
 		dataPanel = new JPanel();
@@ -96,7 +96,7 @@ public class VistaModificarAlgorisme extends JFrame {
 		
 		panel.add(text_inicial);
 		panel.add(dataPanel);
-		panel.add(tornar_enrrere);
+		panel.add(tornar_enrere);
 		
         add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -171,7 +171,7 @@ public class VistaModificarAlgorisme extends JFrame {
 			}
 		});
 		
-		tornar_enrrere.addActionListener(new ActionListener() {
+		tornar_enrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.mostra();
 				dispose();				

@@ -1,7 +1,6 @@
 package src.recomanador.presentacio;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -14,7 +13,7 @@ import src.recomanador.excepcions.PrivilegesException;
 
 public class VistaCanviarPesos extends JFrame {
     ArrayList<String> pesosVells;
-    VistaAllItems vi;
+    VistaItems vi;
     ArrayList<String> pesosNous;
     ArrayList<String> na; //Nom atributs
 
@@ -30,18 +29,28 @@ public class VistaCanviarPesos extends JFrame {
     ArrayList<JTextField> textPesos;
 
     //Cridat des de VistaAllItems
-    public VistaCanviarPesos(ArrayList<String> pesos, ArrayList<String> nomAtributs, VistaAllItems inst) {
-        pesosVells = pesos;
+    public VistaCanviarPesos(ArrayList<String> pesos2, ArrayList<String> nomAtributs, VistaItems inst) {
+        pesosVells = pesos2;
         vi = inst;
         na = nomAtributs;
 
         allItems = true;
 
         crearVistaPesos();
+        
+        accept.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < pesos.size(); ++i) {
+                    pesosNous.set(i, ""+(pesos.get(i).getValue()/100.0));
+                }
+                retornarItancar();
+            }
+        });
     }
 
     //Cridat des de TestAlgorisme
-    public VistaCanviarPesos() {
+    public VistaCanviarPesos(VistaTestAlgorisme vta) {
         try {
             pesosVells = ControladorPresentacio.getPesos();
         }
@@ -60,6 +69,18 @@ public class VistaCanviarPesos extends JFrame {
         allItems = false;
 
         crearVistaPesos();
+        
+        accept.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < pesos.size(); ++i) {
+                    pesosNous.set(i, ""+(pesos.get(i).getValue()/100.0));
+                }
+                ControladorPresentacio.setPesos(pesosNous);
+                vta.mostra();
+                dispose();
+            }
+        });
     }
 
     void crearVistaPesos() {
@@ -71,15 +92,7 @@ public class VistaCanviarPesos extends JFrame {
 
         accept = new JButton("Aplicar canvis");
 
-        accept.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < pesos.size(); ++i) {
-                    pesosNous.set(i, ""+(pesos.get(i).getValue()/100.0));
-                }
-                retornarItancar();
-            }
-        });
+        
 
         JLabel espai = new JLabel("");
         espai.setPreferredSize(new Dimension(60, 15));
@@ -90,8 +103,8 @@ public class VistaCanviarPesos extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < pesos.size(); ++i) {
-                    pesos.get(i).setValue((int) Float.parseFloat(pesosVells.get(i))*100);
-                    textPesos.get(i).setText(((int)Float.parseFloat(pesosVells.get(i))*100)/100.0+"");
+                    pesos.get(i).setValue((int) (Float.parseFloat(pesosVells.get(i))*100));
+                    textPesos.get(i).setText((Float.parseFloat(pesosVells.get(i))*100)/100.0+"");
                 }
             }
         });
@@ -168,19 +181,8 @@ public class VistaCanviarPesos extends JFrame {
     }
 
     void retornarItancar() {
-        if (allItems) {
-            vi.pesosFi(pesosNous);
-        }
-        else {
-            try {
-                ControladorPresentacio.setPesos(pesosNous);
-            }
-            catch (PrivilegesException | ItemWeightNotCorrectException e) {
-                ControladorPresentacio.obreVistaError(e.getMessage());
-                return;
-            }
-        }
-
+        ControladorPresentacio.setPesos(pesosNous);
+        vi.pesosFi(pesosNous);
         dispose();
     }
 }

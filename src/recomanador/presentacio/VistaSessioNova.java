@@ -6,9 +6,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import src.recomanador.excepcions.AlreadyLogedInException;
 
 public class VistaSessioNova extends JFrame {
     ArrayList<JTextField> nomAtributs;
@@ -25,7 +26,10 @@ public class VistaSessioNova extends JFrame {
 
     VistaSessioNova instancia;
 
+    String nom;
+
     public VistaSessioNova (String nomProj) {
+        nom = nomProj;
         instancia = this;
         diferentsTipus = new ArrayList<String>();
         ArrayList<String> auxiliar = ControladorPresentacio.getTipus();
@@ -223,13 +227,23 @@ public class VistaSessioNova extends JFrame {
                     tipuses.add(tipusAtributs.get(i).getItemAt(tipusAtributs.get(i).getSelectedIndex()));
                 }
 
-                new VistaAllItems(noms, tipuses, instancia);
-                setVisible(false);
+                try {
+                    ControladorPresentacio.logInAdmin();
+                }
+                catch (AlreadyLogedInException e1) {
+                    ControladorPresentacio.obreVistaError(e1.getMessage());
+                    return;
+                }
+                if (ControladorPresentacio.crearProjecte(nomProj, tipuses, noms)) {
+                    new VistaItems(noms, tipuses, instancia);
+                    setVisible(false);
+                }
             }
         });
     }    
 
     public void ItemsAcabats() {
-        setVisible(true);
+        ControladorPresentacio.obreVistaPrincipal();
+        dispose();
     }
 }
