@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.lang.Math;
 
+import src.recomanador.excepcions.*;
+
 public class VistaUsuari extends JFrame {
     JPanel panel;
 	
@@ -79,7 +81,8 @@ public class VistaUsuari extends JFrame {
         setSize(new Dimension(1000, 900));
         
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
-
+		VistaUsuari vu = this;
+		
         panel = new JPanel();
         
 		ArrayList<ArrayList<String>> all_recs =
@@ -163,13 +166,25 @@ public class VistaUsuari extends JFrame {
 			
 			idLab.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					cp.obreVistaInformacioItem(tempId);
+					try {
+						new VistaInformacioItem(vu, cp.getItem(Integer.parseInt(tempId)));
+						setVisible(false);
+					}
+					catch(ItemNotFoundException exce) {
+						new VistaError(exce.getMessage());
+					}
 				}
 			});
 			
 			nomLab.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					cp.obreVistaInformacioItem(tempId);
+					try {
+						new VistaInformacioItem(vu, cp.getItem(Integer.parseInt(tempId)));
+						setVisible(false);
+					}
+					catch(ItemNotFoundException exce) {
+						new VistaError(exce.getMessage());
+					}
 				}
 			});
 			
@@ -186,8 +201,6 @@ public class VistaUsuari extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					cp.eliminarRecomanacio(USER_ID, tempId);
 					panel.remove(item_valorat);
-					//setVisible(false);
-					setVisible(true);
 					setVisible(true);
 				}
 			});
@@ -211,5 +224,9 @@ public class VistaUsuari extends JFrame {
 			}
         });
          */
+	}
+	
+	public void mostra() {
+		setVisible(true);
 	}
 }

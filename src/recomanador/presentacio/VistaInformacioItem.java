@@ -36,7 +36,7 @@ public class VistaInformacioItem extends JFrame {
 
     }
 
-    //Vista informacio item cridada per VistaUsuari
+    //Vista informacio item cridada per VistaPrincipal
     public VistaInformacioItem(VistaPrincipal vp, ArrayList<ArrayList<String>> item) {
         it = item;
         //afegir vista usuari
@@ -53,6 +53,28 @@ public class VistaInformacioItem extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 vp.mostra();
+                dispose();
+            }
+        });
+    }
+    
+    //Vista informacio item cridada per VistaUsuari
+    public VistaInformacioItem(VistaUsuari vu, ArrayList<ArrayList<String>> item) {
+        it = item;
+        //afegir vista usuari
+
+        allI = false;
+
+        na = ControladorPresentacio.getHeaderItems();
+
+        ta = ControladorPresentacio.getTipusItems();
+
+        crearVistaInfoItem();
+
+        sortir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                vu.mostra();
                 dispose();
             }
         });
