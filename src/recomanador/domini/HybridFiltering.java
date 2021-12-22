@@ -111,7 +111,7 @@ public class HybridFiltering {
             Collections.sort(random_items);
 
             ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
-            for (int i = 0; i < Q; ++i) Q_items.add(random_items.get(i));
+            for (int i = 0; i < Q &&  i < random_items.size(); ++i) Q_items.add(random_items.get(i));
             return Q_items;
         }
         
@@ -190,6 +190,21 @@ public class HybridFiltering {
             }
             ++i;
         }
+
+        if(Q_items.size() == 0) {
+            //System.out.println("L'usuari no té cap valoració. Generant valoracions aleatories.");
+            
+            ArrayList<ItemValoracioEstimada> random_items = new ArrayList<ItemValoracioEstimada>();
+            for (int j = 0; j < items.size(); ++j) {
+                if (!valoracions.existeixRecomanacio(items.get(j).getId(), user_ID)) random_items.add(new ItemValoracioEstimada(rand.nextFloat()*5, items.get(j)));
+            }
+            Collections.sort(random_items);
+
+            Q_items = new ArrayList<ItemValoracioEstimada>();
+            for (int j = 0; j < Q && j < random_items.size(); ++j) Q_items.add(random_items.get(j));
+            return Q_items;
+        }
+
         return Q_items;
     }
 
@@ -334,7 +349,7 @@ public class HybridFiltering {
         
         float distance = 0;
 
-        ConjuntRecomanacions valoracionsUser = valoracions.getValoracions(usuaris.get(idx_usuari).getId());
+        ConjuntRecomanacions valoracionsUser = crs.get(idx_usuari);
 
         for (int idx_rec = 0; idx_rec < valoracionsUser.size(); ++idx_rec) {
             Recomanacio rec = valoracionsUser.get(idx_rec);

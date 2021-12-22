@@ -90,7 +90,7 @@ public class ContentBasedFiltering {
             Collections.sort(random_items);
 
             ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
-            for (int i = 0; i < Q; ++i) Q_items.add(random_items.get(i));
+            for (int i = 0; i < Q && i < random_items.size(); ++i) Q_items.add(random_items.get(i));
             return Q_items;
         }
         
@@ -149,55 +149,11 @@ public class ContentBasedFiltering {
             Collections.sort(random_items);
 
             Q_items = new ArrayList<ItemValoracioEstimada>();
-            for (int j = 0; j < Q; ++j) Q_items.add(random_items.get(j));
+            for (int j = 0; j < Q && j < random_items.size(); ++j) Q_items.add(random_items.get(j));
             return Q_items;
         }
 
         return Q_items;
-    }
-
-    
-    
+    }    
 }
 
-/* IMPLEMENTACIO DIFERENT ANTIGA. POTSER UTIL PER HÍBRID?
-public ArrayList<ItemValoracioEstimada> contentBasedFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
-       
-        ArrayList<ItemValoracioEstimada> items_estimats = new ArrayList<ItemValoracioEstimada>();
-
-        Usuari user = usuaris.getUsuari(user_ID);
-        ConjuntRecomanacions valUser = user.getValoracions();
-
-        for (int idxNV = 0; idxNV < items.size(); ++idxNV) {
-            Item iNV = items.get(idxNV);
-            if (valoracions.existeixValoracio(iNV, user)) continue;
-            float puntuacio_estimada = 0f;
-            for (int idxV = 0; idxV < valUser.size(); ++idxV) {
-                Recomanacio val = valoracions.get(idxV);
-                float similitud = (float)0.0;
-                try {
-                    similitud = ConjuntItems.distanciaItem(iNV, val.getItem());
-                } catch (ItemTypeNotValidException e) {
-                    e.printStackTrace();
-                }
-                
-                //Així, un ítem exactament igual que un que ha valorat com a 0 restaria 2.5 a la puntuació
-                //i viceversa. Això està ponderat per la similitud i per la valoració.
-                //Una valoració "meh" de 2.5 no afectaria a la puntuació estimada
-                puntuacio_estimada += similitud*(val.getVal()-2.5f);
-            }
-            items_estimats.add(new ItemValoracioEstimada(puntuacio_estimada, iNV));
-        }
-        Collections.sort(items_estimats);
-        
-        ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
-
-        for(int i = 0; i < Q; ++i){
-            Q_items.add(items_estimats.get(i));
-        }
-
-        return Q_items;
-    }
-    
-}
-*/
