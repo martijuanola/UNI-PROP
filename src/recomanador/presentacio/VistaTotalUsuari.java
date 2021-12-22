@@ -70,15 +70,7 @@ public class VistaTotalUsuari extends JFrame {
 		panel.add(tornar_enrere);
 		panel.add(text_inicial);
 		panel.add(text_recs_vals);
-		
-		JPanel header = new JPanel();
-		header.setLayout(new GridLayout(1, 4));
-		header.add(new JLabel("id"));
-		header.add(new JLabel("nom"));
-		header.add(new JLabel("valoració"));
-		header.add(new JLabel(""));
-		panel.add(header);
-		
+				
 		for (int i = 0; i < nb; ++i)
 		{
 			String usrId = id_usuaris.get(i);
@@ -92,20 +84,25 @@ public class VistaTotalUsuari extends JFrame {
 			usuari_ensenyat.add(idLab);
 			usuari_ensenyat.add(eliminar);
 			
-			panel.add(usuari_ensenyat
+			panel.add(usuari_ensenyat);
 			
 			idLab.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					setVisible(false);
-					cp.obreVistaUsuari(vtu, usrId);
+					new VistaUsuari(vtu, usrId);
 				}
 			});
 						
 			eliminar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					cp.eliminarUsuari(usrId);
-					panel.remove(item_valorat);
-					setVisible(true);
+					try
+					{
+						cp.eliminarUsuari(usrId);
+						panel.remove(usuari_ensenyat);
+						setVisible(true);
+					} catch(Exception err) {
+						new VistaError(err.getMessage());
+					}
 				}
 			});
 			

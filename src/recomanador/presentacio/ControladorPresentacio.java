@@ -14,6 +14,7 @@ import src.recomanador.excepcions.ItemNotFoundException;
 import src.recomanador.excepcions.ItemTypeNotValidException;
 import src.recomanador.excepcions.ItemWeightNotCorrectException;
 import src.recomanador.excepcions.PrivilegesException;
+import src.recomanador.excepcions.UserNotFoundException;
 
 public class ControladorPresentacio {
     private static ControladorDomini domini;
@@ -237,7 +238,11 @@ public class ControladorPresentacio {
     public static void carregarProjecteNou(String nom, String itemsFile, String ratingsFile) throws FolderNotValidException, FileNotValidException, FileNotFoundException {
         domini.createSession(nom, itemsFile, ratingsFile);
     }
-
+	
+	public static void eliminarUsuari(String user_id) throws PrivilegesException, UserNotFoundException{
+		domini.removeUsuari(user_id);
+	}
+	
     public static ArrayList<String> getProjectesDisponibles() {
         return domini.getAllProjectes();
     }
@@ -259,7 +264,7 @@ public class ControladorPresentacio {
     }
     
     public static ArrayList<String> getAllUsers() throws PrivilegesException {
-		return domini.getAllUsers();
+		return domini.getAllUsuaris();
 	}
 
 	public static String getPosItemId() {
