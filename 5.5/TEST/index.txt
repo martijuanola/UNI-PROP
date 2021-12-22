@@ -3,4 +3,5 @@ DIRECTORI TEST
 - TestControladorLoad.java: JUnit de la classe ControladorLoad
 - TestControladorSave.java: JUnit de la classe ControladorSave
 - TestRecomanacio.java: JUnit de la classe Recomanacio
-- Makefile: programa Makefile per la compilació dels JUnits
+- Makefile: programa Makefile per la compilacio dels JUnits
+- data: conte dues carpetes que s'usen per la comprovació dels JUnits de ControladorSave i ControladorLoad
