@@ -154,7 +154,7 @@ public class VistaPrincipal extends JFrame {
 		
 		//LAYER GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
-        panel.setLayout(new GridLayout(1, 2));	//1, 3
+        panel.setLayout(new GridLayout(1, 2));
         
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
@@ -411,9 +411,54 @@ public class VistaPrincipal extends JFrame {
 		else return 0;
 	}
 	
-	public void mostraDeUsuari() {					
-		System.out.println("Inici");
+	public void mostraDeUsuari() {
 		dreta.remove(recsScrollable);
+		
+		ArrayList<ArrayList<String>> all_recs =
+			new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> all_vals =
+			new ArrayList<ArrayList<String>>();
+		
+		try
+		{
+			all_recs = ControladorPresentacio.getRecomanacions(ControladorPresentacio.getId());
+			all_vals = ControladorPresentacio.getValoracions(ControladorPresentacio.getId());
+		}
+		catch (Exception e)
+		{
+			new VistaError(e.getMessage());
+		}
+		ArrayList<Integer> idx_temp = new ArrayList<Integer>();
+		
+		for (int i = 0; i < recomanacions.size(); ++i)
+		{
+			boolean found_rec = false;
+			boolean found_val = false;
+			for (int j = 0; j < all_recs.size(); ++j) {
+				if (all_recs.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+					all_recs.get(j).get(1).equals(recomanacions.get(i).get(0))) 
+					found_rec = true;
+			}
+			
+			if (!found_rec) {
+				for (int j = 0; j < all_vals.size(); ++j) {
+					if (all_vals.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+						all_vals.get(j).get(1).equals(recomanacions.get(i).get(0)))
+						{
+							found_val = true;
+						}
+				}
+				
+			}
+			
+			if (!found_rec && !found_val) idx_temp.add(i);
+		}
+		
+		for (int i = idx_temp.size()-1; i >= 0; --i)
+		{
+			recomanacions.remove(idx_temp.get(i));
+		}
+		
 		
 		id_item = new ArrayList<JLabel>();
 		nom_item = new ArrayList<JLabel>();
@@ -433,29 +478,12 @@ public class VistaPrincipal extends JFrame {
 		recs.add(header.get(1));
 		recs.add(header.get(2));
 		
-		ArrayList<ArrayList<String>> all_recs =
-			new ArrayList<ArrayList<String>>();
-		ArrayList<ArrayList<String>> all_vals =
-			new ArrayList<ArrayList<String>>();
-		
-		try
-		{
-			all_recs = ControladorPresentacio.getRecomanacions(ControladorPresentacio.getId());
-			all_vals = ControladorPresentacio.getValoracions(ControladorPresentacio.getId());
-		}
-		catch (Exception e)
-		{
-			new VistaError(e.getMessage());
-		}
-		System.out.println("Fins aqui be ");
-		ArrayList<Integer> idx_temp = new ArrayList<Integer>();
-		
 		for (int i = 0; i < recomanacions.size(); ++i)
 		{
 			boolean found_rec = false;
 			boolean found_val = false;
 			String rated_val = "";
-			System.out.print("FuckOf ");
+			
 			for (int j = 0; j < all_recs.size(); ++j) {
 				if (all_recs.get(j).get(0).equals(ControladorPresentacio.getId()) &&
 					all_recs.get(j).get(1).equals(recomanacions.get(i).get(0))) 
@@ -482,27 +510,22 @@ public class VistaPrincipal extends JFrame {
 				recs.add(id_item.get(id_item.size() - 1));
 				recs.add(nom_item.get(nom_item.size() - 1));
 				recs.add(rate.get(rate.size() - 1));
-				System.out.println("Recomanacio");
 			}
 			else if (found_val) {
 				id_item.add(new JLabel(recomanacions.get(i).get(0)));
 				nom_item.add(new JLabel(recomanacions.get(i).get(1)));
 				rate.add(new JComboBox(options));
-				System.out.print("No peta ");
 				rate.get(rate.size()-1).setSelectedIndex(stringToIndex(rated_val));
-				System.out.print("peta ? ");
 				
 				recs.add(id_item.get(id_item.size() - 1));
 				recs.add(nom_item.get(nom_item.size() - 1));
 				recs.add(rate.get(rate.size() - 1));
-				System.out.println("Valoració");
 			}
-			else {
-				idx_temp.add(i);
-				System.out.println("Eliminat");
-			}	
+			//else {
+			//	idx_temp.add(i);
+			//	System.out.println("Eliminat");
+			//}	
 		}
-		System.out.println("FIn");
 		recsScrollable = new JScrollPane(recs);
 		recs.setAutoscrolls(true);
 		dreta.add(recsScrollable);
@@ -548,10 +571,7 @@ public class VistaPrincipal extends JFrame {
 			});
 		}
 		
-		for (int i = idx_temp.size()-1; i >= 0; --i)
-		{
-			recomanacions.remove(idx_temp.get(i));
-		}
+		
 		setVisible(true);
 		
 	}
