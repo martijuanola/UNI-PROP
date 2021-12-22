@@ -1,5 +1,5 @@
 DIRECTORI FONTS
 
-\recomanador:
+\recomanador: Conté els codis fonts de les capes de presentació domini i persistencia
 
 - ???.bat: Executable per Windows/DOS
