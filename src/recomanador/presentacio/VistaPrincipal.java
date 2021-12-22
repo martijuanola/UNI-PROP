@@ -270,9 +270,11 @@ public class VistaPrincipal extends JFrame {
         
         logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-				ControladorPresentacio.logOut();
-				ControladorPresentacio.obreVistaInicial();
-                dispose();
+				if (VistaAdvertencia.Advertencia("Segur que vols tancar sessió? Es perdran totes les dades no guardades.")) {
+					ControladorPresentacio.logOut();
+					ControladorPresentacio.obreVistaInicial();
+					dispose();
+				}
 			}
         });
         
@@ -319,23 +321,25 @@ public class VistaPrincipal extends JFrame {
         
         recuperar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String id_activa = null;
-					boolean admin = false;
-					String nomProj = ControladorPresentacio.getNomProjecte();
-					if (!ControladorPresentacio.isAdmin()) id_activa = ControladorPresentacio.getId();
-					else admin = true;
-					ControladorPresentacio.logOut();
-					ControladorPresentacio.carregarProjecte(nomProj);
-					if (admin) ControladorPresentacio.setAdmin();
-					else ControladorPresentacio.setUser(id_activa);
-					
-					dreta.remove(recsScrollable);
-					validate();
-					repaint();
-					
-				} catch(Exception err) {
-					new VistaError(err.getMessage());
+				if (VistaAdvertencia.Advertencia("Estas segur que vols revertir els canvis? Es perdràn tots els canvis no guardats.")) {
+					try {
+						String id_activa = null;
+						boolean admin = false;
+						String nomProj = ControladorPresentacio.getNomProjecte();
+						if (!ControladorPresentacio.isAdmin()) id_activa = ControladorPresentacio.getId();
+						else admin = true;
+						ControladorPresentacio.logOut();
+						ControladorPresentacio.carregarProjecte(nomProj);
+						if (admin) ControladorPresentacio.setAdmin();
+						else ControladorPresentacio.setUser(id_activa);
+						
+						dreta.remove(recsScrollable);
+						validate();
+						repaint();
+						
+					} catch(Exception err) {
+						new VistaError(err.getMessage());
+					}
 				}
 			}
         });
