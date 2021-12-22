@@ -1,0 +1,10 @@
+Nombre de Grup:	5
+Subgrup de Laboratori: 5
+Lliurament: 3er
+Versió: 3.0
+Data de Lliurament: 22/12/2021
+Integrants del Grup:
+	- Jaume Casals Vilaplana - jaume.casals.vilaplana@estudiantat.upc.edu
+    	- Adrià Fernandez Clemente- adria.fernandez.clemente@estudiantat.upc.edu
+    	- Martí Juanola Ametller - marti.juanola@estudiantat.upc.edu
+    	- Pol Sturlese Ruiz - pol.sturlese@estudiantat.upc.edu
