@@ -68,7 +68,13 @@ public class VistaAfegirItem extends JFrame {
         help.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-                tornar();
+                JOptionPane.showMessageDialog(new JFrame(), "Els formats acceptats són: \n" +
+                                                            "- Identificador: nombre enter.\n" +
+                                                            "- Nom: qualsevol.\n" +
+                                                            "- Boolean: true / false.\n" + 
+                                                            "- String: qualsevol.\n" +
+                                                            "- Float: nombre enter, nombre real i amb exponent: 1.23e3.\n" +
+                                                            "- Data: DD-MM-AAAA.\n");
             }
         });
         boto.add(help);

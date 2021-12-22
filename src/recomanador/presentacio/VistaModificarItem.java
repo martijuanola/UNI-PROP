@@ -23,6 +23,8 @@ public class VistaModificarItem extends JFrame {
     JButton cancelar;
     JButton reset;
 
+    JButton help;
+
     int pos;
 
     public VistaModificarItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, int posicio, ArrayList<ArrayList<String>> item, VistaItems inst) {
@@ -91,6 +93,23 @@ public class VistaModificarItem extends JFrame {
             }
         });
         boto.add(reset);
+
+        help = new JButton("Ajuda");
+
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "Els formats acceptats són: \n" +
+                                                            "- Identificador: nombre enter.\n" +
+                                                            "- Nom: qualsevol.\n" +
+                                                            "- Boolean: true / false.\n" + 
+                                                            "- String: qualsevol.\n" +
+                                                            "- Float: nombre enter, nombre real i amb exponent: 1.23e3.\n" +
+                                                            "- Data: DD-MM-AAAA.\n");
+            }
+        });
+
+        boto.add(help);
 
         JPanel nomTipus = new JPanel();
         nomTipus.setLayout(new GridLayout(na.size(), 2));
