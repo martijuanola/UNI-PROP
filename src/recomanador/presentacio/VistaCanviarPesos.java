@@ -59,12 +59,7 @@ public class VistaCanviarPesos extends JFrame {
             return;
         }
 
-        na = new ArrayList<String>();
-        ArrayList<ArrayList<ArrayList<String>>> items = ControladorPresentacio.getAllItems();
-        int nomPos = Integer.parseInt(ControladorPresentacio.getPosItemNom());
-        for (int i = 0; i < items.size(); ++i) {
-            na.add(items.get(i).get(nomPos).get(0));
-        }
+        na = ControladorPresentacio.getHeaderItems();
 
         allItems = false;
 
@@ -176,7 +171,8 @@ public class VistaCanviarPesos extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Modificar Pesos");
         pack();
-        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
+        setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 200));
         setVisible(true);
     }
 

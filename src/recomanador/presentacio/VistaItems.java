@@ -151,14 +151,18 @@ public class VistaItems extends JFrame {
 		botons.add(exit);
 
         sota = new JPanel();
+        /*
         if (admin) {
-            sotaLayout = new GridLayout(items.size()+1, 5);
-            sota.setLayout(sotaLayout); //tipus id info modificar eliminar
+            sotaLayout = new GridLayout(items.size()+1, 5); //tipus id (info modificar eliminar)
+            sota.setLayout(sotaLayout);
         }
         else {
-            sotaLayout = new GridLayout(items.size()+1, 3);
-            sota.setLayout(sotaLayout); //-2 per treure modificar i eliminar
+            sotaLayout = new GridLayout(items.size()+1, 3); //-2 per treure modificar i eliminar
+            sota.setLayout(sotaLayout);
         }
+        */
+        sotaLayout = new GridLayout(items.size()+1, 3); //-2 per treure modificar i eliminar
+        sota.setLayout(sotaLayout);
          
         JPanel f1 = new JPanel();
         f1.setLayout(new FlowLayout());
@@ -171,10 +175,11 @@ public class VistaItems extends JFrame {
         sota.add(f2);
 
         sota.add(new JLabel(""));
+        /*
         if (admin) {
             sota.add(new JLabel(""));
             sota.add(new JLabel(""));
-        }
+        }*/
 
         ids = new ArrayList<JLabel>();
         noms = new ArrayList<JLabel>();
@@ -195,7 +200,8 @@ public class VistaItems extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Tots els items");
         pack();
-        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
+        setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 200));
         setVisible(true);
     }
 
@@ -284,7 +290,6 @@ public class VistaItems extends JFrame {
         JPanel f5 = new JPanel();
         f5.setLayout(new FlowLayout());
         f5.add(info);
-        sota.add(f5);
 
         if (admin) {
             JButton mod = new JButton("Modificar");
@@ -296,13 +301,9 @@ public class VistaItems extends JFrame {
             });
 
 
-            JPanel f6 = new JPanel();
-            f6.setLayout(new FlowLayout());
-            f6.add(mod);
-            sota.add(f6);
+            f5.add(mod);
 
             JButton elim = new JButton("Eliminar");
-            JPanel f7 = new JPanel();
 
             elim.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -312,9 +313,7 @@ public class VistaItems extends JFrame {
                     sota.remove(f4); //nom
                     noms.remove(nom1);
 
-                    sota.remove(f5); //info
-                    sota.remove(f6); //mod
-                    sota.remove(f7); //elim
+                    sota.remove(f5); //info mod elim
 
                     sotaLayout.setRows(sotaLayout.getRows() - 1);
                     ControladorPresentacio.eliminarItem(id1.getText());
@@ -327,9 +326,8 @@ public class VistaItems extends JFrame {
             elim.setContentAreaFilled(false);
             elim.setOpaque(true);
 
-            f7.setLayout(new FlowLayout());
-            f7.add(elim);
-            sota.add(f7);
+            f5.add(elim);
+            sota.add(f5);
         }
     }
 }
