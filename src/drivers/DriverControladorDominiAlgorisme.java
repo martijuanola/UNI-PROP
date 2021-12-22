@@ -188,10 +188,8 @@ public class DriverControladorDominiAlgorisme {
             System.out.println("Escull una ID d'usuari:");
             System.out.println("(p.ex.: " + usuaris.get(0).getId() + ", " + usuaris.get(1).getId() + ", " + usuaris.get(2).getId() + ")");
             System.out.print(">>>>> ");
-            bool1 = true;
-            while(bool1) {
-                user_ID = in.nextInt();
-                try {
+            user_ID = in.nextInt();
+                /*try {
                     usuaris.getUsuari(user_ID);
                     bool1 = false;
                 }
@@ -199,7 +197,7 @@ public class DriverControladorDominiAlgorisme {
                     System.out.println(e);
                     System.out.print(">>>>> ");
                 }
-            }
+                */
             System.out.println();
 
             algorisme.setData(items, usuaris, recomanacions);
@@ -239,6 +237,7 @@ public class DriverControladorDominiAlgorisme {
 
                 int DCG = 0;
                 Double IDCG = 0d;
+                algorisme.setData(items, usuaris, recomanacions);
 
                 for(int idx_unknown = 0; idx_unknown < usuarisUnknown.size(); ++idx_unknown) {
                     int id_unknown = usuarisUnknown.get(idx_unknown).getId();
@@ -253,7 +252,6 @@ public class DriverControladorDominiAlgorisme {
                     }
                     Collections.sort(val_unknown);
 
-                    algorisme.setData(items, usuaris, recomanacions);
                     items_recomanats = algorisme.run_algorithm(id_unknown);
                     int DCG_user = 0;
 

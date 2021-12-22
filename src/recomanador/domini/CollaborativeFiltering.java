@@ -89,6 +89,27 @@ public class CollaborativeFiltering {
      * @throws     UserNotFoundException if the id specified is not valid
      */
     public ArrayList<ItemValoracioEstimada> collaborativeFiltering(int Q, int user_ID, int K) throws UserNotFoundException {
+
+        Usuari user = null;
+
+        try {user = usuaris.getUsuari(user_ID);}
+        catch (UserNotFoundException e) {}
+        
+        ConjuntRecomanacions valUser = new ConjuntRecomanacions();
+        if (user != null) valUser = valoracions.getValoracions(user.getId());
+
+        if (user == null || valUser.size() == 0) {
+            System.out.println("L'usuari no té cap valoració. Generant valoracions aleatories.");
+            
+            ArrayList<ItemValoracioEstimada> random_items = new ArrayList<ItemValoracioEstimada>();
+            for (int i = 0; i < items.size(); ++i) random_items.add(new ItemValoracioEstimada(rand.nextFloat()*5, items.get(i)));
+            Collections.sort(random_items);
+
+            ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
+            for (int i = 0; i < Q; ++i) Q_items.add(random_items.get(i));
+            return Q_items;
+        }
+
         ArrayList<Usuari> usuaris_cluster = usuaris_cluster(user_ID, K); //kmeans
         System.out.println("L'usuari " + user_ID + " pertany a un cluster que conté " + usuaris_cluster.size() + " dels " + usuaris.size() + " usuaris." );
         System.out.println("Executant slope-1");
@@ -110,6 +131,8 @@ public class CollaborativeFiltering {
      * @param      K            The value K
      * 
      * @return     users of the cluster
+     * 
+     * @throws     UserNotFoundException if the id specified is not valid
      */
     private ArrayList<Usuari> usuaris_cluster(int user_ID, int K) throws UserNotFoundException {
         if(!centroidesCalculats) {

@@ -247,8 +247,9 @@ public class VistaPrincipal extends JFrame {
 						public void actionPerformed(ActionEvent  e) {
 							cb = (JComboBox<String>)e.getSource();
 							String rate_value = cb.getSelectedItem().toString();
-							if (rate_value == "Sense valoració") rate_value = "0";
-							cp.valorar(stringedId, rate_value);
+							if (rate_value == "Sense valoració") 
+								cp.eliminarValoracio(cp.getId(), stringedId);
+							else cp.valorar(stringedId, cp.getId(), rate_value);
 						}
 					});
 				}
@@ -265,27 +266,21 @@ public class VistaPrincipal extends JFrame {
         
         info_usuari.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaUsuari(cp.getId());
-				//cp.obreVistaModificarAlgorisme();				
-				
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
+				setVisible(false);
+				new VistaUsuari(vp, cp.getId());
 			}
         });
         
         info_total_usuaris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaTotalUsuari();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
+				setVisible(false);
+				new VistaTotalUsuari(vp);
 			}
         });
         
         info_items.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cp.obreVistaItems();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
@@ -293,8 +288,6 @@ public class VistaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				new VistaModificarAlgorisme(vp);
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
@@ -302,16 +295,12 @@ public class VistaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				new VistaTestAlgorisme(vp);
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
         guardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cp.guardar();
-				//Fer invisible temporalment la vista aquesta?
-				//Això si, sense eliminar-la
 			}
         });
         
@@ -320,9 +309,11 @@ public class VistaPrincipal extends JFrame {
 				try {
 					String id_activa = null;
 					boolean admin = false;
+					String nomProj = cp.getNomProjecte();
 					if (!cp.isAdmin()) id_activa = cp.getId();
 					else admin = true;
-					cp.carregarProjecte(cp.getNomProjecte());
+					cp.logOut();
+					cp.carregarProjecte(nomProj);
 					if (admin) cp.setAdmin();
 					else cp.setUser(id_activa);
 					
