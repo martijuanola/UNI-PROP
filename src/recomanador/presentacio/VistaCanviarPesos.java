@@ -29,18 +29,28 @@ public class VistaCanviarPesos extends JFrame {
     ArrayList<JTextField> textPesos;
 
     //Cridat des de VistaAllItems
-    public VistaCanviarPesos(ArrayList<String> pesos, ArrayList<String> nomAtributs, VistaItems inst) {
-        pesosVells = pesos;
+    public VistaCanviarPesos(ArrayList<String> pesos2, ArrayList<String> nomAtributs, VistaItems inst) {
+        pesosVells = pesos2;
         vi = inst;
         na = nomAtributs;
 
         allItems = true;
 
         crearVistaPesos();
+        
+        accept.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < pesos.size(); ++i) {
+                    pesosNous.set(i, ""+(pesos.get(i).getValue()/100.0));
+                }
+                retornarItancar();
+            }
+        });
     }
 
     //Cridat des de TestAlgorisme
-    public VistaCanviarPesos() {
+    public VistaCanviarPesos(VistaTestAlgorisme vta) {
         try {
             pesosVells = ControladorPresentacio.getPesos();
         }
@@ -59,6 +69,18 @@ public class VistaCanviarPesos extends JFrame {
         allItems = false;
 
         crearVistaPesos();
+        
+        accept.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < pesos.size(); ++i) {
+                    pesosNous.set(i, ""+(pesos.get(i).getValue()/100.0));
+                }
+                ControladorPresentacio.setPesos(pesosNous);
+                vta.mostra();
+                dispose();
+            }
+        });
     }
 
     void crearVistaPesos() {
@@ -70,15 +92,7 @@ public class VistaCanviarPesos extends JFrame {
 
         accept = new JButton("Aplicar canvis");
 
-        accept.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < pesos.size(); ++i) {
-                    pesosNous.set(i, ""+(pesos.get(i).getValue()/100.0));
-                }
-                retornarItancar();
-            }
-        });
+        
 
         JLabel espai = new JLabel("");
         espai.setPreferredSize(new Dimension(60, 15));

@@ -55,10 +55,18 @@ public class VistaItems extends JFrame {
         na = nomAtributs;
         ta = tipusAtributs;
         crearVistaItems();
+        
+        exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
+            public void actionPerformed(ActionEvent e)
+            {
+                vs.ItemsAcabats();
+                dispose();
+            }
+        });
     }
 
     //Exactament igual que l'anterior però amb vistaPrincipal
-    public VistaItems() {
+    public VistaItems(VistaPrincipal vp) {
         items = ControladorPresentacio.getAllItems();
         idPos = Integer.parseInt(ControladorPresentacio.getPosItemId());
         nomPos = Integer.parseInt(ControladorPresentacio.getPosItemNom());
@@ -75,6 +83,14 @@ public class VistaItems extends JFrame {
         na = ControladorPresentacio.getHeaderItems();
         ta = ControladorPresentacio.getTipusItems();
         crearVistaItems();
+        
+        exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
+            public void actionPerformed(ActionEvent e)
+            {
+                vp.mostra();
+                dispose();
+            }
+        });
     }
 
     private void crearVistaItems() {
@@ -131,15 +147,8 @@ public class VistaItems extends JFrame {
         else {
             exit = new JButton("Tornar");
         }
-        exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
-            public void actionPerformed(ActionEvent e)
-            {
-                vs.ItemsAcabats();
-                dispose();
-            }
-        });
-        botons.add(exit);
-
+        
+		botons.add(exit);
 
         sota = new JPanel();
         if (admin) {

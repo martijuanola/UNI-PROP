@@ -61,6 +61,7 @@ public class VistaTestAlgorisme extends JFrame {
     /*----- FUNCIONS -----*/
     public VistaTestAlgorisme(VistaPrincipal vp) {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
+        VistaTestAlgorisme vta = this;
         
         setMinimumSize(new Dimension(550, 250));
         setSize(new Dimension(1000, 900));
@@ -218,7 +219,8 @@ public class VistaTestAlgorisme extends JFrame {
         
         pesos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new VistaError("Canviar a vista pesos");
+				setVisible(false);
+				new VistaCanviarPesos(vta);
 			}
         });
 					
@@ -229,5 +231,9 @@ public class VistaTestAlgorisme extends JFrame {
 			}
         });
          */
+	}
+	
+	public void mostra() {
+		setVisible(true);
 	}
 }

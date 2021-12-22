@@ -280,7 +280,8 @@ public class VistaPrincipal extends JFrame {
         
         info_items.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cp.obreVistaItems();
+				setVisible(false);
+				new VistaItems(vp);
 			}
         });
         
