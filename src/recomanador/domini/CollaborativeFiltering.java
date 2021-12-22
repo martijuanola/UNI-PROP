@@ -102,7 +102,7 @@ public class CollaborativeFiltering {
             System.out.println("L'usuari no té cap valoració. Generant valoracions aleatories.");
             
             ArrayList<ItemValoracioEstimada> random_items = new ArrayList<ItemValoracioEstimada>();
-            for (int i = 0; i < items.size(); ++i) random_items.add(new ItemValoracioEstimada(rand.nextFloat(5.0f), items.get(i)));
+            for (int i = 0; i < items.size(); ++i) random_items.add(new ItemValoracioEstimada(rand.nextFloat()*5, items.get(i)));
             Collections.sort(random_items);
 
             ArrayList<ItemValoracioEstimada> Q_items = new ArrayList<ItemValoracioEstimada>();
