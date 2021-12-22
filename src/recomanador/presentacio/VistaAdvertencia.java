@@ -5,7 +5,7 @@ import javax.swing.*;
 public class VistaAdvertencia extends JFrame {
     JButton accept;
 
-    static String[] options = {"Acceptar", "Cancelar"};
+    static String[] options = {"Acceptar", "Cancel·lar"};
 
     public static boolean Advertencia(String advertencia) {
         return crearVistaAdvertencia(advertencia);
