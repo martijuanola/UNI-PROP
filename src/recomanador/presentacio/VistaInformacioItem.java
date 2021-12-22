@@ -142,7 +142,8 @@ public class VistaInformacioItem extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Informació de l'ítem");
         pack();
-        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
+        setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 700));
         setVisible(true);
     }
 

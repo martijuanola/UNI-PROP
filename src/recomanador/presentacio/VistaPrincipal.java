@@ -60,8 +60,9 @@ public class VistaPrincipal extends JFrame {
 			ArrayList<JComboBox> rate;	//Tindra no valorat i [0.5, 5] de 1/2 en 1/2
     
     /*----- DADES -----*/
-    ArrayList<String> id_recomanacions;
-    ArrayList<String> nom_recomanacions;
+	VistaPrincipal vp;
+	ArrayList<ArrayList<String>> recomanacions;
+	
     JComboBox<String> cb;
     String[] options = {"Sense valoració", "0.5", "1.0", 
 								"1.5", "2.0", "2.5", "3.0",
@@ -70,10 +71,12 @@ public class VistaPrincipal extends JFrame {
     /*----- FUNCIONS -----*/
     public VistaPrincipal() {
         ControladorPresentacio cp = ControladorPresentacio.getInstance();
-        VistaPrincipal vp = this;
+        vp = this;
         setMinimumSize(new Dimension(550, 250));
         setSize(new Dimension(1000, 900));
-
+        
+		recomanacions = new ArrayList<ArrayList<String>>();
+        
         panel = new JPanel();
         
         //LAYER E
@@ -88,11 +91,11 @@ public class VistaPrincipal extends JFrame {
 			
 			nom_projecte = new JLabel("Projecte sobre el que es treballa: " + ControladorPresentacio.getNomProjecte());
 			usuari_sessio_actual = new JLabel("Usuari de la sessió actual: " + lab_usr);
-			info_usuari = new JButton("Informació meva");
+			info_usuari = new JButton("Les meves recomanacions");
 			info_total_usuaris = new JButton("Informació dels usuaris");
 			info_items = new JButton("Informació dels ítems");
 			modificar_algorisme = new JButton("Modificar algorisme");
-			test_algorisme = new JButton("Testejar algorisme");
+			test_algorisme = new JButton("Avaluar algorisme");
 			
 			//if (ControladorPresentacio.isAdmin()) menu_esquerra.setLayout(new GridLayout(6, 1));//, 0, 10));
 			//else menu_esquerra.setLayout(new GridLayout(4, 1));//, 0, 10));
@@ -112,7 +115,7 @@ public class VistaPrincipal extends JFrame {
 			//me_down = new JPanel();
 			
 			guardar = new JButton("Guardar");
-			recuperar = new JButton("Recuperar dades");
+			recuperar = new JButton("Revertir canvis");
 			logout = new JButton("Tancar sessió");
 			
 			//me_down.setLayout(new GridLayout(3, 1));//, 0, 10));
@@ -132,7 +135,7 @@ public class VistaPrincipal extends JFrame {
 			dreta.setLayout(new GridLayout(2, 1, 0, 10));
 			
 			
-			recomana = new JButton("RECOMANA");
+			recomana = new JButton("OBTENIR RECOMANACIONS");
 			//recomana.setBackground(Color.RED);
 			//recomana.setForeground(Color.BLACK);
 			recs = new JPanel();
@@ -151,7 +154,7 @@ public class VistaPrincipal extends JFrame {
 		
 		//LAYER GLOBAL
 		panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
-        panel.setLayout(new GridLayout(1, 2));	//1, 3
+        panel.setLayout(new GridLayout(1, 2));
         
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
@@ -188,7 +191,7 @@ public class VistaPrincipal extends JFrame {
         recomana.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				
-				ArrayList<ArrayList<String>> recomanacions = ControladorPresentacio.executarAlgorisme();
+				recomanacions = ControladorPresentacio.executarAlgorisme();
 				
 				int nb = recomanacions.size();
 				
@@ -242,6 +245,24 @@ public class VistaPrincipal extends JFrame {
 							}
 						}
 					});
+
+					final int nonChange = k;
+					id_item.get(k).addMouseMotionListener(new MouseAdapter() {
+						@Override
+						public void mouseMoved(MouseEvent e) {
+							// only display a hand if the cursor is over the label
+							final Rectangle cellBounds = id_item.get(nonChange).getBounds();
+							if (cellBounds != null) {
+								id_item.get(nonChange).setCursor(new Cursor(Cursor.HAND_CURSOR));
+							}
+
+							id_item.get(nonChange).getParent().repaint();
+						}
+
+						@Override
+						public void mouseDragged(MouseEvent e) {							
+						}
+					});
 					
 					nom_item.get(k).addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
@@ -254,25 +275,45 @@ public class VistaPrincipal extends JFrame {
 							}
 						}
 					});
-					
+
+					nom_item.get(k).addMouseMotionListener(new MouseAdapter() {
+						@Override
+						public void mouseMoved(MouseEvent e) {
+							// only display a hand if the cursor is over the label
+							final Rectangle cellBounds = nom_item.get(nonChange).getBounds();
+							if (cellBounds != null) {
+								nom_item.get(nonChange).setCursor(new Cursor(Cursor.HAND_CURSOR));
+							}
+
+							nom_item.get(nonChange).getParent().repaint();
+						}
+
+						@Override
+						public void mouseDragged(MouseEvent e) {							
+						}
+					});
+
 					rate.get(k).addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent  e) {
 							cb = (JComboBox<String>)e.getSource();
 							String rate_value = cb.getSelectedItem().toString();
-							if (rate_value == "Sense valoració") 
+							if (rate_value.equals("Sense valoració")) 
 								ControladorPresentacio.eliminarValoracio(ControladorPresentacio.getId(), stringedId);
 							else ControladorPresentacio.valorar(stringedId, ControladorPresentacio.getId(), rate_value);
 						}
 					});
 				}
+				System.out.println("x" + recomanacions.size());
             }
         });
         
         logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-				ControladorPresentacio.logOut();
-				ControladorPresentacio.obreVistaInicial();
-                dispose();
+				if (VistaAdvertencia.Advertencia("Segur que vols tancar sessió? Es perdran tots els canvis no guardats.")) {
+					ControladorPresentacio.logOut();
+					ControladorPresentacio.obreVistaInicial();
+					dispose();
+				}
 			}
         });
         
@@ -319,23 +360,25 @@ public class VistaPrincipal extends JFrame {
         
         recuperar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String id_activa = null;
-					boolean admin = false;
-					String nomProj = ControladorPresentacio.getNomProjecte();
-					if (!ControladorPresentacio.isAdmin()) id_activa = ControladorPresentacio.getId();
-					else admin = true;
-					ControladorPresentacio.logOut();
-					ControladorPresentacio.carregarProjecte(nomProj);
-					if (admin) ControladorPresentacio.setAdmin();
-					else ControladorPresentacio.setUser(id_activa);
-					
-					dreta.remove(recsScrollable);
-					validate();
-					repaint();
-					
-				} catch(Exception err) {
-					new VistaError(err.getMessage());
+				if (VistaAdvertencia.Advertencia("Segur que vols revertir els canvis? Es perdràn tots els canvis no guardats.")) {
+					try {
+						String id_activa = null;
+						boolean admin = false;
+						String nomProj = ControladorPresentacio.getNomProjecte();
+						if (!ControladorPresentacio.isAdmin()) id_activa = ControladorPresentacio.getId();
+						else admin = true;
+						ControladorPresentacio.logOut();
+						ControladorPresentacio.carregarProjecte(nomProj);
+						if (admin) ControladorPresentacio.setAdmin();
+						else ControladorPresentacio.setUser(id_activa);
+						
+						dreta.remove(recsScrollable);
+						validate();
+						repaint();
+						
+					} catch(Exception err) {
+						new VistaError(err.getMessage());
+					}
 				}
 			}
         });
@@ -351,5 +394,176 @@ public class VistaPrincipal extends JFrame {
 	
 	public void mostra() {
 		setVisible(true);
+	}
+	
+	private int stringToIndex(String s)
+	{
+		if (s.equals("0.5")) return 1;
+		else if (s.equals("1.0")) return 2;
+		else if (s.equals("1.5")) return 3;
+		else if (s.equals("2.0")) return 4;
+		else if (s.equals("2.5")) return 5;
+		else if (s.equals("3.0")) return 6;
+		else if (s.equals("3.5")) return 7;
+		else if (s.equals("4.0")) return 8;
+		else if (s.equals("4.5")) return 9;
+		else if (s.equals("5.0")) return 10;
+		else return 0;
+	}
+	
+	public void mostraDeUsuari() {
+		dreta.remove(recsScrollable);
+		
+		ArrayList<ArrayList<String>> all_recs =
+			new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> all_vals =
+			new ArrayList<ArrayList<String>>();
+		
+		try
+		{
+			all_recs = ControladorPresentacio.getRecomanacions(ControladorPresentacio.getId());
+			all_vals = ControladorPresentacio.getValoracions(ControladorPresentacio.getId());
+		}
+		catch (Exception e)
+		{
+			new VistaError(e.getMessage());
+		}
+		
+		int eliminats = 0;
+		
+		for (int i = 0; i < recomanacions.size(); ++i)
+		{
+			boolean found_rec = false;
+			boolean found_val = false;
+			for (int j = 0; j < all_recs.size(); ++j) {
+				if (all_recs.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+					all_recs.get(j).get(1).equals(recomanacions.get(i).get(0))) 
+					found_rec = true;
+			}
+			
+			if (!found_rec) {
+				for (int j = 0; j < all_vals.size(); ++j) {
+					if (all_vals.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+						all_vals.get(j).get(1).equals(recomanacions.get(i).get(0)))
+						{
+							found_val = true;
+						}
+				}
+				
+			}
+			
+			if (!found_rec && !found_val) ++eliminats;
+		}
+			
+		
+		id_item = new ArrayList<JLabel>();
+		nom_item = new ArrayList<JLabel>();
+		rate = new ArrayList<JComboBox>();
+		
+		System.out.println(recomanacions.size());
+					
+		recs = new JPanel();
+		recs.setLayout(new GridLayout(recomanacions.size() - eliminats + 1, 3));
+		
+		header = new ArrayList<JLabel>();
+		header.add(new JLabel("id"));
+		header.add(new JLabel("nom"));
+		header.add(new JLabel("valoració"));
+		
+		recs.add(header.get(0));
+		recs.add(header.get(1));
+		recs.add(header.get(2));
+		
+		for (int i = 0; i < recomanacions.size(); ++i)
+		{
+			boolean found_rec = false;
+			boolean found_val = false;
+			String rated_val = "";
+			
+			for (int j = 0; j < all_recs.size(); ++j) {
+				if (all_recs.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+					all_recs.get(j).get(1).equals(recomanacions.get(i).get(0))) 
+					found_rec = true;
+			}
+			
+			if (!found_rec) {
+				for (int j = 0; j < all_vals.size(); ++j) {
+					if (all_vals.get(j).get(0).equals(ControladorPresentacio.getId()) &&
+						all_vals.get(j).get(1).equals(recomanacions.get(i).get(0)))
+					{
+						found_val = true;
+						rated_val = all_vals.get(j).get(2);
+					}
+				}
+				
+			}
+			
+			if (found_rec) {
+				id_item.add(new JLabel(recomanacions.get(i).get(0)));
+				nom_item.add(new JLabel(recomanacions.get(i).get(1)));
+				rate.add(new JComboBox(options));
+				
+				recs.add(id_item.get(id_item.size() - 1));
+				recs.add(nom_item.get(nom_item.size() - 1));
+				recs.add(rate.get(rate.size() - 1));
+			}
+			else if (found_val) {
+				id_item.add(new JLabel(recomanacions.get(i).get(0)));
+				nom_item.add(new JLabel(recomanacions.get(i).get(1)));
+				rate.add(new JComboBox(options));
+				rate.get(rate.size()-1).setSelectedIndex(stringToIndex(rated_val));
+				
+				recs.add(id_item.get(id_item.size() - 1));
+				recs.add(nom_item.get(nom_item.size() - 1));
+				recs.add(rate.get(rate.size() - 1));
+			}
+		}
+		recsScrollable = new JScrollPane(recs);
+		recs.setAutoscrolls(true);
+		dreta.add(recsScrollable);
+		
+		
+		
+		for (int k = 0; k < id_item.size(); ++k)
+		{
+			String stringedId = id_item.get(k).getText();
+			id_item.get(k).addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					try {
+						new VistaInformacioItem(vp, ControladorPresentacio.getItem(Integer.parseInt(stringedId)));
+						setVisible(false);
+					}
+					catch(ItemNotFoundException exce) {
+						new VistaError(exce.getMessage());
+					}
+				}
+			});
+			
+			nom_item.get(k).addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					try {
+						new VistaInformacioItem(vp, ControladorPresentacio.getItem(Integer.parseInt(stringedId)));
+						setVisible(false);
+					}
+					catch(ItemNotFoundException exce) {
+						new VistaError(exce.getMessage());
+					}
+				}
+			});
+			
+			rate.get(k).addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent  e) {
+					cb = (JComboBox<String>)e.getSource();
+					String rate_value = cb.getSelectedItem().toString();
+					if (rate_value.equals("Sense valoració")) 
+						ControladorPresentacio.eliminarValoracio(ControladorPresentacio.getId(), stringedId);
+					else ControladorPresentacio.valorar(stringedId, ControladorPresentacio.getId(), rate_value);
+				}
+			});
+		}
+				
+		setVisible(true);
+		validate();
+		repaint();
 	}
 }

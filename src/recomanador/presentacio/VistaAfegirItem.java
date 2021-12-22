@@ -19,6 +19,7 @@ public class VistaAfegirItem extends JFrame {
 
     JButton acceptar;
     JButton cancelar;
+    JButton help;
 
     public VistaAfegirItem(ArrayList<String> tipusAtributs, ArrayList<String> nomAtributs, VistaItems inst) {
         vi = inst;
@@ -49,8 +50,8 @@ public class VistaAfegirItem extends JFrame {
         });
         boto.add(acceptar);
 
-        cancelar = new JButton("Cancelar");
-        cancelar.setForeground(Color.WHITE);
+        cancelar = new JButton("Cancel·lar");
+        //cancelar.setForeground(Color.WHITE);
         cancelar.setBackground(Color.RED);
         cancelar.setContentAreaFilled(false);
         cancelar.setOpaque(true);
@@ -61,6 +62,22 @@ public class VistaAfegirItem extends JFrame {
             }
         });
         boto.add(cancelar);
+
+        help = new JButton("Ajuda");
+
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                JOptionPane.showMessageDialog(new JFrame(), "Els formats acceptats són: \n" +
+                                                            "- Identificador: nombre enter.\n" +
+                                                            "- Nom: qualsevol.\n" +
+                                                            "- Boolean: true / false.\n" + 
+                                                            "- String: qualsevol.\n" +
+                                                            "- Float: nombre enter, nombre real i amb exponent: 1.23e3.\n" +
+                                                            "- Data: DD-MM-AAAA.\n");
+            }
+        });
+        boto.add(help);
 
         JPanel nomTipus = new JPanel();
         nomTipus.setLayout(new GridLayout(na.size(), 2));
@@ -134,7 +151,8 @@ public class VistaAfegirItem extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Afegir ítem");
         pack();
-        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
+        setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 700));
         setVisible(true);
     }
 

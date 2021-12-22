@@ -59,6 +59,7 @@ public class VistaItems extends JFrame {
         exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
             public void actionPerformed(ActionEvent e)
             {
+                ControladorPresentacio.guardar();
                 vs.ItemsAcabats();
                 dispose();
             }
@@ -87,6 +88,7 @@ public class VistaItems extends JFrame {
         exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
             public void actionPerformed(ActionEvent e)
             {
+                if (admin) ControladorPresentacio.guardar();
                 vp.mostra();
                 dispose();
             }
@@ -151,14 +153,18 @@ public class VistaItems extends JFrame {
 		botons.add(exit);
 
         sota = new JPanel();
+        /*
         if (admin) {
-            sotaLayout = new GridLayout(items.size()+1, 5);
-            sota.setLayout(sotaLayout); //tipus id info modificar eliminar
+            sotaLayout = new GridLayout(items.size()+1, 5); //tipus id (info modificar eliminar)
+            sota.setLayout(sotaLayout);
         }
         else {
-            sotaLayout = new GridLayout(items.size()+1, 3);
-            sota.setLayout(sotaLayout); //-2 per treure modificar i eliminar
+            sotaLayout = new GridLayout(items.size()+1, 3); //-2 per treure modificar i eliminar
+            sota.setLayout(sotaLayout);
         }
+        */
+        sotaLayout = new GridLayout(items.size()+1, 3); //-2 per treure modificar i eliminar
+        sota.setLayout(sotaLayout);
          
         JPanel f1 = new JPanel();
         f1.setLayout(new FlowLayout());
@@ -171,10 +177,11 @@ public class VistaItems extends JFrame {
         sota.add(f2);
 
         sota.add(new JLabel(""));
+        /*
         if (admin) {
             sota.add(new JLabel(""));
             sota.add(new JLabel(""));
-        }
+        }*/
 
         ids = new ArrayList<JLabel>();
         noms = new ArrayList<JLabel>();
@@ -195,7 +202,8 @@ public class VistaItems extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Tots els items");
         pack();
-        setMinimumSize(new Dimension(getBounds().getSize().width, 200));
+        setMinimumSize(new Dimension(Math.min(getBounds().getSize().width, 700), 200));
+        setSize(new Dimension(Math.min(getBounds().getSize().width, 1500), 700));
         setVisible(true);
     }
 
@@ -255,25 +263,12 @@ public class VistaItems extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 ArrayList<ArrayList<String>> item;
-                if (!SessioNova) {
-                    try {
-                        item = ControladorPresentacio.getItem(Integer.parseInt(items.get(nonChanger).get(idPos).get(0)));
-                    }
-                    catch (NumberFormatException | ItemNotFoundException e1) {
-                        ControladorPresentacio.obreVistaError(e1.getMessage());
-                        return;
-                    }
+                try {
+                    item = ControladorPresentacio.getItem(Integer.parseInt(items.get(nonChanger).get(idPos).get(0)));
                 }
-                else {
-                    item = new ArrayList<ArrayList<String>>();
-                    for (int i = 0; i < na.size(); ++i) {
-                        ArrayList<String> atribut = new ArrayList<String>();
-                        for (int j = i; j < 26; ++j) {
-                            if (j == na.size()+1) atribut.add("");
-                            else atribut.add("test");
-                        }
-                        item.add(atribut);
-                    }
+                catch (NumberFormatException | ItemNotFoundException e1) {
+                    ControladorPresentacio.obreVistaError(e1.getMessage());
+                    return;
                 }
 
                 new VistaInformacioItem(item, ta, na, instancia);
@@ -284,7 +279,6 @@ public class VistaItems extends JFrame {
         JPanel f5 = new JPanel();
         f5.setLayout(new FlowLayout());
         f5.add(info);
-        sota.add(f5);
 
         if (admin) {
             JButton mod = new JButton("Modificar");
@@ -296,40 +290,35 @@ public class VistaItems extends JFrame {
             });
 
 
-            JPanel f6 = new JPanel();
-            f6.setLayout(new FlowLayout());
-            f6.add(mod);
-            sota.add(f6);
+            f5.add(mod);
 
             JButton elim = new JButton("Eliminar");
-            JPanel f7 = new JPanel();
 
             elim.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    sota.remove(f3); //id
-                    ids.remove(id1);
+                    if (VistaAdvertencia.Advertencia("Segur que vols eliminar l'item?")) {
+                        sota.remove(f3); //id
+                        ids.remove(id1);
 
-                    sota.remove(f4); //nom
-                    noms.remove(nom1);
+                        sota.remove(f4); //nom
+                        noms.remove(nom1);
 
-                    sota.remove(f5); //info
-                    sota.remove(f6); //mod
-                    sota.remove(f7); //elim
+                        sota.remove(f5); //info mod elim
 
-                    sotaLayout.setRows(sotaLayout.getRows() - 1);
-                    ControladorPresentacio.eliminarItem(id1.getText());
-                    revalidate();
+                        sotaLayout.setRows(sotaLayout.getRows() - 1);
+                        ControladorPresentacio.eliminarItem(id1.getText());
+                        revalidate();
+                    }
                 }
             });      
 
-            elim.setForeground(Color.WHITE);
+            //elim.setForeground(Color.WHITE);
             elim.setBackground(Color.RED);
             elim.setContentAreaFilled(false);
             elim.setOpaque(true);
 
-            f7.setLayout(new FlowLayout());
-            f7.add(elim);
-            sota.add(f7);
+            f5.add(elim);
         }
+        sota.add(f5);
     }
 }
