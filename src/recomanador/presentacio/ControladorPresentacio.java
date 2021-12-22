@@ -55,16 +55,10 @@ public class ControladorPresentacio {
 				String nom = item.get(Integer.parseInt(domini.getPosNomItem())).get(0);
 				temp.get(i).add(nom);
 			}
-			//System.out.println("--------------------");
-			//System.out.println("--- Provant algo ---");
-			//System.out.println("--------------------");
 			//La diferència de conjunts serà els que es mostrarà
 			return temp;
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			//System.out.println("--------------------");
-			//System.out.println("--- Error  Error ---");
-			//System.out.println("--------------------");
 			return null;
 		}
 	}
@@ -119,8 +113,6 @@ public class ControladorPresentacio {
 		try {		
 			domini.saveSession();
 		} catch(Exception e) {
-			//new VistaError(e.getMessage());
-			//No va, pq l'error està buit
 			new VistaError("Error en guardar.");
 		}
 	}
@@ -142,7 +134,7 @@ public class ControladorPresentacio {
 			return domini.getQ();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			return "0";
+			return "1";
 		}
 	}
 	
@@ -151,7 +143,7 @@ public class ControladorPresentacio {
 			return domini.getK();
 		} catch(Exception e) {
 			new VistaError(e.getMessage());
-			return "0";
+			return "1";
 		}
 	}
 	

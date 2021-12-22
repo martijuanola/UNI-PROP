@@ -174,17 +174,8 @@ public class VistaModificarAlgorisme extends JFrame {
 		tornar_enrere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vp.mostra();
-				dispose();				
-				//new VistaError("Falta tornar enrrere");
+				dispose();
 			}
         });
-				
-        /*
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-        });
-         */
 	}
 }
