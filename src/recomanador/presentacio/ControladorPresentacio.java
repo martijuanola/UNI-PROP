@@ -39,7 +39,7 @@ public class ControladorPresentacio {
 				boolean found = false;
 				
 				for (int j = 0; j < old.size(); ++j)
-					if (one.get(1) == old.get(j).get(1)) found = true;
+					if (one.get(1).equals(old.get(j).get(1))) found = true;
 				
 				if (!found)
 				{
