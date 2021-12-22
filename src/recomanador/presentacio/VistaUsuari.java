@@ -63,16 +63,16 @@ public class VistaUsuari extends JFrame {
 	
 	private int stringToIndex(String s)
 	{
-		if (s == "0.5") return 1;
-		else if (s == "1.0") return 2;
-		else if (s == "1.5") return 3;
-		else if (s == "2.0") return 4;
-		else if (s == "2.5") return 5;
-		else if (s == "3.0") return 6;
-		else if (s == "3.5") return 7;
-		else if (s == "4.0") return 8;
-		else if (s == "4.5") return 9;
-		else if (s == "5.0") return 10;
+		if (s.equals("0.5")) return 1;
+		else if (s.equals("1.0")) return 2;
+		else if (s.equals("1.5")) return 3;
+		else if (s.equals("2.0")) return 4;
+		else if (s.equals("2.5")) return 5;
+		else if (s.equals("3.0")) return 6;
+		else if (s.equals("3.5")) return 7;
+		else if (s.equals("4.0")) return 8;
+		else if (s.equals("4.5")) return 9;
+		else if (s.equals("5.0")) return 10;
 		else return 0;
 	}
 	
@@ -110,7 +110,7 @@ public class VistaUsuari extends JFrame {
 			{
 				id_items.add(cp.getItem(Integer.parseInt(all_vals.get(i).get(1))).get(Integer.parseInt(cp.getPosItemId())).get(0));
 				nom_items.add(cp.getItem(Integer.parseInt(all_vals.get(i).get(1))).get(Integer.parseInt(cp.getPosItemNom())).get(0));
-				option_idx.add(stringToIndex(all_vals.get(i).get(2)));
+				option_idx.add(stringToIndex(all_vals.get(i).get(2)));	
 			}
 			
 			for (int i = 0; i < all_recs.size(); ++i)
@@ -150,6 +150,7 @@ public class VistaUsuari extends JFrame {
 			JLabel nomLab = new JLabel(nom_items.get(i));
 			JComboBox rate = new JComboBox(options);
 			rate.setSelectedIndex(option_idx.get(i));
+			
 			JButton eliminar = new JButton("Eliminar");
 			
 			JPanel item_valorat = new JPanel();
