@@ -59,6 +59,7 @@ public class VistaItems extends JFrame {
         exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
             public void actionPerformed(ActionEvent e)
             {
+                ControladorPresentacio.guardar();
                 vs.ItemsAcabats();
                 dispose();
             }
@@ -87,6 +88,7 @@ public class VistaItems extends JFrame {
         exit.addActionListener(new ActionListener() { //Es tanca la finestra com si es fes click a la "X" i s'activa la funció de dalt
             public void actionPerformed(ActionEvent e)
             {
+                if (admin) ControladorPresentacio.guardar();
                 vp.mostra();
                 dispose();
             }
@@ -261,25 +263,12 @@ public class VistaItems extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 ArrayList<ArrayList<String>> item;
-                if (!SessioNova) {
-                    try {
-                        item = ControladorPresentacio.getItem(Integer.parseInt(items.get(nonChanger).get(idPos).get(0)));
-                    }
-                    catch (NumberFormatException | ItemNotFoundException e1) {
-                        ControladorPresentacio.obreVistaError(e1.getMessage());
-                        return;
-                    }
+                try {
+                    item = ControladorPresentacio.getItem(Integer.parseInt(items.get(nonChanger).get(idPos).get(0)));
                 }
-                else {
-                    item = new ArrayList<ArrayList<String>>();
-                    for (int i = 0; i < na.size(); ++i) {
-                        ArrayList<String> atribut = new ArrayList<String>();
-                        for (int j = i; j < 26; ++j) {
-                            if (j == na.size()+1) atribut.add("");
-                            else atribut.add("test");
-                        }
-                        item.add(atribut);
-                    }
+                catch (NumberFormatException | ItemNotFoundException e1) {
+                    ControladorPresentacio.obreVistaError(e1.getMessage());
+                    return;
                 }
 
                 new VistaInformacioItem(item, ta, na, instancia);
@@ -307,17 +296,19 @@ public class VistaItems extends JFrame {
 
             elim.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    sota.remove(f3); //id
-                    ids.remove(id1);
+                    if (VistaAdvertencia.Advertencia("Segur que vols eliminar l'item?")) {
+                        sota.remove(f3); //id
+                        ids.remove(id1);
 
-                    sota.remove(f4); //nom
-                    noms.remove(nom1);
+                        sota.remove(f4); //nom
+                        noms.remove(nom1);
 
-                    sota.remove(f5); //info mod elim
+                        sota.remove(f5); //info mod elim
 
-                    sotaLayout.setRows(sotaLayout.getRows() - 1);
-                    ControladorPresentacio.eliminarItem(id1.getText());
-                    revalidate();
+                        sotaLayout.setRows(sotaLayout.getRows() - 1);
+                        ControladorPresentacio.eliminarItem(id1.getText());
+                        revalidate();
+                    }
                 }
             });      
 
