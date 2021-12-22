@@ -377,6 +377,7 @@ public class VistaPrincipal extends JFrame {
 	}
 	
 	public void mostraDeUsuari() {					
+		System.out.println("Inici");
 		dreta.remove(recsScrollable);
 		
 		id_item = new ArrayList<JLabel>();
@@ -418,7 +419,8 @@ public class VistaPrincipal extends JFrame {
 		{
 			boolean found_rec = false;
 			boolean found_val = false;
-			System.out.println("FuckOf ");
+			String rated_val = "";
+			System.out.print("FuckOf ");
 			for (int j = 0; j < all_recs.size(); ++j) {
 				if (all_recs.get(j).get(0).equals(ControladorPresentacio.getId()) &&
 					all_recs.get(j).get(1).equals(recomanacions.get(i).get(0))) 
@@ -428,9 +430,13 @@ public class VistaPrincipal extends JFrame {
 			if (!found_rec) {
 				for (int j = 0; j < all_vals.size(); ++j) {
 					if (all_vals.get(j).get(0).equals(ControladorPresentacio.getId()) &&
-						all_vals.get(j).get(1).equals(recomanacions.get(i).get(0))) 
-						found_val = true;
+						all_vals.get(j).get(1).equals(recomanacions.get(i).get(0)))
+						{
+							found_val = true;
+							rated_val = all_vals.get(j).get(2);
+						}
 				}
+				
 			}
 			
 			if (found_rec) {
@@ -438,26 +444,30 @@ public class VistaPrincipal extends JFrame {
 				nom_item.add(new JLabel(recomanacions.get(i).get(1)));
 				rate.add(new JComboBox(options));
 				
-				recs.add(id_item.get(i));
-				recs.add(nom_item.get(i));
-				recs.add(rate.get(i));
+				recs.add(id_item.get(id_item.size() - 1));
+				recs.add(nom_item.get(nom_item.size() - 1));
+				recs.add(rate.get(rate.size() - 1));
+				System.out.println("Recomanacio");
 			}
 			else if (found_val) {
 				id_item.add(new JLabel(recomanacions.get(i).get(0)));
 				nom_item.add(new JLabel(recomanacions.get(i).get(1)));
 				rate.add(new JComboBox(options));
-				rate.get(i).setSelectedIndex(stringToIndex(recomanacions.get(i).get(2)));
+				System.out.print("No peta ");
+				rate.get(rate.size()-1).setSelectedIndex(stringToIndex(rated_val));
+				System.out.print("peta ? ");
 				
-				recs.add(id_item.get(i));
-				recs.add(nom_item.get(i));
-				recs.add(rate.get(i));
+				recs.add(id_item.get(id_item.size() - 1));
+				recs.add(nom_item.get(nom_item.size() - 1));
+				recs.add(rate.get(rate.size() - 1));
+				System.out.println("Valoració");
 			}
 			else {
 				idx_temp.add(i);
-				
+				System.out.println("Eliminat");
 			}	
 		}
-		
+		System.out.println("FIn");
 		recsScrollable = new JScrollPane(recs);
 		recs.setAutoscrolls(true);
 		dreta.add(recsScrollable);
@@ -507,7 +517,7 @@ public class VistaPrincipal extends JFrame {
 		{
 			recomanacions.remove(idx_temp.get(i));
 		}
-		
 		setVisible(true);
+		
 	}
 }
