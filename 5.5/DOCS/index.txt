@@ -1,6 +1,6 @@
 DIRECTORI DOCS
 
-\javadoc:
+\javadoc:  Conté la documentació de les classes feta amb javadoc.
 
 - documentacio.pdf: Manual d'usuari + jocs de prova + repartició classes + llibreries externes
-- enllaçjavadoc.??: Enllaç simbòlic a l'index.html del javadoc
+- javadoc_index: Enllaç simbòlic a l'index.html del javadoc
